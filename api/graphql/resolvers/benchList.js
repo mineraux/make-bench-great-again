@@ -19,6 +19,7 @@ module.exports = {
   },
   createBench: async args => {
     const bench = new Bench({
+      geolocation: args.benchInput.geolocation,
       name: args.benchInput.name,
       description: args.benchInput.description,
       lockedDescription: args.benchInput.lockedDescription
@@ -26,7 +27,7 @@ module.exports = {
     try {
       const createdBench = await bench.save()
       return createdBench
-    } catch(err) {
+    } catch (err) {
       throw err
     }
   },

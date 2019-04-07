@@ -7,13 +7,9 @@ module.exports = buildSchema(`
     description: String!,
     lockedDescription: String!
   }
-
-  type GeoLocation {
-    latitude: Float!,
-    longitude: Float!
-  }
-
+  
   input BenchInput {
+    geolocation: [Float]!
     name: String!
     description: String!,
     lockedDescription: String!

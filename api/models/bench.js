@@ -1,7 +1,7 @@
 const mongoose = require('mongoose')
 const Schema = mongoose.Schema
 
-const benchSchema = new Schema({
+const benchSchema = new Schema({   
   name: {
     type: String,
     required: true
@@ -13,7 +13,14 @@ const benchSchema = new Schema({
   lockedDescription: {
     type: String,
     required: true
-  }
+  },
+  geolocation: {
+    type: {
+      latitude: Number,
+      longitude: Number
+    },
+    required: true
+  },
 })
 
 module.exports = mongoose.model('Bench', benchSchema)
