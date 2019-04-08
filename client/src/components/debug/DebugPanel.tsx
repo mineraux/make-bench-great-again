@@ -18,8 +18,8 @@ const DebugPanel: FunctionComponent = () => {
           <h3>Bench list</h3>
           <ul>
             {
-              benchList.map(bench => (
-                <li>
+              benchList.map((bench, index) => (
+                <li key={index}>
                   <span>{bench.name}</span>
                 </li>
               ))
