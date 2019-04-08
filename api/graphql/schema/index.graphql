@@ -5,14 +5,17 @@ module.exports = buildSchema(`
     _id: ID!
     name: String!
     description: String!,
-    lockedDescription: String!
+    lockedDescription: String!,
+    geolocation: [Float]!,
+    hashTags: [String!]
   }
   
   input BenchInput {
-    geolocation: [Float]!
     name: String!
     description: String!,
-    lockedDescription: String!
+    lockedDescription: String!,
+    geolocation: [Float]!,
+    hashTags: [String!]
   }
 
   type RootQuery {
