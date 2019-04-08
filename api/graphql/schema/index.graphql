@@ -1,0 +1,31 @@
+const { buildSchema } = require('graphql')
+
+module.exports = buildSchema(`
+  type Bench {
+    _id: ID!
+    name: String!
+    description: String!,
+    lockedDescription: String!
+  }
+  
+  input BenchInput {
+    geolocation: [Float]!
+    name: String!
+    description: String!,
+    lockedDescription: String!
+  }
+
+  type RootQuery {
+    benchList: [Bench!]!
+  }
+
+  type RootMutation {
+    createBench(benchInput: BenchInput): Bench
+    deleteBench(benchId: ID!): Bench!
+  }
+
+  schema {
+    query: RootQuery
+    mutation: RootMutation
+  }
+`)
