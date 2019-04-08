@@ -18,13 +18,27 @@ module.exports = buildSchema(`
     hashTags: [String!]
   }
 
+  type Petition {
+    _id: ID!
+    title: String!,
+    description: String!,
+  }
+
+  input PetitionInput {
+    title: String!,
+    description: String!
+  }
+
   type RootQuery {
     benchList: [Bench!]!
+    petitionList: [Petition!]!
   }
 
   type RootMutation {
     createBench(benchInput: BenchInput): Bench
     deleteBench(benchId: ID!): Bench!
+    createPetition(petitionInput: PetitionInput): Petition
+    deletePetition(petitionId: ID!): Petition!
   }
 
   schema {

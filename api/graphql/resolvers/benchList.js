@@ -41,7 +41,6 @@ module.exports = {
         _id: args.benchId
       })
       return bench
-
     } catch (err) {
       throw err
     }
