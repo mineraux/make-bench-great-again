@@ -1,10 +1,10 @@
 import { ApiBenchReponseRoot } from "../@types";
 
-
 class ApiClient {
 
   public getBenchList = async(): Promise<ApiBenchReponseRoot> => {
     let benchList: ApiBenchReponseRoot = []
+    
     const requestBody = {
       query: `
         query {
@@ -15,13 +15,13 @@ class ApiClient {
       `
     }
 
-    fetch('http://localhost:4000/api', {
+    await (fetch('http://localhost:4000/api', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json'
       },
       body: JSON.stringify(requestBody),			
-    })
+    }))
     .then(res => {
       if (res.status !== 200 && res.status !== 201) {
         throw Error('Failed')
@@ -29,12 +29,12 @@ class ApiClient {
       return res.json()
     })
     .then(resData => {
-      console.log(resData.data)
-      benchList = resData.data
+      benchList = resData.data.benchList
     })
     .catch(err => {
       console.log(err)
     })
+    
     return benchList
   }
 

@@ -7,27 +7,28 @@ const DebugPanel: FunctionComponent = () => {
 
   const {benchList, fetchBenchList} = Store
 
-    const test = useCallback( async () => {
-      try {
-        // const response = await ApiClient.getBenchList()
-        // console.log(response)
-        fetchBenchList()
-      } catch(err) {
-        console.log(err)
-      }
-      // fetchBenchList()
-      
-    }, [])
+    const getInstallationList = async () => {
+      await fetchBenchList()
+    }
 
     return (
       <div className="debug-panel">
         <h2>Debug interface</h2>
-        <p>benchList = {benchList}</p>
-        <button onClick={test}>Query toutes les installation</button>
+        <div>
+          <h3>Bench list</h3>
+          <ul>
+            {
+              benchList.map(bench => (
+                <li>
+                  <span>{bench.name}</span>
+                </li>
+              ))
+            }
+          </ul>
+        </div>
+        <button onClick={getInstallationList}>Query toutes les installation</button>
       </div>
     )
-  
-
 }
 
 export default observer(DebugPanel)
