@@ -6,7 +6,7 @@ class Store {
   @observable benchList:ApiBenchReponseRoot = []
 
   @action public fetchBenchList = async () => {
-    this.benchList = (await ApiClient.getBenchList()).map(
+    this.benchList = (await ApiClient.getBenchList({name:true, description: true})).map(
       entry => ({... entry})
     )
   }

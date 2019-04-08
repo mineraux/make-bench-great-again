@@ -1,20 +1,26 @@
-import { ApiBenchReponseRoot } from "../@types";
+import { ApiBenchReponseRoot, QueryApiBenchReponse } from "../@types";
 
 class ApiClient {
 
-  public getBenchList = async(): Promise<ApiBenchReponseRoot> => {
-    let benchList: ApiBenchReponseRoot = []
-    
-    const requestBody = {
-      query: `
-        query {
-          benchList{
-            name
-          }
-        }
-      `
+  public queryBenchList = (args:QueryApiBenchReponse) => {
+    const query = `
+    query {
+      benchList{
+        ${args.name?'name':''}
+        ${args.description?'description':''}
+        ${args.lockedDescription?'lockedDescription':''}
+      }
     }
+    `
+    return query
+  }
 
+  public getBenchList = async(fieldsToFetch:QueryApiBenchReponse): Promise<ApiBenchReponseRoot> => {
+    let benchList: ApiBenchReponseRoot = []
+    const query = this.queryBenchList(fieldsToFetch)
+    const requestBody = {
+      query: query
+    }
     await (fetch('http://localhost:4000/api', {
       method: 'POST',
       headers: {
