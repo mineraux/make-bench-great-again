@@ -10,7 +10,9 @@ module.exports = {
           _id: bench.id,
           name: bench.name,
           description: bench.description,
-          lockedDescription: bench.lockedDescription
+          lockedDescription: bench.lockedDescription,
+          geolocation: bench.geolocation,
+          hashTags: bench.hashTags
         }
       })
     } catch (err) {
@@ -19,10 +21,11 @@ module.exports = {
   },
   createBench: async args => {
     const bench = new Bench({
-      geolocation: args.benchInput.geolocation,
       name: args.benchInput.name,
       description: args.benchInput.description,
-      lockedDescription: args.benchInput.lockedDescription
+      lockedDescription: args.benchInput.lockedDescription,
+      geolocation: args.benchInput.geolocation,
+      hashTags: args.benchInput.hashTags
     })
     try {
       const createdBench = await bench.save()
@@ -38,7 +41,6 @@ module.exports = {
         _id: args.benchId
       })
       return bench
-
     } catch (err) {
       throw err
     }

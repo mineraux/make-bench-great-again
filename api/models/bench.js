@@ -21,6 +21,10 @@ const benchSchema = new Schema({
     },
     required: true
   },
+  hashTags: {
+    type: [String],
+    required: true
+  }
 })
 
 module.exports = mongoose.model('Bench', benchSchema)
