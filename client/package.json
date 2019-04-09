@@ -3,6 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "@mapbox/mapbox-gl-directions": "^4.0.0",
     "@types/googlemaps": "^3.30.19",
     "@types/jest": "24.0.11",
     "@types/node": "11.11.4",
