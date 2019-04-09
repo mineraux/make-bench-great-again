@@ -9,6 +9,10 @@ const ProtoMap: FunctionComponent = () => {
 
   //@ts-ignore
   let directions;
+  //@ts-ignore
+  let geolocate;
+
+  let userLocation;
 
   useEffect(() => {
     const map = new mapboxgl.Map({
@@ -26,12 +30,19 @@ const ProtoMap: FunctionComponent = () => {
     .setLngLat([2.402, 48.8787])
     .addTo(map);
 
-    map.addControl(new mapboxgl.GeolocateControl({
+    geolocate = new mapboxgl.GeolocateControl({
       positionOptions: {
           enableHighAccuracy: true
       },
       trackUserLocation: true
-  }));
+    })
+
+    geolocate.on('geolocate', function() {
+      //@ts-ignore
+      console.log('User geolocated !')
+    })
+
+    map.addControl(geolocate);
 
   directions = new MapboxDirections({
     accessToken: mapboxgl.accessToken,
@@ -49,7 +60,6 @@ const ProtoMap: FunctionComponent = () => {
     //@ts-ignore
     directions.setDestination([2.40590, 48.8757])
   }
-
 
   return (
     <>
