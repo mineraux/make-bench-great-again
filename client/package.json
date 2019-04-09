@@ -10,6 +10,7 @@
     "@types/styled-components": "^4.1.12",
     "mobx": "^5.9.0",
     "mobx-react-lite": "^1.1.1",
+    "node-sass": "^4.11.0",
     "prettier": "^1.15.3",
     "react": "^16.8.4",
     "react-dom": "^16.8.4",

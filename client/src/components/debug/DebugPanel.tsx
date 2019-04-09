@@ -11,7 +11,7 @@ const DebugPanel: FunctionComponent = () => {
   const { debug } = DebugStore
 
     const getInstallationList = async () => {
-      await fetchBenchList()
+      await fetchBenchList({name:true, description: true})
     }
 
     return (
