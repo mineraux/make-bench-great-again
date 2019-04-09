@@ -1,17 +1,23 @@
 import React, { FunctionComponent, useCallback } from 'react'
-import ApiClient from '../../clients/ApiClient';
 import { observer } from 'mobx-react-lite'
 import Store from '../../store/Store'
+import DebugStore from '../../store/DebugStore';
+import DebugButton from './DebugButton';
+import './debugPanel.scss'
 
 const DebugPanel: FunctionComponent = () => {
 
   const {benchList, fetchBenchList} = Store
+  const { debug } = DebugStore
 
     const getInstallationList = async () => {
       await fetchBenchList()
     }
 
     return (
+      <>
+      <DebugButton />
+      {debug && 
       <div className="debug-panel">
         <h2>Debug interface</h2>
         <div>
@@ -29,7 +35,8 @@ const DebugPanel: FunctionComponent = () => {
           </ul>
         </div>
         <button onClick={getInstallationList}>Query toutes les installation</button>
-      </div>
+      </div>}
+      </>
     )
 }
 
