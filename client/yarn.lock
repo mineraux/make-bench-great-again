@@ -1079,6 +1079,11 @@
     "@svgr/plugin-svgo" "^4.0.3"
     loader-utils "^1.1.0"
 
+"@types/geojson@*":
+  version "7946.0.7"
+  resolved "https://registry.yarnpkg.com/@types/geojson/-/geojson-7946.0.7.tgz#c8fa532b60a0042219cdf173ca21a975ef0666ad"
+  integrity sha512-wE2v81i4C4Ol09RtsWFAqg3BUitWbHSpSlIo+bNdsCJijO9sjme+zm+73ZMCa/qMC8UEERxzGbvmr1cffo2SiQ==
+
 "@types/googlemaps@^3.30.19":
   version "3.30.19"
   resolved "https://registry.yarnpkg.com/@types/googlemaps/-/googlemaps-3.30.19.tgz#359c025e244490b0775826fb216bed093fd66b16"
@@ -1095,6 +1100,13 @@
   integrity sha512-2kLuPC5FDnWIDvaJBzsGTBQaBbnDweznicvK7UGYzlIJP4RJR2a4A/ByLUXEyEgag6jz8eHdlWExGDtH3EYUXQ==
   dependencies:
     "@types/jest-diff" "*"
+
+"@types/mapbox-gl@^0.51.4":
+  version "0.51.4"
+  resolved "https://registry.yarnpkg.com/@types/mapbox-gl/-/mapbox-gl-0.51.4.tgz#74ae72af6ea8fcead9a85b44d408e8bc97f91bb5"
+  integrity sha512-+MqOB1O81rBKPE0mobvgfMs7FugtNnZY42y4sOHj/ljyoIiidyAQ+N27Jd5eTZ8arLAMzbxmDJ0s5oukAgZroQ==
+  dependencies:
+    "@types/geojson" "*"
 
 "@types/node@*":
   version "11.10.5"
