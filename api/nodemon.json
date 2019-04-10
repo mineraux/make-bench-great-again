@@ -1,7 +1,0 @@
-{
-  "env" : {
-    "MONGO_USER": "Robin",
-    "MONGO_PASSWORD" : "yolopastaga",
-    "MONGO_DB": "make-bench-great-again"
-  }
-}

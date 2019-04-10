@@ -1,5 +1,5 @@
 import { action, observable, reaction } from 'mobx'
-import ApiClient from '../clients/ApiClient';
+import ApiClient from '../ApiClient/ApiClient';
 import { ApiBenchReponseRoot, QueryApiBenchReponse } from '../@types';
 
 class Store {

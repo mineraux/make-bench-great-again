@@ -2,20 +2,21 @@ import { ApiBenchReponseRoot, QueryApiBenchReponse } from "../@types";
 
 class ApiClient {
 
-  private queryBenchList = (args:QueryApiBenchReponse) => {
+  private queryBenchList = (args: QueryApiBenchReponse) => {
     const query = `
     query {
       benchList{
-        ${args.name?'name':''}
-        ${args.description?'description':''}
-        ${args.lockedDescription?'lockedDescription':''}
+        ${args.name ? 'name' : ''}
+        ${args.description ? 'description' : ''}
+        ${args.lockedDescription ? 'lockedDescription' : ''}
+        ${args.geolocation ? 'geolocation' : ''}
       }
     }
     `
     return query
   }
 
-  public getBenchList = async(fieldsToFetch:QueryApiBenchReponse): Promise<ApiBenchReponseRoot> => {
+  public getBenchList = async (fieldsToFetch: QueryApiBenchReponse): Promise<ApiBenchReponseRoot> => {
     let benchList: ApiBenchReponseRoot = []
     const query = this.queryBenchList(fieldsToFetch)
     const requestBody = {
@@ -26,21 +27,21 @@ class ApiClient {
       headers: {
         'Content-Type': 'application/json'
       },
-      body: JSON.stringify(requestBody),			
+      body: JSON.stringify(requestBody),
     }))
-    .then(res => {
-      if (res.status !== 200 && res.status !== 201) {
-        throw Error('Failed')
-      }
-      return res.json()
-    })
-    .then(resData => {
-      benchList = resData.data.benchList
-    })
-    .catch(err => {
-      console.log(err)
-    })
-    
+      .then(res => {
+        if (res.status !== 200 && res.status !== 201) {
+          throw Error('Failed')
+        }
+        return res.json()
+      })
+      .then(resData => {
+        benchList = resData.data.benchList
+      })
+      .catch(err => {
+        console.log(err)
+      })
+
     return benchList
   }
 
