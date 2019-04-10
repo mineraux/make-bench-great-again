@@ -1,6 +1,15 @@
 import { action, observable, reaction } from 'mobx'
+import ApiClient from '../clients/ApiClient';
+import { ApiBenchReponseRoot, QueryApiBenchReponse } from '../@types';
 
-class Store {}
+class Store {
+  @observable benchList:ApiBenchReponseRoot = []
 
-const store = new Store();
-export default store
+  @action public fetchBenchList = async (fieldToFetch: QueryApiBenchReponse) => {
+    this.benchList = (await ApiClient.getBenchList(fieldToFetch)).map(
+      entry => ({... entry})
+    )
+  }
+}
+
+export default new Store()
