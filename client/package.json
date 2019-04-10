@@ -8,13 +8,16 @@
     "@types/react": "16.8.8",
     "@types/react-dom": "16.8.3",
     "@types/styled-components": "^4.1.12",
+    "gsap": "^2.1.2",
     "mobx": "^5.9.0",
     "mobx-react-lite": "^1.1.1",
     "node-sass": "^4.11.0",
     "prettier": "^1.15.3",
     "react": "^16.8.4",
     "react-dom": "^16.8.4",
+    "react-router-dom": "^5.0.0",
     "react-scripts": "2.1.8",
+    "react-transition-group": "^2.9.0",
     "styled-components": "^4.1.3",
     "typescript": "3.3.4000"
   },
@@ -34,6 +37,9 @@
     "not op_mini all"
   ],
   "devDependencies": {
+    "@types/gsap": "^1.20.2",
+    "@types/react-router-dom": "^4.3.1",
+    "@types/react-transition-group": "^2.8.0",
     "husky": "^1.3.1",
     "lint-staged": "^8.1.5",
     "tslint": "^5.11.0",
