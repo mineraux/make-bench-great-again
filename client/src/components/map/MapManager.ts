@@ -1,4 +1,6 @@
 import * as turf from '@turf/turf'
+import { ApiBenchReponseRoot, QueryApiBenchReponse } from '../../@types';
+import mapboxgl, { GeolocateControl, Map as MapboxGlMap, Marker } from 'mapbox-gl'
 
 class MapManager {
 
@@ -18,6 +20,15 @@ class MapManager {
       lastDistance = distance
     })
     return nearestMarker
+  }
+
+  public setAllMarkers = (benchList: ApiBenchReponseRoot, map:mapboxgl.Map) => {
+    const markers: mapboxgl.Marker[] = []
+    benchList.map(bench => {
+      let marker = new mapboxgl.Marker().setLngLat(bench.geolocation).addTo(map)
+      markers.push(marker)
+    })
+    return markers
   }
 
 }

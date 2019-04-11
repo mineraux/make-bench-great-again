@@ -66,46 +66,15 @@ const ProtoMap: FunctionComponent = () => {
   }, [])
 
   useEffect(() => {
-    const tempMarkers: mapboxgl.Marker[] = []
     if (map.current) {
-      benchList.map(bench => {
-        let marker = new mapboxgl.Marker().setLngLat(bench.geolocation).addTo(map.current!)
-        tempMarkers.push(marker)
-      })
-
-      setMarkers(tempMarkers)
+      const markers = MapManager.setAllMarkers(benchList,map.current)
+      setMarkers(markers)
     }
   }, [benchList])
 
   const loadInstalationList = () => {
     getInstallationList()
   }
-
-  // const getNearestMarker = () => {
-  //   let lastDistance = 99999
-
-  //   markers.map((marker: mapboxgl.Marker, index: number) => {
-  //     const lngLat = marker.getLngLat()
-  //     const lngLatArr = [lngLat.lng, lngLat.lat]
-
-  //     const distance = turf.distance(userLocation, lngLatArr)
-  //     if (distance < lastDistance) {
-  //       setNearestMarker(marker)
-  //     }
-
-  //     lastDistance = distance
-  //   })
-
-  //   if (nearestMarker && userLocation) {
-  //     const lngLat = nearestMarker.getLngLat()
-  //     const lngLatArr = [lngLat.lng, lngLat.lat]
-
-  //     //@ts-ignore
-  //     directions.current.setOrigin(userLocation);
-  //     //@ts-ignore
-  //     directions.current.setDestination(lngLatArr)
-  //   }
-  // }
 
   const test = () => {
     const nearestMarker = MapManager.getNearestMarker(markers, userLocation)
