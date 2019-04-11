@@ -3,10 +3,9 @@ import './map.scss'
 import { observer } from "mobx-react-lite";
 import Store from "../../store/Store";
 import mapboxgl, { GeolocateControl, Map as MapboxGlMap, Marker } from 'mapbox-gl'
+import MapManager from "./MapManager";
 // import MapBoxDirections from '@mapbox/mapbox-gl-directions'
 var MapboxDirections = require('@mapbox/mapbox-gl-directions/dist/mapbox-gl-directions');
-import * as turf from '@turf/turf'
-import { number } from "prop-types";
 
 const ProtoMap: FunctionComponent = () => {
 
@@ -82,38 +81,49 @@ const ProtoMap: FunctionComponent = () => {
     getInstallationList()
   }
 
-  const getNearestMarker = () => {
-    let lastDistance = 99999
+  // const getNearestMarker = () => {
+  //   let lastDistance = 99999
 
-    markers.map((marker: mapboxgl.Marker, index: number) => {
-      const lngLat = marker.getLngLat()
-      const lngLatArr = [lngLat.lng, lngLat.lat]
+  //   markers.map((marker: mapboxgl.Marker, index: number) => {
+  //     const lngLat = marker.getLngLat()
+  //     const lngLatArr = [lngLat.lng, lngLat.lat]
 
-      const distance = turf.distance(userLocation, lngLatArr)
-      if (distance < lastDistance) {
-        setNearestMarker(marker)
-      }
+  //     const distance = turf.distance(userLocation, lngLatArr)
+  //     if (distance < lastDistance) {
+  //       setNearestMarker(marker)
+  //     }
 
-      lastDistance = distance
-    })
+  //     lastDistance = distance
+  //   })
 
-    if (nearestMarker && userLocation) {
-      const lngLat = nearestMarker.getLngLat()
-      const lngLatArr = [lngLat.lng, lngLat.lat]
-      console.log(userLocation)
+  //   if (nearestMarker && userLocation) {
+  //     const lngLat = nearestMarker.getLngLat()
+  //     const lngLatArr = [lngLat.lng, lngLat.lat]
 
-      //@ts-ignore
-      directions.current.setOrigin(userLocation);
-      //@ts-ignore
-      directions.current.setDestination(lngLatArr)
-    }
+  //     //@ts-ignore
+  //     directions.current.setOrigin(userLocation);
+  //     //@ts-ignore
+  //     directions.current.setDestination(lngLatArr)
+  //   }
+  // }
+
+  const test = () => {
+    const nearestMarker = MapManager.getNearestMarker(markers, userLocation)
+
+    const lngLat = nearestMarker.getLngLat()
+    const lngLatArr = [lngLat.lng, lngLat.lat]
+
+    //@ts-ignore
+    directions.current.setOrigin(userLocation);
+    //@ts-ignore
+    directions.current.setDestination(lngLatArr)
   }
 
   return (
     <>
       <div id="map"></div>
       <button onClick={loadInstalationList}>Load instalations data</button>
-      <button onClick={getNearestMarker}>Get nearest marker</button>
+      <button onClick={test}>Get nearest marker</button>
     </>
   )
 }
