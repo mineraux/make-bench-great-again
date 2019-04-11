@@ -32,7 +32,6 @@ class App extends Component {
           </Route>
 
         </BrowserRouter>
-
       </div>
     );
   }

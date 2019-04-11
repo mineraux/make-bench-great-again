@@ -10,8 +10,8 @@ const DebugPanel: FunctionComponent = () => {
   const {benchList, fetchBenchList} = Store
   const { debug } = DebugStore
 
-    const getInstallationList = async () => {
-      await fetchBenchList({name:true, description: true})
+    const getInstallationList = async() => {
+      await fetchBenchList({name:true, description: true, geolocation: true})
     }
 
     return (
@@ -29,6 +29,8 @@ const DebugPanel: FunctionComponent = () => {
                   {bench.name && <p>{bench.name}</p>}
                   {bench.description && <p>{bench.description}</p>}
                   {bench.lockedDescription && <p>{bench.lockedDescription}</p>}
+                  {bench.geolocation && bench.geolocation.map((item, index) => <p key={index}>{item}</p>)
+                  }
                 </li>
               ))
             }
