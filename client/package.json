@@ -4,6 +4,7 @@
   "private": true,
   "dependencies": {
     "@mapbox/mapbox-gl-directions": "^4.0.0",
+    "@turf/turf": "^5.1.6",
     "@types/googlemaps": "^3.30.19",
     "@types/jest": "24.0.11",
     "@types/mapbox-gl": "^0.51.4",
@@ -11,8 +12,8 @@
     "@types/react": "16.8.8",
     "@types/react-dom": "16.8.3",
     "@types/styled-components": "^4.1.12",
-    "mapbox-gl": "^0.53.1",
     "gsap": "^2.1.2",
+    "mapbox-gl": "^0.53.1",
     "mobx": "^5.9.0",
     "mobx-react-lite": "^1.1.1",
     "node-sass": "^4.11.0",
