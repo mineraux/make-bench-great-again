@@ -1,8 +1,10 @@
+export type Coords = [number,number]
+
 export interface ApiBench {
   name: string,
   description: string,
   lockedDescription: string,
-  geolocation: [number, number]
+  geolocation: Coords
 }
 
 export interface queryApiBench {

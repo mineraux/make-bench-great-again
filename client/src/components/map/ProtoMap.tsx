@@ -2,22 +2,19 @@ import React, { FunctionComponent, useEffect, useRef, useState } from "react";
 import './map.scss'
 import { observer } from "mobx-react-lite";
 import Store from "../../store/Store";
-import mapboxgl, { GeolocateControl, Map as MapboxGlMap, Marker } from 'mapbox-gl'
+import mapboxgl, { GeolocateControl, Map as MapboxGlMap } from 'mapbox-gl'
 import MapManager from "./MapManager";
-// import MapBoxDirections from '@mapbox/mapbox-gl-directions'
-var MapboxDirections = require('@mapbox/mapbox-gl-directions/dist/mapbox-gl-directions');
+import { Coords } from '../../@types'
 
 const ProtoMap: FunctionComponent = () => {
 
   const { benchList, fetchBenchList } = Store
 
   let map = useRef<MapboxGlMap | null>(null);
-  let directions = useRef(null);
-  let geolocate = useRef<GeolocateControl | null>(null)
+  let directions = useRef(MapManager.initMapboxDirections());
+  let geolocate = useRef<GeolocateControl>(MapManager.initGeolocate())
 
   const [markers, setMarkers] = useState()
-  const [lastMarker, setLastMarker] = useState()
-  const [nearestMarker, setNearestMarker] = useState<mapboxgl.Marker>()
   const [userLocation, setUserLocation] = useState()
 
   const getInstallationList = async () => {
@@ -28,30 +25,18 @@ const ProtoMap: FunctionComponent = () => {
     mapboxgl.accessToken = process.env.REACT_APP_MAPBOX_ACCESS_TOKEN as string
 
     map.current = MapManager.initMapCanvas('map', 15, [2.40592, 48.8757], 'mapbox://styles/mapbox/navigation-guidance-night-v2')
+    map.current.addControl(geolocate.current)
+    //@ts-ignore
+    map.current.addControl(directions.current);
 
-    geolocate.current = new GeolocateControl({
-      positionOptions: {
-        enableHighAccuracy: true
-      },
-      trackUserLocation: true
+    map.current.on('load', function () {
+      getInstallationList()
+      geolocate.current.trigger()
     })
 
     geolocate.current.on('geolocate', function (e: any) {
       setUserLocation([e.coords.longitude, e.coords.latitude])
     })
-
-    map.current.on('load', function () {
-      getInstallationList()
-      if (geolocate.current) {
-        geolocate.current.trigger()
-      }
-    })
-
-    map.current.addControl(geolocate.current);
-
-    directions.current = MapManager.initMapboxDirections()
-    //@ts-ignore
-    map.current.addControl(directions.current);
   }, [])
 
   useEffect(() => {
@@ -61,28 +46,21 @@ const ProtoMap: FunctionComponent = () => {
     }
   }, [benchList])
 
-  const loadInstalationList = () => {
-    getInstallationList()
-  }
-
-  const test = () => {
-    if (!markers || !userLocation) return
+  const setFastestPath = () => {
     const nearestMarker = MapManager.getNearestMarker(markers, userLocation)
-
-    const lngLat = nearestMarker.getLngLat()
-    const lngLatArr = [lngLat.lng, lngLat.lat]
+    const nearestMarkerCoords = nearestMarker.getLngLat()
+    const normalizedNearestMarkerCoords:Coords = [nearestMarkerCoords.lng, nearestMarkerCoords.lat]
 
     //@ts-ignore
     directions.current.setOrigin(userLocation);
     //@ts-ignore
-    directions.current.setDestination(lngLatArr)
+    directions.current.setDestination(normalizedNearestMarkerCoords)
   }
 
   return (
     <>
       <div id="map"></div>
-      <button onClick={loadInstalationList}>Load instalations data</button>
-      <button onClick={test}>Get nearest marker</button>
+      {markers && userLocation && <button onClick={setFastestPath}>Get nearest marker</button>}
     </>
   )
 }
