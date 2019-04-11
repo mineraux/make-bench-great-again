@@ -4,9 +4,9 @@ import {Link} from "react-router-dom"
 
 import './nav.scss'
 
-interface LinksInterface {
-  link: string,
-  label: string
+export interface LinksInterface {
+  path: string,
+  name: string
 }
 
 type Props = {
@@ -18,8 +18,8 @@ const Nav: FunctionComponent<Props> = ({links}) => {
     return (
       <nav className="nav">
         {links && links.map(link => (
-          <Fragment key={link.link}>
-            <Link to={link.link}>{link.label}</Link>
+          <Fragment key={link.path}>
+            <Link to={link.path}>{link.name}</Link>
           </Fragment>
           ))}
       </nav>

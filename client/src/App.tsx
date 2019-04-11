@@ -4,7 +4,9 @@ import { BrowserRouter, Route } from 'react-router-dom';
 //pages
 import Home from './pages/Home/Home'
 import Map from './pages/Map/Map'
-import Nav from "./components/Nav/Nav";
+import Nav, {LinksInterface} from "./components/Nav/Nav";
+//config
+import config from './config/config'
 
 class App extends Component {
   render() {
@@ -13,23 +15,13 @@ class App extends Component {
         <DebugPanel />
         <BrowserRouter>
 
-          <Nav links={[
-            {
-              link: "/",
-              label: 'Home'
-            },
-            {
-              link: "/map",
-              label: "Map"
-            }
-          ]}/>
+          <Nav links={Object.values(config.routes)}/>
 
-          <Route path="/" exact>
-            {({match}) => <Home show={match !== null}/>}
-          </Route>
-          <Route path="/map">
-            {({match}) => <Map show={match !== null}/>}
-          </Route>
+          {Object.values(config.routes).map(route => (
+            <Route key={route.path} path={route.path} exact>
+              {({match}) => <route.component show={match !== null}/>}
+            </Route>
+          ))}
 
         </BrowserRouter>
       </div>
