@@ -27,12 +27,7 @@ const ProtoMap: FunctionComponent = () => {
   useEffect(() => {
     mapboxgl.accessToken = process.env.REACT_APP_MAPBOX_ACCESS_TOKEN as string
 
-    map.current = new MapboxGlMap({
-      container: 'map',
-      zoom: 15,
-      center: [2.40592, 48.8757],
-      style: 'mapbox://styles/mapbox/navigation-guidance-night-v2'
-    });
+    map.current = MapManager.initMapCanvas('map', 15, [2.40592, 48.8757], 'mapbox://styles/mapbox/navigation-guidance-night-v2')
 
     geolocate.current = new GeolocateControl({
       positionOptions: {
@@ -57,21 +52,11 @@ const ProtoMap: FunctionComponent = () => {
     directions.current = MapManager.initMapboxDirections()
     //@ts-ignore
     map.current.addControl(directions.current);
-
-    // //@ts-ignore
-    // directions.current = new MapboxDirections({
-    //   accessToken: mapboxgl.accessToken,
-    //   unit: 'metric',
-    //   profile: 'mapbox/walking',
-    // });
-
-    // //@ts-ignore
-    // map.current.addControl(directions.current);
   }, [])
 
   useEffect(() => {
     if (map.current) {
-      const markers = MapManager.setAllMarkers(benchList,map.current)
+      const markers = MapManager.setAllMarkers(benchList, map.current)
       setMarkers(markers)
     }
   }, [benchList])
@@ -81,6 +66,7 @@ const ProtoMap: FunctionComponent = () => {
   }
 
   const test = () => {
+    if (!markers || !userLocation) return
     const nearestMarker = MapManager.getNearestMarker(markers, userLocation)
 
     const lngLat = nearestMarker.getLngLat()
