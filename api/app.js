@@ -28,7 +28,7 @@ app.use('/api', graphqlHttp({
 }))
 
 mongoose
-  .connect(`mongodb+srv://${process.env.MONGO_USER}:${process.env.MONGO_PASSWORD}@cluster0-6az6w.mongodb.net/${process.env.MONGO_DB}?retryWrites=true`)
+  .connect(`mongodb+srv://${process.env.MONGO_USER}:${process.env.MONGO_PASSWORD}@${process.env.MONGO_CLUSTER}.mongodb.net/${process.env.MONGO_DB}?retryWrites=true`)
   .then(() => {
     app.listen(PORT)
     console.log('Listening on port : ' + PORT)

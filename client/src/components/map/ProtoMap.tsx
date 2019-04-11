@@ -16,11 +16,11 @@ const ProtoMap: FunctionComponent = () => {
 
   const getInstallationList = async() => {
     await fetchBenchList({name:true, description: true, geolocation: true})
-  }
-  
-  mapboxgl.accessToken = 'pk.eyJ1IjoibWluZXJhdXgiLCJhIjoiY2p1YTV1ZGZ2MDFhMjRicW52aTEwcm12dSJ9.B1KT6acYBd9EsQIQXOBRcQ';
+  } 
 
   useEffect(() => {
+    mapboxgl.accessToken = process.env.REACT_APP_MAPBOX_ACCESS_TOKEN as string
+    
     map.current = new MapboxGlMap({
       container: 'map',
       zoom: 15,
