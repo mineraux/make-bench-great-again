@@ -1,6 +1,8 @@
 import * as turf from '@turf/turf'
 import { ApiBenchReponseRoot, QueryApiBenchReponse } from '../../@types';
 import mapboxgl, { GeolocateControl, Map as MapboxGlMap, Marker } from 'mapbox-gl'
+// import MapBoxDirections from '@mapbox/mapbox-gl-directions'
+var MapboxDirections = require('@mapbox/mapbox-gl-directions/dist/mapbox-gl-directions');
 
 class MapManager {
 
@@ -29,6 +31,17 @@ class MapManager {
       markers.push(marker)
     })
     return markers
+  }
+
+  public initMapboxDirections = () => {
+    //@ts-ignore
+    const directions = new MapboxDirections({
+      accessToken: mapboxgl.accessToken,
+      unit: 'metric',
+      profile: 'mapbox/walking',
+    });
+
+    return directions
   }
 
 }

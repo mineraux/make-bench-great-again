@@ -54,15 +54,19 @@ const ProtoMap: FunctionComponent = () => {
 
     map.current.addControl(geolocate.current);
 
-    //@ts-ignore
-    directions.current = new MapboxDirections({
-      accessToken: mapboxgl.accessToken,
-      unit: 'metric',
-      profile: 'mapbox/walking',
-    });
-
+    directions.current = MapManager.initMapboxDirections()
     //@ts-ignore
     map.current.addControl(directions.current);
+
+    // //@ts-ignore
+    // directions.current = new MapboxDirections({
+    //   accessToken: mapboxgl.accessToken,
+    //   unit: 'metric',
+    //   profile: 'mapbox/walking',
+    // });
+
+    // //@ts-ignore
+    // map.current.addControl(directions.current);
   }, [])
 
   useEffect(() => {
