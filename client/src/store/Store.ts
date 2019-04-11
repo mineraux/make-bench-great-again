@@ -18,7 +18,13 @@ class Store {
           name: "Bench2",
           description: "Desc2",
           lockedDescription: "Locked",
-          geolocation: [2.4059,48.8757]
+          geolocation: [2.40764,48.87512]
+        },
+        {
+          name: "Bench3",
+          description: "Desc3",
+          lockedDescription: "Locked",
+          geolocation: [2.39636,48.87539]
         }
       ]      
     } else {

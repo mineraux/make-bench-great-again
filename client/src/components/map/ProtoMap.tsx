@@ -2,10 +2,11 @@ import React, { FunctionComponent, useEffect, useRef, useState } from "react";
 import './map.scss'
 import { observer } from "mobx-react-lite";
 import Store from "../../store/Store";
-import mapboxgl, { GeolocateControl, Map as MapboxGlMap } from 'mapbox-gl'
+import mapboxgl, { GeolocateControl, Map as MapboxGlMap, Marker } from 'mapbox-gl'
 // import MapBoxDirections from '@mapbox/mapbox-gl-directions'
 var MapboxDirections = require('@mapbox/mapbox-gl-directions/dist/mapbox-gl-directions');
 import * as turf from '@turf/turf'
+import { number } from "prop-types";
 
 const ProtoMap: FunctionComponent = () => {
 
@@ -16,6 +17,8 @@ const ProtoMap: FunctionComponent = () => {
   let geolocate = useRef<GeolocateControl | null>(null)
 
   const [markers, setMarkers] = useState()
+  const [lastMarker, setLastMarker] = useState()
+  const [nearestMarker, setNearestMarker] = useState<mapboxgl.Marker>()
   const [userLocation, setUserLocation] = useState()
 
   const getInstallationList = async () => {
@@ -41,10 +44,6 @@ const ProtoMap: FunctionComponent = () => {
 
     geolocate.current.on('geolocate', function (e: any) {
       setUserLocation([e.coords.longitude, e.coords.latitude])
-      //@ts-ignore
-      directions.current.setOrigin([e.coords.longitude, e.coords.latitude]);
-      //@ts-ignore
-      directions.current.setDestination([2.402, 48.8787])
     })
 
     map.current.on('load', function () {
@@ -60,8 +59,9 @@ const ProtoMap: FunctionComponent = () => {
     directions.current = new MapboxDirections({
       accessToken: mapboxgl.accessToken,
       unit: 'metric',
-      profile: 'mapbox/cycling'
+      profile: 'mapbox/walking',
     });
+
     //@ts-ignore
     map.current.addControl(directions.current);
   }, [])
@@ -83,14 +83,30 @@ const ProtoMap: FunctionComponent = () => {
   }
 
   const getNearestMarker = () => {
-    console.log(userLocation)
-    markers.map((marker: mapboxgl.Marker) => {
+    let lastDistance = 99999
+
+    markers.map((marker: mapboxgl.Marker, index: number) => {
       const lngLat = marker.getLngLat()
       const lngLatArr = [lngLat.lng, lngLat.lat]
 
       const distance = turf.distance(userLocation, lngLatArr)
-      console.log(distance)
+      if (distance < lastDistance) {
+        setNearestMarker(marker)
+      }
+
+      lastDistance = distance
     })
+
+    if (nearestMarker && userLocation) {
+      const lngLat = nearestMarker.getLngLat()
+      const lngLatArr = [lngLat.lng, lngLat.lat]
+      console.log(userLocation)
+
+      //@ts-ignore
+      directions.current.setOrigin(userLocation);
+      //@ts-ignore
+      directions.current.setDestination(lngLatArr)
+    }
   }
 
   return (
