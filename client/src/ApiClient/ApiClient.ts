@@ -22,7 +22,7 @@ class ApiClient {
     const requestBody = {
       query: query
     }
-    await (fetch('http://localhost:4000/api', {
+    await (fetch(`${process.env.REACT_APP_PATH_API}`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json'
