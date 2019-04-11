@@ -16,6 +16,8 @@ const ProtoMap: FunctionComponent = () => {
 
   const [markers, setMarkers] = useState()
   const [userLocation, setUserLocation] = useState()
+  const [travelTime, setTravelTime] = useState()
+  const [travelDistance, setTravelDistance] = useState()
 
   const getInstallationList = async () => {
     await fetchBenchList({ name: true, description: true, geolocation: true })
@@ -26,7 +28,6 @@ const ProtoMap: FunctionComponent = () => {
 
     map.current = MapManager.initMapCanvas('map', 15, [2.40592, 48.8757], 'mapbox://styles/mapbox/navigation-guidance-night-v2')
     map.current.addControl(geolocate.current)
-    //@ts-ignore
     map.current.addControl(directions.current);
 
     map.current.on('load', function () {
@@ -37,6 +38,15 @@ const ProtoMap: FunctionComponent = () => {
     geolocate.current.on('geolocate', function (e: any) {
       setUserLocation([e.coords.longitude, e.coords.latitude])
     })
+
+    directions.current.on('route', function (e:any) {
+      // Returned value is in secondes => conversion to minutes
+      setTravelTime(Math.floor(e.route[0].duration / 60))
+
+      // Returned value is in meters => conversion to km
+      setTravelDistance((e.route[0].distance / 1000).toFixed(2))
+    })
+    
   }, [])
 
   useEffect(() => {
@@ -51,9 +61,7 @@ const ProtoMap: FunctionComponent = () => {
     const nearestMarkerCoords = nearestMarker.getLngLat()
     const normalizedNearestMarkerCoords:Coords = [nearestMarkerCoords.lng, nearestMarkerCoords.lat]
 
-    //@ts-ignore
-    directions.current.setOrigin(userLocation);
-    //@ts-ignore
+    directions.current.setOrigin(userLocation); 
     directions.current.setDestination(normalizedNearestMarkerCoords)
   }
 
@@ -61,6 +69,7 @@ const ProtoMap: FunctionComponent = () => {
     <>
       <div id="map"></div>
       {markers && userLocation && <button onClick={setFastestPath}>Get nearest marker</button>}
+      {travelTime && travelDistance && <p>Nous vous prévoyons {travelTime} minutes de trajet ({travelDistance} km)</p>}
     </>
   )
 }

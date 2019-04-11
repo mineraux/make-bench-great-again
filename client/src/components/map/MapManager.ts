@@ -18,11 +18,12 @@ class MapManager {
   }
 
   public initMapboxDirections = () => {
-    //@ts-ignore
+    
     const directions = new MapboxDirections({
       accessToken: mapboxgl.accessToken,
       unit: 'metric',
       profile: 'mapbox/walking',
+      controls: false
     });
 
     return directions
@@ -33,7 +34,7 @@ class MapManager {
       positionOptions: {
         enableHighAccuracy: true
       },
-      trackUserLocation: true
+      trackUserLocation: true,
     })
 
     return geolocate
@@ -44,10 +45,11 @@ class MapManager {
     let nearestMarker: mapboxgl.Marker = markers[0]
 
     markers.map((marker: mapboxgl.Marker) => {
-      const lngLat = marker.getLngLat()
-      const lngLatArr = [lngLat.lng, lngLat.lat]
+      const markerCoords = marker.getLngLat()
+      const normalizedMarkerCoords:Coords = [markerCoords.lng, markerCoords.lat]
 
-      const distance = turf.distance(userLocation, lngLatArr)
+      const distance = turf.distance(userLocation, normalizedMarkerCoords)
+
       if (distance < lastDistance) {
         nearestMarker = marker
       }
