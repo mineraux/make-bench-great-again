@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
 import {Transition } from 'react-transition-group';
 import {TweenLite} from 'gsap';
+import ProtoMap from '../../components/map/ProtoMap';
 
 type props = {
   show: boolean,
@@ -13,8 +14,9 @@ class Map extends Component<props> {
     return (
       <Transition
         unmountOnExit
+        
         in={show}
-        timeout={1000}
+        timeout={8000}
         onEnter={node => TweenLite.set(node, {
           autoAlpha: 0,
           x: -50
@@ -29,6 +31,7 @@ class Map extends Component<props> {
       >
         <div className={"map"}>
           <p>Page : Map</p>
+          <ProtoMap />
         </div>
       </Transition>
 
