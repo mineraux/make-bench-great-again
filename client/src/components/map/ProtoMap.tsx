@@ -1,83 +1,75 @@
-import React, { FunctionComponent, useEffect, useCallback, useRef } from "react";
+import React, { FunctionComponent, useEffect, useRef, useState } from "react";
 import './map.scss'
 import { observer } from "mobx-react-lite";
 import Store from "../../store/Store";
 import mapboxgl, { GeolocateControl, Map as MapboxGlMap } from 'mapbox-gl'
-// import MapBoxDirections from '@mapbox/mapbox-gl-directions'
-var MapboxDirections = require('@mapbox/mapbox-gl-directions/dist/mapbox-gl-directions');
+import MapManager from "./MapManager";
+import { Coords } from '../../@types'
 
 const ProtoMap: FunctionComponent = () => {
 
-  const {benchList, fetchBenchList} = Store
+  const { benchList, fetchBenchList } = Store
 
   let map = useRef<MapboxGlMap | null>(null);
-  let directions = useRef(null);
-  let geolocate = useRef<GeolocateControl | null>(null)
+  let directions = useRef(MapManager.initMapboxDirections());
+  let geolocate = useRef<GeolocateControl>(MapManager.initGeolocate())
 
-  const getInstallationList = async() => {
-    await fetchBenchList({name:true, description: true, geolocation: true})
-  } 
+  const [markers, setMarkers] = useState()
+  const [userLocation, setUserLocation] = useState()
+  const [travelTime, setTravelTime] = useState()
+  const [travelDistance, setTravelDistance] = useState()
+
+  const getInstallationList = async () => {
+    await fetchBenchList({ name: true, description: true, geolocation: true })
+  }
 
   useEffect(() => {
     mapboxgl.accessToken = process.env.REACT_APP_MAPBOX_ACCESS_TOKEN as string
-    
-    map.current = new MapboxGlMap({
-      container: 'map',
-      zoom: 15,
-      center: [2.40592, 48.8757],
-      style: 'mapbox://styles/mapbox/navigation-guidance-night-v2'
-    });
 
-    geolocate.current = new GeolocateControl({
-      positionOptions: {
-          enableHighAccuracy: true
-      },
-      trackUserLocation: true
-    })
+    map.current = MapManager.initMapCanvas('map', 15, [2.40592, 48.8757], 'mapbox://styles/mapbox/navigation-guidance-night-v2')
+    map.current.addControl(geolocate.current)
+    map.current.addControl(directions.current);
 
-    geolocate.current.on('geolocate', function(e:any) {
-      //@ts-ignore
-      directions.current.setOrigin([e.coords.longitude, e.coords.latitude]);
-      //@ts-ignore
-      directions.current.setDestination([2.402, 48.8787])
-    })
-    
-    map.current.on('load', function() {
+    map.current.on('load', function () {
       getInstallationList()
-      if (geolocate.current) {
-        geolocate.current.trigger()
-      }
+      geolocate.current.trigger()
     })
 
-    
-    map.current.addControl(geolocate.current);
+    geolocate.current.on('geolocate', function (e: any) {
+      setUserLocation([e.coords.longitude, e.coords.latitude])
+    })
 
-  //@ts-ignore
-  directions.current = new MapboxDirections({ 
-    accessToken: mapboxgl.accessToken,
-    unit: 'metric',
-    profile: 'mapbox/cycling'
-  });
-  //@ts-ignore
-  map.current.addControl(directions.current);
+    directions.current.on('route', function (e:any) {
+      // Returned value is in secondes => conversion to minutes
+      setTravelTime(Math.floor(e.route[0].duration / 60))
+
+      // Returned value is in meters => conversion to km
+      setTravelDistance((e.route[0].distance / 1000).toFixed(2))
+    })
+    
   }, [])
 
   useEffect(() => {
-    if(map.current) {
-      benchList.map(bench => {
-        const marker = new mapboxgl.Marker().setLngLat(bench.geolocation).addTo(map.current!)
-        console.log(bench.geolocation)
-      })
+    if (map.current) {
+      const markers = MapManager.setAllMarkers(benchList, map.current)
+      setMarkers(markers)
     }
-  },[benchList])
-  const yolo = () => {
-    getInstallationList()
+  }, [benchList])
+
+  const setFastestPath = () => {
+    const nearestMarker = MapManager.getNearestMarker(markers, userLocation)
+    const nearestMarkerCoords = nearestMarker.getLngLat()
+    const normalizedNearestMarkerCoords:Coords = [nearestMarkerCoords.lng, nearestMarkerCoords.lat]
+
+    directions.current.setOrigin(userLocation); 
+    directions.current.setDestination(normalizedNearestMarkerCoords)
   }
 
   return (
     <>
       <div id="map"></div>
-      <button onClick={yolo}>YOLO</button>
+      {markers && userLocation && <button onClick={setFastestPath}>Get nearest marker</button>}
+      {travelTime && travelDistance && <p>Nous vous prévoyons {travelTime} minutes de trajet ({travelDistance} km)</p>}
     </>
   )
 }
