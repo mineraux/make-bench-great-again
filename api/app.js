@@ -37,7 +37,7 @@ app.use('/api', graphqlHttp({
 }))
 
 
-app.get('/twitter/:hashtag', (req, res) => {
+app.post('/twitter/:hashtag', (req, res) => {
 
   console.log("API /twitter/:hashtag");
 
@@ -52,6 +52,7 @@ app.get('/twitter/:hashtag', (req, res) => {
     if (error) {
       console.log("Error getting tweets");
     } else {
+      console.log("Success getting tweets");
       res.json(tweets);
     }
 
@@ -59,12 +60,12 @@ app.get('/twitter/:hashtag', (req, res) => {
 
 })
 
-//
-// mongoose
-//   .connect(`mongodb+srv://${process.env.MONGO_USER}:${process.env.MONGO_PASSWORD}@${process.env.MONGO_CLUSTER}.mongodb.net/${process.env.MONGO_DB}?retryWrites=true`)
-//   .then(() => {
-//     console.log('Sucess connect to mongoDB')
-//   })
-//   .catch(err => {
-//     console.error('Error connect to mongoDB', err)
-//   })
+
+mongoose
+  .connect(`mongodb+srv://${process.env.MONGO_USER}:${process.env.MONGO_PASSWORD}@${process.env.MONGO_CLUSTER}.mongodb.net/${process.env.MONGO_DB}?retryWrites=true`)
+  .then(() => {
+    console.log('Success connect to mongoDB')
+  })
+  .catch(err => {
+    console.error('Error connect to mongoDB', err)
+  })

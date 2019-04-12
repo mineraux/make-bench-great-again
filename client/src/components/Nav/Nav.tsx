@@ -4,9 +4,10 @@ import {Link} from "react-router-dom"
 
 import './nav.scss'
 
-export interface LinksInterface {
+interface LinksInterface {
   path: string,
-  name: string
+  name: string,
+  inNav: boolean
 }
 
 type Props = {
@@ -17,11 +18,15 @@ const Nav: FunctionComponent<Props> = ({links}) => {
 
     return (
       <nav className="nav">
-        {links && links.map(link => (
-          <Fragment key={link.path}>
-            <Link to={link.path}>{link.name}</Link>
-          </Fragment>
-          ))}
+        {links && links.map(link => {
+          if(link.inNav) {
+            return (
+              <Fragment key={link.path}>
+                <Link to={link.path}>{link.name}</Link>
+              </Fragment>
+            )
+          }
+        })}
       </nav>
 
     )

@@ -11,8 +11,8 @@
     "@types/react": "16.8.8",
     "@types/react-dom": "16.8.3",
     "@types/styled-components": "^4.1.12",
-    "mapbox-gl": "^0.53.1",
     "gsap": "^2.1.2",
+    "mapbox-gl": "^0.53.1",
     "mobx": "^5.9.0",
     "mobx-react-lite": "^1.1.1",
     "node-sass": "^4.11.0",
@@ -23,6 +23,7 @@
     "react-router-dom": "^5.0.0",
     "react-scripts": "2.1.8",
     "react-transition-group": "^2.9.0",
+    "react-tweet-embed": "^1.2.2",
     "styled-components": "^4.1.3",
     "typescript": "3.3.4000"
   },

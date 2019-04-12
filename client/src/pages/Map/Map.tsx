@@ -2,10 +2,9 @@ import React, {Component} from 'react';
 import {Transition } from 'react-transition-group';
 import {TweenLite} from 'gsap';
 import ProtoMap from '../../components/map/ProtoMap';
+import {pageProps} from "../types";
 
-type props = {
-  show: boolean,
-}
+type props = pageProps & {}
 
 class Map extends Component<props> {
 
@@ -29,7 +28,7 @@ class Map extends Component<props> {
           });
         }}
       >
-        <div className={"map"}>
+        <div className={"page-map"}>
           <p>Page : Map</p>
           <ProtoMap />
         </div>

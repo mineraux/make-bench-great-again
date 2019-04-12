@@ -1,10 +1,9 @@
 import React, {Component} from 'react';
 import {Transition } from 'react-transition-group';
 import {TweenLite} from 'gsap';
+import {pageProps} from "../types";
 
-type props = {
-  show: boolean,
-}
+type props = pageProps & {}
 
 class Home extends Component<props> {
 
@@ -27,7 +26,7 @@ class Home extends Component<props> {
           });
         }}
       >
-        <div className={"home"}>
+        <div className={"page-home"}>
           <p>Page : Home</p>
         </div>
       </Transition>
