@@ -20,7 +20,7 @@ const ProtoMap: FunctionComponent = () => {
   const [travelDistance, setTravelDistance] = useState()
 
   const getInstallationList = async () => {
-    await fetchBenchList({ name: true, description: true, geolocation: true })
+    await fetchBenchList("", { name: true, description: true, geolocation: true })
   }
 
   useEffect(() => {

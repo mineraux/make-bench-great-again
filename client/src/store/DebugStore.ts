@@ -1,7 +1,7 @@
 import { action, observable } from 'mobx'
 
 class DebugStore {
-    @observable debug = false
+    @observable debug = true
 
     @action public showDebug = () => {
         this.debug = true

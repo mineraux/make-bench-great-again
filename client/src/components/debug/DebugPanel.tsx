@@ -7,11 +7,15 @@ import './debugPanel.scss'
 
 const DebugPanel: FunctionComponent = () => {
 
-  const {benchList, fetchBenchList} = Store
+  const {benchListTemp, fetchBenchList} = Store
   const { debug } = DebugStore
 
     const getInstallationList = async() => {
-      await fetchBenchList({name:true, description: true, geolocation: true})
+      await fetchBenchList("nameGeo")
+    }
+
+    const test = async() => {
+      await fetchBenchList("test")
     }
 
     return (
@@ -24,7 +28,7 @@ const DebugPanel: FunctionComponent = () => {
           <h3>Bench list</h3>
           <ul>
             {
-              benchList.map((bench, index) => (
+              benchListTemp.map((bench, index) => (
                 <li key={index}>
                   {bench.name && <p>{bench.name}</p>}
                   {bench.description && <p>{bench.description}</p>}
@@ -37,6 +41,7 @@ const DebugPanel: FunctionComponent = () => {
           </ul>
         </div>
         <button onClick={getInstallationList}>Query toutes les installation</button>
+        <button onClick={test}>Query toutes les installation</button>
       </div>}
       </>
     )

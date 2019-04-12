@@ -62,7 +62,7 @@ class MapManager {
   public setAllMarkers = (benchList: ApiBenchReponseRoot, map: mapboxgl.Map) => {
     const markers: mapboxgl.Marker[] = []
     benchList.map(bench => {
-      let marker = new mapboxgl.Marker().setLngLat(bench.geolocation).addTo(map)
+      let marker = new mapboxgl.Marker().setLngLat(bench.geolocation!).addTo(map)
       markers.push(marker)
     })
     return markers
