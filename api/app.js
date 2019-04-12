@@ -37,24 +37,34 @@ app.use('/api', graphqlHttp({
 }))
 
 
-app.get('/twitter', (req, res) => {
+app.get('/twitter/:hashtag', (req, res) => {
 
-  client.get('search/tweets', {q: "#apple", count: 1, result_type: "mixed"}, function (error, tweets, response) {
+  console.log("API /twitter/:hashtag");
+
+  const hashtag = req.params.hashtag
+
+  client.get('search/tweets', {
+    q: "#"+ hashtag,
+    count: 1,
+    result_type: "recent",
+    lang: "fr"
+  }, function (error, tweets, response) {
     if (error) {
       console.log("Error getting tweets");
-      return;
+    } else {
+      res.json(tweets);
     }
-    res.json(tweets);
+
   });
 
 })
 
-
-mongoose
-  .connect(`mongodb+srv://${process.env.MONGO_USER}:${process.env.MONGO_PASSWORD}@${process.env.MONGO_CLUSTER}.mongodb.net/${process.env.MONGO_DB}?retryWrites=true`)
-  .then(() => {
-    console.log('Sucess connect to mongoDB')
-  })
-  .catch(err => {
-    console.error('Error connect to mongoDB', err)
-  })
+//
+// mongoose
+//   .connect(`mongodb+srv://${process.env.MONGO_USER}:${process.env.MONGO_PASSWORD}@${process.env.MONGO_CLUSTER}.mongodb.net/${process.env.MONGO_DB}?retryWrites=true`)
+//   .then(() => {
+//     console.log('Sucess connect to mongoDB')
+//   })
+//   .catch(err => {
+//     console.error('Error connect to mongoDB', err)
+//   })
