@@ -5,6 +5,7 @@ import Store from "../../store/Store";
 import mapboxgl, { GeolocateControl, Map as MapboxGlMap } from 'mapbox-gl'
 import MapManager from "./MapManager";
 import { Coords } from '../../@types'
+import { featureCoords, featureInFeaturesCoords } from "../../utils/map";
 
 const ProtoMap: FunctionComponent = () => {
 
@@ -31,22 +32,37 @@ const ProtoMap: FunctionComponent = () => {
     map.current.addControl(directions.current);
 
     map.current.on('load', function () {
-      //getInstallationList()
-      //geolocate.current.trigger()
+      getInstallationList()
+      geolocate.current.trigger()
+
+      map.current!.on('click', 'markers', function (e) {
+        if (e.features && featureInFeaturesCoords(e)){
+          map.current!.flyTo({ center: featureInFeaturesCoords(e) });  
+          console.log(e.features[0].properties!.name)
+        }
+      });
+
+      map.current!.on('mouseenter', 'markers', function () {
+        map.current!.getCanvas().style.cursor = 'pointer';
+      });
+
+      map.current!.on('mouseleave', 'markers', function () {
+        map.current!.getCanvas().style.cursor = '';
+      });
     })
 
     geolocate.current.on('geolocate', function (e: any) {
       setUserLocation([e.coords.longitude, e.coords.latitude])
     })
 
-    directions.current.on('route', function (e:any) {
+    directions.current.on('route', function (e: any) {
       // Returned value is in secondes => conversion to minutes
       setTravelTime(Math.floor(e.route[0].duration / 60))
 
       // Returned value is in meters => conversion to km
       setTravelDistance((e.route[0].distance / 1000).toFixed(2))
     })
-    
+
   }, [])
 
   useEffect(() => {
@@ -58,11 +74,10 @@ const ProtoMap: FunctionComponent = () => {
 
   const setFastestPath = () => {
     const nearestMarker = MapManager.getNearestMarker(markers, userLocation)
-    const nearestMarkerCoords = nearestMarker.getLngLat()
-    const normalizedNearestMarkerCoords:Coords = [nearestMarkerCoords.lng, nearestMarkerCoords.lat]
+    const nearestMarkerCoords = featureCoords(nearestMarker)
 
-    directions.current.setOrigin(userLocation); 
-    directions.current.setDestination(normalizedNearestMarkerCoords)
+    directions.current.setOrigin(userLocation);
+    directions.current.setDestination(nearestMarkerCoords)
   }
 
   return (

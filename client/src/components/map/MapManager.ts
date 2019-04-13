@@ -1,6 +1,7 @@
 import * as turf from '@turf/turf'
 import { ApiBenchReponseRoot, Coords } from '../../@types';
 import mapboxgl, { GeolocateControl, Map as MapboxGlMap, Marker } from 'mapbox-gl'
+import { featureCoords } from '../../utils/map';
 // import MapBoxDirections from '@mapbox/mapbox-gl-directions'
 var MapboxDirections = require('@mapbox/mapbox-gl-directions/dist/mapbox-gl-directions');
 
@@ -23,7 +24,8 @@ class MapManager {
       accessToken: mapboxgl.accessToken,
       unit: 'metric',
       profile: 'mapbox/walking',
-      controls: false
+      controls: false,
+      interactive: false
     });
 
     return directions
@@ -40,15 +42,13 @@ class MapManager {
     return geolocate
   }
 
-  public getNearestMarker = (markers: mapboxgl.Marker[], userLocation: Coords) => {
+  public getNearestMarker = (markers: any, userLocation: Coords) => {
     let lastDistance = 99999
-    let nearestMarker: mapboxgl.Marker = markers[0]
+    let nearestMarker: any = markers
 
-    markers.map((marker: mapboxgl.Marker) => {
-      const markerCoords = marker.getLngLat()
-      const normalizedMarkerCoords:Coords = [markerCoords.lng, markerCoords.lat]
-
-      const distance = turf.distance(userLocation, normalizedMarkerCoords)
+    markers.map((marker: any) => {      
+      const markerCoords:Coords = featureCoords(marker)
+      const distance = turf.distance(userLocation, markerCoords)
 
       if (distance < lastDistance) {
         nearestMarker = marker
@@ -57,15 +57,46 @@ class MapManager {
       lastDistance = distance
     })
     return nearestMarker
+    
   }
 
   public setAllMarkers = (benchList: ApiBenchReponseRoot, map: mapboxgl.Map) => {
-    const markers: mapboxgl.Marker[] = []
+    const markers: any = []
+
     benchList.map(bench => {
-      let marker = new mapboxgl.Marker().setLngLat(bench.geolocation!).addTo(map)
-      markers.push(marker)
-    })
-    return markers
+      const feature = {
+        "type": "Feature",
+        "properties": {
+          "name": bench.name,
+          "description": bench.description
+        },
+        "geometry": {
+          "type": "Point",
+          "coordinates": bench.geolocation
+        }
+      }
+        markers.push(feature)
+      })
+
+      if (benchList.length > 0) {
+        map.addLayer({
+          "id": "markers",
+          "type": "symbol",
+          //@ts-ignore
+          "source": {
+            "type": "geojson",
+            "data": {
+              "type": "FeatureCollection",
+              "features": markers
+            }
+          },
+          "layout": {
+            "icon-image": "rocket-15"
+          }
+        });
+      }
+      
+      return markers
   }
 }
 

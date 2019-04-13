@@ -9,35 +9,35 @@ class Store {
   @action public fetchBenchList = async (fieldToFetch: QueryApiBenchReponse) => {
     if (process.env.NODE_ENV === "development") {
 
+      this.benchList = [
+        {
+          _id: "1",
+          name: "Bench1",
+          description: "Desc1",
+          lockedDescription: "Locked",
+          geolocation: [2.402, 48.8787]
+        },
+        {
+          _id: "2",
+          name: "Bench2",
+          description: "Desc2",
+          lockedDescription: "Locked",
+          geolocation: [2.40764, 48.87512]
+        },
+        {
+          _id: "3",
+          name: "Bench3",
+          description: "Desc3",
+          lockedDescription: "Locked",
+          geolocation: [2.39636, 48.87539]
+        }
+      ]
+    } else {
       const data:ApiBenchReponseRoot  = (await ApiClient.getBenchList(fieldToFetch)).map(
-          entry => ({... entry})
-        )
+        entry => ({... entry})
+      )
 
-      this.benchList = this.mergeById(data);
-
-      // this.benchList = [
-      //   {
-      //     id: "1",
-      //     name: "Bench1",
-      //     description: "Desc1",
-      //     lockedDescription: "Locked",
-      //     geolocation: [2.402, 48.8787]
-      //   },
-      //   {
-      //     id: "2",
-      //     name: "Bench2",
-      //     description: "Desc2",
-      //     lockedDescription: "Locked",
-      //     geolocation: [2.40764, 48.87512]
-      //   },
-      //   {
-      //     id: "3",
-      //     name: "Bench3",
-      //     description: "Desc3",
-      //     lockedDescription: "Locked",
-      //     geolocation: [2.39636, 48.87539]
-      //   }
-      // ]
+    this.benchList = this.mergeById(data);
     }
   }
 
