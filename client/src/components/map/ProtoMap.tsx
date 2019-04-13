@@ -15,6 +15,10 @@ const ProtoMap: FunctionComponent = () => {
   let directions = useRef(MapManager.initMapboxDirections());
   let geolocate = useRef<GeolocateControl>(MapManager.initGeolocate())
 
+  const [isTravelInformationOpen, setIsTravelInformationOpen] = useState(false)
+  const [benchTargetName, setBenchTargetName] = useState('Nom par défaut')
+  const [benchTargetDescription, setBenchTargetDescription] = useState('Description par défaut')
+
   const [markers, setMarkers] = useState()
   const [userLocation, setUserLocation] = useState()
   const [travelTime, setTravelTime] = useState()
@@ -35,10 +39,17 @@ const ProtoMap: FunctionComponent = () => {
       getInstallationList()
       geolocate.current.trigger()
 
+      map.current!.on('click', function(e) {
+        setIsTravelInformationOpen(false)
+      })
+
       map.current!.on('click', 'markers', function (e) {
         if (e.features && featureInFeaturesCoords(e)){
           map.current!.flyTo({ center: featureInFeaturesCoords(e) });  
-          console.log(e.features[0].properties!.name)
+          //console.log(e.features[0].properties!.name)
+          setBenchTargetName(e.features[0].properties!.name)
+          setBenchTargetName(e.features[0].properties!.description)
+          setIsTravelInformationOpen(true)
         }
       });
 
@@ -79,10 +90,15 @@ const ProtoMap: FunctionComponent = () => {
     directions.current.setOrigin(userLocation);
     directions.current.setDestination(nearestMarkerCoords)
   }
-
+  const panelClassName="map__travel-informations-panel";
   return (
     <>
-      <div id="map"></div>
+      <div id="map">
+        <div className={isTravelInformationOpen?`${panelClassName} open`:panelClassName}>
+          <span className="map__travel-informations-panel__bench-name">{benchTargetName}</span>
+          <span className="map__travel-informations-panel__bench-description">{benchTargetDescription}</span>
+        </div>
+      </div>
       {markers && userLocation && <button onClick={setFastestPath}>Get nearest marker</button>}
       {travelTime && travelDistance && <p>Nous vous prévoyons {travelTime} minutes de trajet ({travelDistance} km)</p>}
     </>
