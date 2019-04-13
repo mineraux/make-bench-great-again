@@ -16,4 +16,5 @@ export interface queryApiBench {
 }
 
 export type ApiBenchReponseRoot =  Array<ApiBench>
+export type ApiSingleBenchReponseRoot = ApiBench
 export type QueryApiBenchReponse = queryApiBench

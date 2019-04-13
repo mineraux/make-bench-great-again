@@ -1,5 +1,5 @@
 import { action, observable } from 'mobx'
-import { ApiBenchReponseRoot, QueryApiBenchReponse, ApiBench } from '../@types';
+import { ApiBenchReponseRoot, QueryApiBenchReponse, ApiBench, ApiSingleBenchReponseRoot } from '../@types';
 import ApiClient from '../ApiClient/ApiClient';
 
 class Store {
@@ -39,7 +39,12 @@ class Store {
       //   }
       // ]
     }
+  }
 
+  @action public fetchSingleBench = async(benchID:ApiBench["_id"], fieldToFetch: QueryApiBenchReponse) => {
+    const data:ApiSingleBenchReponseRoot = (await ApiClient.getSingleBench(benchID,fieldToFetch))
+
+    this.benchList = this.mergeById([data])
   }
 
   mergeById = (data:ApiBenchReponseRoot) => {

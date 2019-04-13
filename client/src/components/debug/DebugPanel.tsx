@@ -7,19 +7,19 @@ import './debugPanel.scss'
 
 const DebugPanel: FunctionComponent = () => {
 
-  const { benchList, fetchBenchList } = Store
+  const { benchList, fetchBenchList, fetchSingleBench } = Store
   const { debug } = DebugStore
 
   const queryName = async () => {
     await fetchBenchList({ name: true })
   }
 
-  const queryDesc = async () => {
-    await fetchBenchList({ description: true })
-  }
-
   const queryGeoAndDesc = async () => {
     await fetchBenchList({ geolocation: true, description: true })
+  }
+
+  const queryOneBench = async () => {
+    await fetchSingleBench("5cad02bb1f4fddfe20225f18",{geolocation:true})
   }
 
   return (
@@ -48,8 +48,8 @@ const DebugPanel: FunctionComponent = () => {
             </ul>
           </div>
           <button onClick={queryName}>Query le nom des installations</button>
-          <button onClick={queryDesc}>Query la description</button>
           <button onClick={queryGeoAndDesc}>Query la geoloc et la description</button>
+          <button onClick={queryOneBench}>Query les infos d'un banc</button>
         </div>}
     </>
   )

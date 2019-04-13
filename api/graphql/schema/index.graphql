@@ -28,15 +28,10 @@ module.exports = buildSchema(`
     title: String!,
     description: String!
   }
-
-  input SingleBenchInput {
-    benchId: ID!
-  }
   
-
   type RootQuery {
     benchList: [Bench!]!
-    singleBench(SingleBenchInput): Bench!
+    singleBench(benchId: ID!): Bench!
     petitionList: [Petition!]!
   }
 
