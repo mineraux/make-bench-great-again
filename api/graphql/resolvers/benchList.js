@@ -19,6 +19,14 @@ module.exports = {
       throw err
     }
   },
+  singleBench: async args => {
+    try {
+      const bench = await Bench.findById(args.benchId)
+      return bench
+    } catch (err) {
+      throw err
+    }
+  },
   createBench: async args => {
     const bench = new Bench({
       name: args.benchInput.name,
