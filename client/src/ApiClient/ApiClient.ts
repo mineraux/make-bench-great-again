@@ -6,6 +6,7 @@ class ApiClient {
     const query = `
     query {
       benchList{
+        _id
         ${args.name ? 'name' : ''}
         ${args.description ? 'description' : ''}
         ${args.lockedDescription ? 'lockedDescription' : ''}
