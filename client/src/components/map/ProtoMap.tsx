@@ -19,6 +19,7 @@ const ProtoMap: FunctionComponent = () => {
   const [isTravelInformationOpen, setIsTravelInformationOpen] = useState(false)
   const [benchTargetName, setBenchTargetName] = useState('Nom par défaut')
   const [benchTargetDescription, setBenchTargetDescription] = useState('Description par défaut')
+  const [isTourStarted, setIsTourStarted] = useState(false)
 
   const [markers, setMarkers] = useState()
   const [userLocation, setUserLocation] = useState()
@@ -85,18 +86,25 @@ const ProtoMap: FunctionComponent = () => {
 
   const getFastestPath = () => {
     DirectionsManager.setFastestPath(directions.current, markers, userLocation)
+    setIsTourStarted(true)
   }
-  const panelClassName = "map__travel-informations-panel";
+  const panelClassName = "mapboxgl-map__travel-informations-panel";
   return (
     <>
       <div id="map">
         <div className={isTravelInformationOpen ? `${panelClassName} open` : panelClassName}>
-          <span className="map__travel-informations-panel__bench-name">{benchTargetName}</span>
-          <span className="map__travel-informations-panel__bench-description">{benchTargetDescription}</span>
+          <div className="mapboxgl-map__travel-informations-panel__informations--installation">
+            <span className="mapboxgl-map__travel-informations-panel__bench-name">{benchTargetName}</span>
+            <span className="mapboxgl-map__travel-informations-panel__bench-description">{benchTargetDescription}</span>
+          </div>
+          <div className="mapboxgl-map__travel-informations-panel__travel-duration">
+            {travelTime && travelDistance && <p>Nous vous prévoyons {travelTime} minutes de trajet ({travelDistance} km)</p>}
+          </div>
         </div>
+        {markers && userLocation && !isTourStarted &&
+        <button onClick={getFastestPath} className="mapboxgl-map__btn-start-travel">Commencer la visite</button>
+        }
       </div>
-      {markers && userLocation && <button onClick={getFastestPath}>Get nearest marker</button>}
-      {travelTime && travelDistance && <p>Nous vous prévoyons {travelTime} minutes de trajet ({travelDistance} km)</p>}
     </>
   )
 }
