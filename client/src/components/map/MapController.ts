@@ -4,14 +4,13 @@ import { Feature } from 'geojson';
 
 class MapManager {
 
-  public initMapCanvas = (container: string, zoom: number, center: Coords, style: string) => {
+  public initMapCanvas = () => {
     const map = new MapboxGlMap({
-      container: container,
-      zoom: zoom,
-      center: center,
-      style: style
+      container: 'map',
+      zoom: 15,
+      center: [2.40592, 48.8757],
+      style: 'mapbox://styles/mapbox/navigation-guidance-night-v2'
     });
-
     return map
   }
 

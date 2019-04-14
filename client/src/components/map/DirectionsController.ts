@@ -5,12 +5,14 @@ import { featureCoords } from '../../utils/map';
 import GeoLocationManager from './GeoLocationController';
 import { Coords } from '../../@types';
 import { Feature } from 'geojson';
+import style from './DirectionsStyles';
 
 class DirectionsManager {
   public initMapboxDirections = () => {
 
     const directions = new MapboxDirections({
       accessToken: mapboxgl.accessToken,
+      styles: style,
       unit: 'metric',
       profile: 'mapbox/walking',
       controls: false,

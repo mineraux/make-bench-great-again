@@ -32,7 +32,7 @@ const ProtoMap: FunctionComponent = () => {
   useEffect(() => {
     mapboxgl.accessToken = process.env.REACT_APP_MAPBOX_ACCESS_TOKEN as string
 
-    map.current = MapManager.initMapCanvas('map', 15, [2.40592, 48.8757], 'mapbox://styles/mapbox/navigation-guidance-night-v2')
+    map.current = MapManager.initMapCanvas()
     map.current.addControl(geolocate.current)
     map.current.addControl(directions.current);
 
