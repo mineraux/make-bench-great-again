@@ -3,17 +3,18 @@ import './map.scss'
 import { observer } from "mobx-react-lite";
 import Store from "../../store/Store";
 import mapboxgl, { GeolocateControl, Map as MapboxGlMap } from 'mapbox-gl'
-import MapManager from "./MapManager";
-import { Coords } from '../../@types'
+import MapManager from "./MapController";
 import { featureCoords, featureInFeaturesCoords } from "../../utils/map";
+import DirectionsManager from "./DirectionsController";
+import GeoLocationManager from "./GeoLocationController";
 
 const ProtoMap: FunctionComponent = () => {
 
   const { benchList, fetchBenchList } = Store
 
   let map = useRef<MapboxGlMap | null>(null);
-  let directions = useRef(MapManager.initMapboxDirections());
-  let geolocate = useRef<GeolocateControl>(MapManager.initGeolocate())
+  let directions = useRef(DirectionsManager.initMapboxDirections());
+  let geolocate = useRef<GeolocateControl>(GeoLocationManager.initGeolocate())
 
   const [isTravelInformationOpen, setIsTravelInformationOpen] = useState(false)
   const [benchTargetName, setBenchTargetName] = useState('Nom par défaut')
@@ -46,9 +47,8 @@ const ProtoMap: FunctionComponent = () => {
       map.current!.on('click', 'markers', function (e) {
         if (e.features && featureInFeaturesCoords(e)){
           map.current!.flyTo({ center: featureInFeaturesCoords(e) });  
-          //console.log(e.features[0].properties!.name)
           setBenchTargetName(e.features[0].properties!.name)
-          setBenchTargetName(e.features[0].properties!.description)
+          setBenchTargetDescription(e.features[0].properties!.description)
           setIsTravelInformationOpen(true)
         }
       });
@@ -83,12 +83,8 @@ const ProtoMap: FunctionComponent = () => {
     }
   }, [benchList])
 
-  const setFastestPath = () => {
-    const nearestMarker = MapManager.getNearestMarker(markers, userLocation)
-    const nearestMarkerCoords = featureCoords(nearestMarker)
-
-    directions.current.setOrigin(userLocation);
-    directions.current.setDestination(nearestMarkerCoords)
+  const getFastestPath = () => {
+    DirectionsManager.setFastestPath(directions.current,markers,userLocation)
   }
   const panelClassName="map__travel-informations-panel";
   return (
@@ -99,7 +95,7 @@ const ProtoMap: FunctionComponent = () => {
           <span className="map__travel-informations-panel__bench-description">{benchTargetDescription}</span>
         </div>
       </div>
-      {markers && userLocation && <button onClick={setFastestPath}>Get nearest marker</button>}
+      {markers && userLocation && <button onClick={getFastestPath}>Get nearest marker</button>}
       {travelTime && travelDistance && <p>Nous vous prévoyons {travelTime} minutes de trajet ({travelDistance} km)</p>}
     </>
   )
