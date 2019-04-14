@@ -3,6 +3,8 @@ var MapboxDirections = require('@mapbox/mapbox-gl-directions/dist/mapbox-gl-dire
 import mapboxgl from 'mapbox-gl'
 import { featureCoords } from '../../utils/map';
 import GeoLocationManager from './GeoLocationController';
+import { Coords } from '../../@types';
+import { Feature } from 'geojson';
 
 class DirectionsManager {
   public initMapboxDirections = () => {
@@ -18,7 +20,7 @@ class DirectionsManager {
     return directions
   }
 
-  public setFastestPath = (directions: any, markers: any, userLocation: any) => {
+  public setFastestPath = (directions: any, markers: Feature[], userLocation: Coords) => {
     const nearestMarker = GeoLocationManager.getNearestMarker(markers, userLocation)
     const nearestMarkerCoords = featureCoords(nearestMarker)
 

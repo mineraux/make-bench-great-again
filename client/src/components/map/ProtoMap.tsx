@@ -2,9 +2,9 @@ import React, { FunctionComponent, useEffect, useRef, useState } from "react";
 import './map.scss'
 import { observer } from "mobx-react-lite";
 import Store from "../../store/Store";
-import mapboxgl, { GeolocateControl, Map as MapboxGlMap } from 'mapbox-gl'
+import mapboxgl, { GeolocateControl, Map as MapboxGlMap, EventData } from 'mapbox-gl'
 import MapManager from "./MapController";
-import { featureCoords, featureInFeaturesCoords } from "../../utils/map";
+import { featureInFeaturesCoords } from "../../utils/map";
 import DirectionsManager from "./DirectionsController";
 import GeoLocationManager from "./GeoLocationController";
 
@@ -40,13 +40,13 @@ const ProtoMap: FunctionComponent = () => {
       getInstallationList()
       geolocate.current.trigger()
 
-      map.current!.on('click', function(e) {
+      map.current!.on('click', function (e) {
         setIsTravelInformationOpen(false)
       })
 
       map.current!.on('click', 'markers', function (e) {
-        if (e.features && featureInFeaturesCoords(e)){
-          map.current!.flyTo({ center: featureInFeaturesCoords(e) });  
+        if (e.features && featureInFeaturesCoords(e)) {
+          map.current!.flyTo({ center: featureInFeaturesCoords(e) });
           setBenchTargetName(e.features[0].properties!.name)
           setBenchTargetDescription(e.features[0].properties!.description)
           setIsTravelInformationOpen(true)
@@ -62,11 +62,11 @@ const ProtoMap: FunctionComponent = () => {
       });
     })
 
-    geolocate.current.on('geolocate', function (e: any) {
+    geolocate.current.on('geolocate', function (e: EventData) {
       setUserLocation([e.coords.longitude, e.coords.latitude])
     })
 
-    directions.current.on('route', function (e: any) {
+    directions.current.on('route', function (e: EventData) {
       // Returned value is in secondes => conversion to minutes
       setTravelTime(Math.floor(e.route[0].duration / 60))
 
@@ -84,13 +84,13 @@ const ProtoMap: FunctionComponent = () => {
   }, [benchList])
 
   const getFastestPath = () => {
-    DirectionsManager.setFastestPath(directions.current,markers,userLocation)
+    DirectionsManager.setFastestPath(directions.current, markers, userLocation)
   }
-  const panelClassName="map__travel-informations-panel";
+  const panelClassName = "map__travel-informations-panel";
   return (
     <>
       <div id="map">
-        <div className={isTravelInformationOpen?`${panelClassName} open`:panelClassName}>
+        <div className={isTravelInformationOpen ? `${panelClassName} open` : panelClassName}>
           <span className="map__travel-informations-panel__bench-name">{benchTargetName}</span>
           <span className="map__travel-informations-panel__bench-description">{benchTargetDescription}</span>
         </div>
