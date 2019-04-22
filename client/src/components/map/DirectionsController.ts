@@ -22,12 +22,14 @@ class DirectionsManager {
     return directions
   }
 
-  public setFastestPath = (directions: any, markers: Feature[], userLocation: Coords) => {
+  public setFastestPath = (directions: any, markers: Feature[], userLocation: Coords): Feature => {
     const nearestMarker = GeoLocationManager.getNearestMarker(markers, userLocation)
     const nearestMarkerCoords = featureCoords(nearestMarker)
 
     directions.setOrigin(userLocation);
     directions.setDestination(nearestMarkerCoords)
+
+    return nearestMarker
   }
 }
 

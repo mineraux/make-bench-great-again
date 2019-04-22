@@ -7,6 +7,7 @@ import MapManager from "./MapController";
 import { featureInFeaturesCoords } from "../../utils/map";
 import DirectionsManager from "./DirectionsController";
 import GeoLocationManager from "./GeoLocationController";
+import InformationsPanel from "./InformationsPanel";
 
 const ProtoMap: FunctionComponent = () => {
 
@@ -16,13 +17,12 @@ const ProtoMap: FunctionComponent = () => {
   let directions = useRef(DirectionsManager.initMapboxDirections());
   let geolocate = useRef<GeolocateControl>(GeoLocationManager.initGeolocate())
 
-  const [isTravelInformationOpen, setIsTravelInformationOpen] = useState(false)
-  const [benchTargetName, setBenchTargetName] = useState('Nom par défaut')
-  const [benchTargetDescription, setBenchTargetDescription] = useState('Description par défaut')
   const [isTourStarted, setIsTourStarted] = useState(false)
 
   const [markers, setMarkers] = useState()
   const [userLocation, setUserLocation] = useState()
+  const [selectedMarker, setSelectedMarker] = useState()
+
   const [travelTime, setTravelTime] = useState()
   const [travelDistance, setTravelDistance] = useState()
 
@@ -41,16 +41,10 @@ const ProtoMap: FunctionComponent = () => {
       getInstallationList()
       geolocate.current.trigger()
 
-      map.current!.on('click', function (e) {
-        setIsTravelInformationOpen(false)
-      })
-
       map.current!.on('click', 'markers', function (e) {
         if (e.features && featureInFeaturesCoords(e)) {
           map.current!.flyTo({ center: featureInFeaturesCoords(e) });
-          setBenchTargetName(e.features[0].properties!.name)
-          setBenchTargetDescription(e.features[0].properties!.description)
-          setIsTravelInformationOpen(true)
+          setSelectedMarker(e.features[0])
         }
       });
 
@@ -68,10 +62,10 @@ const ProtoMap: FunctionComponent = () => {
     })
 
     directions.current.on('route', function (e: EventData) {
-      // Returned value is in secondes => conversion to minutes
+      // // Returned value is in secondes => conversion to minutes
       setTravelTime(Math.floor(e.route[0].duration / 60))
 
-      // Returned value is in meters => conversion to km
+      // // Returned value is in meters => conversion to km
       setTravelDistance((e.route[0].distance / 1000).toFixed(2))
     })
 
@@ -84,28 +78,19 @@ const ProtoMap: FunctionComponent = () => {
     }
   }, [benchList])
 
-  const getFastestPath = () => {
-    DirectionsManager.setFastestPath(directions.current, markers, userLocation)
+  const setFastestPath = () => {
+    setSelectedMarker(DirectionsManager.setFastestPath(directions.current, markers, userLocation))
+
     setIsTourStarted(true)
   }
-  const panelClassName = "mapboxgl-map__travel-informations-panel";
+
   return (
-    <>
-      <div id="map">
-        <div className={isTravelInformationOpen ? `${panelClassName} open` : panelClassName}>
-          <div className="mapboxgl-map__travel-informations-panel__informations--installation">
-            <span className="mapboxgl-map__travel-informations-panel__bench-name">{benchTargetName}</span>
-            <span className="mapboxgl-map__travel-informations-panel__bench-description">{benchTargetDescription}</span>
-          </div>
-          <div className="mapboxgl-map__travel-informations-panel__travel-duration">
-            {travelTime && travelDistance && <p>Nous vous prévoyons {travelTime} minutes de trajet ({travelDistance} km)</p>}
-          </div>
-        </div>
-        {markers && userLocation && !isTourStarted &&
-        <button onClick={getFastestPath} className="mapboxgl-map__btn-start-travel">Commencer la visite</button>
-        }
-      </div>
-    </>
+    <div id="map">
+      <InformationsPanel marker={selectedMarker} travelTime={travelTime} travelDistance={travelDistance} />
+      {markers && userLocation && !isTourStarted &&
+        <button onClick={setFastestPath} className="mapboxgl-map__btn-start-travel">Commencer la visite</button>
+      }
+    </div>
   )
 }
 
