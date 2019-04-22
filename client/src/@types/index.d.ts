@@ -15,6 +15,15 @@ export interface queryApiBench {
   geolocation?: Boolean
 }
 
+export interface createApiBench {
+  name: string,
+  description: string,
+  lockedDescription: string,
+  latitude: number,
+  longitude: number,
+}
+
 export type ApiBenchReponseRoot =  Array<ApiBench>
 export type ApiSingleBenchReponseRoot = ApiBench
 export type QueryApiBenchReponse = queryApiBench
+export type createApiBenchMutation = createApiBench
