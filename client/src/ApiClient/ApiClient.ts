@@ -1,15 +1,31 @@
-import { ApiBenchReponseRoot, QueryApiBenchReponse } from "../@types";
+import { ApiBenchReponseRoot, QueryApiBenchReponse, ApiSingleBenchReponseRoot, ApiBench } from "../@types";
 
 class ApiClient {
 
-  private queryBenchList = (args: QueryApiBenchReponse) => {
+  private queryBenchList = (fieldsToFetch: QueryApiBenchReponse) => {
     const query = `
     query {
       benchList{
-        ${args.name ? 'name' : ''}
-        ${args.description ? 'description' : ''}
-        ${args.lockedDescription ? 'lockedDescription' : ''}
-        ${args.geolocation ? 'geolocation' : ''}
+        _id
+        ${fieldsToFetch.name ? 'name' : ''}
+        ${fieldsToFetch.description ? 'description' : ''}
+        ${fieldsToFetch.lockedDescription ? 'lockedDescription' : ''}
+        ${fieldsToFetch.geolocation ? 'geolocation' : ''}
+      }
+    }
+    `
+    return query
+  }
+
+  private querySingleBench = (benchId: ApiBench["_id"], fieldsToFetch: QueryApiBenchReponse) => {
+    const query = `
+    query {
+      singleBench(benchId:"${benchId}") {
+        _id
+        ${fieldsToFetch.name ? 'name' : ''}
+        ${fieldsToFetch.description ? 'description' : ''}
+        ${fieldsToFetch.lockedDescription ? 'lockedDescription' : ''}
+        ${fieldsToFetch.geolocation ? 'geolocation' : ''}
       }
     }
     `
@@ -43,6 +59,35 @@ class ApiClient {
       })
 
     return benchList
+  }
+
+  public getSingleBench = async (benchID: ApiBench["_id"], fieldsToFetch: QueryApiBenchReponse): Promise<ApiSingleBenchReponseRoot> => {
+    let bench: ApiBench = {_id: ""}
+    const query = this.querySingleBench(benchID, fieldsToFetch)
+    const requestBody = {
+      query: query
+    }
+    await (fetch(`${process.env.REACT_APP_PATH_API}`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(requestBody),
+    }))
+      .then(res => {
+        if (res.status !== 200 && res.status !== 201) {
+          throw Error('Failed')
+        }
+        return res.json()
+      })
+      .then(resData => {
+        bench = resData.data.singleBench
+      })
+      .catch(err => {
+        console.log(err)
+      })
+
+    return bench
   }
 
 }

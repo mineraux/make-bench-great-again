@@ -31,8 +31,8 @@ const ProtoMap: FunctionComponent = () => {
     map.current.addControl(directions.current);
 
     map.current.on('load', function () {
-      getInstallationList()
-      geolocate.current.trigger()
+      //getInstallationList()
+      //geolocate.current.trigger()
     })
 
     geolocate.current.on('geolocate', function (e: any) {

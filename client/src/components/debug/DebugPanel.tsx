@@ -7,39 +7,52 @@ import './debugPanel.scss'
 
 const DebugPanel: FunctionComponent = () => {
 
-  const {benchList, fetchBenchList} = Store
+  const { benchList, fetchBenchList, fetchSingleBench } = Store
   const { debug } = DebugStore
 
-    const getInstallationList = async() => {
-      await fetchBenchList({name:true, description: true, geolocation: true})
-    }
+  const queryName = async () => {
+    await fetchBenchList({ name: true })
+  }
 
-    return (
-      <>
+  const queryGeoAndDesc = async () => {
+    await fetchBenchList({ geolocation: true, description: true })
+  }
+
+  const queryOneBench = async () => {
+    await fetchSingleBench("5cad02bb1f4fddfe20225f18",{geolocation:true})
+  }
+
+  return (
+    <>
       <DebugButton />
-      {debug && 
-      <div className="debug-panel">
-        <h2>Debug interface</h2>
-        <div>
-          <h3>Bench list</h3>
-          <ul>
-            {
-              benchList.map((bench, index) => (
-                <li key={index}>
-                  {bench.name && <p>{bench.name}</p>}
-                  {bench.description && <p>{bench.description}</p>}
-                  {bench.lockedDescription && <p>{bench.lockedDescription}</p>}
-                  {bench.geolocation && bench.geolocation.map((item, index) => <p key={index}>{item}</p>)
-                  }
-                </li>
-              ))
-            }
-          </ul>
-        </div>
-        <button onClick={getInstallationList}>Query toutes les installation</button>
-      </div>}
-      </>
-    )
+      {debug &&
+        <div className="debug-panel">
+          <h2>Debug interface</h2>
+          <div>
+            <h3>Bench list</h3>
+            <ul>
+              {
+                benchList.map((bench, index) => (
+                  <li key={index}>
+                    {bench._id && <p>{bench._id}</p>}
+                    {bench.name && <p>{bench.name}</p>}
+                    {bench.description && <p>{bench.description}</p>}
+                    {bench.lockedDescription && <p>{bench.lockedDescription}</p>}
+                    {bench.geolocation && <p>{bench.geolocation.map((item, index) => (
+                      <span key={index}>{item} </span>)
+                    )}</p>
+                    }
+                  </li>
+                ))
+              }
+            </ul>
+          </div>
+          <button onClick={queryName}>Query le nom des installations</button>
+          <button onClick={queryGeoAndDesc}>Query la geoloc et la description</button>
+          <button onClick={queryOneBench}>Query les infos d'un banc</button>
+        </div>}
+    </>
+  )
 }
 
 export default observer(DebugPanel)

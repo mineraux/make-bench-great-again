@@ -9,6 +9,12 @@ module.exports = buildSchema(`
     geolocation: [Float]!,
     hashTags: [String!]
   }
+
+  type Petition {
+    _id: ID!
+    title: String!,
+    description: String!,
+  }
   
   input BenchInput {
     name: String!
@@ -18,19 +24,14 @@ module.exports = buildSchema(`
     hashTags: [String!]
   }
 
-  type Petition {
-    _id: ID!
-    title: String!,
-    description: String!,
-  }
-
   input PetitionInput {
     title: String!,
     description: String!
   }
-
+  
   type RootQuery {
     benchList: [Bench!]!
+    singleBench(benchId: ID!): Bench!
     petitionList: [Petition!]!
   }
 
