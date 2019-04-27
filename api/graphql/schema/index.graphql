@@ -4,28 +4,37 @@ module.exports = buildSchema(`
   type Bench {
     _id: ID!
     name: String!
-    description: String!,
-    lockedDescription: String!,
-    geolocation: [Float]!,
+    description: String!
+    lockedDescription: String!
+    geolocation: [Float]!
     hashTags: [String!]
   }
 
   type Petition {
     _id: ID!
-    title: String!,
-    description: String!,
+    title: String!
+    description: String!
   }
   
   input BenchInput {
     name: String!
-    description: String!,
-    lockedDescription: String!,
-    geolocation: [Float]!,
+    description: String!
+    lockedDescription: String!
+    geolocation: [Float]!
     hashTags: [String!]
   }
 
+  input UpdateBenchInput {
+    benchId: ID!
+    name: String
+    description: String
+    lockedDescription: String
+    geolocation: [Float]
+    hashTags: [String]
+  }
+
   input PetitionInput {
-    title: String!,
+    title: String!
     description: String!
   }
   
@@ -37,6 +46,7 @@ module.exports = buildSchema(`
 
   type RootMutation {
     createBench(benchInput: BenchInput): Bench
+    updateBench(updateBenchInput: UpdateBenchInput): Bench
     deleteBench(benchId: ID!): Bench!
     createPetition(petitionInput: PetitionInput): Petition
     deletePetition(petitionId: ID!): Petition!

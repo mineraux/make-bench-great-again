@@ -52,5 +52,26 @@ module.exports = {
     } catch (err) {
       throw err
     }
+  },
+  updateBench: async args => {
+    var fieldsToUpdate = {};
+
+    if (args.updateBenchInput.name) fieldsToUpdate.name = args.updateBenchInput.name
+    if (args.updateBenchInput.description) fieldsToUpdate.description = args.updateBenchInput.description
+    if (args.updateBenchInput.lockedDescription) fieldsToUpdate.lockedDescription = args.updateBenchInput.lockedDescription
+    if (args.updateBenchInput.geolocation) fieldsToUpdate.geolocation = args.updateBenchInput.geolocation
+    if (args.updateBenchInput.hashTags) fieldsToUpdate.hashTags = args.updateBenchInput.hashTags
+
+    try {
+      const bench = await Bench.findOneAndUpdate(
+        {"_id" : args.updateBenchInput.benchId},
+        { $set: fieldsToUpdate },
+        {new: true}
+      )
+      return bench
+
+    } catch (err) {
+      throw err
+    }
   }
 }
