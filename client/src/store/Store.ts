@@ -7,7 +7,7 @@ class Store {
   @observable benchListTemp: ApiBenchReponseRoot = []
 
   @action public fetchBenchList = async (fieldToFetch: QueryApiBenchReponse) => {
-    if (process.env.NODE_ENV === "development") {
+    if (process.env.NODE_ENV !== "development") {
 
       this.benchList = [
         {

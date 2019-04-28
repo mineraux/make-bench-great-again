@@ -23,7 +23,12 @@ export interface createApiBench {
   longitude: number,
 }
 
+export interface updateApiBench extends createApiBench{
+  _id: string
+}
+
 export type ApiBenchReponseRoot =  Array<ApiBench>
 export type ApiSingleBenchReponseRoot = ApiBench
 export type QueryApiBenchReponse = queryApiBench
 export type createApiBenchMutation = createApiBench
+export type updateApiBenchMutation = updateApiBench

@@ -1,6 +1,6 @@
-import React, {Component, createRef} from 'react';
-import {Transition } from 'react-transition-group';
-import {TweenLite} from 'gsap';
+import React, { Component, createRef } from 'react';
+import { Transition } from 'react-transition-group';
+import { TweenLite } from 'gsap';
 import ApiClient from '../../ApiClient/ApiClient';
 
 type props = {
@@ -8,6 +8,7 @@ type props = {
 }
 
 class Admin extends Component<props> {
+  installationID: React.RefObject<HTMLInputElement>;
   installationName: React.RefObject<HTMLInputElement>;
   installationDescription: React.RefObject<HTMLTextAreaElement>;
   installationLockedDescription: React.RefObject<HTMLTextAreaElement>;
@@ -17,6 +18,7 @@ class Admin extends Component<props> {
   constructor(props: props) {
     super(props)
 
+    this.installationID = React.createRef()
     this.installationName = React.createRef()
     this.installationDescription = React.createRef()
     this.installationLockedDescription = React.createRef()
@@ -25,14 +27,14 @@ class Admin extends Component<props> {
   }
 
   render() {
-    const {show} = this.props
+    const { show } = this.props
 
     const createBench = (e: React.FormEvent<HTMLFormElement>) => {
       e.preventDefault()
       if (this.installationName.current
-        && this.installationDescription.current 
-        && this.installationLockedDescription.current 
-        && this.installationLatitude.current 
+        && this.installationDescription.current
+        && this.installationLockedDescription.current
+        && this.installationLatitude.current
         && this.installationLongitude.current) {
 
         const installationName = this.installationName.current.value
@@ -42,19 +44,35 @@ class Admin extends Component<props> {
         const installationLongitude = this.installationLongitude.current.value
 
         ApiClient.createBench({
-          name:installationName, 
-          description:installationDescription, 
-          lockedDescription:installationLockedDescription, 
-          latitude: parseFloat(installationLatitude), 
+          name: installationName,
+          description: installationDescription,
+          lockedDescription: installationLockedDescription,
+          latitude: parseFloat(installationLatitude),
           longitude: parseFloat(installationLongitude)
         })
       }
     }
 
+    const updateBench = (e: React.FormEvent<HTMLFormElement>) => {
+      e.preventDefault()
+
+      if (this.installationID.current && this.installationName.current) {
+
+        const installationID:string = this.installationID.current.value
+        const installationName:string = this.installationName.current.value
+
+        ApiClient.updateBench({_id: installationID, name: installationName})
+
+        
+      }
+      
+
+    }
+
     return (
       <Transition
         unmountOnExit
-        
+
         in={show}
         timeout={8000}
         onEnter={node => TweenLite.set(node, {
@@ -71,14 +89,28 @@ class Admin extends Component<props> {
       >
         <div className="admin-panel">
           <h2>Admin interface</h2>
+          <h3>Ajouter une installation</h3>
           <form action="/" onSubmit={createBench}>
-          <input type="text" placeholder="Nom" ref={this.installationName}/>
-          <textarea placeholder="Description" ref={this.installationDescription}></textarea>
-          <textarea placeholder="Description bloquée" ref={this.installationLockedDescription}></textarea>
-          <input type="text" placeholder="Latitude" ref={this.installationLatitude}/>
-          <input type="text" placeholder="Longitude" ref={this.installationLongitude}/>
-          <button type="submit">Envoyer</button>
+            <input type="text" placeholder="Nom" ref={this.installationName} />
+            <textarea placeholder="Description" ref={this.installationDescription}></textarea>
+            <textarea placeholder="Description bloquée" ref={this.installationLockedDescription}></textarea>
+            <input type="text" placeholder="Latitude" ref={this.installationLatitude} />
+            <input type="text" placeholder="Longitude" ref={this.installationLongitude} />
+            <button type="submit">Envoyer</button>
           </form>
+
+          <h3>Mettre à jour une installation</h3>
+          <form action="/" onSubmit={updateBench}>
+            <input type="text" placeholder="ID" ref={this.installationID} />
+            <input type="text" placeholder="Nom" ref={this.installationName} />
+            <textarea placeholder="Description" ref={this.installationDescription}></textarea>
+            <textarea placeholder="Description bloquée" ref={this.installationLockedDescription}></textarea>
+            <input type="text" placeholder="Latitude" ref={this.installationLatitude} />
+            <input type="text" placeholder="Longitude" ref={this.installationLongitude} />
+            <button type="submit">Envoyer</button>
+          </form>
+
+          <h3>Supprimer une installation</h3>
         </div>
       </Transition>
 

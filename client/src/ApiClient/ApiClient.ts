@@ -1,4 +1,4 @@
-import { ApiBenchReponseRoot, QueryApiBenchReponse, ApiSingleBenchReponseRoot, ApiBench, createApiBenchMutation } from "../@types";
+import { ApiBenchReponseRoot, QueryApiBenchReponse, ApiSingleBenchReponseRoot, ApiBench, createApiBenchMutation, updateApiBench } from "../@types";
 
 class ApiClient {
 
@@ -50,6 +50,34 @@ class ApiClient {
     return query
   }
 
+  private mutationUpdateBench = (fields: ApiBench) => {
+    // const geolocation = [fields.latitude, fields.longitude]
+
+    const fieldsToUpdate:ApiBench = {
+      _id:fields._id,
+      name:fields.name
+    };
+
+    const newObject = {};
+
+    const query = `
+    mutation {
+      updateBench(
+        updateBenchInput:
+          ${ JSON.stringify(newObject)}
+      ){
+        name
+        description
+      }
+    }
+    `
+
+    // console.log(query)
+
+    return query
+
+  }
+
   public createBench = async (fields: createApiBenchMutation) => {
     const query = this.mutationCreateBench(fields)
 
@@ -69,6 +97,33 @@ class ApiClient {
         throw Error('Failed')
       }
     })
+  }
+
+  public updateBench = async (fields: ApiBench) => {
+    const query = this.mutationUpdateBench(fields)
+
+    const requestBody = {
+      query: query
+    }
+
+    console.log(requestBody)
+
+    
+
+    await (fetch(`${process.env.REACT_APP_PATH_API}`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(requestBody),
+    }))
+    .then(res => {
+      if (res.status !== 200 && res.status !== 201) {
+        throw Error('Failed')
+      }
+    })
+
+
   }
 
   public getBenchList = async (fieldsToFetch: QueryApiBenchReponse): Promise<ApiBenchReponseRoot> => {
