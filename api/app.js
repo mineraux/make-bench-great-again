@@ -1,15 +1,48 @@
+const process = require('process');
 const express = require('express')
 const bodyParser = require('body-parser')
 const graphqlHttp = require('express-graphql')
+
+// ENV 🔧
+
+const dotenv = require('dotenv')
+dotenv.config({path: __dirname + '/.env.local'})
+
+// DB 🗄
+
 const mongoose = require('mongoose')
 const graphQLSchema = require('./graphql/schema/index.graphql')
 const graphQLResolvers = require('./graphql/resolvers/index')
 
-const app = express()
+mongoose
+    .connect(`mongodb+srv://${process.env.MONGO_USER}:${process.env.MONGO_PASSWORD}@${process.env.MONGO_CLUSTER}.mongodb.net/${process.env.MONGO_DB}?retryWrites=true`)
+    .then(() => {
+      console.log('🗄 Success connect to mongoDB')
+    })
+    .catch(err => {
+      console.error('🗄 Error connect to mongoDB', err)
+    })
 
-app.use(bodyParser.json())
+// TWITTER 🐦
+
+const Twitter = require('twitter');
+const client = new Twitter({
+  consumer_key: process.env.TWITTER_CONSUMER_KEY,
+  consumer_secret: process.env.TWITTER_CONSUMER_SECRET,
+  access_token_key: process.env.TWITTER_ACCESS_TOKEN_KEY,
+  access_token_secret: process.env.TWITTER_ACCESS_TOKEN_SECRET
+});
+
+// APP 📱
 
 const PORT = 4000;
+
+const app = express()
+
+app.listen(PORT)
+console.log('🚀 Listening on port : ' + PORT)
+
+app.use(bodyParser.json())
 
 app.use((req, res, next) => {
   res.setHeader('Access-Control-Allow-Origin', '*')
@@ -27,12 +60,25 @@ app.use('/api', graphqlHttp({
   graphiql: true
 }))
 
-mongoose
-  .connect(`mongodb+srv://${process.env.MONGO_USER}:${process.env.MONGO_PASSWORD}@${process.env.MONGO_CLUSTER}.mongodb.net/${process.env.MONGO_DB}?retryWrites=true`)
-  .then(() => {
-    app.listen(PORT)
-    console.log('Listening on port : ' + PORT)
-  })
-  .catch(err => {
-    console.log(err)
-  })
+app.post('/twitter/:hashtag', (req, res) => {
+
+  const hashtag = req.params.hashtag
+
+  console.log("🐦 API > /twitter/" + hashtag);
+
+  client.get('search/tweets', {
+    q: "#"+ hashtag,
+    count: 5,
+    result_type: "recent",
+    lang: "fr"
+  }, function (error, tweets, response) {
+    if (error) {
+      console.log("🐦 Error getting tweets");
+    } else {
+      console.log("🐦 Success getting tweets");
+      res.json(tweets);
+    }
+
+  });
+
+})

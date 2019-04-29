@@ -1,0 +1,47 @@
+.page-twitter {
+  &__input-container {
+    display: flex;
+    align-items: center;
+
+    input {
+      height: 2.5rem;
+      font-size: 1.8rem;
+      padding: 0 0.8rem;
+    }
+
+    &__button {
+      margin-left: 2rem;
+      font-size: 1.6rem;
+      color: white;
+      padding: 1rem 1.5rem;
+      background-color: rgb(74, 160, 235);
+      cursor: pointer;
+      transition: .3s;
+
+      &:hover {
+        opacity: 0.8;
+      }
+    }
+  }
+
+  &__tweets-container {
+    &__tweet {
+      position: relative;
+      margin-bottom: 3rem;
+      display: flex;
+      justify-content: center;
+      &:not(:last-of-type) {
+        &:after {
+          position: absolute;
+          content: '';
+          width: 100%;
+          height: 0.4rem;
+          background: rgb(74, 160, 235);
+          left: 0;
+          bottom: -1.5rem;
+        }
+      }
+
+    }
+  }
+}

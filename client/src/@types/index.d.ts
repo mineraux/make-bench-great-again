@@ -1,4 +1,13 @@
+declare global {
+  interface Window {
+    twttr: any;
+  }
+}
+
+window.twttr = window.twttr || {};
+
 export type Coords = [number,number]
+
 
 export interface ApiBench {
   _id: string,
