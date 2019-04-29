@@ -9,81 +9,81 @@ type props = {
 }
 
 class Admin extends Component<props> {
-  installationID: React.RefObject<HTMLInputElement>;
-  installationName: React.RefObject<HTMLInputElement>;
-  installationDescription: React.RefObject<HTMLTextAreaElement>;
-  installationLockedDescription: React.RefObject<HTMLTextAreaElement>;
-  installationLatitude: React.RefObject<HTMLInputElement>;
-  installationLongitude: React.RefObject<HTMLInputElement>;
+  createBenchForm: HTMLFormElement | null = null;
+  updateBenchForm: HTMLFormElement | null = null;
 
   constructor(props: props) {
     super(props)
-
-    this.installationID = React.createRef()
-    this.installationName = React.createRef()
-    this.installationDescription = React.createRef()
-    this.installationLockedDescription = React.createRef()
-    this.installationLatitude = React.createRef()
-    this.installationLongitude = React.createRef()
   }
 
   render() {
     const { show } = this.props
 
     const createBench = (e: React.FormEvent<HTMLFormElement>) => {
+
       e.preventDefault()
-      if (this.installationName.current
-        && this.installationDescription.current
-        && this.installationLockedDescription.current
-        && this.installationLatitude.current
-        && this.installationLongitude.current) {
 
-        const installationName = this.installationName.current.value
-        const installationDescription = this.installationDescription.current.value
-        const installationLockedDescription = this.installationLockedDescription.current.value
-        const installationLatitude = this.installationLatitude.current.value
-        const installationLongitude = this.installationLongitude.current.value
+      if (this.createBenchForm) {
 
-        ApiClient.createBench({
-          name: installationName,
-          description: installationDescription,
-          lockedDescription: installationLockedDescription,
-          latitude: parseFloat(installationLatitude),
-          longitude: parseFloat(installationLongitude)
-        })
+        const name: string = (this.createBenchForm.querySelector('[name="name"]') as HTMLInputElement).value
+        const description: string = (this.createBenchForm.querySelector('[name="description"]') as HTMLTextAreaElement).value
+        const lockedDescription: string = (this.createBenchForm.querySelector('[name="lockedDescription"]') as HTMLTextAreaElement).value
+        const latitude: string = (this.createBenchForm.querySelector('[name="latitude"]') as HTMLInputElement).value
+        const longitude: string = (this.createBenchForm.querySelector('[name="longitude"]') as HTMLInputElement).value
+
+        if (name.length > 0
+          && description.length > 0
+          && lockedDescription.length > 0
+          && latitude.length > 0
+          && longitude.length > 0) {
+          ApiClient.createBench({
+            name: name,
+            description: description,
+            lockedDescription: lockedDescription,
+            latitude: parseFloat(latitude),
+            longitude: parseFloat(longitude)
+          })
+        } else {
+          console.log("Tout les champs sont nécessaires pour ajouter une nouvelle installation")
+        }
       }
     }
 
     const updateBench = (e: React.FormEvent<HTMLFormElement>) => {
       e.preventDefault()
 
-      let fieldsToUpdate: ApiBench = {
-        _id: this.installationID.current!.value
-      };
+      if (this.updateBenchForm) {
 
-      if (this.installationName.current
-        && this.installationName.current.value.length > 0) {
-        fieldsToUpdate.name = this.installationName.current.value
+        const id: string = (this.updateBenchForm.querySelector('[name="id"]') as HTMLInputElement).value
+        const name: string = (this.updateBenchForm.querySelector('[name="name"]') as HTMLInputElement).value
+        const description: string = (this.updateBenchForm.querySelector('[name="description"]') as HTMLTextAreaElement).value
+        const lockedDescription: string = (this.updateBenchForm.querySelector('[name="lockedDescription"]') as HTMLTextAreaElement).value
+        const latitude: string = (this.updateBenchForm.querySelector('[name="latitude"]') as HTMLInputElement).value
+        const longitude: string = (this.updateBenchForm.querySelector('[name="longitude"]') as HTMLInputElement).value
+
+        let fieldsToUpdate: ApiBench = {
+          _id: id
+        }
+
+
+        if (name.length > 0) {
+          fieldsToUpdate.name = name
+        }
+
+        if (description.length > 0) {
+          fieldsToUpdate.description = description
+        }
+
+        if (lockedDescription.length > 0) {
+          fieldsToUpdate.lockedDescription = lockedDescription
+        }
+
+        if (latitude.length > 0 && longitude.length > 0) {
+          fieldsToUpdate.geolocation = [parseFloat(latitude), parseFloat(longitude)]
+        }
+
+        ApiClient.updateBench(fieldsToUpdate)
       }
-
-      if (this.installationDescription.current
-        && this.installationDescription.current.value.length > 0) {
-        fieldsToUpdate.description = this.installationDescription.current.value
-      }
-
-      if (this.installationLockedDescription.current
-        && this.installationLockedDescription.current.value.length > 0) {
-        fieldsToUpdate.lockedDescription = this.installationLockedDescription.current.value
-      }
-
-      if (this.installationLatitude.current
-        && this.installationLatitude.current.value.length > 0
-        && this.installationLongitude.current
-        && this.installationLongitude.current.value.length > 0) {
-        fieldsToUpdate.geolocation = [parseFloat(this.installationLatitude.current.value), parseFloat(this.installationLongitude.current.value)]
-      }
-
-      ApiClient.updateBench(fieldsToUpdate)
     }
 
     return (
@@ -107,23 +107,23 @@ class Admin extends Component<props> {
         <div className="admin-panel">
           <h2>Admin interface</h2>
           <h3>Ajouter une installation</h3>
-          <form action="/" onSubmit={createBench}>
-            <input type="text" placeholder="Nom" ref={this.installationName} />
-            <textarea placeholder="Description" ref={this.installationDescription}></textarea>
-            <textarea placeholder="Description bloquée" ref={this.installationLockedDescription}></textarea>
-            <input type="text" placeholder="Latitude" ref={this.installationLatitude} />
-            <input type="text" placeholder="Longitude" ref={this.installationLongitude} />
+          <form action="/" onSubmit={createBench} ref={el => this.createBenchForm = el}>
+            <input type="text" name="name" placeholder="Nom" required />
+            <textarea name="description" placeholder="Description" required ></textarea>
+            <textarea name="lockedDescription" placeholder="Description bloquée" required ></textarea>
+            <input type="text" name="latitude" placeholder="Latitude"  required />
+            <input type="text" name="longitude" placeholder="Longitude"  required />
             <button type="submit">Envoyer</button>
           </form>
 
           <h3>Mettre à jour une installation</h3>
-          <form action="/" onSubmit={updateBench}>
-            <input type="text" placeholder="ID" ref={this.installationID} />
-            <input type="text" placeholder="Nom" ref={this.installationName} />
-            <textarea placeholder="Description" ref={this.installationDescription}></textarea>
-            <textarea placeholder="Description bloquée" ref={this.installationLockedDescription}></textarea>
-            <input type="text" placeholder="Latitude" ref={this.installationLatitude} />
-            <input type="text" placeholder="Longitude" ref={this.installationLongitude} />
+          <form action="/" onSubmit={updateBench} ref={el => this.updateBenchForm = el}>
+            <input type="text" name="id" placeholder="ID" required/>
+            <input type="text" name="name" placeholder="Nom" />
+            <textarea name="description" placeholder="Description" ></textarea>
+            <textarea name="lockedDescription" placeholder="Description bloquée" ></textarea>
+            <input type="text" name="latitude" placeholder="Latitude" />
+            <input type="text" name="longitude" placeholder="Longitude" />
             <button type="submit">Envoyer</button>
           </form>
 
