@@ -68,7 +68,7 @@ app.post('/twitter/:hashtag', (req, res) => {
 
   client.get('search/tweets', {
     q: "#"+ hashtag,
-    count: 1,
+    count: 5,
     result_type: "recent",
     lang: "fr"
   }, function (error, tweets, response) {

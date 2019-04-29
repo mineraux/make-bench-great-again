@@ -2,7 +2,7 @@ import React, {Component, Fragment} from 'react';
 import {Transition } from 'react-transition-group';
 import {TweenLite} from 'gsap';
 import {pageProps} from '../types'
-import TweetEmbed from 'react-tweet-embed'
+import {Tweet} from 'react-twitter-widgets'
 //styles
 import './twitter.scss'
 
@@ -19,7 +19,7 @@ class Twitter extends Component<Props, State> {
 
   state: State = {
     value: "",
-    tweets:["692527862369357824"]
+    tweets:[]
   }
 
   onInputChange = (e : any) => {
@@ -29,38 +29,37 @@ class Twitter extends Component<Props, State> {
   }
 
   onClickSubmit = () => {
-    console.log(this.input && this.input.value);
-
     const hashtag: string = this.input!.value
-
     this.fetchTweets(hashtag)
   }
 
+  componentDidUpdate(prevProps: Readonly<Props & {}>, prevState: Readonly<State>, snapshot?: any): void {
+    if(window.twttr && this.state.tweets !== prevState.tweets) {
+      window.twttr.widgets.load()
+    }
+  }
 
   fetchTweets = (hashtag: string) => {
-
     fetch(`${process.env.REACT_APP_SERVER_URL}/twitter/${hashtag}`, {
       method: 'POST'
-    }).then(res => {
+    })
+      .then(res => {
         if (res.status !== 200 && res.status !== 201) {
-          throw Error('Failed')
+          throw Error('Failed to fetch tweets')
         }
-        console.log("TWEETS !!!!", res.json().then(res => {
-          console.log(res.statuses);
-          this.setState({
-            tweets: []
-          }, () => {
-            res.statuses.map((tweet : any) => {
-              this.setState({
-                tweets: [
-                  ...this.state.tweets,
-                  (tweet.id).toString()
-                ]
+        res.json().then(res => {
+          this.setState({tweets: []},
+            () => {
+              res.statuses.map((tweet: any) => {
+                this.setState((previousState) => ({
+                  tweets: [
+                    ...previousState.tweets,
+                    tweet.id_str
+                  ]
+                }))
               })
             })
-          })
-
-        }))
+        })
       })
       .catch(err => {
         console.log(err)
@@ -70,14 +69,12 @@ class Twitter extends Component<Props, State> {
   renderTweets = () => {
     if(this.state.tweets.length > 0) {
       console.log("render tweets", this.state.tweets);
-      return this.state.tweets.map((tweet, index) => (
-          <Fragment key={tweet}>
-            <TweetEmbed id={tweet}/>
-          </Fragment>
+      return this.state.tweets.map((tweet) => (
+        <div className="page-twitter__tweets-container__tweet" key={tweet}>
+          <Tweet tweetId={tweet}/>
+        </div>
         )
       )
-    } else {
-      return null
     }
   }
 
@@ -91,7 +88,6 @@ class Twitter extends Component<Props, State> {
       <div className="page-twitter__tweets-container">
         {this.renderTweets()}
       </div>
-
     </div>
   )
 
@@ -116,7 +112,6 @@ class Twitter extends Component<Props, State> {
       >
         {this.pageContent()}
       </Transition>
-
     )
   }
 }

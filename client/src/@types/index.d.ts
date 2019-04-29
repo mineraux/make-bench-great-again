@@ -1,3 +1,11 @@
+declare global {
+  interface Window {
+    twttr: any;
+  }
+}
+
+window.twttr = window.twttr || {};
+
 export interface ApiBench {
   name: string,
   description: string,
