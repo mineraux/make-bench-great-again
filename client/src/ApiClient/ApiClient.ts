@@ -92,12 +92,11 @@ class ApiClient {
 
   public createBench = async (fields: createApiBenchMutation) => {
     const query = this.mutationCreateBench(fields)
+    let dataResponse
 
     const requestBody = {
       query: query
     }
-
-    console.log(query)
 
     await (fetch(`${process.env.REACT_APP_PATH_API}`, {
       method: 'POST',
@@ -110,7 +109,12 @@ class ApiClient {
         if (res.status !== 200 && res.status !== 201) {
           throw Error('Failed')
         }
+        return res.json()
       })
+      .then(res => dataResponse = res.data);
+
+      return dataResponse
+
   }
 
   public updateBench = async (fields: ApiBench) => {

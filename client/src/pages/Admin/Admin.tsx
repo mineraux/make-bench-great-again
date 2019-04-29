@@ -20,7 +20,7 @@ class Admin extends Component<props> {
   render() {
     const { show } = this.props
 
-    const createBench = (e: React.FormEvent<HTMLFormElement>) => {
+    const createBench = async (e: React.FormEvent<HTMLFormElement>) => {
 
       e.preventDefault()
 
@@ -37,13 +37,15 @@ class Admin extends Component<props> {
           && lockedDescription.length > 0
           && latitude.length > 0
           && longitude.length > 0) {
-          ApiClient.createBench({
+          const request = await (ApiClient.createBench({
             name: name,
             description: description,
             lockedDescription: lockedDescription,
             latitude: parseFloat(latitude),
             longitude: parseFloat(longitude)
-          })
+          }))
+
+          console.log(request)
         } else {
           console.log("Tout les champs sont nécessaires pour ajouter une nouvelle installation")
         }
