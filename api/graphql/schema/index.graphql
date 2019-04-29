@@ -25,12 +25,12 @@ module.exports = buildSchema(`
   }
 
   input UpdateBenchInput {
-    benchId: ID!
+    _id: ID!
     name: String
     description: String
     lockedDescription: String
     geolocation: [Float]
-    hashTags: [String]
+    hashTags: [String!]
   }
 
   input PetitionInput {

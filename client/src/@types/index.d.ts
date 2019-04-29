@@ -6,6 +6,8 @@ export interface ApiBench {
   description?: string,
   lockedDescription?: string,
   geolocation?: Coords
+
+  replace?(arg0: RegExp, arg1: string);
 }
 
 export interface queryApiBench {

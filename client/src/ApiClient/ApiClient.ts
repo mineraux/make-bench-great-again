@@ -51,20 +51,22 @@ class ApiClient {
   }
 
   private mutationUpdateBench = (fields: ApiBench) => {
-    // const geolocation = [fields.latitude, fields.longitude]
 
-    const fieldsToUpdate:ApiBench = {
-      _id:fields._id,
-      name:fields.name
+    const fieldsToUpdate: ApiBench = {
+      _id: fields._id,
+      name: fields.name,
+      description: fields.description,
+      lockedDescription: fields.lockedDescription,
+      geolocation: fields.geolocation
     };
 
-    const newObject = {};
+    const formatedQuery = JSON.stringify(fieldsToUpdate).replace(/"(\w+)"\s*:/g, '$1:');
 
     const query = `
     mutation {
       updateBench(
         updateBenchInput:
-          ${ JSON.stringify(newObject)}
+          ${formatedQuery}
       ){
         name
         description
@@ -72,10 +74,7 @@ class ApiClient {
     }
     `
 
-    // console.log(query)
-
     return query
-
   }
 
   public createBench = async (fields: createApiBenchMutation) => {
@@ -92,11 +91,11 @@ class ApiClient {
       },
       body: JSON.stringify(requestBody),
     }))
-    .then(res => {
-      if (res.status !== 200 && res.status !== 201) {
-        throw Error('Failed')
-      }
-    })
+      .then(res => {
+        if (res.status !== 200 && res.status !== 201) {
+          throw Error('Failed')
+        }
+      })
   }
 
   public updateBench = async (fields: ApiBench) => {
@@ -106,10 +105,6 @@ class ApiClient {
       query: query
     }
 
-    console.log(requestBody)
-
-    
-
     await (fetch(`${process.env.REACT_APP_PATH_API}`, {
       method: 'POST',
       headers: {
@@ -117,11 +112,11 @@ class ApiClient {
       },
       body: JSON.stringify(requestBody),
     }))
-    .then(res => {
-      if (res.status !== 200 && res.status !== 201) {
-        throw Error('Failed')
-      }
-    })
+      .then(res => {
+        if (res.status !== 200 && res.status !== 201) {
+          throw Error('Failed')
+        }
+      })
 
 
   }
@@ -156,7 +151,7 @@ class ApiClient {
   }
 
   public getSingleBench = async (benchID: ApiBench["_id"], fieldsToFetch: QueryApiBenchReponse): Promise<ApiSingleBenchReponseRoot> => {
-    let bench: ApiBench = {_id: ""}
+    let bench: ApiBench = { _id: "" }
     const query = this.querySingleBench(benchID, fieldsToFetch)
     const requestBody = {
       query: query

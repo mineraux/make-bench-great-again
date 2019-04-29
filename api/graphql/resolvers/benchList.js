@@ -64,7 +64,7 @@ module.exports = {
 
     try {
       const bench = await Bench.findOneAndUpdate(
-        {"_id" : args.updateBenchInput.benchId},
+        {"_id" : args.updateBenchInput._id},
         { $set: fieldsToUpdate },
         {new: true}
       )

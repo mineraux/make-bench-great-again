@@ -2,6 +2,7 @@ import React, { Component, createRef } from 'react';
 import { Transition } from 'react-transition-group';
 import { TweenLite } from 'gsap';
 import ApiClient from '../../ApiClient/ApiClient';
+import { ApiBench } from '../../@types';
 
 type props = {
   show: boolean,
@@ -56,17 +57,33 @@ class Admin extends Component<props> {
     const updateBench = (e: React.FormEvent<HTMLFormElement>) => {
       e.preventDefault()
 
-      if (this.installationID.current && this.installationName.current) {
+      let fieldsToUpdate: ApiBench = {
+        _id: this.installationID.current!.value
+      };
 
-        const installationID:string = this.installationID.current.value
-        const installationName:string = this.installationName.current.value
-
-        ApiClient.updateBench({_id: installationID, name: installationName})
-
-        
+      if (this.installationName.current
+        && this.installationName.current.value.length > 0) {
+        fieldsToUpdate.name = this.installationName.current.value
       }
-      
 
+      if (this.installationDescription.current
+        && this.installationDescription.current.value.length > 0) {
+        fieldsToUpdate.description = this.installationDescription.current.value
+      }
+
+      if (this.installationLockedDescription.current
+        && this.installationLockedDescription.current.value.length > 0) {
+        fieldsToUpdate.lockedDescription = this.installationLockedDescription.current.value
+      }
+
+      if (this.installationLatitude.current
+        && this.installationLatitude.current.value.length > 0
+        && this.installationLongitude.current
+        && this.installationLongitude.current.value.length > 0) {
+        fieldsToUpdate.geolocation = [parseFloat(this.installationLatitude.current.value), parseFloat(this.installationLongitude.current.value)]
+      }
+
+      ApiClient.updateBench(fieldsToUpdate)
     }
 
     return (
