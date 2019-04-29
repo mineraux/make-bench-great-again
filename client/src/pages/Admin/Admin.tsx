@@ -11,6 +11,7 @@ type props = {
 class Admin extends Component<props> {
   createBenchForm: HTMLFormElement | null = null;
   updateBenchForm: HTMLFormElement | null = null;
+  deleteBenchForm: HTMLFormElement | null = null;
 
   constructor(props: props) {
     super(props)
@@ -86,6 +87,16 @@ class Admin extends Component<props> {
       }
     }
 
+    const deleteBench = (e:React.FormEvent<HTMLFormElement>) => {
+      e.preventDefault()
+
+      if (this.deleteBenchForm) {
+        const id: string = (this.deleteBenchForm.querySelector('[name="id"]') as HTMLInputElement).value
+
+        ApiClient.deleteBench(id)
+      }
+    }
+
     return (
       <Transition
         unmountOnExit
@@ -128,6 +139,11 @@ class Admin extends Component<props> {
           </form>
 
           <h3>Supprimer une installation</h3>
+
+          <form action="/" onSubmit={deleteBench} ref={el => this.deleteBenchForm = el}>
+            <input type="text" name="id" placeholder="ID" required/>
+            <button type="submit">Envoyer</button>
+          </form>
         </div>
       </Transition>
 
