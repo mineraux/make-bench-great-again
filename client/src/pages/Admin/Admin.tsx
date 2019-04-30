@@ -3,6 +3,7 @@ import { Transition } from 'react-transition-group';
 import { TweenLite } from 'gsap';
 import ApiClient from '../../ApiClient/ApiClient';
 import { ApiBench } from '../../@types';
+import './admin.scss'
 
 type props = {
   show: boolean,
@@ -108,19 +109,19 @@ class Admin extends Component<props, stateAdmin> {
       }
     }
 
-    const deleteBench =  async(e: React.FormEvent<HTMLFormElement>) => {
+    const deleteBench = async (e: React.FormEvent<HTMLFormElement>) => {
       e.preventDefault()
 
       if (this.deleteBenchForm) {
         const id: string = (this.deleteBenchForm.querySelector('[name="id"]') as HTMLInputElement).value
 
         await (ApiClient.deleteBench(id))
-        .then(res => {
-          this.setState({ requestMessage: `Le banc "${res.name}"(ID:${res._id}) a été supprimé avec succès` })
-        })
-        .catch(err => {
-          this.setState({ requestMessage: `${err}` })
-        })
+          .then(res => {
+            this.setState({ requestMessage: `Le banc "${res.name}"(ID:${res._id}) a été supprimé avec succès` })
+          })
+          .catch(err => {
+            this.setState({ requestMessage: `${err}` })
+          })
       }
     }
 
@@ -149,30 +150,45 @@ class Admin extends Component<props, stateAdmin> {
             this.state.requestMessage.length > 0
             && <p>{this.state.requestMessage}</p>
           }
-          <form action="/" onSubmit={createBench} ref={el => this.createBenchForm = el}>
-            <input type="text" name="name" placeholder="Nom" required />
-            <textarea name="description" placeholder="Description" required ></textarea>
-            <textarea name="lockedDescription" placeholder="Description bloquée" required ></textarea>
-            <input type="text" name="latitude" placeholder="Latitude" required />
-            <input type="text" name="longitude" placeholder="Longitude" required />
-            <button type="submit">Envoyer</button>
+          <form
+            action="/"
+            onSubmit={createBench}
+            ref={el => this.createBenchForm = el}
+            className="admin-panel__form"
+          >
+            <input type="text" name="name" placeholder="Nom" required className="admin-panel__form__field"/>
+            <textarea name="description" placeholder="Description" required className="admin-panel__form__field"></textarea>
+            <textarea name="lockedDescription" placeholder="Description bloquée" required className="admin-panel__form__field"></textarea>
+            <input type="text" name="latitude" placeholder="Latitude" required className="admin-panel__form__field"/>
+            <input type="text" name="longitude" placeholder="Longitude" required className="admin-panel__form__field"/>
+            <button type="submit" className="admin-panel__form__submit-button">Envoyer</button>
           </form>
 
           <h3>Mettre à jour une installation</h3>
-          <form action="/" onSubmit={updateBench} ref={el => this.updateBenchForm = el}>
-            <input type="text" name="id" placeholder="ID" required />
-            <input type="text" name="name" placeholder="Nom" />
-            <textarea name="description" placeholder="Description" ></textarea>
-            <textarea name="lockedDescription" placeholder="Description bloquée" ></textarea>
-            <input type="text" name="latitude" placeholder="Latitude" />
-            <input type="text" name="longitude" placeholder="Longitude" />
-            <button type="submit">Envoyer</button>
+          <form
+            action="/"
+            onSubmit={updateBench}
+            ref={el => this.updateBenchForm = el}
+            className="admin-panel__form"
+          >
+            <input type="text" name="id" placeholder="ID" required className="admin-panel__form__field"/>
+            <input type="text" name="name" placeholder="Nom" className="admin-panel__form__field"/>
+            <textarea name="description" placeholder="Description" className="admin-panel__form__field"></textarea>
+            <textarea name="lockedDescription" placeholder="Description bloquée" className="admin-panel__form__field"></textarea>
+            <input type="text" name="latitude" placeholder="Latitude" className="admin-panel__form__field"/>
+            <input type="text" name="longitude" placeholder="Longitude" className="admin-panel__form__field"/>
+            <button type="submit" className="admin-panel__form__submit-button">Envoyer</button>
           </form>
 
           <h3>Supprimer une installation</h3>
-          <form action="/" onSubmit={deleteBench} ref={el => this.deleteBenchForm = el}>
-            <input type="text" name="id" placeholder="ID" required />
-            <button type="submit">Envoyer</button>
+          <form
+            action="/"
+            onSubmit={deleteBench}
+            ref={el => this.deleteBenchForm = el}
+            className="admin-panel__form"
+          >
+            <input type="text" name="id" placeholder="ID" required className="admin-panel__form__field"/>
+            <button type="submit" className="admin-panel__form__submit-button">Envoyer</button>
           </form>
         </div>
       </Transition>
