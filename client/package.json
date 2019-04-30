@@ -17,6 +17,7 @@
     "mobx": "^5.9.0",
     "mobx-react-lite": "^1.1.1",
     "node-sass": "^4.11.0",
+    "normalize.css": "^8.0.1",
     "prettier": "^1.15.3",
     "react": "^16.8.4",
     "react-dom": "^16.8.4",
@@ -24,6 +25,7 @@
     "react-router-dom": "^5.0.0",
     "react-scripts": "2.1.8",
     "react-transition-group": "^2.9.0",
+    "react-twitter-widgets": "^1.7.1",
     "styled-components": "^4.1.3",
     "typescript": "3.3.4000"
   },
