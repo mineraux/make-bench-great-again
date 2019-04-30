@@ -1,5 +1,9 @@
 import { ApiBenchReponseRoot, QueryApiBenchReponse, ApiSingleBenchReponseRoot, ApiBench, createApiBenchMutation, updateApiBench } from "../@types";
 
+type graphqlQuery = {
+  query : string
+}
+
 class ApiClient {
 
   private queryBenchList = (fieldsToFetch: QueryApiBenchReponse) => {
@@ -91,17 +95,8 @@ class ApiClient {
     return query
   }
 
-  public createBench = async (fields: createApiBenchMutation): Promise<ApiBench> => {
-    const query = this.mutationCreateBench(fields)
-    let dataResponse = {
-      createBench: {
-        _id:""
-      }
-    }
-
-    const requestBody = {
-      query: query
-    }
+  private apiCall = async (requestBody: graphqlQuery): Promise<any> => {
+    let response
 
     await (fetch(`${process.env.REACT_APP_PATH_API}`, {
       method: 'POST',
@@ -114,93 +109,72 @@ class ApiClient {
         if (res.status !== 200 && res.status !== 201) {
           throw Error('Erreur lors de la création du banc')
         }
-        return res.json()
+        response = res.json()
       })
-      .then(res => dataResponse.createBench = res.data.createBench);
-      return dataResponse.createBench
+
+    return response
+  }
+
+  public createBench = async (fields: createApiBenchMutation): Promise<ApiBench> => {
+    let dataResponse = {
+      createBench: {
+        _id: ""
+      }
+    }
+
+    const requestBody = {
+      query: this.mutationCreateBench(fields)
+    }
+
+    await this.apiCall(requestBody)
+      .then(res => {
+        dataResponse.createBench = res.data.createBench
+      });
+
+    return dataResponse.createBench
   }
 
   public updateBench = async (fields: ApiBench): Promise<ApiBench> => {
-    const query = this.mutationUpdateBench(fields)
-
     let dataResponse = {
       updateBench: {
-        _id:""
+        _id: ""
       }
     }
 
     const requestBody = {
-      query: query
+      query: this.mutationUpdateBench(fields)
     }
 
-    await (fetch(`${process.env.REACT_APP_PATH_API}`, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify(requestBody),
-    }))
-      .then(res => {
-        if (res.status !== 200 && res.status !== 201) {
-          throw Error('Erreur lors de la mise à jour du banc')
-        }
-        return res.json()
-      })
+    await this.apiCall(requestBody)
       .then(res => dataResponse.updateBench = res.data.updateBench);
 
-      return dataResponse.updateBench
+    return dataResponse.updateBench
   }
 
   public deleteBench = async (benchID: ApiBench["_id"]): Promise<ApiBench> => {
-    const query = this.mutationDeleteBench(benchID)
-
     let dataResponse = {
       deleteBench: {
-        _id:""
+        _id: ""
       }
     }
 
     const requestBody = {
-      query: query
+      query: this.mutationDeleteBench(benchID)
     }
 
-    await (fetch(`${process.env.REACT_APP_PATH_API}`, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify(requestBody),
-    }))
-      .then(res => {
-        if (res.status !== 200 && res.status !== 201) {
-          throw Error('Erreur lors de la suppression du banc')
-        }
-        return res.json()
-      })
+    await this.apiCall(requestBody)
       .then(res => dataResponse.deleteBench = res.data.deleteBench);
 
-      return dataResponse.deleteBench
+    return dataResponse.deleteBench
   }
 
   public getBenchList = async (fieldsToFetch: QueryApiBenchReponse): Promise<ApiBenchReponseRoot> => {
     let benchList: ApiBenchReponseRoot = []
-    const query = this.queryBenchList(fieldsToFetch)
+
     const requestBody = {
-      query: query
+      query: this.queryBenchList(fieldsToFetch)
     }
-    await (fetch(`${process.env.REACT_APP_PATH_API}`, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify(requestBody),
-    }))
-      .then(res => {
-        if (res.status !== 200 && res.status !== 201) {
-          throw Error('Failed')
-        }
-        return res.json()
-      })
+    await this.apiCall(requestBody)
       .then(resData => {
         benchList = resData.data.benchList
       })
@@ -213,23 +187,10 @@ class ApiClient {
 
   public getSingleBench = async (benchID: ApiBench["_id"], fieldsToFetch: QueryApiBenchReponse): Promise<ApiSingleBenchReponseRoot> => {
     let bench: ApiBench = { _id: "" }
-    const query = this.querySingleBench(benchID, fieldsToFetch)
     const requestBody = {
-      query: query
+      query: this.querySingleBench(benchID, fieldsToFetch)
     }
-    await (fetch(`${process.env.REACT_APP_PATH_API}`, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify(requestBody),
-    }))
-      .then(res => {
-        if (res.status !== 200 && res.status !== 201) {
-          throw Error('Failed')
-        }
-        return res.json()
-      })
+    await this.apiCall(requestBody)
       .then(resData => {
         bench = resData.data.singleBench
       })
