@@ -1,5 +1,6 @@
 import Home from '../pages/Home/Home'
 import Map from '../pages/Map/Map'
+import Admin from '../pages/Admin/Admin';
 import Twitter from '../pages/Twitter/Twitter'
 
 export default {
@@ -22,5 +23,11 @@ export default {
       component: Twitter,
       inNav: true
     },
+    Admin: {
+      path: '/admin',
+      name: 'Admin',
+      component: Admin,
+      inNav: true
+    }
   }
 }

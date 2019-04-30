@@ -1,4 +1,4 @@
-import React, { FunctionComponent, useCallback } from 'react'
+import React, { FunctionComponent, useState } from 'react'
 import { observer } from 'mobx-react-lite'
 import Store from '../../store/Store'
 import DebugStore from '../../store/DebugStore';
@@ -9,6 +9,7 @@ const DebugPanel: FunctionComponent = () => {
 
   const { benchList, fetchBenchList, fetchSingleBench } = Store
   const { debug } = DebugStore
+  const [isBenchListDisplayed, setIsBenchListDisplayed] = useState(false)
 
   const queryName = async () => {
     await fetchBenchList({ name: true })
@@ -19,7 +20,7 @@ const DebugPanel: FunctionComponent = () => {
   }
 
   const queryOneBench = async () => {
-    await fetchSingleBench("5cad02bb1f4fddfe20225f18",{geolocation:true})
+    await fetchSingleBench("5cad02bb1f4fddfe20225f18", { name: true })
   }
 
   return (
@@ -28,7 +29,7 @@ const DebugPanel: FunctionComponent = () => {
       {debug &&
         <div className="debug-panel">
           <h2>Debug interface</h2>
-          <div>
+          {isBenchListDisplayed && <div>
             <h3>Bench list</h3>
             <ul>
               {
@@ -46,7 +47,8 @@ const DebugPanel: FunctionComponent = () => {
                 ))
               }
             </ul>
-          </div>
+          </div>}
+          {<button onClick={() => setIsBenchListDisplayed(!isBenchListDisplayed)}>Afficher/Cacher la liste des installations</button>}
           <button onClick={queryName}>Query le nom des installations</button>
           <button onClick={queryGeoAndDesc}>Query la geoloc et la description</button>
           <button onClick={queryOneBench}>Query les infos d'un banc</button>
