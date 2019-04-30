@@ -1,6 +1,5 @@
 import React, {Component, Fragment} from 'react';
-import {Transition } from 'react-transition-group';
-import {TweenLite} from 'gsap';
+import Transition from './Transition';
 import {pageProps} from '../types'
 import {Tweet} from 'react-twitter-widgets'
 //styles
@@ -94,22 +93,7 @@ class Twitter extends Component<Props, State> {
   render() {
     const {show} = this.props
     return (
-      <Transition
-        in={show}
-        unmountOnExit
-        timeout={8000}
-        onEnter={node => TweenLite.set(node, {
-          autoAlpha: 0,
-          x: -50
-        })}
-        addEndListener={(node, done) => {
-          TweenLite.to(node, 0.5, {
-            autoAlpha: show ? 1 : 0,
-            x: show ? 0 : 200,
-            onComplete: done
-          });
-        }}
-      >
+      <Transition show={show}>
         {this.pageContent()}
       </Transition>
     )
