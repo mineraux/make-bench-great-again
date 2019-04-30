@@ -43,6 +43,7 @@ class ApiClient {
           lockedDescription:"${fields.lockedDescription}",
           geolocation:[${geolocation}],
           hashTags:["#1"]}){
+            _id
             name
       }
     }
@@ -68,12 +69,11 @@ class ApiClient {
         updateBenchInput:
           ${formatedQuery}
       ){
+        _id
         name
-        description
       }
     }
     `
-
     return query
   }
 
@@ -82,6 +82,7 @@ class ApiClient {
     const query = `
     mutation {
       deleteBench(benchId:"${benchID}") {
+        _id
         name
       }
     }
@@ -90,9 +91,13 @@ class ApiClient {
     return query
   }
 
-  public createBench = async (fields: createApiBenchMutation) => {
+  public createBench = async (fields: createApiBenchMutation): Promise<ApiBench> => {
     const query = this.mutationCreateBench(fields)
-    let dataResponse
+    let dataResponse = {
+      createBench: {
+        _id:""
+      }
+    }
 
     const requestBody = {
       query: query
@@ -107,19 +112,23 @@ class ApiClient {
     }))
       .then(res => {
         if (res.status !== 200 && res.status !== 201) {
-          throw Error('Failed')
+          throw Error('Erreur lors de la création du banc')
         }
         return res.json()
       })
-      .then(res => dataResponse = res.data);
-
-      return dataResponse
-
+      .then(res => dataResponse.createBench = res.data.createBench);
+      return dataResponse.createBench
   }
 
-  public updateBench = async (fields: ApiBench) => {
+  public updateBench = async (fields: ApiBench): Promise<ApiBench> => {
     const query = this.mutationUpdateBench(fields)
 
+    let dataResponse = {
+      updateBench: {
+        _id:""
+      }
+    }
+
     const requestBody = {
       query: query
     }
@@ -133,14 +142,24 @@ class ApiClient {
     }))
       .then(res => {
         if (res.status !== 200 && res.status !== 201) {
-          throw Error('Failed')
+          throw Error('Erreur lors de la mise à jour du banc')
         }
+        return res.json()
       })
+      .then(res => dataResponse.updateBench = res.data.updateBench);
+
+      return dataResponse.updateBench
   }
 
-  public deleteBench = async (benchID: ApiBench["_id"]) => {
+  public deleteBench = async (benchID: ApiBench["_id"]): Promise<ApiBench> => {
     const query = this.mutationDeleteBench(benchID)
 
+    let dataResponse = {
+      deleteBench: {
+        _id:""
+      }
+    }
+
     const requestBody = {
       query: query
     }
@@ -154,12 +173,14 @@ class ApiClient {
     }))
       .then(res => {
         if (res.status !== 200 && res.status !== 201) {
-          throw Error('Failed')
+          throw Error('Erreur lors de la suppression du banc')
         }
+        return res.json()
       })
+      .then(res => dataResponse.deleteBench = res.data.deleteBench);
+
+      return dataResponse.deleteBench
   }
-
-
 
   public getBenchList = async (fieldsToFetch: QueryApiBenchReponse): Promise<ApiBenchReponseRoot> => {
     let benchList: ApiBenchReponseRoot = []

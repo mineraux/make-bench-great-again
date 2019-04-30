@@ -8,13 +8,21 @@ type props = {
   show: boolean,
 }
 
-class Admin extends Component<props> {
+type stateAdmin = {
+  requestMessage: string
+}
+
+class Admin extends Component<props, stateAdmin> {
   createBenchForm: HTMLFormElement | null = null;
   updateBenchForm: HTMLFormElement | null = null;
   deleteBenchForm: HTMLFormElement | null = null;
 
   constructor(props: props) {
     super(props)
+
+    this.state = {
+      requestMessage: ""
+    }
   }
 
   render() {
@@ -37,22 +45,28 @@ class Admin extends Component<props> {
           && lockedDescription.length > 0
           && latitude.length > 0
           && longitude.length > 0) {
-          const request = await (ApiClient.createBench({
+
+          await (ApiClient.createBench({
             name: name,
             description: description,
             lockedDescription: lockedDescription,
             latitude: parseFloat(latitude),
             longitude: parseFloat(longitude)
-          }))
-
-          console.log(request)
+          })
+          )
+            .then(res => {
+              this.setState({ requestMessage: `Le banc "${res.name}"(ID:${res._id}) a été créer avec succès` })
+            })
+            .catch(err => {
+              this.setState({ requestMessage: `${err}` })
+            })
         } else {
           console.log("Tout les champs sont nécessaires pour ajouter une nouvelle installation")
         }
       }
     }
 
-    const updateBench = (e: React.FormEvent<HTMLFormElement>) => {
+    const updateBench = async (e: React.FormEvent<HTMLFormElement>) => {
       e.preventDefault()
 
       if (this.updateBenchForm) {
@@ -67,7 +81,6 @@ class Admin extends Component<props> {
         let fieldsToUpdate: ApiBench = {
           _id: id
         }
-
 
         if (name.length > 0) {
           fieldsToUpdate.name = name
@@ -85,17 +98,29 @@ class Admin extends Component<props> {
           fieldsToUpdate.geolocation = [parseFloat(latitude), parseFloat(longitude)]
         }
 
-        ApiClient.updateBench(fieldsToUpdate)
+        await (ApiClient.updateBench(fieldsToUpdate))
+          .then(res => {
+            this.setState({ requestMessage: `Le banc "${res.name}"(ID:${res._id}) a été mis à jour avec succès` })
+          })
+          .catch(err => {
+            this.setState({ requestMessage: `${err}` })
+          })
       }
     }
 
-    const deleteBench = (e:React.FormEvent<HTMLFormElement>) => {
+    const deleteBench =  async(e: React.FormEvent<HTMLFormElement>) => {
       e.preventDefault()
 
       if (this.deleteBenchForm) {
         const id: string = (this.deleteBenchForm.querySelector('[name="id"]') as HTMLInputElement).value
 
-        ApiClient.deleteBench(id)
+        await (ApiClient.deleteBench(id))
+        .then(res => {
+          this.setState({ requestMessage: `Le banc "${res.name}"(ID:${res._id}) a été supprimé avec succès` })
+        })
+        .catch(err => {
+          this.setState({ requestMessage: `${err}` })
+        })
       }
     }
 
@@ -120,18 +145,22 @@ class Admin extends Component<props> {
         <div className="admin-panel">
           <h2>Admin interface</h2>
           <h3>Ajouter une installation</h3>
+          {
+            this.state.requestMessage.length > 0
+            && <p>{this.state.requestMessage}</p>
+          }
           <form action="/" onSubmit={createBench} ref={el => this.createBenchForm = el}>
             <input type="text" name="name" placeholder="Nom" required />
             <textarea name="description" placeholder="Description" required ></textarea>
             <textarea name="lockedDescription" placeholder="Description bloquée" required ></textarea>
-            <input type="text" name="latitude" placeholder="Latitude"  required />
-            <input type="text" name="longitude" placeholder="Longitude"  required />
+            <input type="text" name="latitude" placeholder="Latitude" required />
+            <input type="text" name="longitude" placeholder="Longitude" required />
             <button type="submit">Envoyer</button>
           </form>
 
           <h3>Mettre à jour une installation</h3>
           <form action="/" onSubmit={updateBench} ref={el => this.updateBenchForm = el}>
-            <input type="text" name="id" placeholder="ID" required/>
+            <input type="text" name="id" placeholder="ID" required />
             <input type="text" name="name" placeholder="Nom" />
             <textarea name="description" placeholder="Description" ></textarea>
             <textarea name="lockedDescription" placeholder="Description bloquée" ></textarea>
@@ -141,9 +170,8 @@ class Admin extends Component<props> {
           </form>
 
           <h3>Supprimer une installation</h3>
-
           <form action="/" onSubmit={deleteBench} ref={el => this.deleteBenchForm = el}>
-            <input type="text" name="id" placeholder="ID" required/>
+            <input type="text" name="id" placeholder="ID" required />
             <button type="submit">Envoyer</button>
           </form>
         </div>
