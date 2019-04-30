@@ -26,7 +26,8 @@ export default {
     Admin: {
       path: '/admin',
       name: 'Admin',
-      component: Admin
+      component: Admin,
+      inNav: true
     }
   }
 }
