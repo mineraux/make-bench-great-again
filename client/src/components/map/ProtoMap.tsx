@@ -72,7 +72,7 @@ const ProtoMap: FunctionComponent = () => {
   }, [])
 
   useEffect(() => {
-    if (map.current) {
+    if (map.current && !markers) {
       const markers = MapManager.setAllMarkers(benchList, map.current)
       setMarkers(markers)
     }
@@ -80,7 +80,6 @@ const ProtoMap: FunctionComponent = () => {
 
   const setFastestPath = () => {
     setSelectedMarker(DirectionsManager.setFastestPath(directions.current, markers, userLocation))
-
     setIsTourStarted(true)
   }
 

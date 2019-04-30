@@ -1,6 +1,7 @@
 import React, { FunctionComponent, useState, useEffect } from "react";
 import { observer } from "mobx-react-lite";
 import { Feature } from "geojson";
+import { Link } from "react-router-dom";
 
 interface Props {
   marker: Feature,
@@ -32,6 +33,7 @@ const InformationsPanel: FunctionComponent<Props> = props => {
       <div className="mapboxgl-map__travel-informations-panel__travel-duration">
         {props.travelTime && props.travelDistance && <p>Nous vous prévoyons {props.travelTime} minutes de trajet ({props.travelDistance} km)</p>}
       </div>
+          {props.marker && props.marker.properties && <Link to={`/bench/${props.marker.properties._id}`}>Voir les informations de l'installation</Link>}
     </div>
   )
 }

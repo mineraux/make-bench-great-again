@@ -23,6 +23,7 @@ class MapManager {
       const feature: Feature = {
         "type": "Feature",
         "properties": {
+          "_id": bench._id,
           "name": bench.name,
           "description": bench.description
         },
