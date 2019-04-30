@@ -17,7 +17,7 @@ class App extends Component {
 
           {Object.values(config.routes).map(route => (
             <Route key={route.path} path={route.path} exact>
-              {({match}) => <route.component show={match !== null}/>}
+              {({match}) => <route.component show={match !== null} match={match} />}
             </Route>
           ))}
 

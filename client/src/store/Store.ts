@@ -41,10 +41,11 @@ class Store {
     }
   }
 
-  @action public fetchSingleBench = async(benchID:ApiBench["_id"], fieldToFetch: QueryApiBenchReponse) => {
+  @action public fetchSingleBench = async(benchID:ApiBench["_id"], fieldToFetch: QueryApiBenchReponse): Promise<ApiBench> => {
     const data:ApiSingleBenchReponseRoot = (await ApiClient.getSingleBench(benchID,fieldToFetch))
 
     this.benchList = this.mergeById([data])
+    return data
   }
 
   mergeById = (data:ApiBenchReponseRoot) => {

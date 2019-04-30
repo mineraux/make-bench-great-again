@@ -55,32 +55,30 @@ const ProtoMap: FunctionComponent = () => {
       map.current!.on('mouseleave', 'markers', function () {
         map.current!.getCanvas().style.cursor = '';
       });
+
+      geolocate.current.on('geolocate', function (e: EventData) {
+        setUserLocation([e.coords.longitude, e.coords.latitude])
+      })
+  
+      directions.current.on('route', function (e: EventData) {
+        // // Returned value is in secondes => conversion to minutes
+        setTravelTime(Math.floor(e.route[0].duration / 60))
+  
+        // // Returned value is in meters => conversion to km
+        setTravelDistance((e.route[0].distance / 1000).toFixed(2))
+      })
     })
-
-    geolocate.current.on('geolocate', function (e: EventData) {
-      setUserLocation([e.coords.longitude, e.coords.latitude])
-    })
-
-    directions.current.on('route', function (e: EventData) {
-      // // Returned value is in secondes => conversion to minutes
-      setTravelTime(Math.floor(e.route[0].duration / 60))
-
-      // // Returned value is in meters => conversion to km
-      setTravelDistance((e.route[0].distance / 1000).toFixed(2))
-    })
-
   }, [])
 
-  useEffect(() => {
-    if (map.current) {
-      const markers = MapManager.setAllMarkers(benchList, map.current)
-      setMarkers(markers)
-    }
+  useEffect(() => {      
+      if (map.current && !markers && map.current.isStyleLoaded()) {
+        const markers = MapManager.setAllMarkers(benchList, map.current)
+        setMarkers(markers)
+      }
   }, [benchList])
 
   const setFastestPath = () => {
     setSelectedMarker(DirectionsManager.setFastestPath(directions.current, markers, userLocation))
-
     setIsTourStarted(true)
   }
 
