@@ -23,7 +23,14 @@ class Bench extends Component<props, stateBench> {
     }
   }
 
+  componentDidMount() {
+    if (this.props.match && this.state && this.state.bench._id.length === 0) {
+      this.getBenchInformation()
+    }
+  }
+
   componentDidUpdate() {
+    
     if (this.props.match && this.state && this.state.bench._id.length === 0) {
       this.getBenchInformation()
     }
