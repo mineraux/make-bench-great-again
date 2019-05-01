@@ -1,4 +1,11 @@
-import { ApiBenchReponseRoot, QueryApiBenchReponse, ApiSingleBenchReponseRoot, ApiBench, createApiBenchMutation } from "../@types";
+import {
+  ApiBenchReponseRoot,
+  QueryApiBenchReponse,
+  ApiSingleBenchReponseRoot,
+  ApiBench,
+  createApiBenchMutation,
+  updateApiBench,
+} from '../@types'
 
 type graphqlQuery = {
   query : string
@@ -23,7 +30,6 @@ type mongoResponse = {
 }
 
 class ApiClient {
-
   private queryBenchList = (fieldsToFetch: QueryApiBenchReponse) => {
     const query = `
     query {
@@ -39,7 +45,10 @@ class ApiClient {
     return query
   }
 
-  private querySingleBench = (benchId: ApiBench["_id"], fieldsToFetch: QueryApiBenchReponse) => {
+  private querySingleBench = (
+    benchId: ApiBench['_id'],
+    fieldsToFetch: QueryApiBenchReponse
+  ) => {
     const query = `
     query {
       singleBench(benchId:"${benchId}") {
@@ -74,16 +83,18 @@ class ApiClient {
   }
 
   private mutationUpdateBench = (fields: ApiBench) => {
-
     const fieldsToUpdate: ApiBench = {
       _id: fields._id,
       name: fields.name,
       description: fields.description,
       lockedDescription: fields.lockedDescription,
-      geolocation: fields.geolocation
-    };
+      geolocation: fields.geolocation,
+    }
 
-    const formatedQuery = JSON.stringify(fieldsToUpdate).replace(/"(\w+)"\s*:/g, '$1:');
+    const formatedQuery = JSON.stringify(fieldsToUpdate).replace(
+      /"(\w+)"\s*:/g,
+      '$1:'
+    )
 
     const query = `
     mutation {
@@ -99,8 +110,7 @@ class ApiClient {
     return query
   }
 
-  private mutationDeleteBench = (benchID: ApiBench["_id"]) => {
-
+  private mutationDeleteBench = (benchID: ApiBench['_id']) => {
     const query = `
     mutation {
       deleteBench(benchId:"${benchID}") {
@@ -118,13 +128,13 @@ class ApiClient {
       data: {}
     }
 
-    await (fetch(`${process.env.REACT_APP_PATH_API}`, {
+    await fetch(`${process.env.REACT_APP_PATH_API}`, {
       method: 'POST',
       headers: {
-        'Content-Type': 'application/json'
+        'Content-Type': 'application/json',
       },
       body: JSON.stringify(requestBody),
-    }))
+    })
       .then(res => {
         if (res.status !== 200 && res.status !== 201) {
           throw Error('Erreur lors de la création du banc')
@@ -198,12 +208,14 @@ class ApiClient {
         if(res.data.deleteBench) {
           dataResponse.deleteBench = res.data.deleteBench
         }
-      });
+      })
 
     return dataResponse.deleteBench
   }
 
-  public getBenchList = async (fieldsToFetch: QueryApiBenchReponse): Promise<ApiBenchReponseRoot> => {
+  public getBenchList = async (
+    fieldsToFetch: QueryApiBenchReponse
+  ): Promise<ApiBenchReponseRoot> => {
     let benchList: ApiBenchReponseRoot = []
 
     const requestBody = {
@@ -239,7 +251,6 @@ class ApiClient {
 
     return bench
   }
-
 }
 
 export default new ApiClient()

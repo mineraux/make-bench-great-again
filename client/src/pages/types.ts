@@ -1,5 +1,5 @@
 interface pageInterface {
-  show: boolean,
+  show: boolean
   // A refacto pour un type match ?
   match: any
 }
