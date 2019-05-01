@@ -1,21 +1,22 @@
-import React, {Component} from 'react';
+import React, { FunctionComponent } from 'react'
 import Transition from './Transition'
-import {pageProps} from "../types";
+import { pageProps } from '../types'
+import { observer } from 'mobx-react-lite'
+import PageStore from '../../store/PageStore'
 
-type props = pageProps & {}
+type Props = pageProps
 
-class Home extends Component<props> {
+const Home: FunctionComponent<Props> = ({ show, match }) => {
 
-  render() {
-    const {show} = this.props
-    return (
-      <Transition show={show}>
-        <div className={"page-home"}>
-          <p>Page : Home</p>
-        </div>
-      </Transition>
-    )
-  }
+  const { pageExiting } = PageStore
+
+  return (
+    <Transition show={show && !pageExiting}>
+      <div className={'page-home'}>
+        <p>Page : Home</p>
+      </div>
+    </Transition>
+  )
 }
 
-export default Home;
+export default observer(Home)

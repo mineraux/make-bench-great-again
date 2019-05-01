@@ -1,6 +1,7 @@
 import React, { FunctionComponent, ReactNode} from 'react';
 import {Transition} from 'react-transition-group';
 import {TimelineMax, TweenMax} from 'gsap'
+import PageStore from '../../store/PageStore'
 
 interface Props {
   show: boolean,
@@ -9,12 +10,18 @@ interface Props {
 
 const TransitionComponent: FunctionComponent<Props> = ({show, children}) => {
 
+  const {pageExiting, setPageExiting} = PageStore
+
   // Initial state before transition
   const onEnter = (node: HTMLElement) => {
     TweenMax.set(node, {
       autoAlpha: 0,
       x: -100
     })
+  }
+
+  const onExit = () => {
+    setPageExiting(true)
   }
 
   // Enter transition
@@ -31,8 +38,14 @@ const TransitionComponent: FunctionComponent<Props> = ({show, children}) => {
 
   // Exit Transition
   const onExitTransition = (node: HTMLElement, done: () => void): void => {
+
+    setPageExiting(true)
+
     const tl = new TimelineMax({
-      onComplete: done
+      onComplete: () => {
+        setPageExiting(false)
+        done()
+      }
     })
 
     tl.to(node, 1, {
@@ -47,6 +60,7 @@ const TransitionComponent: FunctionComponent<Props> = ({show, children}) => {
       unmountOnExit
       timeout={10000}
       onEnter={onEnter}
+      pageExiting={onExit}
       addEndListener={(node, done) => {
         show ? onEnterTransition(node, done) : onExitTransition(node, done)
       }}

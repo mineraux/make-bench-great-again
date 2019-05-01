@@ -1,44 +1,33 @@
-import React, {Component, Fragment} from 'react';
+import React, {FunctionComponent, Fragment, useState} from 'react';
 import Transition from './Transition';
 import {pageProps} from '../types'
 import {Tweet} from 'react-twitter-widgets'
+import {observer} from 'mobx-react-lite'
+import PageStore from "../../store/PageStore";
 //styles
 import './twitter.scss'
 
 type Props = pageProps & {}
 
-type State = {
-  value: string
-  tweets: string[]
-}
+const Twitter: FunctionComponent<Props> = ({show}) => {
 
-class Twitter extends Component<Props, State> {
+  const {pageExiting} = PageStore
 
-  input: HTMLInputElement | null = null
+  const [value, setValue] = useState<string>("")
+  const [tweets, setTweets] = useState<Array<string>>([])
 
-  state: State = {
-    value: "",
-    tweets:[]
+  let input: HTMLInputElement | null = null
+
+  const onInputChange = (e : any) => {
+    setValue(e.target.value)
   }
 
-  onInputChange = (e : any) => {
-    this.setState({
-      value: e.target.value
-    })
+  const onClickSubmit = () => {
+    const hashtag: string = input!.value
+    fetchTweets(hashtag)
   }
 
-  onClickSubmit = () => {
-    const hashtag: string = this.input!.value
-    this.fetchTweets(hashtag)
-  }
-
-  componentDidUpdate(prevProps: Readonly<Props & {}>, prevState: Readonly<State>, snapshot?: any): void {
-    if(window.twttr && this.state.tweets !== prevState.tweets) {
-      window.twttr.widgets.load()
-    }
-  }
-
-  fetchTweets = (hashtag: string) => {
+  const fetchTweets = (hashtag: string) => {
     fetch(`${process.env.REACT_APP_SERVER_URL}/twitter/${hashtag}`, {
       method: 'POST'
     })
@@ -47,17 +36,14 @@ class Twitter extends Component<Props, State> {
           throw Error('Failed to fetch tweets')
         }
         res.json().then(res => {
-          this.setState({tweets: []},
-            () => {
-              res.statuses.map((tweet: any) => {
-                this.setState((previousState) => ({
-                  tweets: [
-                    ...previousState.tweets,
-                    tweet.id_str
-                  ]
-                }))
-              })
-            })
+          setTweets([])
+          res.statuses.map((tweet: any) => {
+            setTweets((previousState) => [
+              ...previousState,
+              tweet.id_str
+            ])
+          })
+
         })
       })
       .catch(err => {
@@ -65,10 +51,10 @@ class Twitter extends Component<Props, State> {
       })
   }
 
-  renderTweets = () => {
-    if(this.state.tweets.length > 0) {
-      console.log("render tweets", this.state.tweets);
-      return this.state.tweets.map((tweet) => (
+  const renderTweets = () => {
+    if(tweets.length > 0) {
+      console.log("render tweets", tweets);
+      return tweets.map((tweet) => (
         <div className="page-twitter__tweets-container__tweet" key={tweet}>
           <Tweet tweetId={tweet}/>
         </div>
@@ -77,27 +63,25 @@ class Twitter extends Component<Props, State> {
     }
   }
 
-  pageContent = () => (
+  const pageContent = () => (
     <div className={"page-twitter"}>
       <p>Page : twiter</p>
       <div className="page-twitter__input-container">
-        <input type="text" ref={el => this.input = el} value={this.state.value} onChange={this.onInputChange}/>
-        <div className="page-twitter__input-container__button" onClick={this.onClickSubmit}>🐦 Search tweets 🐦</div>
+        <input type="text" ref={el => input = el} value={value} onChange={onInputChange}/>
+        <div className="page-twitter__input-container__button" onClick={onClickSubmit}>🐦 Search tweets 🐦</div>
       </div>
       <div className="page-twitter__tweets-container">
-        {this.renderTweets()}
+        {renderTweets()}
       </div>
     </div>
   )
 
-  render() {
-    const {show} = this.props
-    return (
-      <Transition show={show}>
-        {this.pageContent()}
-      </Transition>
-    )
-  }
+  return (
+    <Transition show={show && !pageExiting}>
+      {pageContent()}
+    </Transition>
+  )
+
 }
 
-export default Twitter;
+export default observer(Twitter);

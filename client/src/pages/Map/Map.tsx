@@ -1,25 +1,25 @@
-import React, {Component} from 'react';
+import React, {FunctionComponent} from 'react';
 import Transition from './Transition';
-import {TweenLite} from 'gsap';
+import {observer} from 'mobx-react-lite'
+
 import ProtoMap from '../../components/map/ProtoMap';
 import {pageProps} from "../types";
+import PageStore from "../../store/PageStore";
 
 type props = pageProps & {}
 
-class Map extends Component<props> {
+const Map:  FunctionComponent<props> = ({show, match}) => {
 
-  render() {
-    const {show} = this.props
-    return (
-      <Transition show={show}>
-        <div className={"page-map"}>
-          <p>Page : Map</p>
-          <ProtoMap />
-        </div>
-      </Transition>
+  const {pageExiting} = PageStore
 
-    )
-  }
+  return (
+    <Transition show={show && !pageExiting}>
+      <div className={"page-map"}>
+        <p>Page : Map</p>
+        <ProtoMap/>
+      </div>
+    </Transition>
+  )
 }
 
-export default Map;
+export default observer(Map);
