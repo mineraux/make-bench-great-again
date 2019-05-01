@@ -1,7 +1,25 @@
-import { ApiBenchReponseRoot, QueryApiBenchReponse, ApiSingleBenchReponseRoot, ApiBench, createApiBenchMutation, updateApiBench } from "../@types";
+import { ApiBenchReponseRoot, QueryApiBenchReponse, ApiSingleBenchReponseRoot, ApiBench, createApiBenchMutation } from "../@types";
 
 type graphqlQuery = {
   query : string
+}
+
+type mongoResponse = {
+  data : {
+    updateBench?:{
+      _id:""
+    }
+    createBench?:{
+      _id:string
+    }
+    deleteBench?:{
+      _id:string
+    }
+    benchList?:ApiBench[]
+    singleBench?:{
+      _id:string
+    }
+  }
 }
 
 class ApiClient {
@@ -95,8 +113,10 @@ class ApiClient {
     return query
   }
 
-  private apiCall = async (requestBody: graphqlQuery): Promise<any> => {
-    let response
+  private apiCall = async (requestBody: graphqlQuery): Promise<mongoResponse> => {
+    let response: mongoResponse = {
+      data: {}
+    }
 
     await (fetch(`${process.env.REACT_APP_PATH_API}`, {
       method: 'POST',
@@ -109,8 +129,13 @@ class ApiClient {
         if (res.status !== 200 && res.status !== 201) {
           throw Error('Erreur lors de la création du banc')
         }
-        response = res.json()
+        return res.json()
       })
+      .then(res => {
+        response = res
+        return res
+      })
+
 
     return response
   }
@@ -128,7 +153,9 @@ class ApiClient {
 
     await this.apiCall(requestBody)
       .then(res => {
-        dataResponse.createBench = res.data.createBench
+        if (res.data.createBench) {
+          dataResponse.createBench = res.data.createBench
+        }
       });
 
     return dataResponse.createBench
@@ -146,7 +173,11 @@ class ApiClient {
     }
 
     await this.apiCall(requestBody)
-      .then(res => dataResponse.updateBench = res.data.updateBench);
+      .then(res => {
+        if (res.data.updateBench) {
+          dataResponse.updateBench = res.data.updateBench
+        }
+      });
 
     return dataResponse.updateBench
   }
@@ -163,7 +194,11 @@ class ApiClient {
     }
 
     await this.apiCall(requestBody)
-      .then(res => dataResponse.deleteBench = res.data.deleteBench);
+      .then(res => {
+        if(res.data.deleteBench) {
+          dataResponse.deleteBench = res.data.deleteBench
+        }
+      });
 
     return dataResponse.deleteBench
   }
@@ -175,8 +210,10 @@ class ApiClient {
       query: this.queryBenchList(fieldsToFetch)
     }
     await this.apiCall(requestBody)
-      .then(resData => {
-        benchList = resData.data.benchList
+      .then(res => {
+        if (res.data.benchList) {
+          benchList = res.data.benchList
+        }
       })
       .catch(err => {
         console.log(err)
@@ -192,7 +229,9 @@ class ApiClient {
     }
     await this.apiCall(requestBody)
       .then(resData => {
-        bench = resData.data.singleBench
+        if (resData.data.singleBench) {
+          bench = resData.data.singleBench
+        }
       })
       .catch(err => {
         console.log(err)
