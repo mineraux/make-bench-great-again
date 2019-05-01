@@ -12,8 +12,8 @@ module.exports = buildSchema(`
 
   type Petition {
     _id: ID!
-    title: String!
-    description: String!
+    subscribers:[String!]
+    relatedBench: ID!
   }
   
   input BenchInput {
@@ -34,10 +34,10 @@ module.exports = buildSchema(`
   }
 
   input PetitionInput {
-    title: String!
-    description: String!
+    subscribers: [String!]
+    relatedBench: ID!
   }
-  
+
   type RootQuery {
     benchList: [Bench!]!
     singleBench(benchId: ID!): Bench!
