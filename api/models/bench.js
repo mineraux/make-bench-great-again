@@ -24,6 +24,10 @@ const benchSchema = new Schema({
   hashTags: {
     type: [String],
     required: true
+  },
+  relatedPetition: {
+    type: Schema.Types.ObjectId,
+    ref: 'Petition'
   }
 })
 

@@ -8,6 +8,7 @@ module.exports = buildSchema(`
     lockedDescription: String!
     geolocation: [Float]!
     hashTags: [String!]
+    relatedPetition: ID!
   }
 
   type Petition {
