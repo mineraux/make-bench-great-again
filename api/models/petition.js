@@ -2,11 +2,11 @@ const mongoose = require('mongoose')
 const Schema = mongoose.Schema
 
 const petitionSchema = new Schema({
-  title: {
-    type: String,
+  subscribers: {
+    type: [String],
     required: true
   },
-  description: {
+  relatedBench: {
     type: String,
     required: true
   }

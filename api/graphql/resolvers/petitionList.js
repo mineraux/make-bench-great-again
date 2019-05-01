@@ -8,8 +8,8 @@ module.exports = {
         return {
           ...petition._doc,
           _id: petition.id,
-          title: petition.title,
-          description: petition.description
+          subscribers: petition.subscribers,
+          relatedBench: petition.relatedBench
         }
       })
     } catch (err) {
@@ -18,15 +18,14 @@ module.exports = {
   },
   createPetition: async args => {
     const petition = new Petition({
-      title: args.petitionInput.title,
-      description: args.petitionInput.description
+      subscribers: args.petitionInput.subscribers,
+      relatedBench: args.petitionInput.relatedBench
     })
 
     try {
       const createdPetition = await petition.save()
       return createdPetition
     } catch (err) {
-
       throw err
     }
   },
