@@ -6,7 +6,7 @@ const graphqlHttp = require('express-graphql')
 // ENV 🔧
 
 const dotenv = require('dotenv')
-dotenv.config({path: __dirname + '/.env.local'})
+dotenv.config({ path: __dirname + '/.env.local' })
 
 // DB 🗄
 
@@ -15,13 +15,13 @@ const graphQLSchema = require('./graphql/schema/index.graphql')
 const graphQLResolvers = require('./graphql/resolvers/index')
 
 mongoose
-    .connect(`mongodb+srv://${process.env.MONGO_USER}:${process.env.MONGO_PASSWORD}@${process.env.MONGO_CLUSTER}.mongodb.net/${process.env.MONGO_DB}?retryWrites=true`)
-    .then(() => {
-      console.log('🗄 Success connect to mongoDB')
-    })
-    .catch(err => {
-      console.error('🗄 Error connect to mongoDB', err)
-    })
+  .connect(`mongodb+srv://${process.env.MONGO_USER}:${process.env.MONGO_PASSWORD}@${process.env.MONGO_CLUSTER}.mongodb.net/${process.env.MONGO_DB}?retryWrites=true`, { useNewUrlParser: true })
+  .then(() => {
+    console.log('🗄 Success connect to mongoDB')
+  })
+  .catch(err => {
+    console.error('🗄 Error connect to mongoDB', err)
+  })
 
 // TWITTER 🐦
 
@@ -67,7 +67,7 @@ app.post('/twitter/:hashtag', (req, res) => {
   console.log("🐦 API > /twitter/" + hashtag);
 
   client.get('search/tweets', {
-    q: "#"+ hashtag,
+    q: "#" + hashtag,
     count: 5,
     result_type: "recent",
     lang: "fr"
