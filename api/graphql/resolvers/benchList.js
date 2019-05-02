@@ -61,6 +61,7 @@ module.exports = {
     if (args.updateBenchInput.lockedDescription) fieldsToUpdate.lockedDescription = args.updateBenchInput.lockedDescription
     if (args.updateBenchInput.geolocation) fieldsToUpdate.geolocation = args.updateBenchInput.geolocation
     if (args.updateBenchInput.hashTags) fieldsToUpdate.hashTags = args.updateBenchInput.hashTags
+    if (args.updateBenchInput.relatedPetition) fieldsToUpdate.relatedPetition = args.updateBenchInput.relatedPetition
 
     try {
       const bench = await Bench.findOneAndUpdate(
