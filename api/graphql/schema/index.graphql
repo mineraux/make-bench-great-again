@@ -8,13 +8,13 @@ module.exports = buildSchema(`
     lockedDescription: String!
     geolocation: [Float]!
     hashTags: [String!]
-    relatedPetition: ID!
+    relatedPetition: Petition
   }
 
   type Petition {
     _id: ID!
     subscribers:[String!]
-    relatedBench: ID!
+    relatedBench: Bench!
   }
   
   input BenchInput {
@@ -23,6 +23,7 @@ module.exports = buildSchema(`
     lockedDescription: String!
     geolocation: [Float]!
     hashTags: [String!]
+    relatedPetition: ID
   }
 
   input UpdateBenchInput {
@@ -32,6 +33,7 @@ module.exports = buildSchema(`
     lockedDescription: String
     geolocation: [Float]
     hashTags: [String!]
+    relatedPetition: ID
   }
 
   input PetitionInput {
