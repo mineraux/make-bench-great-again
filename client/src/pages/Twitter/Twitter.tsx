@@ -1,17 +1,13 @@
-import React, {FunctionComponent, Fragment, useState} from 'react';
+import React, {FunctionComponent, useState} from 'react';
 import Transition from './Transition';
 import {pageProps} from '../types'
 import {Tweet} from 'react-twitter-widgets'
-import {observer} from 'mobx-react-lite'
-import PageStore from "../../store/PageStore";
 //styles
 import './twitter.scss'
 
 type Props = pageProps & {}
 
-const Twitter: FunctionComponent<Props> = ({show}) => {
-
-  const {pageExiting} = PageStore
+const Twitter: FunctionComponent<Props> = ({show, match}) => {
 
   const [value, setValue] = useState<string>("")
   const [tweets, setTweets] = useState<Array<string>>([])
@@ -77,11 +73,11 @@ const Twitter: FunctionComponent<Props> = ({show}) => {
   )
 
   return (
-    <Transition show={show && !pageExiting}>
+    <Transition show={show}>
       {pageContent()}
     </Transition>
   )
 
 }
 
-export default observer(Twitter);
+export default Twitter;
