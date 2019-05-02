@@ -1,21 +1,20 @@
-import React, {FunctionComponent} from 'react';
-import DebugPanel from './components/debug/DebugPanel';
-import {BrowserRouter, Route} from 'react-router-dom';
-import {observer} from 'mobx-react-lite'
+import React, { FunctionComponent } from 'react'
+import DebugPanel from './components/debug/DebugPanel'
+import { BrowserRouter, Route } from 'react-router-dom'
+import { observer } from 'mobx-react-lite'
 import PageStore from './store/PageStore'
 //pages
-import Nav from "./components/Nav/Nav";
+import Nav from './components/Nav/Nav'
 //config
 import config from './config/config'
 
 const App: FunctionComponent = () => {
-
-  const {currentPagePath, setCurrentPagePath, setNextPagePath} = PageStore
+  const { currentPagePath, setCurrentPagePath, setNextPagePath } = PageStore
 
   const renderRoute = (route: any) => {
     return (
       <Route key={route.path} path={route.path} exact>
-        {({match}) => {
+        {({ match }) => {
           // init currentPagePath if is not set
           if (match && currentPagePath === null) {
             setCurrentPagePath(match.path)
@@ -28,8 +27,7 @@ const App: FunctionComponent = () => {
             <route.component
               show={
                 match !== null &&
-                (currentPagePath === match.path ||
-                  currentPagePath === null)
+                (currentPagePath === match.path || currentPagePath === null)
               }
               match={match}
             />
@@ -50,4 +48,4 @@ const App: FunctionComponent = () => {
   )
 }
 
-export default observer(App);
+export default observer(App)

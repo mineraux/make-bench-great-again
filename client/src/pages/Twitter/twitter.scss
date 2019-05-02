@@ -16,7 +16,7 @@
       padding: 1rem 1.5rem;
       background-color: rgb(74, 160, 235);
       cursor: pointer;
-      transition: .3s;
+      transition: 0.3s;
 
       &:hover {
         opacity: 0.8;
@@ -41,7 +41,6 @@
           bottom: -1.5rem;
         }
       }
-
     }
   }
 }
