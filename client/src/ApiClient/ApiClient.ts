@@ -4,7 +4,6 @@ import {
   ApiSingleBenchReponseRoot,
   ApiBench,
   createApiBenchMutation,
-  updateApiBench,
 } from '../@types'
 
 type graphqlQuery = {
@@ -73,12 +72,15 @@ class ApiClient {
           description:"${fields.description}",
           lockedDescription:"${fields.lockedDescription}",
           geolocation:[${geolocation}],
-          hashTags:["#1"]}){
+          hashTags:[${fields.hashtags}],
+          testimony:"${fields.testimony}"
+        }){
             _id
             name
       }
     }
     `
+
     return query
   }
 
@@ -89,6 +91,8 @@ class ApiClient {
       description: fields.description,
       lockedDescription: fields.lockedDescription,
       geolocation: fields.geolocation,
+      hashTags: fields.hashTags,
+      testimony: fields.testimony,
     }
 
     const formatedQuery = JSON.stringify(fieldsToUpdate).replace(
@@ -107,6 +111,7 @@ class ApiClient {
       }
     }
     `
+
     return query
   }
 
