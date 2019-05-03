@@ -1,4 +1,31 @@
 const Bench = require('../../models/bench')
+const Petition = require('../../models/petition')
+
+const bench = async benchId => {
+  try {
+    const bench = await Bench.findById(benchId)
+    return {
+      ...bench._doc,
+      _id: bench.id,
+      relatedPetition: petition.bind(this, bench.relatedPetition)
+    }
+  } catch (err) {
+    throw err
+  }
+}
+
+const petition = async petitionId => {
+  try {
+    const petition = await Petition.findById(petitionId)
+    return {
+      ...petition._doc,
+      _id: petition.id,
+      relatedBench: bench.bind(this, petition.relatedBench)
+    }
+  } catch (err) {
+    throw err
+  }
+}
 
 module.exports = {
   benchList: async () => {
@@ -33,11 +60,30 @@ module.exports = {
       description: args.benchInput.description,
       lockedDescription: args.benchInput.lockedDescription,
       geolocation: args.benchInput.geolocation,
-      hashTags: args.benchInput.hashTags
+      hashTags: args.benchInput.hashTags,
+      relatedPetition: args.benchInput.relatedPetition ? args.benchInput.relatedPetition : null
     })
+
+    let createdBench
+
     try {
-      const createdBench = await bench.save()
+      const result = await bench.save()
+      createdBench = {
+        ...result._doc,
+        _id: result._doc._id.toString(),
+        relatedPetition: args.benchInput.relatedPetition ? petition.bind(this, result._doc.relatedPetition) : null
+      }
+      let relatedPetition = await Petition.findById(args.benchInput.relatedPetition)
+
+      if (!relatedPetition) {
+        relatedPetition = null
+      } else {
+        relatedPetition.relatedBench = bench
+        await relatedPetition.save()
+      }
+
       return createdBench
+
     } catch (err) {
       throw err
     }

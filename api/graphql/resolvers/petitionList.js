@@ -1,6 +1,18 @@
 const Petition = require('../../models/petition')
 const Bench = require('../../models/bench')
 
+const bench = async benchId => {
+  try {
+    const bench = await Bench.findById(benchId)
+    return {
+      ...bench._doc,
+      _id: bench.id,
+      relatedPetition: petition.bind(this, bench.relatedPetition)
+    }
+  } catch (err) {
+    throw err
+  }
+}
 
 const petition = async petitionId => {
   try {
@@ -8,22 +20,8 @@ const petition = async petitionId => {
     return {
       ...petition._doc,
       _id: petition.id,
-      relatedBench: bench.bind(this, peition.relatedBench)
+      relatedBench: bench.bind(this, petition.relatedBench)
     }
-  } catch (err) {
-    throw err
-  }
-}
-
-const bench = async benchId => {
-  try {
-    const bench = await Bench.findById(benchId)
-    return {
-      ...bench._doc,
-      _id: bench.id,
-      relatedPetition: petition.bind(this, petition._doc.relatedPetition)
-    }
-    
   } catch (err) {
     throw err
   }
@@ -56,22 +54,16 @@ module.exports = {
 
     try {
       const result = await petition.save()
-      // const createdPetition = await petition.save()
-      // return createdPetition
-      const 
       createdPetition = {
         ...result._doc,
-        relatedBench: bench.bind(this, args.petitionInput.relatedBench)
+        _id: result._doc._id.toString(),
+        relatedBench: bench.bind(this, result._doc.relatedPetition)
       }
+      let relatedBench = await Bench.findById(args.petitionInput.relatedBench)
 
-      console.log(args.petitionInput.relatedBench)
-      const bench = await Bench.findById(args.petitionInput.relatedBench)
-
-      bench.relatedBench.push(petition)
-      console.log(createdPetition)
-      console.log(bench)
-      await bench.save()
-
+      relatedBench.relatedPetition = petition
+      await relatedBench.save()
+      
       return createdPetition
     } catch (err) {
       throw err
