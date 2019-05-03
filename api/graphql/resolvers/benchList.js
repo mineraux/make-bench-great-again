@@ -39,7 +39,9 @@ module.exports = {
           description: bench.description,
           lockedDescription: bench.lockedDescription,
           geolocation: bench.geolocation,
-          hashTags: bench.hashTags
+          hashTags: bench.hashTags,
+          testimony: bench.testimony,
+          relatedPetition: bench.relatedPetition
         }
       })
     } catch (err) {
@@ -61,6 +63,7 @@ module.exports = {
       lockedDescription: args.benchInput.lockedDescription,
       geolocation: args.benchInput.geolocation,
       hashTags: args.benchInput.hashTags,
+      testimony: args.benchInput.testimony,
       relatedPetition: args.benchInput.relatedPetition ? args.benchInput.relatedPetition : null
     })
 
@@ -106,6 +109,7 @@ module.exports = {
     if (args.updateBenchInput.description) fieldsToUpdate.description = args.updateBenchInput.description
     if (args.updateBenchInput.lockedDescription) fieldsToUpdate.lockedDescription = args.updateBenchInput.lockedDescription
     if (args.updateBenchInput.geolocation) fieldsToUpdate.geolocation = args.updateBenchInput.geolocation
+    if (args.updateBenchInput.testimony) fieldsToUpdate.testimony = args.updateBenchInput.testimony
     if (args.updateBenchInput.hashTags) fieldsToUpdate.hashTags = args.updateBenchInput.hashTags
     if (args.updateBenchInput.relatedPetition) fieldsToUpdate.relatedPetition = args.updateBenchInput.relatedPetition
 

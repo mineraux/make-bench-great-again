@@ -25,6 +25,9 @@ const benchSchema = new Schema({
     type: [String],
     required: true
   },
+  testimony: {
+    type: String,
+  },
   relatedPetition: {
     type: Schema.Types.ObjectId,
     ref: 'Petition'
