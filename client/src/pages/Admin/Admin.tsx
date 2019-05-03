@@ -48,6 +48,12 @@ class Admin extends Component<props, stateAdmin> {
         const longitude: string = (this.createBenchForm.querySelector(
           '[name="longitude"]'
         ) as HTMLInputElement).value
+        const testimony: string = (this.createBenchForm.querySelector(
+          '[name="testimony"]'
+        ) as HTMLInputElement).value
+        const hashtags: string[] = (this.createBenchForm.querySelector(
+          '[name="hashtags"]'
+        ) as HTMLInputElement).value.split(' ')
 
         if (
           name.length > 0 &&
@@ -62,6 +68,8 @@ class Admin extends Component<props, stateAdmin> {
             lockedDescription: lockedDescription,
             latitude: parseFloat(latitude),
             longitude: parseFloat(longitude),
+            testimony: testimony,
+            hashtags: hashtags,
           })
             .then(res => {
               this.setState({
@@ -103,6 +111,12 @@ class Admin extends Component<props, stateAdmin> {
         const longitude: string = (this.updateBenchForm.querySelector(
           '[name="longitude"]'
         ) as HTMLInputElement).value
+        const testimony: string = (this.updateBenchForm.querySelector(
+          '[name="testimony"]'
+        ) as HTMLInputElement).value
+        const hashtags: string[] = (this.updateBenchForm.querySelector(
+          '[name="hashtags"]'
+        ) as HTMLInputElement).value.split('-')
 
         let fieldsToUpdate: ApiBench = {
           _id: id,
@@ -125,6 +139,14 @@ class Admin extends Component<props, stateAdmin> {
             parseFloat(latitude),
             parseFloat(longitude),
           ]
+        }
+
+        if (testimony.length > 0) {
+          fieldsToUpdate.testimony = testimony
+        }
+
+        if (hashtags && hashtags[0].length > 0) {
+          fieldsToUpdate.hashTags = hashtags
         }
 
         await ApiClient.updateBench(fieldsToUpdate)
@@ -227,6 +249,20 @@ class Admin extends Component<props, stateAdmin> {
               required
               className="admin-panel__form__field"
             />
+            <input
+              type="text"
+              name="testimony"
+              placeholder="Témoignage"
+              required
+              className="admin-panel__form__field"
+            />
+            <input
+              type="text"
+              name="hashtags"
+              placeholder="Hastags"
+              required
+              className="admin-panel__form__field"
+            />
             <button type="submit" className="admin-panel__form__submit-button">
               Envoyer
             </button>
@@ -272,6 +308,18 @@ class Admin extends Component<props, stateAdmin> {
               type="text"
               name="longitude"
               placeholder="Longitude"
+              className="admin-panel__form__field"
+            />
+            <input
+              type="text"
+              name="testimony"
+              placeholder="Témoignage"
+              className="admin-panel__form__field"
+            />
+            <input
+              type="text"
+              name="hashtags"
+              placeholder="Hashtags"
               className="admin-panel__form__field"
             />
             <button type="submit" className="admin-panel__form__submit-button">
