@@ -47,7 +47,7 @@ module.exports = {
   createPetition: async args => {
     const petition = new Petition({
       subscribers: args.petitionInput.subscribers,
-      relatedBench: args.petitionInput.relatedBench
+      relatedBench: args.petitionInput.relatedBench ? args.petitionInput.relatedBench : null
     })
 
     let createdPetition
@@ -57,13 +57,17 @@ module.exports = {
       createdPetition = {
         ...result._doc,
         _id: result._doc._id.toString(),
-        relatedBench: bench.bind(this, result._doc.relatedPetition)
+        relatedBench: args.petitionInput.relatedBench ? bench.bind(this, result._doc.relatedPetition) : null
       }
       let relatedBench = await Bench.findById(args.petitionInput.relatedBench)
 
-      relatedBench.relatedPetition = petition
-      await relatedBench.save()
-      
+      if (!relatedBench) {
+        relatedBench = null
+      } else {
+        relatedBench.relatedPetition = petition
+        await relatedBench.save()
+      }
+
       return createdPetition
     } catch (err) {
       throw err
