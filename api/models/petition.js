@@ -8,8 +8,7 @@ const petitionSchema = new Schema({
   },
   relatedBench: {
     type: Schema.Types.ObjectId,
-    ref: 'Bench',
-    required: true
+    ref: 'Bench'
   }
 })
 

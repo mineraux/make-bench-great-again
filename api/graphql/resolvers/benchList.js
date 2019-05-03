@@ -110,12 +110,24 @@ module.exports = {
     if (args.updateBenchInput.relatedPetition) fieldsToUpdate.relatedPetition = args.updateBenchInput.relatedPetition
 
     try {
-      const bench = await Bench.findOneAndUpdate(
+      const bench = await Bench.findById(args.updateBenchInput._id)
+      const relatedPetition = await Petition.findById(bench.relatedPetition)
+      relatedPetition.relatedBench = null
+      relatedPetition.save()
+
+      const updatedBench = await Bench.findOneAndUpdate(
         {"_id" : args.updateBenchInput._id},
         { $set: fieldsToUpdate },
         {new: true}
       )
-      return bench
+
+      if (args.updateBenchInput.relatedPetition) {
+        let relatedPetition = await Petition.findById(args.updateBenchInput.relatedPetition)
+        relatedPetition.relatedBench = updatedBench._doc._id
+        relatedPetition.save()
+      }
+
+      return updatedBench
 
     } catch (err) {
       throw err
