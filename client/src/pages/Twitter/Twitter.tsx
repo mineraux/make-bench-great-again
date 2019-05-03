@@ -1,6 +1,5 @@
-import React, { Component, Fragment } from 'react'
-import { Transition } from 'react-transition-group'
-import { TweenLite } from 'gsap'
+import React, { FunctionComponent, useState } from 'react'
+import Transition from './Transition'
 import { pageProps } from '../types'
 import { Tweet } from 'react-twitter-widgets'
 //styles
@@ -8,41 +7,22 @@ import './twitter.scss'
 
 type Props = pageProps & {}
 
-type State = {
-  value: string
-  tweets: string[]
-}
+const Twitter: FunctionComponent<Props> = ({ show, match }) => {
+  const [value, setValue] = useState<string>('')
+  const [tweets, setTweets] = useState<Array<string>>([])
 
-class Twitter extends Component<Props, State> {
-  input: HTMLInputElement | null = null
+  let input: HTMLInputElement | null = null
 
-  state: State = {
-    value: '',
-    tweets: [],
+  const onInputChange = (e: any) => {
+    setValue(e.target.value)
   }
 
-  onInputChange = (e: any) => {
-    this.setState({
-      value: e.target.value,
-    })
+  const onClickSubmit = () => {
+    const hashtag: string = input!.value
+    fetchTweets(hashtag)
   }
 
-  onClickSubmit = () => {
-    const hashtag: string = this.input!.value
-    this.fetchTweets(hashtag)
-  }
-
-  componentDidUpdate(
-    prevProps: Readonly<Props & {}>,
-    prevState: Readonly<State>,
-    snapshot?: any
-  ): void {
-    if (window.twttr && this.state.tweets !== prevState.tweets) {
-      window.twttr.widgets.load()
-    }
-  }
-
-  fetchTweets = (hashtag: string) => {
+  const fetchTweets = (hashtag: string) => {
     fetch(`${process.env.REACT_APP_SERVER_URL}/twitter/${hashtag}`, {
       method: 'POST',
     })
@@ -51,12 +31,9 @@ class Twitter extends Component<Props, State> {
           throw Error('Failed to fetch tweets')
         }
         res.json().then(res => {
-          this.setState({ tweets: [] }, () => {
-            res.statuses.map((tweet: any) => {
-              this.setState(previousState => ({
-                tweets: [...previousState.tweets, tweet.id_str],
-              }))
-            })
+          setTweets([])
+          res.statuses.map((tweet: any) => {
+            setTweets(previousState => [...previousState, tweet.id_str])
           })
         })
       })
@@ -65,10 +42,10 @@ class Twitter extends Component<Props, State> {
       })
   }
 
-  renderTweets = () => {
-    if (this.state.tweets.length > 0) {
-      console.log('render tweets', this.state.tweets)
-      return this.state.tweets.map(tweet => (
+  const renderTweets = () => {
+    if (tweets.length > 0) {
+      console.log('render tweets', tweets)
+      return tweets.map(tweet => (
         <div className="page-twitter__tweets-container__tweet" key={tweet}>
           <Tweet tweetId={tweet} />
         </div>
@@ -76,54 +53,28 @@ class Twitter extends Component<Props, State> {
     }
   }
 
-  pageContent = () => (
+  const pageContent = () => (
     <div className={'page-twitter'}>
       <p>Page : twiter</p>
       <div className="page-twitter__input-container">
         <input
           type="text"
-          ref={el => (this.input = el)}
-          value={this.state.value}
-          onChange={this.onInputChange}
+          ref={el => (input = el)}
+          value={value}
+          onChange={onInputChange}
         />
         <div
           className="page-twitter__input-container__button"
-          onClick={this.onClickSubmit}
+          onClick={onClickSubmit}
         >
           🐦 Search tweets 🐦
         </div>
       </div>
-      <div className="page-twitter__tweets-container">
-        {this.renderTweets()}
-      </div>
+      <div className="page-twitter__tweets-container">{renderTweets()}</div>
     </div>
   )
 
-  render() {
-    const { show } = this.props
-    return (
-      <Transition
-        in={show}
-        unmountOnExit
-        timeout={8000}
-        onEnter={node =>
-          TweenLite.set(node, {
-            autoAlpha: 0,
-            x: -50,
-          })
-        }
-        addEndListener={(node, done) => {
-          TweenLite.to(node, 0.5, {
-            autoAlpha: show ? 1 : 0,
-            x: show ? 0 : 200,
-            onComplete: done,
-          })
-        }}
-      >
-        {this.pageContent()}
-      </Transition>
-    )
-  }
+  return <Transition show={show}>{pageContent()}</Transition>
 }
 
 export default Twitter

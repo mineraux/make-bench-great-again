@@ -8,23 +8,23 @@ import {
 } from '../@types'
 
 type graphqlQuery = {
-  query : string
+  query: string
 }
 
 type mongoResponse = {
-  data : {
-    updateBench?:{
-      _id:""
+  data: {
+    updateBench?: {
+      _id: ''
     }
-    createBench?:{
-      _id:string
+    createBench?: {
+      _id: string
     }
-    deleteBench?:{
-      _id:string
+    deleteBench?: {
+      _id: string
     }
-    benchList?:ApiBench[]
-    singleBench?:{
-      _id:string
+    benchList?: ApiBench[]
+    singleBench?: {
+      _id: string
     }
   }
 }
@@ -123,9 +123,11 @@ class ApiClient {
     return query
   }
 
-  private apiCall = async (requestBody: graphqlQuery): Promise<mongoResponse> => {
+  private apiCall = async (
+    requestBody: graphqlQuery
+  ): Promise<mongoResponse> => {
     let response: mongoResponse = {
-      data: {}
+      data: {},
     }
 
     await fetch(`${process.env.REACT_APP_PATH_API}`, {
@@ -146,27 +148,27 @@ class ApiClient {
         return res
       })
 
-
     return response
   }
 
-  public createBench = async (fields: createApiBenchMutation): Promise<ApiBench> => {
+  public createBench = async (
+    fields: createApiBenchMutation
+  ): Promise<ApiBench> => {
     let dataResponse = {
       createBench: {
-        _id: ""
-      }
+        _id: '',
+      },
     }
 
     const requestBody = {
-      query: this.mutationCreateBench(fields)
+      query: this.mutationCreateBench(fields),
     }
 
-    await this.apiCall(requestBody)
-      .then(res => {
-        if (res.data.createBench) {
-          dataResponse.createBench = res.data.createBench
-        }
-      });
+    await this.apiCall(requestBody).then(res => {
+      if (res.data.createBench) {
+        dataResponse.createBench = res.data.createBench
+      }
+    })
 
     return dataResponse.createBench
   }
@@ -174,41 +176,39 @@ class ApiClient {
   public updateBench = async (fields: ApiBench): Promise<ApiBench> => {
     let dataResponse = {
       updateBench: {
-        _id: ""
-      }
+        _id: '',
+      },
     }
 
     const requestBody = {
-      query: this.mutationUpdateBench(fields)
+      query: this.mutationUpdateBench(fields),
     }
 
-    await this.apiCall(requestBody)
-      .then(res => {
-        if (res.data.updateBench) {
-          dataResponse.updateBench = res.data.updateBench
-        }
-      });
+    await this.apiCall(requestBody).then(res => {
+      if (res.data.updateBench) {
+        dataResponse.updateBench = res.data.updateBench
+      }
+    })
 
     return dataResponse.updateBench
   }
 
-  public deleteBench = async (benchID: ApiBench["_id"]): Promise<ApiBench> => {
+  public deleteBench = async (benchID: ApiBench['_id']): Promise<ApiBench> => {
     let dataResponse = {
       deleteBench: {
-        _id: ""
-      }
+        _id: '',
+      },
     }
 
     const requestBody = {
-      query: this.mutationDeleteBench(benchID)
+      query: this.mutationDeleteBench(benchID),
     }
 
-    await this.apiCall(requestBody)
-      .then(res => {
-        if(res.data.deleteBench) {
-          dataResponse.deleteBench = res.data.deleteBench
-        }
-      })
+    await this.apiCall(requestBody).then(res => {
+      if (res.data.deleteBench) {
+        dataResponse.deleteBench = res.data.deleteBench
+      }
+    })
 
     return dataResponse.deleteBench
   }
@@ -219,7 +219,7 @@ class ApiClient {
     let benchList: ApiBenchReponseRoot = []
 
     const requestBody = {
-      query: this.queryBenchList(fieldsToFetch)
+      query: this.queryBenchList(fieldsToFetch),
     }
     await this.apiCall(requestBody)
       .then(res => {
@@ -234,10 +234,13 @@ class ApiClient {
     return benchList
   }
 
-  public getSingleBench = async (benchID: ApiBench["_id"], fieldsToFetch: QueryApiBenchReponse): Promise<ApiSingleBenchReponseRoot> => {
-    let bench: ApiBench = { _id: "" }
+  public getSingleBench = async (
+    benchID: ApiBench['_id'],
+    fieldsToFetch: QueryApiBenchReponse
+  ): Promise<ApiSingleBenchReponseRoot> => {
+    let bench: ApiBench = { _id: '' }
     const requestBody = {
-      query: this.querySingleBench(benchID, fieldsToFetch)
+      query: this.querySingleBench(benchID, fieldsToFetch),
     }
     await this.apiCall(requestBody)
       .then(resData => {

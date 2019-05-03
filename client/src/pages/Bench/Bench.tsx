@@ -1,6 +1,5 @@
 import React, { Component } from 'react'
-import { Transition } from 'react-transition-group'
-import { TweenLite } from 'gsap'
+import Transition from './Transition'
 import { pageProps } from '../types'
 import Store from '../../store/Store'
 import { ApiBench } from '../../@types'
@@ -46,24 +45,7 @@ class Bench extends Component<props, stateBench> {
     const { show } = this.props
 
     return (
-      <Transition
-        unmountOnExit
-        in={show}
-        timeout={8000}
-        onEnter={node =>
-          TweenLite.set(node, {
-            autoAlpha: 0,
-            x: -50,
-          })
-        }
-        addEndListener={(node, done) => {
-          TweenLite.to(node, 0.5, {
-            autoAlpha: show ? 1 : 0,
-            x: show ? 0 : 50,
-            onComplete: done,
-          })
-        }}
-      >
+      <Transition show={show}>
         <div className="page-bench">
           {this.state && <p>{this.state.bench.name}</p>}
         </div>

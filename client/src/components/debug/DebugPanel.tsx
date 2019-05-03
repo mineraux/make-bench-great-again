@@ -19,7 +19,7 @@ const DebugPanel: FunctionComponent = () => {
   }
 
   const queryOneBench = async () => {
-    await fetchSingleBench("5cc8779779be4460aef65efc", { name: true })
+    await fetchSingleBench('5cc8779779be4460aef65efc', { name: true })
   }
 
   return (
