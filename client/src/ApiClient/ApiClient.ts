@@ -4,6 +4,9 @@ import {
   ApiSingleBenchReponseRoot,
   ApiBench,
   createApiBenchMutation,
+  ApiPetition,
+  createApiPetitionMutation,
+  createApiPetition,
 } from '../@types'
 
 type graphqlQuery = {
@@ -23,6 +26,9 @@ type mongoResponse = {
     }
     benchList?: ApiBench[]
     singleBench?: {
+      _id: string
+    }
+    createPetition?: {
       _id: string
     }
   }
@@ -258,6 +264,56 @@ class ApiClient {
       })
 
     return bench
+  }
+
+  private mutationCreatePetition = (fields: createApiPetitionMutation) => {
+    const fieldsToUpdate: createApiPetition = {
+      subscribers: fields.subscribers,
+      relatedBench:
+        fields.relatedBench && fields.relatedBench.length > 0
+          ? fields.relatedBench
+          : null,
+    }
+
+    const formatedQuery = JSON.stringify(fieldsToUpdate).replace(
+      /"(\w+)"\s*:/g,
+      '$1:'
+    )
+
+    const query = `
+    mutation {
+      createPetition(
+        petitionInput:
+          ${formatedQuery}
+        ){
+          _id
+      }
+    }
+    `
+
+    return query
+  }
+
+  public createPetition = async (
+    fields: createApiPetitionMutation
+  ): Promise<ApiPetition> => {
+    let dataResponse = {
+      createPetition: {
+        _id: '',
+      },
+    }
+
+    const requestBody = {
+      query: this.mutationCreatePetition(fields),
+    }
+
+    await this.apiCall(requestBody).then(res => {
+      if (res.data.createPetition) {
+        dataResponse.createPetition = res.data.createPetition
+      }
+    })
+
+    return dataResponse.createPetition
   }
 }
 

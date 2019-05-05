@@ -48,8 +48,23 @@ export interface updateApiBench extends createApiBench {
   _id: string
 }
 
+export interface ApiPetition {
+  _id: string
+  subscribers?: string[]
+  relatedBench?: string | null
+}
+
+export interface createApiPetition {
+  subscribers?: string[]
+  relatedBench?: string | null
+}
+
 export type ApiBenchReponseRoot = Array<ApiBench>
 export type ApiSingleBenchReponseRoot = ApiBench
 export type QueryApiBenchReponse = queryApiBench
 export type createApiBenchMutation = createApiBench
 export type updateApiBenchMutation = updateApiBench
+
+export type ApiPetitionReponseRoot = Array<ApiPetition>
+export type ApiSinglePetitionReponseRoot = ApiPetition
+export type createApiPetitionMutation = createApiPetition

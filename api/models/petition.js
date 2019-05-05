@@ -3,8 +3,7 @@ const Schema = mongoose.Schema
 
 const petitionSchema = new Schema({
   subscribers: {
-    type: [String],
-    required: true
+    type: [String]
   },
   relatedBench: {
     type: Schema.Types.ObjectId,

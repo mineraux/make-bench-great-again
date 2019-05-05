@@ -16,6 +16,7 @@ class Admin extends Component<props, stateAdmin> {
   createBenchForm: HTMLFormElement | null = null
   updateBenchForm: HTMLFormElement | null = null
   deleteBenchForm: HTMLFormElement | null = null
+  createPetitionForm: HTMLFormElement | null = null
 
   constructor(props: props) {
     super(props)
@@ -184,6 +185,32 @@ class Admin extends Component<props, stateAdmin> {
       }
     }
 
+    const createPetition = async (e: React.FormEvent<HTMLFormElement>) => {
+      e.preventDefault()
+
+      if (this.createPetitionForm) {
+        const subscribers: string[] = (this.createPetitionForm.querySelector(
+          '[name="subscribers"]'
+        ) as HTMLInputElement).value.split(' ')
+
+        const relatedBench: string = (this.createPetitionForm.querySelector(
+          '[name="relatedBench"]'
+        ) as HTMLInputElement).value
+
+        await ApiClient.createPetition({ subscribers, relatedBench })
+          .then(res => {
+            this.setState({
+              requestMessage: `La pétition "${res._id}"(ID:${
+                res._id
+              }) a été créée avec succès`,
+            })
+          })
+          .catch(err => {
+            this.setState({ requestMessage: `${err}` })
+          })
+      }
+    }
+
     return (
       <Transition show={show}>
         <div className="admin-panel">
@@ -321,6 +348,30 @@ class Admin extends Component<props, stateAdmin> {
               name="id"
               placeholder="ID"
               required
+              className="admin-panel__form__field"
+            />
+            <button type="submit" className="admin-panel__form__submit-button">
+              Envoyer
+            </button>
+          </form>
+
+          <h3>Ajouter une petition</h3>
+          <form
+            action="/"
+            onSubmit={createPetition}
+            ref={el => (this.createPetitionForm = el)}
+            className="admin-panel__form"
+          >
+            <input
+              type="text"
+              name="subscribers"
+              placeholder="Abonnés"
+              className="admin-panel__form__field"
+            />
+            <input
+              type="text"
+              name="relatedBench"
+              placeholder="Installation reliée"
               className="admin-panel__form__field"
             />
             <button type="submit" className="admin-panel__form__submit-button">
