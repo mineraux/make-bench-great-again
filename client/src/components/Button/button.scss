@@ -24,7 +24,7 @@
   &__label {
     font-size: 1.1rem;
     text-transform: uppercase;
-    // TODO: add font : avenir medium
+    font-family: $font-avenir-medium;
 
     &.theme-blue {
       color: $color-blue;
