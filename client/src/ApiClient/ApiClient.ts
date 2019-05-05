@@ -4,7 +4,9 @@ import {
   ApiSingleBenchReponseRoot,
   ApiBench,
   createApiBenchMutation,
-  updateApiBench,
+  ApiPetition,
+  createApiPetitionMutation,
+  createApiPetition,
 } from '../@types'
 
 type graphqlQuery = {
@@ -24,6 +26,12 @@ type mongoResponse = {
     }
     benchList?: ApiBench[]
     singleBench?: {
+      _id: string
+    }
+    createPetition?: {
+      _id: string
+    }
+    deletePetition?: {
       _id: string
     }
   }
@@ -73,12 +81,15 @@ class ApiClient {
           description:"${fields.description}",
           lockedDescription:"${fields.lockedDescription}",
           geolocation:[${geolocation}],
-          hashTags:["#1"]}){
+          hashTags:[${fields.hashtags}],
+          testimony:"${fields.testimony}"
+        }){
             _id
             name
       }
     }
     `
+
     return query
   }
 
@@ -89,6 +100,8 @@ class ApiClient {
       description: fields.description,
       lockedDescription: fields.lockedDescription,
       geolocation: fields.geolocation,
+      hashTags: fields.hashTags,
+      testimony: fields.testimony,
     }
 
     const formatedQuery = JSON.stringify(fieldsToUpdate).replace(
@@ -107,6 +120,7 @@ class ApiClient {
       }
     }
     `
+
     return query
   }
 
@@ -118,6 +132,18 @@ class ApiClient {
         name
       }
     }
+    `
+
+    return query
+  }
+
+  private mutationDeletePetition = (petitionId: ApiPetition['_id']) => {
+    const query = `
+      mutation {
+        deletePetition(petitionId:"${petitionId}"){
+          _id
+        }
+      }
     `
 
     return query
@@ -253,6 +279,78 @@ class ApiClient {
       })
 
     return bench
+  }
+
+  private mutationCreatePetition = (fields: createApiPetitionMutation) => {
+    const fieldsToUpdate: createApiPetition = {
+      subscribers: fields.subscribers,
+      relatedBench:
+        fields.relatedBench && fields.relatedBench.length > 0
+          ? fields.relatedBench
+          : null,
+    }
+
+    const formatedQuery = JSON.stringify(fieldsToUpdate).replace(
+      /"(\w+)"\s*:/g,
+      '$1:'
+    )
+
+    const query = `
+    mutation {
+      createPetition(
+        petitionInput:
+          ${formatedQuery}
+        ){
+          _id
+      }
+    }
+    `
+
+    return query
+  }
+
+  public createPetition = async (
+    fields: createApiPetitionMutation
+  ): Promise<ApiPetition> => {
+    let dataResponse = {
+      createPetition: {
+        _id: '',
+      },
+    }
+
+    const requestBody = {
+      query: this.mutationCreatePetition(fields),
+    }
+
+    await this.apiCall(requestBody).then(res => {
+      if (res.data.createPetition) {
+        dataResponse.createPetition = res.data.createPetition
+      }
+    })
+
+    return dataResponse.createPetition
+  }
+
+  public deletePetition = async (
+    petitionID: ApiPetition['_id']
+  ): Promise<ApiPetition> => {
+    let dataResponse = {
+      deletePetition: {
+        _id: '',
+      },
+    }
+
+    const requestBody = {
+      query: this.mutationDeletePetition(petitionID),
+    }
+
+    await this.apiCall(requestBody).then(res => {
+      if (res.data.deletePetition) {
+        dataResponse.deletePetition = res.data.deletePetition
+      }
+    })
+
+    return dataResponse.deletePetition
   }
 }
 

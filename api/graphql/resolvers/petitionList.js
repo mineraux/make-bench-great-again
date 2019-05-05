@@ -1,6 +1,34 @@
 const Petition = require('../../models/petition')
+const Bench = require('../../models/bench')
+
+const bench = async benchId => {
+  try {
+    const bench = await Bench.findById(benchId)
+    return {
+      ...bench._doc,
+      _id: bench.id,
+      relatedPetition: petition.bind(this, bench.relatedPetition)
+    }
+  } catch (err) {
+    throw err
+  }
+}
+
+const petition = async petitionId => {
+  try {
+    const petition = await Petition.findById(petitionId)
+    return {
+      ...petition._doc,
+      _id: petition.id,
+      relatedBench: bench.bind(this, petition.relatedBench)
+    }
+  } catch (err) {
+    throw err
+  }
+}
 
 module.exports = {
+
   petitionList: async () => {
     try {
       const petitionList = await Petition.find()
@@ -8,8 +36,8 @@ module.exports = {
         return {
           ...petition._doc,
           _id: petition.id,
-          title: petition.title,
-          description: petition.description
+          subscribers: petition.subscribers,
+          relatedBench: petition.relatedBench
         }
       })
     } catch (err) {
@@ -18,15 +46,30 @@ module.exports = {
   },
   createPetition: async args => {
     const petition = new Petition({
-      title: args.petitionInput.title,
-      description: args.petitionInput.description
+      subscribers: args.petitionInput.subscribers,
+      relatedBench: args.petitionInput.relatedBench ? args.petitionInput.relatedBench : null
     })
 
+    let createdPetition
+
     try {
-      const createdPetition = await petition.save()
+      const result = await petition.save()
+      createdPetition = {
+        ...result._doc,
+        _id: result._doc._id.toString(),
+        relatedBench: args.petitionInput.relatedBench ? bench.bind(this, result._doc.relatedPetition) : null
+      }
+      let relatedBench = await Bench.findById(args.petitionInput.relatedBench)
+
+      if (!relatedBench) {
+        relatedBench = null
+      } else {
+        relatedBench.relatedPetition = petition
+        await relatedBench.save()
+      }
+
       return createdPetition
     } catch (err) {
-
       throw err
     }
   },

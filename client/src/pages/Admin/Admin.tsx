@@ -16,6 +16,8 @@ class Admin extends Component<props, stateAdmin> {
   createBenchForm: HTMLFormElement | null = null
   updateBenchForm: HTMLFormElement | null = null
   deleteBenchForm: HTMLFormElement | null = null
+  createPetitionForm: HTMLFormElement | null = null
+  deletePetitionForm: HTMLFormElement | null = null
 
   constructor(props: props) {
     super(props)
@@ -47,6 +49,12 @@ class Admin extends Component<props, stateAdmin> {
         const longitude: string = (this.createBenchForm.querySelector(
           '[name="longitude"]'
         ) as HTMLInputElement).value
+        const testimony: string = (this.createBenchForm.querySelector(
+          '[name="testimony"]'
+        ) as HTMLInputElement).value
+        const hashtags: string[] = (this.createBenchForm.querySelector(
+          '[name="hashtags"]'
+        ) as HTMLInputElement).value.split(' ')
 
         if (
           name.length > 0 &&
@@ -61,6 +69,8 @@ class Admin extends Component<props, stateAdmin> {
             lockedDescription: lockedDescription,
             latitude: parseFloat(latitude),
             longitude: parseFloat(longitude),
+            testimony: testimony,
+            hashtags: hashtags,
           })
             .then(res => {
               this.setState({
@@ -102,6 +112,12 @@ class Admin extends Component<props, stateAdmin> {
         const longitude: string = (this.updateBenchForm.querySelector(
           '[name="longitude"]'
         ) as HTMLInputElement).value
+        const testimony: string = (this.updateBenchForm.querySelector(
+          '[name="testimony"]'
+        ) as HTMLInputElement).value
+        const hashtags: string[] = (this.updateBenchForm.querySelector(
+          '[name="hashtags"]'
+        ) as HTMLInputElement).value.split('-')
 
         let fieldsToUpdate: ApiBench = {
           _id: id,
@@ -124,6 +140,14 @@ class Admin extends Component<props, stateAdmin> {
             parseFloat(latitude),
             parseFloat(longitude),
           ]
+        }
+
+        if (testimony.length > 0) {
+          fieldsToUpdate.testimony = testimony
+        }
+
+        if (hashtags && hashtags[0].length > 0) {
+          fieldsToUpdate.hashTags = hashtags
         }
 
         await ApiClient.updateBench(fieldsToUpdate)
@@ -154,6 +178,54 @@ class Admin extends Component<props, stateAdmin> {
               requestMessage: `Le banc "${res.name}"(ID:${
                 res._id
               }) a été supprimé avec succès`,
+            })
+          })
+          .catch(err => {
+            this.setState({ requestMessage: `${err}` })
+          })
+      }
+    }
+
+    const createPetition = async (e: React.FormEvent<HTMLFormElement>) => {
+      e.preventDefault()
+
+      if (this.createPetitionForm) {
+        const subscribers: string[] = (this.createPetitionForm.querySelector(
+          '[name="subscribers"]'
+        ) as HTMLInputElement).value.split(' ')
+
+        const relatedBench: string = (this.createPetitionForm.querySelector(
+          '[name="relatedBench"]'
+        ) as HTMLInputElement).value
+
+        await ApiClient.createPetition({ subscribers, relatedBench })
+          .then(res => {
+            this.setState({
+              requestMessage: `La pétition "${res._id}"(ID:${
+                res._id
+              }) a été créée avec succès`,
+            })
+          })
+          .catch(err => {
+            this.setState({ requestMessage: `${err}` })
+          })
+      }
+    }
+
+    const deletePetition = async (e: React.FormEvent<HTMLFormElement>) => {
+      e.preventDefault()
+
+      if (this.deletePetitionForm) {
+        const id: string = (this.deletePetitionForm.querySelector(
+          '[name="id"]'
+        ) as HTMLInputElement).value
+
+        await ApiClient.deletePetition(id)
+          .then(res => {
+            this.setState({
+              requestMessage: `La pétition "${
+                res._id
+              }" a été supprimé avec succès`,
             })
           })
           .catch(err => {
@@ -209,6 +281,20 @@ class Admin extends Component<props, stateAdmin> {
               required
               className="admin-panel__form__field"
             />
+            <input
+              type="text"
+              name="testimony"
+              placeholder="Témoignage"
+              required
+              className="admin-panel__form__field"
+            />
+            <input
+              type="text"
+              name="hashtags"
+              placeholder="Hastags"
+              required
+              className="admin-panel__form__field"
+            />
             <button type="submit" className="admin-panel__form__submit-button">
               Envoyer
             </button>
@@ -256,6 +342,18 @@ class Admin extends Component<props, stateAdmin> {
               placeholder="Longitude"
               className="admin-panel__form__field"
             />
+            <input
+              type="text"
+              name="testimony"
+              placeholder="Témoignage"
+              className="admin-panel__form__field"
+            />
+            <input
+              type="text"
+              name="hashtags"
+              placeholder="Hashtags"
+              className="admin-panel__form__field"
+            />
             <button type="submit" className="admin-panel__form__submit-button">
               Envoyer
             </button>
@@ -266,6 +364,49 @@ class Admin extends Component<props, stateAdmin> {
             action="/"
             onSubmit={deleteBench}
             ref={el => (this.deleteBenchForm = el)}
+            className="admin-panel__form"
+          >
+            <input
+              type="text"
+              name="id"
+              placeholder="ID"
+              required
+              className="admin-panel__form__field"
+            />
+            <button type="submit" className="admin-panel__form__submit-button">
+              Envoyer
+            </button>
+          </form>
+
+          <h3>Ajouter une petition</h3>
+          <form
+            action="/"
+            onSubmit={createPetition}
+            ref={el => (this.createPetitionForm = el)}
+            className="admin-panel__form"
+          >
+            <input
+              type="text"
+              name="subscribers"
+              placeholder="Abonnés"
+              className="admin-panel__form__field"
+            />
+            <input
+              type="text"
+              name="relatedBench"
+              placeholder="Installation reliée"
+              className="admin-panel__form__field"
+            />
+            <button type="submit" className="admin-panel__form__submit-button">
+              Envoyer
+            </button>
+          </form>
+
+          <h3>Supprimer une pétition</h3>
+          <form
+            action="/"
+            onSubmit={deletePetition}
+            ref={el => (this.deletePetitionForm = el)}
             className="admin-panel__form"
           >
             <input
