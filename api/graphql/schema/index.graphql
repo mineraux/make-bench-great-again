@@ -8,12 +8,14 @@ module.exports = buildSchema(`
     lockedDescription: String!
     geolocation: [Float]!
     hashTags: [String!]
+    testimony: String
+    relatedPetition: Petition
   }
 
   type Petition {
     _id: ID!
-    title: String!
-    description: String!
+    subscribers:[String!]
+    relatedBench: Bench
   }
   
   input BenchInput {
@@ -22,6 +24,8 @@ module.exports = buildSchema(`
     lockedDescription: String!
     geolocation: [Float]!
     hashTags: [String!]
+    testimony: String
+    relatedPetition: ID
   }
 
   input UpdateBenchInput {
@@ -31,13 +35,15 @@ module.exports = buildSchema(`
     lockedDescription: String
     geolocation: [Float]
     hashTags: [String!]
+    testimony: String
+    relatedPetition: ID
   }
 
   input PetitionInput {
-    title: String!
-    description: String!
+    subscribers: [String!]
+    relatedBench: ID
   }
-  
+
   type RootQuery {
     benchList: [Bench!]!
     singleBench(benchId: ID!): Bench!

@@ -2,13 +2,12 @@ const mongoose = require('mongoose')
 const Schema = mongoose.Schema
 
 const petitionSchema = new Schema({
-  title: {
-    type: String,
-    required: true
+  subscribers: {
+    type: [String]
   },
-  description: {
-    type: String,
-    required: true
+  relatedBench: {
+    type: Schema.Types.ObjectId,
+    ref: 'Bench'
   }
 })
 

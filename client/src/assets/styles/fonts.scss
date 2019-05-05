@@ -1,0 +1,134 @@
+@import './variables.scss';
+
+// AVENIR
+@font-face {
+  font-family: $font-avenir-medium;
+  src: url('../fonts/Avenir/Medium/AvenirLTStd-Medium.eot');
+  src: url('../fonts/Avenir/Medium/AvenirLTStd-Medium.eot?#iefix')
+      format('embedded-opentype'),
+    url('../fonts/Avenir/Medium/AvenirLTStd-Medium.woff') format('woff'),
+    url('../fonts/Avenir/Medium/AvenirLTStd-Medium.ttf') format('truetype'),
+    url('../fonts/Avenir/Medium/AvenirLTStd-Medium.svg') format('svg');
+  font-style: normal;
+  font-weight: normal;
+}
+
+// INFINI
+
+@font-face {
+  font-family: $font-infini-regular;
+  src: url('../fonts/Infini/Romain/infini-romain.eot');
+  src: url('../fonts/Infini/Romain/infini-romain.eot?#iefix')
+      format('embedded-opentype'),
+    url('../fonts/Infini/Romain/infini-romain.woff') format('woff'),
+    url('../fonts/Infini/Romain/infini-romain.ttf') format('truetype'),
+    url('../fonts/Infini/Romain/infini-romain.svg') format('svg');
+  font-style: normal;
+  font-weight: normal;
+}
+
+@font-face {
+  font-family: $font-infini-italic;
+  src: url('../fonts/Infini/Italique/infini-italique.eot');
+  src: url('../fonts/Infini/Italique/infini-italique.eot?#iefix')
+      format('embedded-opentype'),
+    url('../fonts/Infini/Italique/infini-italique.woff') format('woff'),
+    url('../fonts/Infini/Italique/infini-italique.ttf') format('truetype'),
+    url('../fonts/Infini/Italique/infini-italique.svg') format('svg');
+  font-style: italic;
+  font-weight: normal;
+}
+
+@font-face {
+  font-family: $font-infini-bold;
+  src: url('../fonts/Infini/Gras/infini-gras.eot');
+  src: url('../fonts/Infini/Gras/infini-gras.eot?#iefix')
+      format('embedded-opentype'),
+    url('../fonts/Infini/Gras/infini-gras.woff') format('woff'),
+    url('../fonts/Infini/Gras/infini-gras.ttf') format('truetype'),
+    url('../fonts/Infini/Gras/infini-gras.svg') format('svg');
+  font-style: normal;
+  font-weight: bold;
+}
+
+// FAUNE
+
+@font-face {
+  font-family: $font-faune-thin;
+  src: url('../fonts/Faune/Thin/Faune-Text_Thin.eot');
+  src: url('../fonts/Faune/Thin/Faune-Text_Thin.eot?#iefix')
+      format('embedded-opentype'),
+    url('../fonts/Faune/Thin/Faune-Text_Thin.woff2') format('woff2'),
+    url('../fonts/Faune/Thin/Faune-Text_Thin.woff') format('woff'),
+    url('../fonts/Faune/Thin/Faune-Text_Thin.ttf') format('truetype'),
+    url('../fonts/Faune/Thin/Faune-Text_Thin.svg') format('svg');
+  font-style: normal;
+  font-weight: 300;
+}
+
+@font-face {
+  font-family: $font-faune-regular;
+  src: url('../fonts/Faune/Regular/Faune-Text_Regular.eot');
+  src: url('../fonts/Faune/Regular/Faune-Text_Regular.eot?#iefix')
+      format('embedded-opentype'),
+    url('../fonts/Faune/Regular/Faune-Text_Regular.woff2') format('woff2'),
+    url('../fonts/Faune/Regular/Faune-Text_Regular.woff') format('woff'),
+    url('../fonts/Faune/Regular/Faune-Text_Regular.ttf') format('truetype'),
+    url('../fonts/Faune/Regular/Faune-Text_Regular.svg') format('svg');
+  font-style: normal;
+  font-weight: normal;
+}
+
+@font-face {
+  font-family: $font-faune-italic;
+  src: url('../fonts/Faune/Italic/Faune-Text_Italic.eot');
+  src: url('../fonts/Faune/Italic/Faune-Text_Italic.eot?#iefix')
+      format('embedded-opentype'),
+    url('../fonts/Faune/Italic/Faune-Text_Italic.woff2') format('woff2'),
+    url('../fonts/Faune/Italic/Faune-Text_Italic.woff') format('woff'),
+    url('../fonts/Faune/Italic/Faune-Text_Italic.ttf') format('truetype'),
+    url('../fonts/Faune/Italic/Faune-Text_Italic.svg') format('svg');
+  font-style: italic;
+  font-weight: normal;
+}
+
+@font-face {
+  font-family: $font-faune-bold;
+  src: url('../fonts/Faune/Bold/Faune-Text_Bold.eot');
+  src: url('../fonts/Faune/Bold/Faune-Text_Bold.eot?#iefix')
+      format('embedded-opentype'),
+    url('../fonts/Faune/Bold/Faune-Text_Bold.woff2') format('woff2'),
+    url('../fonts/Faune/Bold/Faune-Text_Bold.woff') format('woff'),
+    url('../fonts/Faune/Bold/Faune-Text_Bold.ttf') format('truetype'),
+    url('../fonts/Faune/Bold/Faune-Text_Bold.svg') format('svg');
+  font-style: normal;
+  font-weight: bold;
+}
+
+@font-face {
+  font-family: $font-faune-bold-italic;
+  src: url('../fonts/Faune/BoldItalic/Faune-Text_Bold_Italic.eot');
+  src: url('../fonts/Faune/BoldItalic/Faune-Text_Bold_Italic.eot?#iefix')
+      format('embedded-opentype'),
+    url('../fonts/Faune/BoldItalic/Faune-Text_Bold_Italic.woff2')
+      format('woff2'),
+    url('../fonts/Faune/BoldItalic/Faune-Text_Bold_Italic.woff') format('woff'),
+    url('../fonts/Faune/BoldItalic/Faune-Text_Bold_Italic.ttf')
+      format('truetype'),
+    url('../fonts/Faune/BoldItalic/Faune-Text_Bold_Italic.svg') format('svg');
+  font-style: italic;
+  font-weight: bold;
+}
+
+@font-face {
+  font-family: $font-faune-black;
+  src: url('../fonts/Faune/Black/Faune-Text_Black.eot');
+  src: url('../fonts/Faune/Black/Faune-Text_Black.eot?#iefix')
+      format('embedded-opentype'),
+    url('../fonts/Faune/Black/Faune-Text_Black.woff2') format('woff2'),
+    url('../fonts/Faune/Black/Faune-Text_Black.woff') format('woff'),
+    url('../fonts/Faune/Black/Faune-Text_Black.ttf') format('truetype'),
+    url('../fonts/Faune/Black/Faune-Text_Black.svg') format('svg');
+  font-style: normal;
+  font-weight: 800;
+}

@@ -24,6 +24,13 @@ const benchSchema = new Schema({
   hashTags: {
     type: [String],
     required: true
+  },
+  testimony: {
+    type: String,
+  },
+  relatedPetition: {
+    type: Schema.Types.ObjectId,
+    ref: 'Petition'
   }
 })
 

@@ -1,3 +1,5 @@
+import { Hashtag } from 'react-twitter-widgets'
+
 declare global {
   interface Window {
     twttr: any
@@ -14,6 +16,9 @@ export interface ApiBench {
   description?: string
   lockedDescription?: string
   geolocation?: Coords
+  hashTags?: string[]
+  testimony?: string
+  relatedPetition?: string
 
   replace?(arg0: RegExp, arg1: string)
 }
@@ -23,6 +28,9 @@ export interface queryApiBench {
   description?: Boolean
   lockedDescription?: Boolean
   geolocation?: Boolean
+  hashTags?: string[]
+  testimony?: string
+  relatedPetition?: string
 }
 
 export interface createApiBench {
@@ -31,10 +39,24 @@ export interface createApiBench {
   lockedDescription: string
   latitude: number
   longitude: number
+  hashtags: string[]
+  testimony: string
+  relatedPetition?: string
 }
 
 export interface updateApiBench extends createApiBench {
   _id: string
+}
+
+export interface ApiPetition {
+  _id: string
+  subscribers?: string[]
+  relatedBench?: string | null
+}
+
+export interface createApiPetition {
+  subscribers?: string[]
+  relatedBench?: string | null
 }
 
 export type ApiBenchReponseRoot = Array<ApiBench>
@@ -42,3 +64,7 @@ export type ApiSingleBenchReponseRoot = ApiBench
 export type QueryApiBenchReponse = queryApiBench
 export type createApiBenchMutation = createApiBench
 export type updateApiBenchMutation = updateApiBench
+
+export type ApiPetitionReponseRoot = Array<ApiPetition>
+export type ApiSinglePetitionReponseRoot = ApiPetition
+export type createApiPetitionMutation = createApiPetition
