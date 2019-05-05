@@ -1,5 +1,18 @@
 @import './variables.scss';
 
+// AVENIR
+@font-face {
+  font-family: $font-avenir-medium;
+  src: url('../fonts/Avenir/Medium/AvenirLTStd-Medium.eot');
+  src: url('../fonts/Avenir/Medium/AvenirLTStd-Medium.eot?#iefix')
+      format('embedded-opentype'),
+    url('../fonts/Avenir/Medium/AvenirLTStd-Medium.woff') format('woff'),
+    url('../fonts/Avenir/Medium/AvenirLTStd-Medium.ttf') format('truetype'),
+    url('../fonts/Avenir/Medium/AvenirLTStd-Medium.svg') format('svg');
+  font-style: normal;
+  font-weight: normal;
+}
+
 // INFINI
 
 @font-face {
