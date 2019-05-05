@@ -17,6 +17,7 @@ class Admin extends Component<props, stateAdmin> {
   updateBenchForm: HTMLFormElement | null = null
   deleteBenchForm: HTMLFormElement | null = null
   createPetitionForm: HTMLFormElement | null = null
+  deletePetitionForm: HTMLFormElement | null = null
 
   constructor(props: props) {
     super(props)
@@ -211,6 +212,28 @@ class Admin extends Component<props, stateAdmin> {
       }
     }
 
+    const deletePetition = async (e: React.FormEvent<HTMLFormElement>) => {
+      e.preventDefault()
+
+      if (this.deletePetitionForm) {
+        const id: string = (this.deletePetitionForm.querySelector(
+          '[name="id"]'
+        ) as HTMLInputElement).value
+
+        await ApiClient.deletePetition(id)
+          .then(res => {
+            this.setState({
+              requestMessage: `La pétition "${
+                res._id
+              }" a été supprimé avec succès`,
+            })
+          })
+          .catch(err => {
+            this.setState({ requestMessage: `${err}` })
+          })
+      }
+    }
+
     return (
       <Transition show={show}>
         <div className="admin-panel">
@@ -372,6 +395,25 @@ class Admin extends Component<props, stateAdmin> {
               type="text"
               name="relatedBench"
               placeholder="Installation reliée"
+              className="admin-panel__form__field"
+            />
+            <button type="submit" className="admin-panel__form__submit-button">
+              Envoyer
+            </button>
+          </form>
+
+          <h3>Supprimer une pétition</h3>
+          <form
+            action="/"
+            onSubmit={deletePetition}
+            ref={el => (this.deletePetitionForm = el)}
+            className="admin-panel__form"
+          >
+            <input
+              type="text"
+              name="id"
+              placeholder="ID"
+              required
               className="admin-panel__form__field"
             />
             <button type="submit" className="admin-panel__form__submit-button">

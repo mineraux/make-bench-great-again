@@ -31,6 +31,9 @@ type mongoResponse = {
     createPetition?: {
       _id: string
     }
+    deletePetition?: {
+      _id: string
+    }
   }
 }
 
@@ -129,6 +132,18 @@ class ApiClient {
         name
       }
     }
+    `
+
+    return query
+  }
+
+  private mutationDeletePetition = (petitionId: ApiPetition['_id']) => {
+    const query = `
+      mutation {
+        deletePetition(petitionId:"${petitionId}"){
+          _id
+        }
+      }
     `
 
     return query
@@ -314,6 +329,28 @@ class ApiClient {
     })
 
     return dataResponse.createPetition
+  }
+
+  public deletePetition = async (
+    petitionID: ApiPetition['_id']
+  ): Promise<ApiPetition> => {
+    let dataResponse = {
+      deletePetition: {
+        _id: '',
+      },
+    }
+
+    const requestBody = {
+      query: this.mutationDeletePetition(petitionID),
+    }
+
+    await this.apiCall(requestBody).then(res => {
+      if (res.data.deletePetition) {
+        dataResponse.deletePetition = res.data.deletePetition
+      }
+    })
+
+    return dataResponse.deletePetition
   }
 }
 
