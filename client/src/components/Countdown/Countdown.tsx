@@ -1,16 +1,18 @@
 import React, { FunctionComponent, useState, useEffect } from 'react'
+import ClassNames from 'classnames'
+import './countdown.scss'
 
 type Props = {
   endDate?: string
 }
 
 const Countdown: FunctionComponent<Props> = ({
-  endDate = 'December 31 2019 23:59:59 GMT+0200',
+  endDate = '06/12/2019 10:00:00 GMT+0200',
 }) => {
-  const [days, setDays] = useState(0)
-  const [hours, setHours] = useState(0)
-  const [minutes, setMinutes] = useState(0)
-  const [seconds, setSeconds] = useState(0)
+  const [days, setDays] = useState<number | null>(null)
+  const [hours, setHours] = useState<number | null>(null)
+  const [minutes, setMinutes] = useState<number | null>(null)
+  const [seconds, setSeconds] = useState<number | null>(null)
 
   const endDateTime = new Date(endDate).getTime()
 
@@ -45,11 +47,12 @@ const Countdown: FunctionComponent<Props> = ({
   }, [])
 
   return (
-    <div>
-      <p>{days} days</p>
-      <p>{hours} hours</p>
-      <p>{minutes} minutes</p>
-      <p>{seconds} seconds</p>
+    <div className={ClassNames('countdown')}>
+      {days && hours && minutes && (
+        <p>
+          {days} : {('0' + hours).slice(-2)} : {('0' + minutes).slice(-2)}
+        </p>
+      )}
     </div>
   )
 }
