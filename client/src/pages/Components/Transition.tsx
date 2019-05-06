@@ -50,6 +50,10 @@ const TransitionComponent: FunctionComponent<Props> = ({ show, children }) => {
     setCurrentPagePath(nextPagePath)
   }
 
+  const addEndListener = (node: HTMLElement, done: () => void) => {
+    show ? onEnterTransition(node, done) : onExitTransition(node, done)
+  }
+
   return (
     <Transition
       in={show}
@@ -57,9 +61,7 @@ const TransitionComponent: FunctionComponent<Props> = ({ show, children }) => {
       timeout={10000}
       onEnter={onEnter}
       onExited={onExited}
-      addEndListener={(node, done) => {
-        show ? onEnterTransition(node, done) : onExitTransition(node, done)
-      }}
+      addEndListener={addEndListener}
     >
       {children}
     </Transition>
