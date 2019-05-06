@@ -1,7 +1,8 @@
 import Home from '../pages/Home/Home'
 import Map from '../pages/Map/Map'
-import Admin from '../pages/Admin/Admin'
 import Twitter from '../pages/Twitter/Twitter'
+import Admin from '../pages/Admin/Admin'
+import Components from '../pages/Components/Components'
 import Bench from '../pages/Bench/Bench'
 
 export default {
@@ -28,6 +29,12 @@ export default {
       path: '/admin',
       name: 'Admin',
       component: Admin,
+      inNav: true,
+    },
+    Components: {
+      path: '/components',
+      name: 'Components',
+      component: Components,
       inNav: true,
     },
     Bench: {
