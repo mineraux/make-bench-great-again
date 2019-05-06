@@ -75,22 +75,11 @@ const ProtoMap: FunctionComponent = () => {
   }, [])
 
   useEffect(() => {
-    if (map.current) {
-      console.log(map.current.isStyleLoaded())
-    }
-
-    if (map.current && map.current.isStyleLoaded() && !markers) {
-      const markers = MapManager.setAllMarkers(benchList, map.current)
-      setMarkers(markers)
-    }
-  })
-
-  useEffect(() => {
     if (map.current && !markers && map.current.isStyleLoaded()) {
       const markers = MapManager.setAllMarkers(benchList, map.current)
       setMarkers(markers)
     }
-  }, [benchList, map.current && map.current.isStyleLoaded()])
+  }, [benchList])
 
   const setFastestPath = () => {
     setSelectedMarker(
@@ -120,6 +109,7 @@ const ProtoMap: FunctionComponent = () => {
           travelTime={travelTime}
           travelDistance={travelDistance}
           onButtonClick={setPath}
+          isTourStarted={isTourStarted}
         />
       )}
     </div>

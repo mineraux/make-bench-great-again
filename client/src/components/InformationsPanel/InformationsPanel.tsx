@@ -6,8 +6,6 @@ import ClassNames from 'classnames'
 import './informationsPanel.scss'
 import Button, { themes as ButtonThemes } from '../../components/Button/Button'
 import { ReactComponent as CrossIco } from '../../assets/images/close_ico.svg'
-import DirectionsController from '../map/DirectionsController'
-import ProtoMap from '../map/ProtoMap'
 
 interface Props {
   marker: Feature
@@ -15,6 +13,7 @@ interface Props {
   travelDistance: Number
   className?: string
   onButtonClick: any
+  isTourStarted: boolean
 }
 
 const InformationsPanel: FunctionComponent<Props> = ({
@@ -23,6 +22,7 @@ const InformationsPanel: FunctionComponent<Props> = ({
   travelDistance,
   className,
   onButtonClick,
+  isTourStarted,
 }) => {
   const [isOpen, setIsOpen] = useState(false)
   const [benchTargetName, setBenchTargetName] = useState(
@@ -37,10 +37,6 @@ const InformationsPanel: FunctionComponent<Props> = ({
       setIsOpen(true)
     }
   }, [marker])
-
-  const test = () => {
-    console.log('test')
-  }
 
   return (
     <div
@@ -76,12 +72,14 @@ const InformationsPanel: FunctionComponent<Props> = ({
           </Link>
         )}
       </div>
-      <Button
-        onClick={onButtonClick}
-        label={'Calculer mon itinéraire'}
-        theme={ButtonThemes.Blue}
-        className={'informations-panel__set-direction-button'}
-      />
+      {!isTourStarted && (
+        <Button
+          onClick={onButtonClick}
+          label={'Calculer mon itinéraire'}
+          theme={ButtonThemes.Blue}
+          className={'informations-panel__set-direction-button'}
+        />
+      )}
       <div className="informations-panel__travel-duration">
         {travelTime && travelDistance && (
           <p>

@@ -14,7 +14,7 @@ class Store {
   @action public fetchBenchList = async (
     fieldToFetch: QueryApiBenchReponse
   ) => {
-    if (process.env.NODE_ENV === 'development') {
+    if (process.env.NODE_ENV !== 'development') {
       this.benchList = [
         {
           _id: '1',
@@ -26,7 +26,7 @@ class Store {
         },
         {
           _id: '2',
-          name: 'L’Exedros',
+          name: 'Super banc',
           description:
             'Vestige du 19e siècle, cette sculpture aux courbes parfaites...',
           lockedDescription: 'Locked',
@@ -34,7 +34,7 @@ class Store {
         },
         {
           _id: '3',
-          name: 'L’Exedros',
+          name: 'Enorme celui là',
           description:
             'Vestige du 19e siècle, cette sculpture aux courbes parfaites...',
           lockedDescription: 'Locked',
