@@ -1,5 +1,6 @@
 .nav {
   display: flex;
+  flex-wrap: wrap;
   align-items: center;
   margin-top: 2rem;
 
@@ -8,6 +9,7 @@
     color: dodgerblue;
     text-decoration: none;
     margin: 0 2rem;
+
     &:hover {
       transition: 0.3s ease;
       opacity: 0.6;

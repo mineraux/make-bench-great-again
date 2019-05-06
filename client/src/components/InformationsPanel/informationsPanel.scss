@@ -1,0 +1,84 @@
+@import '../../assets/styles/global.scss';
+
+.informations-panel {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  text-align: center;
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  background-color: $color-pink;
+  padding: 2rem;
+  z-index: 10;
+  transform: translateY(68%);
+  transition: transform 0.5s cubic-bezier(0.23, 1, 0.32, 1);
+  color: $color-blue;
+
+  &.open {
+    transform: translateY(0);
+
+    .informations-panel__close-ico {
+      transform: rotate(45deg);
+    }
+  }
+
+  &__close-ico {
+    position: absolute;
+    top: 1.9rem;
+    right: 2rem;
+    padding: 0;
+    transition: transform 0.5s cubic-bezier(0.23, 1, 0.32, 1);
+    background: none;
+    border: none;
+    outline: none;
+
+    svg {
+      width: 2.6rem;
+      height: 2.6rem;
+    }
+  }
+
+  &__informations--installation {
+    font-family: $font-infini-regular;
+    width: 100%;
+    margin-bottom: 8rem;
+
+    &__bench-name {
+      display: block;
+      font-size: 2rem;
+      margin-bottom: 3rem;
+    }
+
+    &__bench-description {
+      display: inline;
+      font-size: 1.5rem;
+    }
+
+    &__bench-see-more {
+      color: $color-blue;
+      font-family: $font-infini-italic;
+      font-size: 1.5rem;
+      text-decoration: none;
+      position: relative;
+      margin-left: 0.5rem;
+
+      &::before {
+        content: '';
+        width: 100%;
+        height: 0.2rem;
+        position: absolute;
+        left: 0;
+        bottom: 0.3rem;
+        background-color: $color-blue;
+      }
+    }
+  }
+
+  &__travel-duration {
+    p {
+      margin: 0;
+    }
+  }
+}

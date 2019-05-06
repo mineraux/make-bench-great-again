@@ -11,7 +11,7 @@ import MapManager from './MapController'
 import { featureInFeaturesCoords } from '../../utils/map'
 import DirectionsManager from './DirectionsController'
 import GeoLocationManager from './GeoLocationController'
-import InformationsPanel from './InformationsPanel'
+import InformationsPanel from '../InformationsPanel/InformationsPanel'
 
 const ProtoMap: FunctionComponent = () => {
   const { benchList, fetchBenchList } = Store
