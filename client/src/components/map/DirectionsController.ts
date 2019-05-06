@@ -41,14 +41,10 @@ class DirectionsManager {
   public setPathToInstallation = (
     directions: any,
     userLocation: Coords,
-    marker: Feature
+    destination: Coords
   ) => {
-    console.log('directions: ' + directions)
-    console.log('userlocation: ' + userLocation)
-    console.log('marker :' + marker)
-
-    // directions.setOrigin(userLocation)
-    // directions.setDestination(featureCoords(marker))
+    directions.setOrigin(userLocation)
+    directions.setDestination(destination)
   }
 }
 

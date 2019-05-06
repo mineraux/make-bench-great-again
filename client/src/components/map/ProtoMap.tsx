@@ -12,6 +12,7 @@ import { featureInFeaturesCoords } from '../../utils/map'
 import DirectionsManager from './DirectionsController'
 import GeoLocationManager from './GeoLocationController'
 import InformationsPanel from '../InformationsPanel/InformationsPanel'
+import { featureCoords } from '../../utils/map'
 
 const ProtoMap: FunctionComponent = () => {
   const { benchList, fetchBenchList } = Store
@@ -31,7 +32,6 @@ const ProtoMap: FunctionComponent = () => {
 
   const getInstallationList = async () => {
     await fetchBenchList({ name: true, description: true, geolocation: true })
-    // console.log(benchList.length)
   }
 
   useEffect(() => {
@@ -79,6 +79,13 @@ const ProtoMap: FunctionComponent = () => {
       console.log(map.current.isStyleLoaded())
     }
 
+    if (map.current && map.current.isStyleLoaded() && !markers) {
+      const markers = MapManager.setAllMarkers(benchList, map.current)
+      setMarkers(markers)
+    }
+  })
+
+  useEffect(() => {
     if (map.current && !markers && map.current.isStyleLoaded()) {
       const markers = MapManager.setAllMarkers(benchList, map.current)
       setMarkers(markers)
@@ -99,27 +106,21 @@ const ProtoMap: FunctionComponent = () => {
   const setPath = () => {
     DirectionsManager.setPathToInstallation(
       directions.current,
-      selectedMarker,
+      featureCoords(selectedMarker),
       userLocation
     )
-    //setIsTourStarted(true)
+    setIsTourStarted(true)
   }
 
   return (
     <div id="map">
-      <InformationsPanel
-        marker={selectedMarker}
-        travelTime={travelTime}
-        travelDistance={travelDistance}
-        onButtonClick={setPath}
-      />
-      {markers && userLocation && !isTourStarted && (
-        <button
-          onClick={setFastestPath}
-          className="mapboxgl-map__btn-start-travel"
-        >
-          Commencer la visite
-        </button>
+      {markers && userLocation && (
+        <InformationsPanel
+          marker={selectedMarker}
+          travelTime={travelTime}
+          travelDistance={travelDistance}
+          onButtonClick={setPath}
+        />
       )}
     </div>
   )
