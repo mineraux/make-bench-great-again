@@ -38,6 +38,153 @@ type mongoResponse = {
 }
 
 class ApiClient {
+  public createBench = async (
+    fields: createApiBenchMutation
+  ): Promise<ApiBench> => {
+    const dataResponse = {
+      createBench: {
+        _id: '',
+      },
+    }
+
+    const requestBody = {
+      query: this.mutationCreateBench(fields),
+    }
+
+    await this.apiCall(requestBody).then(res => {
+      if (res.data.createBench) {
+        dataResponse.createBench = res.data.createBench
+      }
+    })
+
+    return dataResponse.createBench
+  }
+
+  public updateBench = async (fields: ApiBench): Promise<ApiBench> => {
+    const dataResponse = {
+      updateBench: {
+        _id: '',
+      },
+    }
+
+    const requestBody = {
+      query: this.mutationUpdateBench(fields),
+    }
+
+    await this.apiCall(requestBody).then(res => {
+      if (res.data.updateBench) {
+        dataResponse.updateBench = res.data.updateBench
+      }
+    })
+
+    return dataResponse.updateBench
+  }
+
+  public deleteBench = async (benchID: ApiBench['_id']): Promise<ApiBench> => {
+    const dataResponse = {
+      deleteBench: {
+        _id: '',
+      },
+    }
+
+    const requestBody = {
+      query: this.mutationDeleteBench(benchID),
+    }
+
+    await this.apiCall(requestBody).then(res => {
+      if (res.data.deleteBench) {
+        dataResponse.deleteBench = res.data.deleteBench
+      }
+    })
+
+    return dataResponse.deleteBench
+  }
+
+  public getBenchList = async (
+    fieldsToFetch: QueryApiBenchReponse
+  ): Promise<ApiBenchReponseRoot> => {
+    let benchList: ApiBenchReponseRoot = []
+
+    const requestBody = {
+      query: this.queryBenchList(fieldsToFetch),
+    }
+    await this.apiCall(requestBody)
+      .then(res => {
+        if (res.data.benchList) {
+          benchList = res.data.benchList
+        }
+      })
+      .catch(err => {
+        console.log(err)
+      })
+
+    return benchList
+  }
+
+  public getSingleBench = async (
+    benchID: ApiBench['_id'],
+    fieldsToFetch: QueryApiBenchReponse
+  ): Promise<ApiSingleBenchReponseRoot> => {
+    let bench: ApiBench = { _id: '' }
+    const requestBody = {
+      query: this.querySingleBench(benchID, fieldsToFetch),
+    }
+    await this.apiCall(requestBody)
+      .then(resData => {
+        if (resData.data.singleBench) {
+          bench = resData.data.singleBench
+        }
+      })
+      .catch(err => {
+        console.log(err)
+      })
+
+    return bench
+  }
+
+  public createPetition = async (
+    fields: createApiPetitionMutation
+  ): Promise<ApiPetition> => {
+    const dataResponse = {
+      createPetition: {
+        _id: '',
+      },
+    }
+
+    const requestBody = {
+      query: this.mutationCreatePetition(fields),
+    }
+
+    await this.apiCall(requestBody).then(res => {
+      if (res.data.createPetition) {
+        dataResponse.createPetition = res.data.createPetition
+      }
+    })
+
+    return dataResponse.createPetition
+  }
+
+  public deletePetition = async (
+    petitionID: ApiPetition['_id']
+  ): Promise<ApiPetition> => {
+    const dataResponse = {
+      deletePetition: {
+        _id: '',
+      },
+    }
+
+    const requestBody = {
+      query: this.mutationDeletePetition(petitionID),
+    }
+
+    await this.apiCall(requestBody).then(res => {
+      if (res.data.deletePetition) {
+        dataResponse.deletePetition = res.data.deletePetition
+      }
+    })
+
+    return dataResponse.deletePetition
+  }
   private queryBenchList = (fieldsToFetch: QueryApiBenchReponse) => {
     const query = `
     query {
@@ -177,110 +324,6 @@ class ApiClient {
     return response
   }
 
-  public createBench = async (
-    fields: createApiBenchMutation
-  ): Promise<ApiBench> => {
-    let dataResponse = {
-      createBench: {
-        _id: '',
-      },
-    }
-
-    const requestBody = {
-      query: this.mutationCreateBench(fields),
-    }
-
-    await this.apiCall(requestBody).then(res => {
-      if (res.data.createBench) {
-        dataResponse.createBench = res.data.createBench
-      }
-    })
-
-    return dataResponse.createBench
-  }
-
-  public updateBench = async (fields: ApiBench): Promise<ApiBench> => {
-    let dataResponse = {
-      updateBench: {
-        _id: '',
-      },
-    }
-
-    const requestBody = {
-      query: this.mutationUpdateBench(fields),
-    }
-
-    await this.apiCall(requestBody).then(res => {
-      if (res.data.updateBench) {
-        dataResponse.updateBench = res.data.updateBench
-      }
-    })
-
-    return dataResponse.updateBench
-  }
-
-  public deleteBench = async (benchID: ApiBench['_id']): Promise<ApiBench> => {
-    let dataResponse = {
-      deleteBench: {
-        _id: '',
-      },
-    }
-
-    const requestBody = {
-      query: this.mutationDeleteBench(benchID),
-    }
-
-    await this.apiCall(requestBody).then(res => {
-      if (res.data.deleteBench) {
-        dataResponse.deleteBench = res.data.deleteBench
-      }
-    })
-
-    return dataResponse.deleteBench
-  }
-
-  public getBenchList = async (
-    fieldsToFetch: QueryApiBenchReponse
-  ): Promise<ApiBenchReponseRoot> => {
-    let benchList: ApiBenchReponseRoot = []
-
-    const requestBody = {
-      query: this.queryBenchList(fieldsToFetch),
-    }
-    await this.apiCall(requestBody)
-      .then(res => {
-        if (res.data.benchList) {
-          benchList = res.data.benchList
-        }
-      })
-      .catch(err => {
-        console.log(err)
-      })
-
-    return benchList
-  }
-
-  public getSingleBench = async (
-    benchID: ApiBench['_id'],
-    fieldsToFetch: QueryApiBenchReponse
-  ): Promise<ApiSingleBenchReponseRoot> => {
-    let bench: ApiBench = { _id: '' }
-    const requestBody = {
-      query: this.querySingleBench(benchID, fieldsToFetch),
-    }
-    await this.apiCall(requestBody)
-      .then(resData => {
-        if (resData.data.singleBench) {
-          bench = resData.data.singleBench
-        }
-      })
-      .catch(err => {
-        console.log(err)
-      })
-
-    return bench
-  }
-
   private mutationCreatePetition = (fields: createApiPetitionMutation) => {
     const fieldsToUpdate: createApiPetition = {
       subscribers: fields.subscribers,
@@ -307,50 +350,6 @@ class ApiClient {
     `
 
     return query
-  }
-
-  public createPetition = async (
-    fields: createApiPetitionMutation
-  ): Promise<ApiPetition> => {
-    let dataResponse = {
-      createPetition: {
-        _id: '',
-      },
-    }
-
-    const requestBody = {
-      query: this.mutationCreatePetition(fields),
-    }
-
-    await this.apiCall(requestBody).then(res => {
-      if (res.data.createPetition) {
-        dataResponse.createPetition = res.data.createPetition
-      }
-    })
-
-    return dataResponse.createPetition
-  }
-
-  public deletePetition = async (
-    petitionID: ApiPetition['_id']
-  ): Promise<ApiPetition> => {
-    let dataResponse = {
-      deletePetition: {
-        _id: '',
-      },
-    }
-
-    const requestBody = {
-      query: this.mutationDeletePetition(petitionID),
-    }
-
-    await this.apiCall(requestBody).then(res => {
-      if (res.data.deletePetition) {
-        dataResponse.deletePetition = res.data.deletePetition
-      }
-    })
-
-    return dataResponse.deletePetition
   }
 }
 

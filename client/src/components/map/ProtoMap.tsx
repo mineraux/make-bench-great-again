@@ -16,9 +16,9 @@ import InformationsPanel from './InformationsPanel'
 const ProtoMap: FunctionComponent = () => {
   const { benchList, fetchBenchList } = Store
 
-  let map = useRef<MapboxGlMap | null>(null)
-  let directions = useRef(DirectionsManager.initMapboxDirections())
-  let geolocate = useRef<GeolocateControl>(GeoLocationManager.initGeolocate())
+  const map = useRef<MapboxGlMap | null>(null)
+  const directions = useRef(DirectionsManager.initMapboxDirections())
+  const geolocate = useRef<GeolocateControl>(GeoLocationManager.initGeolocate())
 
   const [isTourStarted, setIsTourStarted] = useState(false)
 
@@ -40,30 +40,30 @@ const ProtoMap: FunctionComponent = () => {
     map.current.addControl(geolocate.current)
     map.current.addControl(directions.current)
 
-    map.current.on('load', function() {
+    map.current.on('load', () => {
       getInstallationList()
       geolocate.current.trigger()
 
-      map.current!.on('click', 'markers', function(e) {
+      map.current!.on('click', 'markers', e => {
         if (e.features && featureInFeaturesCoords(e)) {
           map.current!.flyTo({ center: featureInFeaturesCoords(e) })
           setSelectedMarker(e.features[0])
         }
       })
 
-      map.current!.on('mouseenter', 'markers', function() {
+      map.current!.on('mouseenter', 'markers', () => {
         map.current!.getCanvas().style.cursor = 'pointer'
       })
 
-      map.current!.on('mouseleave', 'markers', function() {
+      map.current!.on('mouseleave', 'markers', () => {
         map.current!.getCanvas().style.cursor = ''
       })
 
-      geolocate.current.on('geolocate', function(e: EventData) {
+      geolocate.current.on('geolocate', (e: EventData) => {
         setUserLocation([e.coords.longitude, e.coords.latitude])
       })
 
-      directions.current.on('route', function(e: EventData) {
+      directions.current.on('route', (e: EventData) => {
         // // Returned value is in secondes => conversion to minutes
         setTravelTime(Math.floor(e.route[0].duration / 60))
 
@@ -75,8 +75,8 @@ const ProtoMap: FunctionComponent = () => {
 
   useEffect(() => {
     if (map.current && !markers && map.current.isStyleLoaded()) {
-      const markers = MapManager.setAllMarkers(benchList, map.current)
-      setMarkers(markers)
+      const newMarkers = MapManager.setAllMarkers(benchList, map.current)
+      setMarkers(newMarkers)
     }
   }, [benchList])
 

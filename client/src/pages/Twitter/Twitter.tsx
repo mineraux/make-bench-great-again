@@ -2,14 +2,14 @@ import React, { FunctionComponent, useState } from 'react'
 import Transition from './Transition'
 import { pageProps } from '../types'
 import { Tweet } from 'react-twitter-widgets'
-//styles
+// styles
 import './twitter.scss'
 
 type Props = pageProps & {}
 
 const Twitter: FunctionComponent<Props> = ({ show, match }) => {
   const [value, setValue] = useState<string>('')
-  const [tweets, setTweets] = useState<Array<string>>([])
+  const [tweets, setTweets] = useState<string[]>([])
 
   let input: HTMLInputElement | null = null
 
@@ -30,9 +30,9 @@ const Twitter: FunctionComponent<Props> = ({ show, match }) => {
         if (res.status !== 200 && res.status !== 201) {
           throw Error('Failed to fetch tweets')
         }
-        res.json().then(res => {
+        res.json().then(res2 => {
           setTweets([])
-          res.statuses.map((tweet: any) => {
+          res2.statuses.map((tweet: any) => {
             setTweets(previousState => [...previousState, tweet.id_str])
           })
         })

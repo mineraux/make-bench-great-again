@@ -1,49 +1,46 @@
-import React, { FunctionComponent, ReactNode} from 'react';
-import {Transition} from 'react-transition-group';
-import {TimelineMax, TweenMax} from 'gsap'
+import React, { FunctionComponent, ReactNode } from 'react'
+import { Transition } from 'react-transition-group'
+import { TimelineMax, TweenMax } from 'gsap'
 import PageStore from '../../store/PageStore'
-import {observer} from 'mobx-react-lite'
+import { observer } from 'mobx-react-lite'
 
 interface Props {
-  show: boolean,
+  show: boolean
   children: ReactNode
 }
 
-const TransitionComponent: FunctionComponent<Props> = ({show, children}) => {
-
+const TransitionComponent: FunctionComponent<Props> = ({ show, children }) => {
   const { setCurrentPagePath, nextPagePath } = PageStore
 
   // Enter : start
   const onEnter = (node: HTMLElement): void => {
     TweenMax.set(node, {
       autoAlpha: 0,
-      x: -100
+      x: -100,
     })
   }
 
   // Enter : transition
   const onEnterTransition = (node: HTMLElement, done: () => void): void => {
-
     const tl = new TimelineMax({
-      onComplete: done
+      onComplete: done,
     })
 
     tl.to(node, 1, {
       autoAlpha: 1,
-      x: 0
+      x: 0,
     })
   }
 
   // Exit : transition
   const onExitTransition = (node: HTMLElement, done: () => void): void => {
-
     const tl = new TimelineMax({
-      onComplete: done
+      onComplete: done,
     })
 
     tl.to(node, 1, {
       autoAlpha: 0,
-      x: 100
+      x: 100,
     })
   }
 
@@ -53,6 +50,10 @@ const TransitionComponent: FunctionComponent<Props> = ({show, children}) => {
     setCurrentPagePath(nextPagePath)
   }
 
+  const addEndListener = (node: HTMLElement, done: () => void) => {
+    show ? onEnterTransition(node, done) : onExitTransition(node, done)
+  }
+
   return (
     <Transition
       in={show}
@@ -60,9 +61,7 @@ const TransitionComponent: FunctionComponent<Props> = ({show, children}) => {
       timeout={10000}
       onEnter={onEnter}
       onExited={onExited}
-      addEndListener={(node, done) => {
-        show ? onEnterTransition(node, done) : onExitTransition(node, done)
-      }}
+      addEndListener={addEndListener}
     >
       {children}
     </Transition>

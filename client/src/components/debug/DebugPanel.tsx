@@ -42,8 +42,8 @@ const DebugPanel: FunctionComponent = () => {
                     )}
                     {bench.geolocation && (
                       <p>
-                        {bench.geolocation.map((item, index) => (
-                          <span key={index}>{item} </span>
+                        {bench.geolocation.map((item, index2) => (
+                          <span key={index2}>{item} </span>
                         ))}
                       </p>
                     )}
@@ -53,11 +53,13 @@ const DebugPanel: FunctionComponent = () => {
             </div>
           )}
           {
+            /* tslint:disable:jsx-no-lambda */
             <button
               onClick={() => setIsBenchListDisplayed(!isBenchListDisplayed)}
             >
               Afficher/Cacher la liste des installations
             </button>
+            /* tslint:enable:jsx-no-lambda */
           }
           <button onClick={queryName}>Query le nom des installations</button>
           <button onClick={queryGeoAndDesc}>
