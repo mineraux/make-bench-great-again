@@ -31,6 +31,7 @@ const ProtoMap: FunctionComponent = () => {
 
   const getInstallationList = async () => {
     await fetchBenchList({ name: true, description: true, geolocation: true })
+    // console.log(benchList.length)
   }
 
   useEffect(() => {
@@ -40,7 +41,7 @@ const ProtoMap: FunctionComponent = () => {
     map.current.addControl(geolocate.current)
     map.current.addControl(directions.current)
 
-    map.current.on('load', function() {
+    map.current.on('load', () => {
       getInstallationList()
       geolocate.current.trigger()
 
@@ -74,11 +75,15 @@ const ProtoMap: FunctionComponent = () => {
   }, [])
 
   useEffect(() => {
+    if (map.current) {
+      console.log(map.current.isStyleLoaded())
+    }
+
     if (map.current && !markers && map.current.isStyleLoaded()) {
       const markers = MapManager.setAllMarkers(benchList, map.current)
       setMarkers(markers)
     }
-  }, [benchList])
+  }, [benchList, map.current && map.current.isStyleLoaded()])
 
   const setFastestPath = () => {
     setSelectedMarker(
@@ -91,12 +96,22 @@ const ProtoMap: FunctionComponent = () => {
     setIsTourStarted(true)
   }
 
+  const setPath = () => {
+    DirectionsManager.setPathToInstallation(
+      directions.current,
+      selectedMarker,
+      userLocation
+    )
+    //setIsTourStarted(true)
+  }
+
   return (
     <div id="map">
       <InformationsPanel
         marker={selectedMarker}
         travelTime={travelTime}
         travelDistance={travelDistance}
+        onButtonClick={setPath}
       />
       {markers && userLocation && !isTourStarted && (
         <button
