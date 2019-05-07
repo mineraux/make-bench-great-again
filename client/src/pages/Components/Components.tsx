@@ -7,6 +7,9 @@ import Button, { themes as ButtonThemes } from '../../components/Button/Button'
 import config from '../../config/config'
 import Countdown from '../../components/Countdown/Countdown'
 import Modal from '../../components/Modal/Modal'
+import BurgerButton, {
+  themes as BurgerButtonThemes,
+} from '../../components/BurgerButton/BurgerButton'
 
 type Props = pageProps
 
@@ -15,6 +18,12 @@ const Components: FunctionComponent<Props> = ({ show }) => {
     <Transition show={show}>
       <div className={'page-components'}>
         <p>Page : Components</p>
+
+        <hr />
+
+        {/*** BurgerButton ***/}
+
+        <BurgerButton theme={BurgerButtonThemes.Blue} />
 
         <hr />
 
@@ -48,6 +57,7 @@ const Components: FunctionComponent<Props> = ({ show }) => {
         <hr />
 
         {/*** MODAL ***/}
+
         <div className="modal-container">
           <Modal
             modalTitle="Votre parcours commence !"
