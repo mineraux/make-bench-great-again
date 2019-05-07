@@ -3,9 +3,9 @@ import DebugPanel from './components/debug/DebugPanel'
 import { BrowserRouter, Route } from 'react-router-dom'
 import { observer } from 'mobx-react-lite'
 import PageStore from './store/PageStore'
-//pages
+// pages
 import Nav from './components/Nav/Nav'
-//config
+// config
 import config from './config/config'
 
 const App: FunctionComponent = () => {

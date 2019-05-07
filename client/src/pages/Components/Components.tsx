@@ -1,3 +1,5 @@
+/* tslint:disable:jsx-no-lambda */
+
 import React, { FunctionComponent } from 'react'
 import Transition from './Transition'
 import { pageProps } from '../types'

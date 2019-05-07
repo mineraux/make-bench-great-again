@@ -4,7 +4,7 @@ import ApiClient from '../../ApiClient/ApiClient'
 import { ApiBench } from '../../@types'
 import './admin.scss'
 
-type props = {
+type Props = {
   show: boolean
 }
 
@@ -12,14 +12,14 @@ type stateAdmin = {
   requestMessage: string
 }
 
-class Admin extends Component<props, stateAdmin> {
+class Admin extends Component<Props, stateAdmin> {
   createBenchForm: HTMLFormElement | null = null
   updateBenchForm: HTMLFormElement | null = null
   deleteBenchForm: HTMLFormElement | null = null
   createPetitionForm: HTMLFormElement | null = null
   deletePetitionForm: HTMLFormElement | null = null
 
-  constructor(props: props) {
+  constructor(props: Props) {
     super(props)
 
     this.state = {
@@ -64,13 +64,13 @@ class Admin extends Component<props, stateAdmin> {
           longitude.length > 0
         ) {
           await ApiClient.createBench({
-            name: name,
-            description: description,
-            lockedDescription: lockedDescription,
+            name,
+            description,
+            lockedDescription,
             latitude: parseFloat(latitude),
             longitude: parseFloat(longitude),
-            testimony: testimony,
-            hashtags: hashtags,
+            testimony,
+            hashtags,
           })
             .then(res => {
               this.setState({
@@ -119,7 +119,7 @@ class Admin extends Component<props, stateAdmin> {
           '[name="hashtags"]'
         ) as HTMLInputElement).value.split('-')
 
-        let fieldsToUpdate: ApiBench = {
+        const fieldsToUpdate: ApiBench = {
           _id: id,
         }
 

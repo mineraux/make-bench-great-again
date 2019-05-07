@@ -5,8 +5,8 @@ import { Link } from 'react-router-dom'
 
 interface Props {
   marker: Feature
-  travelTime: Number
-  travelDistance: Number
+  travelTime: number
+  travelDistance: number
 }
 
 const InformationsPanel: FunctionComponent<Props> = props => {

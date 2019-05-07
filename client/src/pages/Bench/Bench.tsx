@@ -4,14 +4,14 @@ import { pageProps } from '../types'
 import Store from '../../store/Store'
 import { ApiBench } from '../../@types'
 
-type props = pageProps & {}
+type Props = pageProps & {}
 
 type stateBench = {
   bench: ApiBench
 }
 
-class Bench extends Component<props, stateBench> {
-  constructor(props: props) {
+class Bench extends Component<Props, stateBench> {
+  constructor(props: Props) {
     super(props)
 
     this.state = {
