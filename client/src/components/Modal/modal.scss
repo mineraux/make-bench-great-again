@@ -1,0 +1,34 @@
+@import '../../assets/styles/global.scss';
+
+.modal-container {
+  position: relative;
+  height: 35rem;
+}
+
+.modal {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  max-width: 33.5rem;
+  width: 88%;
+  padding: 2.5rem 4rem;
+  transform: translate(-50%, -50%);
+  background-color: $color-pink;
+  color: $color-blue;
+  font-family: $font-infini-regular;
+  text-align: center;
+  letter-spacing: 0.1rem;
+  z-index: 9999;
+
+  &__title {
+    font-size: 2rem;
+    text-transform: uppercase;
+    line-height: 2.5rem;
+  }
+
+  &__text-content {
+    margin-bottom: 3.5rem;
+    font-size: 1.5rem;
+    line-height: 2rem;
+  }
+}
