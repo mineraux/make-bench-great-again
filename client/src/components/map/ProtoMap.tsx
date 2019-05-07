@@ -1,5 +1,5 @@
 import React, { FunctionComponent, useEffect, useRef, useState } from 'react'
-import './map.scss'
+import './mapgl.scss'
 import { observer } from 'mobx-react-lite'
 import Store from '../../store/Store'
 import mapboxgl, {
@@ -13,6 +13,7 @@ import DirectionsManager from './DirectionsController'
 import GeoLocationManager from './GeoLocationController'
 import InformationsPanel from '../InformationsPanel/InformationsPanel'
 import { featureCoords } from '../../utils/map'
+import Modal from '../Modal/Modal'
 
 const ProtoMap: FunctionComponent = () => {
   const { benchList, fetchBenchList } = Store
@@ -43,7 +44,6 @@ const ProtoMap: FunctionComponent = () => {
 
     map.current.on('load', () => {
       getInstallationList()
-      geolocate.current.trigger()
 
       map.current!.on('click', 'markers', e => {
         if (e.features && featureInFeaturesCoords(e)) {
@@ -75,9 +75,15 @@ const ProtoMap: FunctionComponent = () => {
   }, [])
 
   useEffect(() => {
+    if (!isTourStarted && userLocation && markers) {
+      setFastestPath()
+    }
+  }, [userLocation, markers])
+
+  useEffect(() => {
     if (map.current && !markers && map.current.isStyleLoaded()) {
-      const newMarkers = MapManager.setAllMarkers(benchList, map.current)
-      setMarkers(newMarkers)
+      const markers = MapManager.setAllMarkers(benchList, map.current)
+      setMarkers(markers)
     }
   }, [benchList])
 
@@ -92,6 +98,10 @@ const ProtoMap: FunctionComponent = () => {
     setIsTourStarted(true)
   }
 
+  const initGeoLocate = () => {
+    geolocate.current.trigger()
+  }
+
   const setPath = () => {
     DirectionsManager.setPathToInstallation(
       directions.current,
@@ -103,6 +113,15 @@ const ProtoMap: FunctionComponent = () => {
 
   return (
     <div id="map">
+      <Modal
+        modalTitle="Votre parcours commence !"
+        textContent="
+        Nous vous proposons de vous diriger vers l’installation la plus proche pour réaliser la performance et débloquer le contenu associé.
+        Pour cela nous aurons besoin de votre localisation. 
+        "
+        buttonTitle="Démarrer"
+        onButtonClick={initGeoLocate}
+      />
       {markers && userLocation && (
         <InformationsPanel
           marker={selectedMarker}

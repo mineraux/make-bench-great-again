@@ -6,6 +6,7 @@ import { pageProps } from '../types'
 import Button, { themes as ButtonThemes } from '../../components/Button/Button'
 import config from '../../config/config'
 import Countdown from '../../components/Countdown/Countdown'
+import Modal from '../../components/Modal/Modal'
 
 type Props = pageProps
 
@@ -44,6 +45,17 @@ const Components: FunctionComponent<Props> = ({ show }) => {
 
         <Countdown />
 
+        <hr />
+
+        {/*** MODAL ***/}
+        <div className="modal-container">
+          <Modal
+            modalTitle="Votre parcours commence !"
+            textContent="Nous vous proposons de vous diriger vers l'installation la plus proche
+            pour réaliser la performance et débloquer le contenu associé."
+            buttonTitle="Démarrer"
+          />
+        </div>
         <hr />
       </div>
     </Transition>
