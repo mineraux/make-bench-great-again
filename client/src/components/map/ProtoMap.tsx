@@ -119,7 +119,7 @@ const ProtoMap: FunctionComponent = () => {
         Nous vous proposons de vous diriger vers l’installation la plus proche pour réaliser la performance et débloquer le contenu associé.
         Pour cela nous aurons besoin de votre localisation. 
         "
-        buttonTitle="Démarrer"
+        buttonLabel="Démarrer"
         onButtonClick={initGeoLocate}
       />
       {markers && userLocation && (

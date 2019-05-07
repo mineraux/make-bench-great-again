@@ -1,14 +1,14 @@
-import React, { FunctionComponent } from 'react'
-import { observer } from 'mobx-react-lite'
+import React, { FunctionComponent, useState } from 'react'
 import Button, { themes as ButtonThemes } from '../../components/Button/Button'
 import './modal.scss'
+import Classnames from 'classnames'
 
 type Props = {
   className?: string
   modalTitle: string
   textContent: string
   onButtonClick?: any
-  buttonTitle: string
+  buttonLabel: string
 }
 
 const Modal: FunctionComponent<Props> = ({
@@ -16,26 +16,31 @@ const Modal: FunctionComponent<Props> = ({
   modalTitle,
   textContent,
   onButtonClick,
-  buttonTitle,
+  buttonLabel,
 }) => {
   let modal: HTMLDivElement | null = null
+
+  const [isModalOpen, setIsModal] = useState(true)
 
   const clickButton = () => {
     if (onButtonClick) {
       onButtonClick()
     }
     if (modal) {
-      modal.classList.add('hidden')
+      setIsModal(false)
     }
   }
 
   return (
-    <div className="modal" ref={el => (modal = el)}>
+    <div
+      className={Classnames(className, 'modal', { hidden: !isModalOpen })}
+      ref={el => (modal = el)}
+    >
       <h3 className="modal__title">{modalTitle}</h3>
       <p className="modal__text-content">{textContent}</p>
       <Button
         onClick={clickButton}
-        label={buttonTitle}
+        label={buttonLabel}
         theme={ButtonThemes.Blue}
         className={'informations-panel__set-direction-button'}
       />
@@ -43,4 +48,4 @@ const Modal: FunctionComponent<Props> = ({
   )
 }
 
-export default observer(Modal)
+export default Modal
