@@ -11,7 +11,8 @@ import MapManager from './MapController'
 import { featureInFeaturesCoords } from '../../utils/map'
 import DirectionsManager from './DirectionsController'
 import GeoLocationManager from './GeoLocationController'
-import InformationsPanel from './InformationsPanel'
+import InformationsPanel from '../InformationsPanel/InformationsPanel'
+import { featureCoords } from '../../utils/map'
 
 const ProtoMap: FunctionComponent = () => {
   const { benchList, fetchBenchList } = Store
@@ -91,20 +92,25 @@ const ProtoMap: FunctionComponent = () => {
     setIsTourStarted(true)
   }
 
+  const setPath = () => {
+    DirectionsManager.setPathToInstallation(
+      directions.current,
+      featureCoords(selectedMarker),
+      userLocation
+    )
+    setIsTourStarted(true)
+  }
+
   return (
     <div id="map">
-      <InformationsPanel
-        marker={selectedMarker}
-        travelTime={travelTime}
-        travelDistance={travelDistance}
-      />
-      {markers && userLocation && !isTourStarted && (
-        <button
-          onClick={setFastestPath}
-          className="mapboxgl-map__btn-start-travel"
-        >
-          Commencer la visite
-        </button>
+      {markers && userLocation && (
+        <InformationsPanel
+          marker={selectedMarker}
+          travelTime={travelTime}
+          travelDistance={travelDistance}
+          onButtonClick={setPath}
+          isTourStarted={isTourStarted}
+        />
       )}
     </div>
   )

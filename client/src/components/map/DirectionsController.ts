@@ -39,6 +39,15 @@ class DirectionsManager {
 
     return nearestMarker
   }
+
+  public setPathToInstallation = (
+    directions: any,
+    userLocation: Coords,
+    destination: Coords
+  ) => {
+    directions.setOrigin(userLocation)
+    directions.setDestination(destination)
+  }
 }
 
 export default new DirectionsManager()

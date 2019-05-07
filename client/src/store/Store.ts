@@ -18,22 +18,25 @@ class Store {
       this.benchList = [
         {
           _id: '1',
-          name: 'Bench1',
-          description: 'Desc1',
+          name: 'L’Exedros',
+          description:
+            'Vestige du 19e siècle, cette sculpture aux courbes parfaites...',
           lockedDescription: 'Locked',
           geolocation: [2.402, 48.8787],
         },
         {
           _id: '2',
-          name: 'Bench2',
-          description: 'Desc2',
+          name: 'Super banc',
+          description:
+            'Vestige du 19e siècle, cette sculpture aux courbes parfaites...',
           lockedDescription: 'Locked',
           geolocation: [2.40764, 48.87512],
         },
         {
           _id: '3',
-          name: 'Bench3',
-          description: 'Desc3',
+          name: 'Enorme celui là',
+          description:
+            'Vestige du 19e siècle, cette sculpture aux courbes parfaites...',
           lockedDescription: 'Locked',
           geolocation: [2.39636, 48.87539],
         },
