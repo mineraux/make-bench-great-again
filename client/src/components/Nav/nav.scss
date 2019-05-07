@@ -2,12 +2,13 @@
   display: flex;
   align-items: center;
   margin-top: 2rem;
+  flex-wrap: wrap;
 
   a {
     font-size: 2rem;
     color: dodgerblue;
     text-decoration: none;
-    margin: 0 2rem;
+    margin: 0.5rem 2rem;
     &:hover {
       transition: 0.3s ease;
       opacity: 0.6;
