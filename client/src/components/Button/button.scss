@@ -8,34 +8,44 @@
   border-style: solid;
   text-decoration: none;
   cursor: pointer;
+  transition-property: background-color, color;
+  transition-duration: 0.25s;
+  transition-timing-function: cubic-bezier(0.19, 1, 0.22, 1);
 
   &.theme-blue {
     border-color: $color-blue;
+    color: $color-blue;
+
+    &:hover {
+      color: white;
+      background-color: $color-blue;
+    }
   }
 
   &.theme-green {
     border-color: $color-green;
+    color: $color-green;
+
+    &:hover {
+      color: $color-blue;
+      background-color: $color-green;
+    }
   }
 
   &.theme-pink {
     border-color: $color-pink;
+    color: $color-pink;
+
+    &:hover {
+      color: $color-blue;
+      background-color: $color-pink;
+    }
   }
 
   &__label {
     font-size: 1.1rem;
+    line-height: 1.1rem;
     text-transform: uppercase;
     font-family: $font-avenir-medium;
-
-    &.theme-blue {
-      color: $color-blue;
-    }
-
-    &.theme-green {
-      color: $color-green;
-    }
-
-    &.theme-pink {
-      color: $color-pink;
-    }
   }
 }
