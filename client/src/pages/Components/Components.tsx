@@ -10,6 +10,8 @@ import Modal from '../../components/Modal/Modal'
 import BurgerButton, {
   themes as BurgerButtonThemes,
 } from '../../components/BurgerButton/BurgerButton'
+import Header, { themes as HeaderThemes } from '../../components/Header/Header'
+import './components.scss'
 
 type Props = pageProps
 
@@ -50,9 +52,10 @@ const Components: FunctionComponent<Props> = ({ show }) => {
 
         <hr />
 
-        {/*** COUNTDOWN ***/}
+        {/*** HEADER ***/}
 
-        <Countdown />
+        <Header title={'Un titre'} theme={HeaderThemes.Blue} />
+        <Header title={'Un deuxième titre'} theme={HeaderThemes.Green} />
 
         <hr />
 
