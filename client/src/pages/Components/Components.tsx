@@ -53,6 +53,7 @@ const Components: FunctionComponent<Props> = ({ show }) => {
             modalTitle="Votre parcours commence !"
             textContent="Nous vous proposons de vous diriger vers l'installation la plus proche
             pour réaliser la performance et débloquer le contenu associé."
+            buttonTitle="Démarrer"
           />
         </div>
         <hr />

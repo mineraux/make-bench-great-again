@@ -8,6 +8,7 @@ type Props = {
   modalTitle: string
   textContent: string
   onButtonClick?: any
+  buttonTitle: string
 }
 
 const Modal: FunctionComponent<Props> = ({
@@ -15,6 +16,7 @@ const Modal: FunctionComponent<Props> = ({
   modalTitle,
   textContent,
   onButtonClick,
+  buttonTitle,
 }) => {
   let modal: HTMLDivElement | null = null
 
@@ -33,7 +35,7 @@ const Modal: FunctionComponent<Props> = ({
       <p className="modal__text-content">{textContent}</p>
       <Button
         onClick={clickButton}
-        label={'Démarrer'}
+        label={buttonTitle}
         theme={ButtonThemes.Blue}
         className={'informations-panel__set-direction-button'}
       />
