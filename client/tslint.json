@@ -2,7 +2,8 @@
   "extends": [
     "tslint:recommended",
     "tslint-react",
-    "tslint-config-prettier"
+    "tslint-config-prettier",
+    "tslint-react-hooks"
   ],
   "linterOptions": {
     "exclude": [
@@ -19,6 +20,7 @@
     "ordered-imports": false,
     "object-literal-sort-keys": false,
     "jsx-boolean-value": false,
-    "member-access": false
+    "member-access": false,
+    "react-hooks-nesting": "error"
   }
 }
