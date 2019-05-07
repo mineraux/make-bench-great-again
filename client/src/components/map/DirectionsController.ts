@@ -1,5 +1,7 @@
 // import MapBoxDirections from '@mapbox/mapbox-gl-directions'
-var MapboxDirections = require('@mapbox/mapbox-gl-directions/dist/mapbox-gl-directions')
+/* tslint:disable:no-var-requires */
+const MapboxDirections = require('@mapbox/mapbox-gl-directions/dist/mapbox-gl-directions')
+/* tslint:enable:no-var-requires */
 import mapboxgl from 'mapbox-gl'
 import { featureCoords } from '../../utils/map'
 import GeoLocationManager from './GeoLocationController'

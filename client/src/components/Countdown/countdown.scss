@@ -1,0 +1,13 @@
+@import '../../assets/styles/global';
+.countdown {
+  height: 2rem;
+  width: 8rem;
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  p {
+    color: $color-green;
+    font-family: $font-avenir-medium;
+    font-size: 1.5rem;
+  }
+}

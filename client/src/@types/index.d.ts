@@ -24,10 +24,10 @@ export interface ApiBench {
 }
 
 export interface queryApiBench {
-  name?: Boolean
-  description?: Boolean
-  lockedDescription?: Boolean
-  geolocation?: Boolean
+  name?: boolean
+  description?: boolean
+  lockedDescription?: boolean
+  geolocation?: boolean
   hashTags?: string[]
   testimony?: string
   relatedPetition?: string
@@ -59,12 +59,12 @@ export interface createApiPetition {
   relatedBench?: string | null
 }
 
-export type ApiBenchReponseRoot = Array<ApiBench>
+export type ApiBenchReponseRoot = ApiBench[]
 export type ApiSingleBenchReponseRoot = ApiBench
 export type QueryApiBenchReponse = queryApiBench
 export type createApiBenchMutation = createApiBench
 export type updateApiBenchMutation = updateApiBench
 
-export type ApiPetitionReponseRoot = Array<ApiPetition>
+export type ApiPetitionReponseRoot = ApiPetition[]
 export type ApiSinglePetitionReponseRoot = ApiPetition
 export type createApiPetitionMutation = createApiPetition

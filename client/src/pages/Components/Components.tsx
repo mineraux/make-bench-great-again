@@ -1,8 +1,11 @@
+/* tslint:disable:jsx-no-lambda */
+
 import React, { FunctionComponent } from 'react'
 import Transition from './Transition'
 import { pageProps } from '../types'
 import Button, { themes as ButtonThemes } from '../../components/Button/Button'
 import config from '../../config/config'
+import Countdown from '../../components/Countdown/Countdown'
 
 type Props = pageProps
 
@@ -34,6 +37,12 @@ const Components: FunctionComponent<Props> = ({ show }) => {
           link={config.routes.Home.path}
           theme={ButtonThemes.Pink}
         />
+
+        <hr />
+
+        {/*** COUNTDOWN ***/}
+
+        <Countdown />
 
         <hr />
       </div>
