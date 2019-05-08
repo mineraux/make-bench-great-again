@@ -12,10 +12,21 @@ import BurgerButton, {
 } from '../../components/BurgerButton/BurgerButton'
 import Header, { themes as HeaderThemes } from '../../components/Header/Header'
 import './components.scss'
+import ProgressBar from '../../components/ProgressBar/ProgressBar'
+import { observer } from 'mobx-react-lite'
+import { NavigationStore } from '../../store'
 
 type Props = pageProps
 
 const Components: FunctionComponent<Props> = ({ show }) => {
+  const { scrollProgression, setScrollProgression } = NavigationStore
+
+  const handleOnChangeProgression = (
+    e: React.ChangeEvent<HTMLInputElement>
+  ) => {
+    setScrollProgression(Number(e.target.value))
+  }
+
   return (
     <Transition show={show}>
       <div className={'page-components'}>
@@ -57,6 +68,17 @@ const Components: FunctionComponent<Props> = ({ show }) => {
         <Header title={'Un titre'} theme={HeaderThemes.Blue} />
         <Header title={'Un deuxième titre'} theme={HeaderThemes.Green} />
 
+        <p>Set scroll progression</p>
+
+        <input
+          type="range"
+          min={0}
+          step={0.01}
+          max={1}
+          value={scrollProgression}
+          onChange={handleOnChangeProgression}
+        />
+
         <hr />
 
         {/*** MODAL ***/}
@@ -72,9 +94,13 @@ const Components: FunctionComponent<Props> = ({ show }) => {
           />
         </div>
         <hr />
+
+        <ProgressBar progression={0.2} />
+        <hr />
+        <ProgressBar progression={0.8} />
       </div>
     </Transition>
   )
 }
 
-export default Components
+export default observer(Components)
