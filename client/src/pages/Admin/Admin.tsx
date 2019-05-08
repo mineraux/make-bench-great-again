@@ -1,7 +1,7 @@
 import React, { Component, createRef } from 'react'
 import Transition from './Transition'
 import ApiClient from '../../ApiClient/ApiClient'
-import { ApiBench } from '../../@types'
+import { ApiInstallation } from '../../@types'
 import './admin.scss'
 
 type Props = {
@@ -13,9 +13,9 @@ type stateAdmin = {
 }
 
 class Admin extends Component<Props, stateAdmin> {
-  createBenchForm: HTMLFormElement | null = null
-  updateBenchForm: HTMLFormElement | null = null
-  deleteBenchForm: HTMLFormElement | null = null
+  createInstallationForm: HTMLFormElement | null = null
+  updateInstallationForm: HTMLFormElement | null = null
+  deleteInstallationForm: HTMLFormElement | null = null
   createPetitionForm: HTMLFormElement | null = null
   deletePetitionForm: HTMLFormElement | null = null
 
@@ -30,29 +30,29 @@ class Admin extends Component<Props, stateAdmin> {
   render() {
     const { show } = this.props
 
-    const createBench = async (e: React.FormEvent<HTMLFormElement>) => {
+    const createInstallation = async (e: React.FormEvent<HTMLFormElement>) => {
       e.preventDefault()
 
-      if (this.createBenchForm) {
-        const name: string = (this.createBenchForm.querySelector(
+      if (this.createInstallationForm) {
+        const name: string = (this.createInstallationForm.querySelector(
           '[name="name"]'
         ) as HTMLInputElement).value
-        const description: string = (this.createBenchForm.querySelector(
+        const description: string = (this.createInstallationForm.querySelector(
           '[name="description"]'
         ) as HTMLTextAreaElement).value
-        const lockedDescription: string = (this.createBenchForm.querySelector(
+        const lockedDescription: string = (this.createInstallationForm.querySelector(
           '[name="lockedDescription"]'
         ) as HTMLTextAreaElement).value
-        const latitude: string = (this.createBenchForm.querySelector(
+        const latitude: string = (this.createInstallationForm.querySelector(
           '[name="latitude"]'
         ) as HTMLInputElement).value
-        const longitude: string = (this.createBenchForm.querySelector(
+        const longitude: string = (this.createInstallationForm.querySelector(
           '[name="longitude"]'
         ) as HTMLInputElement).value
-        const testimony: string = (this.createBenchForm.querySelector(
+        const testimony: string = (this.createInstallationForm.querySelector(
           '[name="testimony"]'
         ) as HTMLInputElement).value
-        const hashtags: string[] = (this.createBenchForm.querySelector(
+        const hashtags: string[] = (this.createInstallationForm.querySelector(
           '[name="hashtags"]'
         ) as HTMLInputElement).value.split(' ')
 
@@ -63,7 +63,7 @@ class Admin extends Component<Props, stateAdmin> {
           latitude.length > 0 &&
           longitude.length > 0
         ) {
-          await ApiClient.createBench({
+          await ApiClient.createInstallation({
             name,
             description,
             lockedDescription,
@@ -90,36 +90,36 @@ class Admin extends Component<Props, stateAdmin> {
       }
     }
 
-    const updateBench = async (e: React.FormEvent<HTMLFormElement>) => {
+    const updateInstallation = async (e: React.FormEvent<HTMLFormElement>) => {
       e.preventDefault()
 
-      if (this.updateBenchForm) {
-        const id: string = (this.updateBenchForm.querySelector(
+      if (this.updateInstallationForm) {
+        const id: string = (this.updateInstallationForm.querySelector(
           '[name="id"]'
         ) as HTMLInputElement).value
-        const name: string = (this.updateBenchForm.querySelector(
+        const name: string = (this.updateInstallationForm.querySelector(
           '[name="name"]'
         ) as HTMLInputElement).value
-        const description: string = (this.updateBenchForm.querySelector(
+        const description: string = (this.updateInstallationForm.querySelector(
           '[name="description"]'
         ) as HTMLTextAreaElement).value
-        const lockedDescription: string = (this.updateBenchForm.querySelector(
+        const lockedDescription: string = (this.updateInstallationForm.querySelector(
           '[name="lockedDescription"]'
         ) as HTMLTextAreaElement).value
-        const latitude: string = (this.updateBenchForm.querySelector(
+        const latitude: string = (this.updateInstallationForm.querySelector(
           '[name="latitude"]'
         ) as HTMLInputElement).value
-        const longitude: string = (this.updateBenchForm.querySelector(
+        const longitude: string = (this.updateInstallationForm.querySelector(
           '[name="longitude"]'
         ) as HTMLInputElement).value
-        const testimony: string = (this.updateBenchForm.querySelector(
+        const testimony: string = (this.updateInstallationForm.querySelector(
           '[name="testimony"]'
         ) as HTMLInputElement).value
-        const hashtags: string[] = (this.updateBenchForm.querySelector(
+        const hashtags: string[] = (this.updateInstallationForm.querySelector(
           '[name="hashtags"]'
         ) as HTMLInputElement).value.split('-')
 
-        const fieldsToUpdate: ApiBench = {
+        const fieldsToUpdate: ApiInstallation = {
           _id: id,
         }
 
@@ -150,7 +150,7 @@ class Admin extends Component<Props, stateAdmin> {
           fieldsToUpdate.hashTags = hashtags
         }
 
-        await ApiClient.updateBench(fieldsToUpdate)
+        await ApiClient.updateInstallation(fieldsToUpdate)
           .then(res => {
             this.setState({
               requestMessage: `Le banc "${res.name}"(ID:${
@@ -164,15 +164,15 @@ class Admin extends Component<Props, stateAdmin> {
       }
     }
 
-    const deleteBench = async (e: React.FormEvent<HTMLFormElement>) => {
+    const deleteInstallation = async (e: React.FormEvent<HTMLFormElement>) => {
       e.preventDefault()
 
-      if (this.deleteBenchForm) {
-        const id: string = (this.deleteBenchForm.querySelector(
+      if (this.deleteInstallationForm) {
+        const id: string = (this.deleteInstallationForm.querySelector(
           '[name="id"]'
         ) as HTMLInputElement).value
 
-        await ApiClient.deleteBench(id)
+        await ApiClient.deleteInstallation(id)
           .then(res => {
             this.setState({
               requestMessage: `Le banc "${res.name}"(ID:${
@@ -194,11 +194,11 @@ class Admin extends Component<Props, stateAdmin> {
           '[name="subscribers"]'
         ) as HTMLInputElement).value.split(' ')
 
-        const relatedBench: string = (this.createPetitionForm.querySelector(
-          '[name="relatedBench"]'
+        const relatedInstallation: string = (this.createPetitionForm.querySelector(
+          '[name="relatedInstallation"]'
         ) as HTMLInputElement).value
 
-        await ApiClient.createPetition({ subscribers, relatedBench })
+        await ApiClient.createPetition({ subscribers, relatedInstallation })
           .then(res => {
             this.setState({
               requestMessage: `La pétition "${res._id}"(ID:${
@@ -244,8 +244,8 @@ class Admin extends Component<Props, stateAdmin> {
           )}
           <form
             action="/"
-            onSubmit={createBench}
-            ref={el => (this.createBenchForm = el)}
+            onSubmit={createInstallation}
+            ref={el => (this.createInstallationForm = el)}
             className="admin-panel__form"
           >
             <input
@@ -303,8 +303,8 @@ class Admin extends Component<Props, stateAdmin> {
           <h3>Mettre à jour une installation</h3>
           <form
             action="/"
-            onSubmit={updateBench}
-            ref={el => (this.updateBenchForm = el)}
+            onSubmit={updateInstallation}
+            ref={el => (this.updateInstallationForm = el)}
             className="admin-panel__form"
           >
             <input
@@ -362,8 +362,8 @@ class Admin extends Component<Props, stateAdmin> {
           <h3>Supprimer une installation</h3>
           <form
             action="/"
-            onSubmit={deleteBench}
-            ref={el => (this.deleteBenchForm = el)}
+            onSubmit={deleteInstallation}
+            ref={el => (this.deleteInstallationForm = el)}
             className="admin-panel__form"
           >
             <input
@@ -393,7 +393,7 @@ class Admin extends Component<Props, stateAdmin> {
             />
             <input
               type="text"
-              name="relatedBench"
+              name="relatedInstallation"
               placeholder="Installation reliée"
               className="admin-panel__form__field"
             />

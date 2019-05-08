@@ -1,9 +1,9 @@
 import {
-  ApiBenchReponseRoot,
-  QueryApiBenchReponse,
-  ApiSingleBenchReponseRoot,
-  ApiBench,
-  createApiBenchMutation,
+  ApiInstallationReponseRoot,
+  QueryApiInstallationReponse,
+  ApiSingleInstallationReponseRoot,
+  ApiInstallation,
+  createApiInstallationMutation,
   ApiPetition,
   createApiPetitionMutation,
   createApiPetition,
@@ -15,17 +15,17 @@ type graphqlQuery = {
 
 type mongoResponse = {
   data: {
-    updateBench?: {
+    updateInstallation?: {
       _id: ''
     }
-    createBench?: {
+    createInstallation?: {
       _id: string
     }
-    deleteBench?: {
+    deleteInstallation?: {
       _id: string
     }
-    benchList?: ApiBench[]
-    singleBench?: {
+    installationList?: ApiInstallation[]
+    singleInstallation?: {
       _id: string
     }
     createPetition?: {
@@ -38,108 +38,112 @@ type mongoResponse = {
 }
 
 class ApiClient {
-  public createBench = async (
-    fields: createApiBenchMutation
-  ): Promise<ApiBench> => {
+  public createInstallation = async (
+    fields: createApiInstallationMutation
+  ): Promise<ApiInstallation> => {
     const dataResponse = {
-      createBench: {
+      createInstallation: {
         _id: '',
       },
     }
 
     const requestBody = {
-      query: this.mutationCreateBench(fields),
+      query: this.mutationCreateInstallation(fields),
     }
 
     await this.apiCall(requestBody).then(res => {
-      if (res.data.createBench) {
-        dataResponse.createBench = res.data.createBench
+      if (res.data.createInstallation) {
+        dataResponse.createInstallation = res.data.createInstallation
       }
     })
 
-    return dataResponse.createBench
+    return dataResponse.createInstallation
   }
 
-  public updateBench = async (fields: ApiBench): Promise<ApiBench> => {
+  public updateInstallation = async (
+    fields: ApiInstallation
+  ): Promise<ApiInstallation> => {
     const dataResponse = {
-      updateBench: {
+      updateInstallation: {
         _id: '',
       },
     }
 
     const requestBody = {
-      query: this.mutationUpdateBench(fields),
+      query: this.mutationUpdateInstallation(fields),
     }
 
     await this.apiCall(requestBody).then(res => {
-      if (res.data.updateBench) {
-        dataResponse.updateBench = res.data.updateBench
+      if (res.data.updateInstallation) {
+        dataResponse.updateInstallation = res.data.updateInstallation
       }
     })
 
-    return dataResponse.updateBench
+    return dataResponse.updateInstallation
   }
 
-  public deleteBench = async (benchID: ApiBench['_id']): Promise<ApiBench> => {
+  public deleteInstallation = async (
+    installationID: ApiInstallation['_id']
+  ): Promise<ApiInstallation> => {
     const dataResponse = {
-      deleteBench: {
+      deleteInstallation: {
         _id: '',
       },
     }
 
     const requestBody = {
-      query: this.mutationDeleteBench(benchID),
+      query: this.mutationDeleteInstallation(installationID),
     }
 
     await this.apiCall(requestBody).then(res => {
-      if (res.data.deleteBench) {
-        dataResponse.deleteBench = res.data.deleteBench
+      if (res.data.deleteInstallation) {
+        dataResponse.deleteInstallation = res.data.deleteInstallation
       }
     })
 
-    return dataResponse.deleteBench
+    return dataResponse.deleteInstallation
   }
 
-  public getBenchList = async (
-    fieldsToFetch: QueryApiBenchReponse
-  ): Promise<ApiBenchReponseRoot> => {
-    let benchList: ApiBenchReponseRoot = []
+  public getInstallationList = async (
+    fieldsToFetch: QueryApiInstallationReponse
+  ): Promise<ApiInstallationReponseRoot> => {
+    let installationList: ApiInstallationReponseRoot = []
 
     const requestBody = {
-      query: this.queryBenchList(fieldsToFetch),
+      query: this.queryInstallationList(fieldsToFetch),
     }
     await this.apiCall(requestBody)
       .then(res => {
-        if (res.data.benchList) {
-          benchList = res.data.benchList
+        if (res.data.installationList) {
+          installationList = res.data.installationList
         }
       })
       .catch(err => {
         console.log(err)
       })
 
-    return benchList
+    return installationList
   }
 
-  public getSingleBench = async (
-    benchID: ApiBench['_id'],
-    fieldsToFetch: QueryApiBenchReponse
-  ): Promise<ApiSingleBenchReponseRoot> => {
-    let bench: ApiBench = { _id: '' }
+  public getSingleInstallation = async (
+    installationID: ApiInstallation['_id'],
+    fieldsToFetch: QueryApiInstallationReponse
+  ): Promise<ApiSingleInstallationReponseRoot> => {
+    let installation: ApiInstallation = { _id: '' }
     const requestBody = {
-      query: this.querySingleBench(benchID, fieldsToFetch),
+      query: this.querySingleInstallation(installationID, fieldsToFetch),
     }
     await this.apiCall(requestBody)
       .then(resData => {
-        if (resData.data.singleBench) {
-          bench = resData.data.singleBench
+        if (resData.data.singleInstallation) {
+          installation = resData.data.singleInstallation
         }
       })
       .catch(err => {
         console.log(err)
       })
 
-    return bench
+    return installation
   }
 
   public createPetition = async (
@@ -185,28 +189,12 @@ class ApiClient {
 
     return dataResponse.deletePetition
   }
-  private queryBenchList = (fieldsToFetch: QueryApiBenchReponse) => {
-    const query = `
-    query {
-      benchList{
-        _id
-        ${fieldsToFetch.name ? 'name' : ''}
-        ${fieldsToFetch.description ? 'description' : ''}
-        ${fieldsToFetch.lockedDescription ? 'lockedDescription' : ''}
-        ${fieldsToFetch.geolocation ? 'geolocation' : ''}
-      }
-    }
-    `
-    return query
-  }
-
-  private querySingleBench = (
-    benchId: ApiBench['_id'],
-    fieldsToFetch: QueryApiBenchReponse
+  private queryInstallationList = (
+    fieldsToFetch: QueryApiInstallationReponse
   ) => {
     const query = `
     query {
-      singleBench(benchId:"${benchId}") {
+      installationList{
         _id
         ${fieldsToFetch.name ? 'name' : ''}
         ${fieldsToFetch.description ? 'description' : ''}
@@ -218,12 +206,32 @@ class ApiClient {
     return query
   }
 
-  private mutationCreateBench = (fields: createApiBenchMutation) => {
+  private querySingleInstallation = (
+    installationId: ApiInstallation['_id'],
+    fieldsToFetch: QueryApiInstallationReponse
+  ) => {
+    const query = `
+    query {
+      singleInstallation(installationId:"${installationId}") {
+        _id
+        ${fieldsToFetch.name ? 'name' : ''}
+        ${fieldsToFetch.description ? 'description' : ''}
+        ${fieldsToFetch.lockedDescription ? 'lockedDescription' : ''}
+        ${fieldsToFetch.geolocation ? 'geolocation' : ''}
+      }
+    }
+    `
+    return query
+  }
+
+  private mutationCreateInstallation = (
+    fields: createApiInstallationMutation
+  ) => {
     const geolocation = [fields.latitude, fields.longitude]
     const query = `
     mutation {
-      createBench(
-        benchInput: {
+      createInstallation(
+        installationInput: {
           name:"${fields.name}",
           description:"${fields.description}",
           lockedDescription:"${fields.lockedDescription}",
@@ -240,8 +248,8 @@ class ApiClient {
     return query
   }
 
-  private mutationUpdateBench = (fields: ApiBench) => {
-    const fieldsToUpdate: ApiBench = {
+  private mutationUpdateInstallation = (fields: ApiInstallation) => {
+    const fieldsToUpdate: ApiInstallation = {
       _id: fields._id,
       name: fields.name,
       description: fields.description,
@@ -258,8 +266,8 @@ class ApiClient {
 
     const query = `
     mutation {
-      updateBench(
-        updateBenchInput:
+      updateInstallation(
+        updateInstallationInput:
           ${formatedQuery}
       ){
         _id
@@ -271,10 +279,12 @@ class ApiClient {
     return query
   }
 
-  private mutationDeleteBench = (benchID: ApiBench['_id']) => {
+  private mutationDeleteInstallation = (
+    installationID: ApiInstallation['_id']
+  ) => {
     const query = `
     mutation {
-      deleteBench(benchId:"${benchID}") {
+      deleteInstallation(installationId:"${installationID}") {
         _id
         name
       }
@@ -327,9 +337,9 @@ class ApiClient {
   private mutationCreatePetition = (fields: createApiPetitionMutation) => {
     const fieldsToUpdate: createApiPetition = {
       subscribers: fields.subscribers,
-      relatedBench:
-        fields.relatedBench && fields.relatedBench.length > 0
-          ? fields.relatedBench
+      relatedInstallation:
+        fields.relatedInstallation && fields.relatedInstallation.length > 0
+          ? fields.relatedInstallation
           : null,
     }
 

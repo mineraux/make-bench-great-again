@@ -1,4 +1,4 @@
-import { ApiBenchReponseRoot, Coords } from '../../@types'
+import { ApiInstallationReponseRoot, Coords } from '../../@types'
 import mapboxgl, { Map as MapboxGlMap } from 'mapbox-gl'
 import { Feature } from 'geojson'
 
@@ -14,26 +14,26 @@ class MapManager {
   }
 
   public setAllMarkers = (
-    benchList: ApiBenchReponseRoot,
+    installationList: ApiInstallationReponseRoot,
     map: mapboxgl.Map
   ) => {
     const markers: Feature[] = []
 
-    if (benchList.length === 0) {
+    if (installationList.length === 0) {
       return
     }
 
-    benchList.map(bench => {
+    installationList.map(installation => {
       const feature: Feature = {
         type: 'Feature',
         properties: {
-          _id: bench._id,
-          name: bench.name,
-          description: bench.description,
+          _id: installation._id,
+          name: installation.name,
+          description: installation.description,
         },
         geometry: {
           type: 'Point',
-          coordinates: bench.geolocation as number[],
+          coordinates: installation.geolocation as number[],
         },
       }
 

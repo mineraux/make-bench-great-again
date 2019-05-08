@@ -1,7 +1,7 @@
 const { buildSchema } = require('graphql')
 
 module.exports = buildSchema(`
-  type Bench {
+  type Installation {
     _id: ID!
     name: String!
     description: String!
@@ -15,10 +15,10 @@ module.exports = buildSchema(`
   type Petition {
     _id: ID!
     subscribers:[String!]
-    relatedBench: Bench
+    relatedInstallation: Installation
   }
   
-  input BenchInput {
+  input InstallationInput {
     name: String!
     description: String!
     lockedDescription: String!
@@ -28,7 +28,7 @@ module.exports = buildSchema(`
     relatedPetition: ID
   }
 
-  input UpdateBenchInput {
+  input UpdateInstallationInput {
     _id: ID!
     name: String
     description: String
@@ -41,19 +41,19 @@ module.exports = buildSchema(`
 
   input PetitionInput {
     subscribers: [String!]
-    relatedBench: ID
+    relatedInstallation: ID
   }
 
   type RootQuery {
-    benchList: [Bench!]!
-    singleBench(benchId: ID!): Bench!
+    installationList: [Installation!]!
+    singleInstallation(installationId: ID!): Installation!
     petitionList: [Petition!]!
   }
 
   type RootMutation {
-    createBench(benchInput: BenchInput): Bench
-    updateBench(updateBenchInput: UpdateBenchInput): Bench
-    deleteBench(benchId: ID!): Bench!
+    createInstallation(installationInput: InstallationInput): Installation
+    updateInstallation(updateInstallationInput: UpdateInstallationInput): Installation
+    deleteInstallation(installationId: ID!): Installation!
     createPetition(petitionInput: PetitionInput): Petition
     deletePetition(petitionId: ID!): Petition!
   }
