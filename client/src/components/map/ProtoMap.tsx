@@ -1,7 +1,7 @@
 import React, { FunctionComponent, useEffect, useRef, useState } from 'react'
 import './mapgl.scss'
 import { observer } from 'mobx-react-lite'
-import { BenchStore } from '../../store'
+import { InstallationStore } from '../../store'
 import mapboxgl, {
   GeolocateControl,
   Map as MapboxGlMap,
@@ -16,7 +16,7 @@ import { featureCoords } from '../../utils/map'
 import Modal from '../Modal/Modal'
 
 const ProtoMap: FunctionComponent = () => {
-  const { benchList, fetchBenchList } = BenchStore
+  const { installationList, fetchInstallationList } = InstallationStore
 
   const map = useRef<MapboxGlMap | null>(null)
   const directions = useRef(DirectionsManager.initMapboxDirections())
@@ -32,7 +32,11 @@ const ProtoMap: FunctionComponent = () => {
   const [travelDistance, setTravelDistance] = useState()
 
   const getInstallationList = async () => {
-    await fetchBenchList({ name: true, description: true, geolocation: true })
+    await fetchInstallationList({
+      name: true,
+      description: true,
+      geolocation: true,
+    })
   }
 
   useEffect(() => {
@@ -97,10 +101,10 @@ const ProtoMap: FunctionComponent = () => {
 
   useEffect(() => {
     if (map.current && !markers && map.current.isStyleLoaded()) {
-      const markers = MapManager.setAllMarkers(benchList, map.current)
+      const markers = MapManager.setAllMarkers(installationList, map.current)
       setMarkers(markers)
     }
-  }, [benchList])
+  }, [installationList])
 
   useEffect(() => {
     if (travelDistance === 0 || travelTime === 0) {

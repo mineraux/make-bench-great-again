@@ -25,15 +25,18 @@ const InformationsPanel: FunctionComponent<Props> = ({
   isTourStarted,
 }) => {
   const [isOpen, setIsOpen] = useState(false)
-  const [benchTargetName, setBenchTargetName] = useState(
+  const [installationTargetName, setInstallationTargetName] = useState(
     'Choisissez une oeuvre'
   )
-  const [benchTargetDescription, setBenchTargetDescription] = useState()
+  const [
+    installationTargetDescription,
+    setInstallationTargetDescription,
+  ] = useState()
 
   useEffect(() => {
     if (marker && marker.properties) {
-      setBenchTargetName(marker.properties.name)
-      setBenchTargetDescription(marker.properties.description)
+      setInstallationTargetName(marker.properties.name)
+      setInstallationTargetDescription(marker.properties.description)
       setIsOpen(true)
     }
   }, [marker])
@@ -44,7 +47,7 @@ const InformationsPanel: FunctionComponent<Props> = ({
         open: isOpen,
       })}
     >
-      {benchTargetDescription && (
+      {installationTargetDescription && (
         <button
           className="informations-panel__close-ico"
           onClick={() => {
@@ -55,17 +58,17 @@ const InformationsPanel: FunctionComponent<Props> = ({
         </button>
       )}
       <div className="informations-panel__informations--installation">
-        <span className="informations-panel__informations--installation__bench-name">
-          {benchTargetName}
+        <span className="informations-panel__informations--installation__installation-name">
+          {installationTargetName}
         </span>
-        <span className="informations-panel__informations--installation__bench-description">
-          {benchTargetDescription}
+        <span className="informations-panel__informations--installation__installation-description">
+          {installationTargetDescription}
         </span>
         {marker && marker.properties && (
           <Link
-            to={`/bench/${marker.properties._id}`}
+            to={`/installation/${marker.properties._id}`}
             className={
-              'informations-panel__informations--installation__bench-see-more'
+              'informations-panel__informations--installation__installation-see-more'
             }
           >
             en savoir plus

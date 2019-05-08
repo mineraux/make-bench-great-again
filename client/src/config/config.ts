@@ -3,7 +3,7 @@ import Map from '../pages/Map/Map'
 import Twitter from '../pages/Twitter/Twitter'
 import Admin from '../pages/Admin/Admin'
 import Components from '../pages/Components/Components'
-import Bench from '../pages/Bench/Bench'
+import Installation from '../pages/Installation/Installation'
 
 export default {
   routes: {
@@ -37,10 +37,10 @@ export default {
       component: Components,
       inNav: true,
     },
-    Bench: {
-      path: '/bench/:benchId',
-      name: 'Bench',
-      component: Bench,
+    Installation: {
+      path: '/installation/:installationId',
+      name: 'Installation',
+      component: Installation,
       inNav: false,
     },
   },
