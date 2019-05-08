@@ -81,11 +81,32 @@ const ProtoMap: FunctionComponent = () => {
   }, [userLocation, markers])
 
   useEffect(() => {
+    /**
+     * Position d'une instal pour fake le GPS :
+     * 48,875100
+     * 2,407654
+     */
+    if (isTourStarted) {
+      DirectionsManager.setPathToInstallation(
+        directions.current,
+        featureCoords(selectedMarker),
+        userLocation
+      )
+    }
+  }, [isTourStarted, userLocation])
+
+  useEffect(() => {
     if (map.current && !markers && map.current.isStyleLoaded()) {
       const markers = MapManager.setAllMarkers(benchList, map.current)
       setMarkers(markers)
     }
   }, [benchList])
+
+  useEffect(() => {
+    if (travelDistance === 0 || travelTime === 0) {
+      console.log('User close to installation')
+    }
+  }, [travelDistance])
 
   const setFastestPath = () => {
     setSelectedMarker(
