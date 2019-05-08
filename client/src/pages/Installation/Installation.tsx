@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import Transition from './Transition'
 import { pageProps } from '../types'
-import Store from '../../store/Store'
+import { InstallationStore } from '../../store'
 import { ApiInstallation } from '../../@types'
 
 type Props = pageProps & {}
@@ -42,7 +42,7 @@ class Installation extends Component<Props, stateInstallation> {
   }
 
   async getInstallationInformation() {
-    await Store.fetchSingleInstallation(
+    await InstallationStore.fetchSingleInstallation(
       this.props.match.params.installationId,
       {
         name: true,

@@ -1,6 +1,6 @@
 import React, { FunctionComponent, useState } from 'react'
 import { observer } from 'mobx-react-lite'
-import { BenchStore } from '../../store'
+import { InstallationStore } from '../../store'
 import { DebugStore } from '../../store'
 import DebugButton from './DebugButton'
 import './debugPanel.scss'
@@ -10,7 +10,7 @@ const DebugPanel: FunctionComponent = () => {
     installationList,
     fetchInstallationList,
     fetchSingleInstallation,
-  } = Store
+  } = InstallationStore
   const { debug } = DebugStore
   const [
     isInstallationListDisplayed,
