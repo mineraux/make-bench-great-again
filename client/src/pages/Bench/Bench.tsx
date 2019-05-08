@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import Transition from './Transition'
 import { pageProps } from '../types'
-import Store from '../../store/Store'
+import { BenchStore } from '../../store'
 import { ApiBench } from '../../@types'
 
 type Props = pageProps & {}
@@ -34,7 +34,7 @@ class Bench extends Component<Props, stateBench> {
   }
 
   async getBenchInformation() {
-    await Store.fetchSingleBench(this.props.match.params.benchId, {
+    await BenchStore.fetchSingleBench(this.props.match.params.benchId, {
       name: true,
     }).then(res => {
       this.setState({ bench: res })

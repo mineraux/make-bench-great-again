@@ -2,14 +2,18 @@ import React, { FunctionComponent } from 'react'
 import DebugPanel from './components/debug/DebugPanel'
 import { BrowserRouter, Route } from 'react-router-dom'
 import { observer } from 'mobx-react-lite'
-import PageStore from './store/PageStore'
+import { NavigationStore } from './store'
 // pages
 import Nav from './components/Nav/Nav'
 // config
 import config from './config/config'
 
 const App: FunctionComponent = () => {
-  const { currentPagePath, setCurrentPagePath, setNextPagePath } = PageStore
+  const {
+    currentPagePath,
+    setCurrentPagePath,
+    setNextPagePath,
+  } = NavigationStore
 
   const renderRoute = (route: any) => {
     return (

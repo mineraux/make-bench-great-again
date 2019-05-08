@@ -1,6 +1,6 @@
 import React from 'react'
 import { ReactComponent as BugIcon } from '../../assets/images/bug.svg'
-import DebugStore from '../../store/DebugStore'
+import { DebugStore } from '../../store'
 import './debugButton.scss'
 
 const DebugButton = () => {

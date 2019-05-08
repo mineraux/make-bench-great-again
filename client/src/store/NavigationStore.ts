@@ -4,7 +4,7 @@ type currentPagePathType = string | null
 type nextPagePathType = string | null
 type isMenuOpenType = boolean
 
-class PageStore {
+class NavigationStore {
   @observable currentPagePath: currentPagePathType = null
 
   @observable nextPagePath: nextPagePathType = null
@@ -24,4 +24,4 @@ class PageStore {
   }
 }
 
-export default new PageStore()
+export default new NavigationStore()

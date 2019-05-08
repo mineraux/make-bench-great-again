@@ -1,12 +1,12 @@
 import React, { FunctionComponent, useState } from 'react'
 import { observer } from 'mobx-react-lite'
-import Store from '../../store/Store'
-import DebugStore from '../../store/DebugStore'
+import { BenchStore } from '../../store'
+import { DebugStore } from '../../store'
 import DebugButton from './DebugButton'
 import './debugPanel.scss'
 
 const DebugPanel: FunctionComponent = () => {
-  const { benchList, fetchBenchList, fetchSingleBench } = Store
+  const { benchList, fetchBenchList, fetchSingleBench } = BenchStore
   const { debug } = DebugStore
   const [isBenchListDisplayed, setIsBenchListDisplayed] = useState(false)
 

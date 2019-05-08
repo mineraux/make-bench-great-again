@@ -2,7 +2,7 @@ import React, { FunctionComponent, useEffect, useState } from 'react'
 import Classnames from 'classnames'
 import './burger-button.scss'
 import { observer } from 'mobx-react-lite'
-import PageStore from '../../store/PageStore'
+import { NavigationStore } from '../../store'
 
 export enum themes {
   Blue = 'blue',
@@ -16,10 +16,10 @@ type Props = {
 }
 
 const BurgerButton: FunctionComponent<Props> = ({ className, theme }) => {
-  const [isOpen, setIsOpen] = useState(PageStore.isMenuOpen)
+  const [isOpen, setIsOpen] = useState(NavigationStore.isMenuOpen)
 
   const handleOnClick = () => {
-    PageStore.setIsMenuOpen(!isOpen)
+    NavigationStore.setIsMenuOpen(!isOpen)
     setIsOpen(!isOpen)
   }
 

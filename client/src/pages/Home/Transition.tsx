@@ -1,7 +1,7 @@
 import React, { FunctionComponent, ReactNode } from 'react'
 import { Transition } from 'react-transition-group'
 import { TimelineMax, TweenMax } from 'gsap'
-import PageStore from '../../store/PageStore'
+import { NavigationStore } from '../../store'
 import { observer } from 'mobx-react-lite'
 
 interface Props {
@@ -10,7 +10,7 @@ interface Props {
 }
 
 const TransitionComponent: FunctionComponent<Props> = ({ show, children }) => {
-  const { setCurrentPagePath, nextPagePath } = PageStore
+  const { setCurrentPagePath, nextPagePath } = NavigationStore
 
   // Enter : start
   const onEnter = (node: HTMLElement): void => {
