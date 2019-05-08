@@ -2,12 +2,19 @@ import React, { FunctionComponent, useState, useEffect } from 'react'
 import ClassNames from 'classnames'
 import './countdown.scss'
 
+export enum themes {
+  Blue = 'blue',
+  Green = 'green',
+}
+
 type Props = {
   endDate?: string
+  theme?: themes
 }
 
 const Countdown: FunctionComponent<Props> = ({
   endDate = '06/12/2019 10:00:00 GMT+0200',
+  theme = themes.Green,
 }) => {
   const [days, setDays] = useState<number | null>(null)
   const [hours, setHours] = useState<number | null>(null)
@@ -47,10 +54,10 @@ const Countdown: FunctionComponent<Props> = ({
   }, [])
 
   return (
-    <div className={ClassNames('countdown')}>
+    <div className={ClassNames('countdown', `theme-${theme}`)}>
       {days && hours && minutes && (
         <p>
-          {days} : {('0' + hours).slice(-2)} : {('0' + minutes).slice(-2)}
+          {days}:{('0' + hours).slice(-2)}
         </p>
       )}
     </div>
