@@ -1,7 +1,7 @@
 const mongoose = require('mongoose')
 const Schema = mongoose.Schema
 
-const benchSchema = new Schema({   
+const installationSchema = new Schema({   
   name: {
     type: String,
     required: true
@@ -34,4 +34,4 @@ const benchSchema = new Schema({
   }
 })
 
-module.exports = mongoose.model('Bench', benchSchema)
+module.exports = mongoose.model('Installation', installationSchema)

@@ -6,20 +6,27 @@ import DebugButton from './DebugButton'
 import './debugPanel.scss'
 
 const DebugPanel: FunctionComponent = () => {
-  const { benchList, fetchBenchList, fetchSingleBench } = Store
+  const {
+    installationList,
+    fetchInstallationList,
+    fetchSingleInstallation,
+  } = Store
   const { debug } = DebugStore
-  const [isBenchListDisplayed, setIsBenchListDisplayed] = useState(false)
+  const [
+    isInstallationListDisplayed,
+    setIsInstallationListDisplayed,
+  ] = useState(false)
 
   const queryName = async () => {
-    await fetchBenchList({ name: true })
+    await fetchInstallationList({ name: true })
   }
 
   const queryGeoAndDesc = async () => {
-    await fetchBenchList({ geolocation: true, description: true })
+    await fetchInstallationList({ geolocation: true, description: true })
   }
 
-  const queryOneBench = async () => {
-    await fetchSingleBench('5cc8779779be4460aef65efc', { name: true })
+  const queryOneInstallation = async () => {
+    await fetchSingleInstallation('5cc8779779be4460aef65efc', { name: true })
   }
 
   return (
@@ -28,21 +35,23 @@ const DebugPanel: FunctionComponent = () => {
       {debug && (
         <div className="debug-panel">
           <h2>Debug interface</h2>
-          {isBenchListDisplayed && (
+          {isInstallationListDisplayed && (
             <div>
-              <h3>Bench list</h3>
+              <h3>Installation list</h3>
               <ul>
-                {benchList.map((bench, index) => (
+                {installationList.map((installation, index) => (
                   <li key={index}>
-                    {bench._id && <p>{bench._id}</p>}
-                    {bench.name && <p>{bench.name}</p>}
-                    {bench.description && <p>{bench.description}</p>}
-                    {bench.lockedDescription && (
-                      <p>{bench.lockedDescription}</p>
+                    {installation._id && <p>{installation._id}</p>}
+                    {installation.name && <p>{installation.name}</p>}
+                    {installation.description && (
+                      <p>{installation.description}</p>
                     )}
-                    {bench.geolocation && (
+                    {installation.lockedDescription && (
+                      <p>{installation.lockedDescription}</p>
+                    )}
+                    {installation.geolocation && (
                       <p>
-                        {bench.geolocation.map((item, index2) => (
+                        {installation.geolocation.map((item, index2) => (
                           <span key={index2}>{item} </span>
                         ))}
                       </p>
@@ -55,7 +64,9 @@ const DebugPanel: FunctionComponent = () => {
           {
             /* tslint:disable:jsx-no-lambda */
             <button
-              onClick={() => setIsBenchListDisplayed(!isBenchListDisplayed)}
+              onClick={() =>
+                setIsInstallationListDisplayed(!isInstallationListDisplayed)
+              }
             >
               Afficher/Cacher la liste des installations
             </button>
@@ -65,7 +76,9 @@ const DebugPanel: FunctionComponent = () => {
           <button onClick={queryGeoAndDesc}>
             Query la geoloc et la description
           </button>
-          <button onClick={queryOneBench}>Query les infos d'un banc</button>
+          <button onClick={queryOneInstallation}>
+            Query les infos d'un banc
+          </button>
         </div>
       )}
     </>

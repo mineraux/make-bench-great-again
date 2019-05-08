@@ -1,21 +1,21 @@
 import { action, observable } from 'mobx'
 import {
-  ApiBenchReponseRoot,
-  QueryApiBenchReponse,
-  ApiBench,
-  ApiSingleBenchReponseRoot,
+  ApiInstallationReponseRoot,
+  QueryApiInstallationReponse,
+  ApiInstallation,
+  ApiSingleInstallationReponseRoot,
 } from '../@types'
 import ApiClient from '../ApiClient/ApiClient'
 
 class Store {
-  @observable benchList: ApiBenchReponseRoot = []
-  @observable benchListTemp: ApiBenchReponseRoot = []
+  @observable installationList: ApiInstallationReponseRoot = []
+  @observable installationListTemp: ApiInstallationReponseRoot = []
 
-  @action public fetchBenchList = async (
-    fieldToFetch: QueryApiBenchReponse
+  @action public fetchInstallationList = async (
+    fieldToFetch: QueryApiInstallationReponse
   ) => {
     if (process.env.NODE_ENV !== 'development') {
-      this.benchList = [
+      this.installationList = [
         {
           _id: '1',
           name: 'L’Exedros',
@@ -42,32 +42,32 @@ class Store {
         },
       ]
     } else {
-      const data: ApiBenchReponseRoot = (await ApiClient.getBenchList(
+      const data: ApiInstallationReponseRoot = (await ApiClient.getInstallationList(
         fieldToFetch
       )).map(entry => ({ ...entry }))
 
-      this.benchList = this.mergeById(data)
+      this.installationList = this.mergeById(data)
     }
   }
 
-  @action public fetchSingleBench = async (
-    benchID: ApiBench['_id'],
-    fieldToFetch: QueryApiBenchReponse
-  ): Promise<ApiBench> => {
-    const data: ApiSingleBenchReponseRoot = await ApiClient.getSingleBench(
-      benchID,
+  @action public fetchSingleInstallation = async (
+    installationID: ApiInstallation['_id'],
+    fieldToFetch: QueryApiInstallationReponse
+  ): Promise<ApiInstallation> => {
+    const data: ApiSingleInstallationReponseRoot = await ApiClient.getSingleInstallation(
+      installationID,
       fieldToFetch
     )
 
-    this.benchList = this.mergeById([data])
+    this.installationList = this.mergeById([data])
     return data
   }
 
-  mergeById = (data: ApiBenchReponseRoot) => {
+  mergeById = (data: ApiInstallationReponseRoot) => {
     let mergedData
-    if (this.benchList.length > 0) {
-      mergedData = this.benchList.map(itm => ({
-        ...data.find((item: ApiBench) => item._id === itm._id),
+    if (this.installationList.length > 0) {
+      mergedData = this.installationList.map(itm => ({
+        ...data.find((item: ApiInstallation) => item._id === itm._id),
         ...itm,
       }))
     } else {

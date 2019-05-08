@@ -16,7 +16,7 @@ import { featureCoords } from '../../utils/map'
 import Modal from '../Modal/Modal'
 
 const ProtoMap: FunctionComponent = () => {
-  const { benchList, fetchBenchList } = Store
+  const { installationList, fetchInstallationList } = Store
 
   const map = useRef<MapboxGlMap | null>(null)
   const directions = useRef(DirectionsManager.initMapboxDirections())
@@ -32,7 +32,11 @@ const ProtoMap: FunctionComponent = () => {
   const [travelDistance, setTravelDistance] = useState()
 
   const getInstallationList = async () => {
-    await fetchBenchList({ name: true, description: true, geolocation: true })
+    await fetchInstallationList({
+      name: true,
+      description: true,
+      geolocation: true,
+    })
   }
 
   useEffect(() => {
@@ -82,10 +86,10 @@ const ProtoMap: FunctionComponent = () => {
 
   useEffect(() => {
     if (map.current && !markers && map.current.isStyleLoaded()) {
-      const markers = MapManager.setAllMarkers(benchList, map.current)
+      const markers = MapManager.setAllMarkers(installationList, map.current)
       setMarkers(markers)
     }
-  }, [benchList])
+  }, [installationList])
 
   const setFastestPath = () => {
     setSelectedMarker(

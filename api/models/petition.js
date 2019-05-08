@@ -5,9 +5,9 @@ const petitionSchema = new Schema({
   subscribers: {
     type: [String]
   },
-  relatedBench: {
+  relatedInstallation: {
     type: Schema.Types.ObjectId,
-    ref: 'Bench'
+    ref: 'Installation'
   }
 })
 

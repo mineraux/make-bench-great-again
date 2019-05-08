@@ -1,8 +1,8 @@
-const benchListResolver = require('./benchList')
+const installationListResolver = require('./installationList')
 const petitionListResolver = require('./petitionList')
 
 const RootResolver = {
-  ...benchListResolver,
+  ...installationListResolver,
   ...petitionListResolver
 }
 

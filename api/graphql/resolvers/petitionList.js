@@ -1,13 +1,13 @@
 const Petition = require('../../models/petition')
-const Bench = require('../../models/bench')
+const Installation = require('../../models/installation')
 
-const bench = async benchId => {
+const installation = async installationId => {
   try {
-    const bench = await Bench.findById(benchId)
+    const installation = await Installation.findById(installationId)
     return {
-      ...bench._doc,
-      _id: bench.id,
-      relatedPetition: petition.bind(this, bench.relatedPetition)
+      ...installation._doc,
+      _id: installation.id,
+      relatedPetition: petition.bind(this, installation.relatedPetition)
     }
   } catch (err) {
     throw err
@@ -20,7 +20,7 @@ const petition = async petitionId => {
     return {
       ...petition._doc,
       _id: petition.id,
-      relatedBench: bench.bind(this, petition.relatedBench)
+      relatedInstallation: installation.bind(this, petition.relatedInstallation)
     }
   } catch (err) {
     throw err
@@ -37,7 +37,7 @@ module.exports = {
           ...petition._doc,
           _id: petition.id,
           subscribers: petition.subscribers,
-          relatedBench: petition.relatedBench
+          relatedInstallation: petition.relatedInstallation
         }
       })
     } catch (err) {
@@ -47,7 +47,7 @@ module.exports = {
   createPetition: async args => {
     const petition = new Petition({
       subscribers: args.petitionInput.subscribers,
-      relatedBench: args.petitionInput.relatedBench ? args.petitionInput.relatedBench : null
+      relatedInstallation: args.petitionInput.relatedInstallation ? args.petitionInput.relatedInstallation : null
     })
 
     let createdPetition
@@ -57,15 +57,15 @@ module.exports = {
       createdPetition = {
         ...result._doc,
         _id: result._doc._id.toString(),
-        relatedBench: args.petitionInput.relatedBench ? bench.bind(this, result._doc.relatedPetition) : null
+        relatedInstallation: args.petitionInput.relatedInstallation ? installation.bind(this, result._doc.relatedPetition) : null
       }
-      let relatedBench = await Bench.findById(args.petitionInput.relatedBench)
+      let relatedInstallation = await Installation.findById(args.petitionInput.relatedInstallation)
 
-      if (!relatedBench) {
-        relatedBench = null
+      if (!relatedInstallation) {
+        relatedInstallation = null
       } else {
-        relatedBench.relatedPetition = petition
-        await relatedBench.save()
+        relatedInstallation.relatedPetition = petition
+        await relatedInstallation.save()
       }
 
       return createdPetition
