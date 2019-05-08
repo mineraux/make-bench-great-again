@@ -7,7 +7,7 @@ import {
 } from '../@types'
 import ApiClient from '../ApiClient/ApiClient'
 
-class Store {
+class BenchStore {
   @observable benchList: ApiBenchReponseRoot = []
   @observable benchListTemp: ApiBenchReponseRoot = []
 
@@ -78,4 +78,4 @@ class Store {
   }
 }
 
-export default new Store()
+export default new BenchStore()

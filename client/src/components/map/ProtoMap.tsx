@@ -1,7 +1,7 @@
 import React, { FunctionComponent, useEffect, useRef, useState } from 'react'
 import './mapgl.scss'
 import { observer } from 'mobx-react-lite'
-import Store from '../../store/Store'
+import { BenchStore } from '../../store'
 import mapboxgl, {
   GeolocateControl,
   Map as MapboxGlMap,
@@ -16,7 +16,7 @@ import { featureCoords } from '../../utils/map'
 import Modal from '../Modal/Modal'
 
 const ProtoMap: FunctionComponent = () => {
-  const { benchList, fetchBenchList } = Store
+  const { benchList, fetchBenchList } = BenchStore
 
   const map = useRef<MapboxGlMap | null>(null)
   const directions = useRef(DirectionsManager.initMapboxDirections())
