@@ -1,68 +1,41 @@
-import React, { Component } from 'react'
+import React, { FunctionComponent, useEffect, useRef, useState } from 'react'
 import Transition from './Transition'
 import { pageProps } from '../types'
 import { InstallationStore } from '../../store'
 import { ApiInstallation } from '../../@types'
+import './installation.scss'
 
 type Props = pageProps & {}
 
-type stateInstallation = {
-  installation: ApiInstallation
-}
+const Installation: FunctionComponent<Props> = ({ show, match }) => {
+  const [installation, setInstallation] = useState<ApiInstallation>({ _id: '' })
 
-class Installation extends Component<Props, stateInstallation> {
-  constructor(props: Props) {
-    super(props)
-
-    this.state = {
-      installation: {
-        _id: '',
-      },
+  useEffect(() => {
+    if (match && installation._id.length === 0) {
+      getInstallationInformation()
     }
-  }
+  }, [])
 
-  componentDidMount() {
-    if (
-      this.props.match &&
-      this.state &&
-      this.state.installation._id.length === 0
-    ) {
-      this.getInstallationInformation()
-    }
-  }
-
-  componentDidUpdate() {
-    if (
-      this.props.match &&
-      this.state &&
-      this.state.installation._id.length === 0
-    ) {
-      this.getInstallationInformation()
-    }
-  }
-
-  async getInstallationInformation() {
+  const getInstallationInformation = async () => {
     await InstallationStore.fetchSingleInstallation(
-      this.props.match.params.installationId,
+      match.params.installationId,
       {
         name: true,
       }
     ).then(res => {
-      this.setState({ installation: res })
+      setInstallation(res)
     })
   }
 
-  render() {
-    const { show } = this.props
-
-    return (
-      <Transition show={show}>
-        <div className="page-installation">
-          {this.state && <p>{this.state.installation.name}</p>}
-        </div>
-      </Transition>
-    )
-  }
+  return (
+    <Transition show={show}>
+      <div className="page-installation">
+        <p className="page-installation__installation-name">
+          {installation.name}
+        </p>
+      </div>
+    </Transition>
+  )
 }
 
 export default Installation
