@@ -14,7 +14,7 @@ type Props = {
   isVisible?: boolean
 }
 
-const ScrollIdication: FunctionComponent<Props> = ({
+const ScrollIndication: FunctionComponent<Props> = ({
   title = 'Scroll',
   theme = themes.Green,
   isVisible = true,
@@ -31,4 +31,4 @@ const ScrollIdication: FunctionComponent<Props> = ({
   )
 }
 
-export default ScrollIdication
+export default ScrollIndication
