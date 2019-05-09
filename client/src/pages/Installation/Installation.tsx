@@ -21,6 +21,8 @@ const Installation: FunctionComponent<Props> = ({ show, match }) => {
       match.params.installationId,
       {
         name: true,
+        description: true,
+        lockedDescription: true,
       }
     ).then(res => {
       setInstallation(res)
@@ -32,6 +34,12 @@ const Installation: FunctionComponent<Props> = ({ show, match }) => {
       <div className="page-installation">
         <p className="page-installation__installation-name">
           {installation.name}
+        </p>
+        <p className="page-installation__installation-description">
+          {installation.description}
+        </p>
+        <p className="page-installation__installation-locked-description">
+          {installation.lockedDescription}
         </p>
       </div>
     </Transition>
