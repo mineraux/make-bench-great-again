@@ -1,9 +1,12 @@
 import { action, observable } from 'mobx'
 
+import { themes as headerThemes } from '../components/Header/Header'
+
 type currentPagePathType = string | null
 type nextPagePathType = string | null
 type isMenuOpenType = boolean
 type scrollProgressionType = number
+type headerTitleType = string
 
 class NavigationStore {
   @observable currentPagePath: currentPagePathType = null
@@ -13,6 +16,10 @@ class NavigationStore {
   @observable isMenuOpen: isMenuOpenType = false
 
   @observable scrollProgression: scrollProgressionType = 0.5
+
+  @observable headerTitle: headerTitleType = 'titre'
+
+  @observable headerTheme: headerThemes = headerThemes.Blue
 
   @action setCurrentPagePath = (value: currentPagePathType): void => {
     this.currentPagePath = value
@@ -28,6 +35,14 @@ class NavigationStore {
 
   @action setScrollProgression = (value: scrollProgressionType): void => {
     this.scrollProgression = value
+  }
+
+  @action setHeaderTitle = (value: headerTitleType): void => {
+    this.headerTitle = value
+  }
+
+  @action setHeaderThemes = (value: headerThemes): void => {
+    this.headerTheme = value
   }
 }
 

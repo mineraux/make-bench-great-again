@@ -1,18 +1,25 @@
 import React, { FunctionComponent } from 'react'
-import DebugPanel from './components/debug/DebugPanel'
 import { BrowserRouter, Route } from 'react-router-dom'
 import { observer } from 'mobx-react-lite'
+// store
 import { NavigationStore } from './store'
-// pages
-import Nav from './components/Nav/Nav'
 // config
 import config from './config/config'
+// components
+import DebugPanel from './components/debug/DebugPanel'
+import Header from './components/Header/Header'
+import Nav from './components/Nav/Nav'
+// styles
+import './assets/styles/app.scss'
 
 const App: FunctionComponent = () => {
   const {
     currentPagePath,
     setCurrentPagePath,
     setNextPagePath,
+    headerTitle,
+    headerTheme,
+    isMenuOpen,
   } = NavigationStore
 
   const renderRoute = (route: any) => {
@@ -45,7 +52,14 @@ const App: FunctionComponent = () => {
     <div className="app">
       <DebugPanel />
       <BrowserRouter>
-        <Nav links={Object.values(config.routes)} />
+        <div className={'app__header-container'}>
+          <Header
+            title={headerTitle}
+            theme={headerTheme}
+            className="app__header-container__header"
+          />
+        </div>
+        <Nav isOpen={isMenuOpen} links={Object.values(config.routes)} />
         {Object.values(config.routes).map(route => renderRoute(route))}
       </BrowserRouter>
     </div>
