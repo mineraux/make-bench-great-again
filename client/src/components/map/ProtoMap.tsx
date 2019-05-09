@@ -138,6 +138,7 @@ const ProtoMap: FunctionComponent = () => {
 
   return (
     <div id="map">
+      <div className="mapboxgl-map__mask" />
       <Modal
         modalTitle="Votre parcours commence !"
         textContent="
