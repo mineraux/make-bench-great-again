@@ -15,6 +15,9 @@ import './components.scss'
 import ProgressBar from '../../components/ProgressBar/ProgressBar'
 import { observer } from 'mobx-react-lite'
 import { NavigationStore } from '../../store'
+import ScrollIdication, {
+  themes as scrollIndicationThemes,
+} from '../../components/ScrollIdication/ScrollIdication'
 
 type Props = pageProps
 
@@ -98,6 +101,12 @@ const Components: FunctionComponent<Props> = ({ show }) => {
         <ProgressBar progression={0.2} />
         <hr />
         <ProgressBar progression={0.8} />
+
+        <hr />
+
+        {/***  SCROLL INDICATION ***/}
+
+        <ScrollIdication theme={scrollIndicationThemes.Blue} />
       </div>
     </Transition>
   )

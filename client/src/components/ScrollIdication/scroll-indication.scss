@@ -1,0 +1,64 @@
+@import '../../assets/styles/global';
+
+.scroll-indication {
+  $self: &;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  opacity: 0;
+  transition: opacity 0.4s ease;
+
+  &.visible {
+    opacity: 1;
+  }
+
+  &.theme-green {
+    #{$self}__title {
+      color: $color-green;
+    }
+
+    #{$self}__icon path {
+      stroke: $color-green;
+    }
+  }
+
+  &.theme-blue {
+    #{$self}__title {
+      color: $color-blue;
+    }
+
+    #{$self}__icon path {
+      stroke: $color-blue;
+    }
+  }
+
+  #{$self}__title {
+    font-family: $font-avenir-medium;
+    font-size: 1.2rem;
+    text-transform: uppercase;
+    margin-bottom: 0.7rem;
+  }
+
+  #{$self}__icon {
+    @keyframes fadeDown {
+      0% {
+        opacity: 0;
+        transform: translateY(-0.5rem);
+      }
+      36%,
+      45% {
+        opacity: 1;
+      }
+      90% {
+        opacity: 0;
+        transform: translateY(0.5rem);
+      }
+      100% {
+        opacity: 0;
+      }
+    }
+
+    animation: fadeDown 2.5s infinite ease-in-out;
+    width: 2.5rem;
+  }
+}
