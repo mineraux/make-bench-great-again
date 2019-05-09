@@ -2,4 +2,34 @@
   hr {
     margin: 1.5rem 0;
   }
+
+  .header {
+    margin-bottom: 2rem;
+  }
+
+  .scroll-indication {
+    margin-bottom: 3rem;
+  }
+
+  input[type='range'] {
+    -webkit-appearance: none;
+    background: transparent;
+    width: 30rem;
+    margin-top: 1rem;
+  }
+
+  input[type='range']::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    background: #ff988c;
+    height: 18px;
+    width: 18px;
+    margin-top: -8px;
+    border-radius: 99px;
+  }
+
+  input[type='range']::-webkit-slider-runnable-track {
+    width: 300px;
+    height: 4px;
+    background: #ddd;
+  }
 }

@@ -1,0 +1,9 @@
+@import '../../assets/styles/global';
+
+.progress-bar {
+  background-color: $color-green;
+  height: 0.25rem;
+  width: 100%;
+  transform: scaleX(0);
+  transform-origin: left;
+}
