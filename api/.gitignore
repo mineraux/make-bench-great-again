@@ -1,2 +1,6 @@
 /node_modules
 .env.local
+
+# ssl
+server.cert
+server.key
