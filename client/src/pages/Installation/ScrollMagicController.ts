@@ -8,30 +8,29 @@ class ScrollMagicController {
   public initController = () => {
     const controller = new ScrollMagic.Controller()
 
-    const tween = TweenMax.to('#target', 0.5, { css: { scaleX: 2, scaleY: 1 } })
+    const tween = TweenMax.to('#target', 0.5, {
+      yPercent: -100,
+    })
 
-    // build scene
+    const textHeight = document
+      .querySelector('#target')!
+      .getBoundingClientRect().height
+    const pageHeight = document
+      .querySelector('.page-installation')!
+      .getBoundingClientRect().height
     const scene = new ScrollMagic.Scene({
-      triggerElement: '#trigger',
-      duration: 300,
+      duration: 2000,
+      triggerHook: 0,
     })
       .setTween(tween)
-      .addIndicators() // add indicators (requires plugin)
+      .setPin('#part1')
+      .addIndicators({ name: 'Start animation' })
       .addTo(controller)
-  }
 
-  // $("#tweenparams input").on("change", function () {
-  //   var params = {css: {
-  //     scaleX: parseFloat($("input#scaleX").val()),
-  //     scaleY: parseFloat($("input#scaleY").val())
-  //   }};
-  //   // reset progress to start so changes do not occur from current position but from start
-  //   tween.progress(0)
-  //   // set set new tween parameters
-  //   tween.updateTo(params, true);
-  //   // re-add tween to reset position and to update
-  //   scene.setTween(tween);
-  // });
+    scene.on('progress', (event: any) => {
+      console.log('Scene progress changed to' + event.progress)
+    })
+  }
 }
 
 export default new ScrollMagicController()

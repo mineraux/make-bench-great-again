@@ -37,18 +37,20 @@ const Installation: FunctionComponent<Props> = ({ show, match }) => {
   return (
     <Transition show={show}>
       <div className="page-installation">
-        <div id="trigger" />
-        <p className="page-installation__installation-name">
-          {installation.name}
-        </p>
-        <p className="page-installation__installation-description">
-          {installation.description}
-        </p>
-        <p className="page-installation__installation-locked-description">
-          {installation.lockedDescription}
-          {installation.lockedDescription}
-        </p>
-        <p id="target">{installation.lockedDescription}</p>
+        <div id="part1">
+          <p className="page-installation__installation-name">
+            {installation.name}
+          </p>
+          <div className="placeholder-img" />
+          <div className="page-installation__installation-text-content-wrapper">
+            <p
+              id="target"
+              className="page-installation__installation-locked-description"
+            >
+              {installation.lockedDescription}
+            </p>
+          </div>
+        </div>
       </div>
     </Transition>
   )

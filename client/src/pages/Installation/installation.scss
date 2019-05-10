@@ -14,6 +14,11 @@
     font-family: $font-infini-regular;
   }
 
+  &__installation-text-content-wrapper {
+    max-height: 20em;
+    overflow: hidden;
+  }
+
   &__installation-description,
   &__installation-locked-description {
     text-align: center;
@@ -27,5 +32,10 @@
 
   &__installation-description {
     margin-bottom: 3rem;
+  }
+
+  .placeholder-img {
+    height: 35em;
+    width: 20em;
   }
 }
