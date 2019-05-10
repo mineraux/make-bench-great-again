@@ -6,7 +6,7 @@
 
   &__installation-name {
     display: inline-block;
-    margin-top: 3.5rem;
+    margin: 3.5rem 0;
     width: 100%;
     color: $color-green;
     font-size: 4rem;
@@ -16,8 +16,16 @@
 
   &__installation-description,
   &__installation-locked-description {
+    text-align: center;
+    max-width: $content-width;
+    padding: 0 $content-padding;
+    margin: auto;
     font-family: $font-infini-regular;
     color: $color-pink;
     font-size: 1.5rem;
+  }
+
+  &__installation-description {
+    margin-bottom: 3rem;
   }
 }

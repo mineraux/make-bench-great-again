@@ -40,6 +40,7 @@ const Installation: FunctionComponent<Props> = ({ show, match }) => {
         </p>
         <p className="page-installation__installation-locked-description">
           {installation.lockedDescription}
+          {installation.lockedDescription}
         </p>
       </div>
     </Transition>
