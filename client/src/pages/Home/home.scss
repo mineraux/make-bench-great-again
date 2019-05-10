@@ -1,6 +1,8 @@
 @import '../../assets/styles/global';
 
 .page-home {
+  transition: filter 0.3s linear;
+
   &__container-1 {
     height: 85vh;
     width: 100%;

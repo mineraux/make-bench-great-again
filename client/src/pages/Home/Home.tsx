@@ -1,17 +1,71 @@
-import React, { FunctionComponent } from 'react'
+import React, { FunctionComponent, useEffect, useState, useRef } from 'react'
 import Transition from './Transition'
 import { pageProps } from '../types'
 import config from '../../config/config'
+import { throttle } from '../../utils'
+import Button, { themes as buttonThemes } from '../../components/Button/Button'
 // styles
 import './home.scss'
-import Button, { themes as buttonThemes } from '../../components/Button/Button'
 
 type Props = pageProps
 
+const minDelta = 0
+const maxDelta = 20
+
 const Home: FunctionComponent<Props> = ({ show }) => {
+  const [scrollSpeed, setScrollSpeed] = useState(0)
+  const ref = useRef<HTMLDivElement>(null)
+
+  useEffect(() => {
+    if (scrollSpeed !== null) {
+      const clampedDelta = Math.max(minDelta, Math.min(scrollSpeed, maxDelta))
+      const normalizedDelta = (clampedDelta - minDelta) / (maxDelta - minDelta)
+      if (ref && ref.current) {
+        console.log(normalizedDelta)
+        ref.current.style.filter = `blur(${normalizedDelta * 0.12}rem)`
+      }
+    }
+  }, [scrollSpeed])
+
+  useEffect(() => {
+    let lastPos: number | null
+    let newPos: number | null
+    let timer: any
+    let delta: number = 0
+    const delayToClear: number = 200
+
+    const clear = () => {
+      lastPos = null
+      delta = 0
+      setScrollSpeed(0)
+    }
+
+    const getScrollSpeed = () => {
+      newPos = window.scrollY
+      if (lastPos != null) {
+        // && newPos < maxScroll
+        delta = newPos - lastPos
+      }
+      lastPos = newPos
+      clearTimeout(timer)
+      timer = setTimeout(clear, delayToClear)
+      return Math.abs(delta)
+    }
+
+    const handleScroll = () => {
+      setScrollSpeed(getScrollSpeed())
+    }
+
+    window.addEventListener('scroll', throttle(50, handleScroll))
+
+    return () => {
+      window.removeEventListener('scroll', throttle(50, handleScroll))
+    }
+  }, [show])
+
   return (
     <Transition show={show}>
-      <div className={'page-home'}>
+      <div className={'page-home'} ref={ref}>
         <div className="page-home__container-1">
           <p className="page-home__container-1__title">
             UNE EXPERIENCE
