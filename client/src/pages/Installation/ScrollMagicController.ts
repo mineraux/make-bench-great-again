@@ -1,8 +1,8 @@
+import { TweenMax, TimelineMax } from 'gsap'
 //@ts-ignore
 import ScrollMagic from 'scrollmagic'
-import { TweenMax, TimelineMax } from 'gsap'
-// import 'scrollmagic/scrollmagic/minified/plugins/animation.gsap.min.js'
-import 'scrollmagic/scrollmagic/minified/plugins/debug.addIndicators.min.js'
+import 'animation.gsap'
+import 'debug.addIndicators'
 
 class ScrollMagicController {
   public initController = () => {
