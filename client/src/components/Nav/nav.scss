@@ -1,13 +1,27 @@
+@import '../../assets/styles/global';
+
 .nav {
   display: flex;
   flex-wrap: wrap;
   align-items: center;
-  margin-top: 2rem;
-  flex-wrap: wrap;
+  padding-top: 1rem;
+  position: fixed;
+  top: $header-height;
+  left: 0;
+  transform: translateY(-100%);
+  opacity: 0;
+  transition: all 0.5s ease-in;
+  z-index: 997;
+
+  &.open {
+    transform: translateY(0rem);
+    opacity: 1;
+    transition: all 0.5s ease-out;
+  }
 
   a {
     font-size: 2rem;
-    color: dodgerblue;
+    color: red;
     text-decoration: none;
     margin: 0.5rem 2rem;
     &:hover {

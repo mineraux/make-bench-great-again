@@ -1,7 +1,7 @@
 import React, { FunctionComponent, Fragment } from 'react'
-import { observer } from 'mobx-react-lite'
 import { Link } from 'react-router-dom'
-
+import Classnames from 'classnames'
+// styles
 import './nav.scss'
 
 interface LinksInterface {
@@ -11,12 +11,14 @@ interface LinksInterface {
 }
 
 type Props = {
+  className?: string
   links: LinksInterface[]
+  isOpen?: boolean
 }
 
-const Nav: FunctionComponent<Props> = ({ links }) => {
+const Nav: FunctionComponent<Props> = ({ className, links, isOpen = true }) => {
   return (
-    <nav className="nav">
+    <nav className={Classnames('nav', { open: isOpen })}>
       {links &&
         links.map(link => {
           if (link.inNav) {
@@ -31,4 +33,4 @@ const Nav: FunctionComponent<Props> = ({ links }) => {
   )
 }
 
-export default observer(Nav)
+export default Nav

@@ -12,7 +12,7 @@ export enum themes {
 type Props = {
   className?: string
   link?: string
-  onClick: () => any
+  onClick?: () => any
   label: string
   theme: themes
 }
@@ -24,12 +24,18 @@ const Button: FunctionComponent<Props> = ({
   link,
   theme,
 }) => {
+  const handleOnClick = () => {
+    if (onClick) {
+      onClick()
+    }
+  }
+
   if (link) {
     return (
       <Link
         to={link}
         className={Classnames(className, 'button', `theme-${theme}`)}
-        onClick={onClick}
+        onClick={handleOnClick}
       >
         <span className={Classnames('button__label', `theme-${theme}`)}>
           {label}
@@ -40,7 +46,7 @@ const Button: FunctionComponent<Props> = ({
     return (
       <div
         className={Classnames(className, 'button', `theme-${theme}`)}
-        onClick={onClick}
+        onClick={handleOnClick}
       >
         <span className={Classnames('button__label', `theme-${theme}`)}>
           {label}

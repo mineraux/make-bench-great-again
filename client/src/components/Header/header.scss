@@ -8,7 +8,7 @@ $progress-bar-height: 0.25;
   display: flex;
   align-items: center;
   justify-content: space-between;
-  height: 4.25rem;
+  height: $header-height;
   width: 100%;
   padding: 0 2rem;
   position: relative;
