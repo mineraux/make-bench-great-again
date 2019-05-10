@@ -4,6 +4,7 @@ import { pageProps } from '../types'
 import { InstallationStore } from '../../store'
 import { ApiInstallation } from '../../@types'
 import './installation.scss'
+import ScrollMagicController from './ScrollMagicController'
 
 type Props = pageProps & {}
 
@@ -24,14 +25,19 @@ const Installation: FunctionComponent<Props> = ({ show, match }) => {
         description: true,
         lockedDescription: true,
       }
-    ).then(res => {
-      setInstallation(res)
-    })
+    )
+      .then(res => {
+        setInstallation(res)
+      })
+      .then(() => {
+        ScrollMagicController.initController()
+      })
   }
 
   return (
     <Transition show={show}>
       <div className="page-installation">
+        <div id="trigger" />
         <p className="page-installation__installation-name">
           {installation.name}
         </p>
@@ -42,6 +48,7 @@ const Installation: FunctionComponent<Props> = ({ show, match }) => {
           {installation.lockedDescription}
           {installation.lockedDescription}
         </p>
+        <p id="target">{installation.lockedDescription}</p>
       </div>
     </Transition>
   )
