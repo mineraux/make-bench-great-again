@@ -6,6 +6,17 @@
   position: relative;
   overflow-y: hidden;
 
+  &__mask {
+    pointer-events: none;
+    background: radial-gradient(farthest-side, transparent 60%, #192193 100%);
+    position: absolute;
+    left: 0;
+    top: 0;
+    height: 100%;
+    width: 100%;
+    z-index: 1;
+  }
+
   &__btn-start-travel {
     z-index: 11;
     position: absolute;
