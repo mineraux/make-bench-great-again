@@ -1,15 +1,14 @@
-import React, { FunctionComponent, ReactNode } from 'react'
+import React, { FunctionComponent, ReactNode, useEffect } from 'react'
 import { Transition } from 'react-transition-group'
 import { TimelineMax, TweenMax } from 'gsap'
 import { NavigationStore } from '../../store'
 import { observer } from 'mobx-react-lite'
+import Home from './Home'
+import { pageTransitionProps } from '../types'
 
-interface Props {
-  show: boolean
-  children: ReactNode
-}
+type Props = pageTransitionProps
 
-const TransitionComponent: FunctionComponent<Props> = ({ show, children }) => {
+const TransitionComponent: FunctionComponent<Props> = ({ show }) => {
   const { setCurrentPagePath, nextPagePath } = NavigationStore
 
   // Enter : start
@@ -63,7 +62,7 @@ const TransitionComponent: FunctionComponent<Props> = ({ show, children }) => {
       onExited={onExited}
       addEndListener={addEndListener}
     >
-      {children}
+      <Home />
     </Transition>
   )
 }

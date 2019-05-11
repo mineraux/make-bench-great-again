@@ -6,9 +6,9 @@ import { Tweet } from 'react-twitter-widgets'
 import './twitter.scss'
 import TwitterThumbnail from '../../components/TwitterThumbnail/TwitterThumbnail'
 
-type Props = pageProps & {}
+type Props = pageProps
 
-const Twitter: FunctionComponent<Props> = ({ show, match }) => {
+const Twitter: FunctionComponent<Props> = () => {
   const [value, setValue] = useState<string>('')
   const [tweets, setTweets] = useState<string[]>([])
 
@@ -80,7 +80,7 @@ const Twitter: FunctionComponent<Props> = ({ show, match }) => {
     </div>
   )
 
-  return <Transition show={show}>{pageContent()}</Transition>
+  return pageContent()
 }
 
 export default Twitter

@@ -1,14 +1,17 @@
 import React, { FunctionComponent, ReactNode } from 'react'
 import { Transition } from 'react-transition-group'
 import { TimelineMax, TweenMax } from 'gsap'
+import { pageTransitionProps } from '../types'
+import Installation from './Installation'
+import { observer } from 'mobx-react-lite'
+import { NavigationStore } from '../../store'
 
-interface Props {
-  show: boolean
-  children: ReactNode
-}
+type Props = pageTransitionProps
 
-const TransitionComponent: FunctionComponent<Props> = ({ show, children }) => {
-  // Initial state before transition
+const TransitionComponent: FunctionComponent<Props> = ({ show, match }) => {
+  const { setCurrentPagePath, nextPagePath } = NavigationStore
+
+  // Enter : start
   const onEnter = (node: HTMLElement) => {
     TweenMax.set(node, {
       autoAlpha: 0,
@@ -16,7 +19,7 @@ const TransitionComponent: FunctionComponent<Props> = ({ show, children }) => {
     })
   }
 
-  // Enter transition
+  // Enter : transition
   const onEnterTransition = (node: HTMLElement, done: () => void): void => {
     const tl = new TimelineMax({
       onComplete: done,
@@ -28,7 +31,7 @@ const TransitionComponent: FunctionComponent<Props> = ({ show, children }) => {
     })
   }
 
-  // Exit Transition
+  // Exit : transition
   const onExitTransition = (node: HTMLElement, done: () => void): void => {
     const tl = new TimelineMax({
       onComplete: done,
@@ -38,6 +41,12 @@ const TransitionComponent: FunctionComponent<Props> = ({ show, children }) => {
       autoAlpha: 0,
       x: 100,
     })
+  }
+
+  // Exit : end
+  const onExited = () => {
+    // set current page with page in queue store in next page
+    setCurrentPagePath(nextPagePath)
   }
 
   const addEndListener = (node: HTMLElement, done: () => void) => {
@@ -50,11 +59,12 @@ const TransitionComponent: FunctionComponent<Props> = ({ show, children }) => {
       unmountOnExit
       timeout={10000}
       onEnter={onEnter}
+      onExited={onExited}
       addEndListener={addEndListener}
     >
-      {children}
+      <Installation match={match} />
     </Transition>
   )
 }
 
-export default TransitionComponent
+export default observer(TransitionComponent)

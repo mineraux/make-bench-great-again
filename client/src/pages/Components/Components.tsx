@@ -5,7 +5,6 @@ import Transition from './Transition'
 import { pageProps } from '../types'
 import Button, { themes as ButtonThemes } from '../../components/Button/Button'
 import config from '../../config/config'
-import Countdown from '../../components/Countdown/Countdown'
 import Modal from '../../components/Modal/Modal'
 import BurgerButton, {
   themes as BurgerButtonThemes,
@@ -21,7 +20,7 @@ import ScrollIndication, {
 
 type Props = pageProps
 
-const Components: FunctionComponent<Props> = ({ show }) => {
+const Components: FunctionComponent<Props> = () => {
   const { scrollProgression, setScrollProgression } = NavigationStore
 
   const handleOnChangeProgression = (
@@ -31,84 +30,82 @@ const Components: FunctionComponent<Props> = ({ show }) => {
   }
 
   return (
-    <Transition show={show}>
-      <div className={'page-components'}>
-        <p>Page : Components</p>
+    <div className={'page-components'}>
+      <p>Page : Components</p>
 
-        <hr />
+      <hr />
 
-        {/*** BurgerButton ***/}
+      {/*** BurgerButton ***/}
 
-        <BurgerButton theme={BurgerButtonThemes.Blue} />
+      <BurgerButton theme={BurgerButtonThemes.Blue} />
 
-        <hr />
+      <hr />
 
-        {/*** BUTTON ***/}
+      {/*** BUTTON ***/}
 
-        {/* Simple button */}
-        <Button
-          onClick={() => {
-            console.log('click on button')
-          }}
-          label={'Un boutton simple'}
-          theme={ButtonThemes.Blue}
-        />
+      {/* Simple button */}
+      <Button
+        onClick={() => {
+          console.log('click on button')
+        }}
+        label={'Un boutton simple'}
+        theme={ButtonThemes.Blue}
+      />
 
-        {/* Internal Link button */}
-        <Button
-          onClick={() => {
-            console.log('click on internal link')
-          }}
-          label={'Un boutton lien ver Home'}
-          link={config.routes.Home.path}
-          theme={ButtonThemes.Pink}
-        />
+      {/* Internal Link button */}
+      <Button
+        onClick={() => {
+          console.log('click on internal link')
+        }}
+        label={'Un boutton lien ver Home'}
+        link={config.routes.Home.path}
+        theme={ButtonThemes.Pink}
+      />
 
-        <hr />
+      <hr />
 
-        {/*** HEADER ***/}
+      {/*** HEADER ***/}
 
-        <Header title={'Un titre'} theme={HeaderThemes.Blue} />
-        <Header title={'Un deuxième titre'} theme={HeaderThemes.Green} />
+      <Header title={'Un titre'} theme={HeaderThemes.Blue} />
+      <Header title={'Un deuxième titre'} theme={HeaderThemes.Green} />
 
-        <p>Set scroll progression</p>
+      <p>Set scroll progression</p>
 
-        <input
-          type="range"
-          min={0}
-          step={0.01}
-          max={1}
-          value={scrollProgression}
-          onChange={handleOnChangeProgression}
-        />
+      <input
+        type="range"
+        min={0}
+        step={0.01}
+        max={1}
+        value={scrollProgression}
+        onChange={handleOnChangeProgression}
+      />
 
-        <hr />
+      <hr />
 
-        {/*** MODAL ***/}
+      {/*** MODAL ***/}
 
-        <div className="modal-container">
-          <Modal
-            modalTitle="Votre parcours commence !"
-            textContent="
+      <div className="modal-container">
+        <Modal
+          modalTitle="Votre parcours commence !"
+          textContent="
           Nous vous proposons de vous diriger vers l’installation la plus proche pour réaliser la performance et débloquer le contenu associé.
           Pour cela nous aurons besoin de votre localisation. 
           "
-            buttonLabel="Démarrer"
-          />
-        </div>
-        <hr />
-
-        <ProgressBar progression={0.2} />
-        <hr />
-        <ProgressBar progression={0.8} />
-
-        <hr />
-
-        {/***  SCROLL INDICATION ***/}
-
-        <ScrollIndication theme={scrollIndicationThemes.Blue} />
+          buttonLabel="Démarrer"
+        />
       </div>
-    </Transition>
+      <hr />
+
+      <ProgressBar progression={0.2} />
+      <hr />
+      <ProgressBar progression={0.8} />
+
+      <hr />
+
+      {/***  SCROLL INDICATION ***/}
+
+      <ScrollIndication theme={scrollIndicationThemes.Blue} />
+    </div>
   )
 }
 
