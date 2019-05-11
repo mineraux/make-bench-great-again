@@ -1,0 +1,50 @@
+@import '../../assets/styles/global';
+
+.twitter-thumbnail {
+  $self: &;
+  // TODO : responsive
+  width: 15.8rem;
+
+  &__image {
+    display: block;
+    // TODO : responsive : width 100% with ratio 1:1
+    width: 15.8rem;
+    height: 15.8rem;
+
+    img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+  }
+
+  &__informations {
+    display: inline-flex;
+    align-items: center;
+    width: 100%;
+    margin-top: 0.8rem;
+
+    &__author {
+      text-decoration: none;
+      color: $color-pink;
+      margin-right: auto;
+
+      font-family: $font-faune-regular;
+      font-size: 1.3rem;
+    }
+
+    &__like {
+      color: $color-pink;
+      font-family: $font-faune-regular;
+      font-size: 1.3rem;
+      margin-right: 0.5rem;
+    }
+
+    &__heart {
+      width: 1.7rem;
+      path {
+        fill: $color-pink;
+      }
+    }
+  }
+}

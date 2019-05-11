@@ -2,15 +2,16 @@
   &__input-container {
     display: flex;
     align-items: center;
+    flex-direction: column;
 
     input {
       height: 2.5rem;
       font-size: 1.8rem;
       padding: 0 0.8rem;
+      margin-bottom: 1.5rem;
     }
 
     &__button {
-      margin-left: 2rem;
       font-size: 1.6rem;
       color: white;
       padding: 1rem 1.5rem;

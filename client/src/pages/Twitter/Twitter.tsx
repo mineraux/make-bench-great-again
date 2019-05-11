@@ -4,6 +4,7 @@ import { pageProps } from '../types'
 import { Tweet } from 'react-twitter-widgets'
 // styles
 import './twitter.scss'
+import TwitterThumbnail from '../../components/TwitterThumbnail/TwitterThumbnail'
 
 type Props = pageProps & {}
 
@@ -55,7 +56,6 @@ const Twitter: FunctionComponent<Props> = ({ show, match }) => {
 
   const pageContent = () => (
     <div className={'page-twitter'}>
-      <p>Page : twiter</p>
       <div className="page-twitter__input-container">
         <input
           type="text"
@@ -70,6 +70,12 @@ const Twitter: FunctionComponent<Props> = ({ show, match }) => {
           🐦 Search tweets 🐦
         </div>
       </div>
+      <TwitterThumbnail
+        url={'https://twitter.com'}
+        image={'https://via.placeholder.com/500x750'}
+        author={'TwitterFrance'}
+        likeCount={'103'}
+      />
       <div className="page-twitter__tweets-container">{renderTweets()}</div>
     </div>
   )
