@@ -84,7 +84,9 @@ app.post('/twitter/:hashtag', (req, res) => {
     q: "#" + hashtag,
     count: 5,
     result_type: "recent",
-    lang: "fr"
+    lang: "fr",
+    include_entities: true,
+    tweet_mode: "extended"
   }, function (error, tweets, response) {
     if (error) {
       console.log("🐦 Error getting tweets");
