@@ -20,13 +20,14 @@ const TwitterThumbnail: FunctionComponent<Props> = ({
 }) => {
   return (
     <div className={Classnames(className, 'twitter-thumbnail')}>
-      <a href={url} className="twitter-thumbnail__image">
+      <a href={url} target={'_blank'} className="twitter-thumbnail__image">
         <img src={image} alt="" />
       </a>
       <div className="twitter-thumbnail__informations">
         <a
           className="twitter-thumbnail__informations__author"
           href={`https://twitter.com/${author}`}
+          target={'_blank'}
         >
           @{author}
         </a>
