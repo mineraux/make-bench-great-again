@@ -50,7 +50,6 @@ const App: FunctionComponent = () => {
 
   return (
     <div className="app">
-      <DebugPanel />
       <BrowserRouter>
         <div className={'app__header-container'}>
           <Header

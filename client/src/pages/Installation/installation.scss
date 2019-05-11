@@ -1,0 +1,138 @@
+@import '../../assets/styles/global';
+
+.page-installation {
+  background-color: $color-blue;
+  height: 100vh;
+
+  &__part1 {
+    height: 100vh;
+    background: linear-gradient($color-blue 93%, $color-pink);
+    padding-bottom: 10rem;
+  }
+
+  &__part2 {
+    background-color: $color-pink;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    height: 100vh;
+
+    &__challenge {
+      font-family: $font-infini-regular;
+      color: $color-blue;
+
+      &__title {
+        display: inline-block;
+        margin: 7rem 0;
+        padding: 0 1.7em;
+        width: 100%;
+        font-size: 2.5rem;
+        text-align: center;
+        color: $color-blue;
+        text-transform: uppercase;
+        line-height: 1.5em;
+      }
+
+      &__text-content {
+        text-align: center;
+        max-width: $content-width;
+        padding: 3rem 4rem 0 4rem;
+        margin-bottom: 3em;
+        font-family: $font-infini-regular;
+        color: $color-blue;
+        font-size: 1.5rem;
+        line-height: 1.3em;
+
+        &--bold {
+          font-family: $font-infini-bold;
+        }
+      }
+
+      &__help {
+        margin-top: 3em;
+        color: $color-blue;
+        font-size: 1.3em;
+        max-width: $content-width;
+        text-align: center;
+        line-height: 1.3em;
+      }
+    }
+  }
+
+  &__presentation,
+  &__testimony,
+  &__challenge {
+    &__title {
+      display: inline-block;
+      margin: 3.5rem 0;
+      width: 100%;
+      color: $color-green;
+      font-size: 4rem;
+      text-align: center;
+      font-family: $font-infini-regular;
+      text-transform: uppercase;
+    }
+
+    &__text-content {
+      text-align: center;
+      max-width: $content-width;
+      padding: 3rem $content-padding 0 $content-padding;
+      margin: auto;
+      font-family: $font-infini-regular;
+      color: $color-pink;
+      font-size: 1.5rem;
+      line-height: 1.3em;
+
+      &-wrapper {
+        position: relative;
+        max-height: 20em;
+        overflow: hidden;
+
+        &__mask {
+          position: absolute;
+          top: 0;
+          left: 0;
+          right: 0;
+          bottom: 0;
+          background: linear-gradient(
+            to top,
+            $color-blue,
+            transparent 20%,
+            transparent 80%,
+            $color-blue
+          );
+          z-index: 1;
+        }
+      }
+    }
+  }
+
+  &__presentation {
+    &__installation-sketch {
+      max-width: $content-width;
+      margin: auto;
+      display: block;
+      margin-bottom: 3rem;
+    }
+  }
+
+  &__testimony {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    opacity: 0;
+
+    &__player {
+      max-width: $content-width;
+      margin: auto;
+      display: block;
+      margin-bottom: 3rem;
+    }
+
+    &__text-content-wrapper {
+      opacity: 0;
+    }
+  }
+}
