@@ -1,5 +1,7 @@
 const process = require('process');
 const express = require('express')
+const https = require('https')
+const fs = require('fs');
 const bodyParser = require('body-parser')
 const graphqlHttp = require('express-graphql')
 
@@ -35,12 +37,24 @@ const client = new Twitter({
 
 // APP 📱
 
-const PORT = 4000;
-
 const app = express()
 
-app.listen(PORT)
-console.log('🚀 Listening on port : ' + PORT)
+const PORT = process.env.PORT || 4000;
+
+if(process.env.HTTPS === "true") {
+  // To create certificate :
+  // https://flaviocopes.com/express-https-self-signed-certificate/
+  https.createServer({
+    key: fs.readFileSync('server.key'),
+    cert: fs.readFileSync('server.cert')
+  }, app).listen(PORT, () => {
+    console.log('🚀 🔒 HTTPS 🔒 : Listening on port : ' + PORT)
+  });
+} else {
+  app.listen(PORT, () => {
+    console.log('🚀 HTTP : Listening on port : ' + PORT)
+  })
+}
 
 app.use(bodyParser.json())
 
@@ -70,7 +84,9 @@ app.post('/twitter/:hashtag', (req, res) => {
     q: "#" + hashtag,
     count: 5,
     result_type: "recent",
-    lang: "fr"
+    lang: "fr",
+    include_entities: true,
+    tweet_mode: "extended"
   }, function (error, tweets, response) {
     if (error) {
       console.log("🐦 Error getting tweets");
