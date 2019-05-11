@@ -76,11 +76,10 @@
     "workbox-webpack-plugin": "3.6.3"
   },
   "scripts": {
-    "start": "react-scripts start",
-    "start-https": "HTTPS=true PORT=3001 react-scripts start",
-    "build": "react-scripts build",
-    "test": "react-scripts test",
-    "eject": "react-scripts eject",
+    "start": "node scripts/start.js",
+    "start-https": "HTTPS=true PORT=3001 node scripts/start.js",
+    "build": "node scripts/build.js",
+    "test": "node scripts/test.js",
     "format": "prettier --write src/**/*.{ts,tsx,scss}",
     "lint": "tslint --format verbose -c tslint.json 'src/**/*.{ts,tsx}'",
     "lint-fix": "tslint -c tslint.json --fix --format verbose 'src/**/*.{ts,tsx}'"
