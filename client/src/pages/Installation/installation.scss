@@ -4,7 +4,8 @@
   background-color: $color-blue;
   height: 100vh;
 
-  &__installation-name {
+  &__installation-name,
+  &__installation-title {
     display: inline-block;
     margin: 3.5rem 0;
     width: 100%;
@@ -32,6 +33,18 @@
 
   &__installation-description {
     margin-bottom: 3rem;
+  }
+
+  .testimony {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    opacity: 0;
+
+    .page-installation__installation-locked-description {
+      opacity: 0;
+    }
   }
 
   .placeholder-img {

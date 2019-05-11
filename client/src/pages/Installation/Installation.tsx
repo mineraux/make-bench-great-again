@@ -38,17 +38,28 @@ const Installation: FunctionComponent<Props> = ({ show, match }) => {
     <Transition show={show}>
       <div className="page-installation">
         <div id="part1">
-          <p className="page-installation__installation-name">
-            {installation.name}
-          </p>
-          <div className="placeholder-img" />
-          <div className="page-installation__installation-text-content-wrapper">
-            <p
-              id="target"
-              className="page-installation__installation-locked-description"
-            >
-              {installation.lockedDescription}
+          <div className="presentation">
+            <p className="page-installation__installation-name">
+              {installation.name}
             </p>
+            <div className="placeholder-img" />
+            <div className="page-installation__installation-text-content-wrapper">
+              <p
+                id="target"
+                className="page-installation__installation-locked-description"
+              >
+                {installation.lockedDescription}
+              </p>
+            </div>
+          </div>
+          <div className="testimony">
+            <p className="page-installation__installation-title">Témoignage</p>
+            <div className="placeholder-img" />
+            <div className="page-installation__installation-text-content-wrapper">
+              <p className="page-installation__installation-locked-description">
+                Ouais ouais les bancs ça pique. Jui plus apte a rester ici moi
+              </p>
+            </div>
           </div>
         </div>
       </div>
