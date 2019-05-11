@@ -4,30 +4,49 @@
   background-color: $color-blue;
   height: 100vh;
 
-  &__title {
-    display: inline-block;
-    margin: 3.5rem 0;
-    width: 100%;
-    color: $color-green;
-    font-size: 4rem;
-    text-align: center;
-    font-family: $font-infini-regular;
-    text-transform: uppercase;
-  }
+  &__presentation,
+  &__testimony {
+    &__title {
+      display: inline-block;
+      margin: 3.5rem 0;
+      width: 100%;
+      color: $color-green;
+      font-size: 4rem;
+      text-align: center;
+      font-family: $font-infini-regular;
+      text-transform: uppercase;
+    }
 
-  &__text-content {
-    text-align: center;
-    max-width: $content-width;
-    padding: 0 $content-padding;
-    margin: auto;
-    font-family: $font-infini-regular;
-    color: $color-pink;
-    font-size: 1.5rem;
+    &__text-content {
+      text-align: center;
+      max-width: $content-width;
+      padding: 0 $content-padding;
+      margin: auto;
+      font-family: $font-infini-regular;
+      color: $color-pink;
+      font-size: 1.5rem;
 
-    &-wrapper {
-      position: relative;
-      max-height: 20em;
-      overflow: hidden;
+      &-wrapper {
+        position: relative;
+        max-height: 20em;
+        overflow: hidden;
+
+        &__mask {
+          position: absolute;
+          top: 0;
+          left: 0;
+          right: 0;
+          bottom: 0;
+          background: linear-gradient(
+            to top,
+            $color-blue,
+            transparent 20%,
+            transparent 80%,
+            $color-blue
+          );
+          z-index: 1;
+        }
+      }
     }
   }
 
@@ -36,10 +55,6 @@
       max-width: $content-width;
       margin: auto;
       display: block;
-      margin-bottom: 3rem;
-    }
-
-    &__installation-description {
       margin-bottom: 3rem;
     }
   }
@@ -61,21 +76,5 @@
     &__text-content-wrapper {
       opacity: 0;
     }
-  }
-
-  .mask {
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background: linear-gradient(
-      to top,
-      $color-blue,
-      transparent 20%,
-      transparent 80%,
-      $color-blue
-    );
-    z-index: 1;
   }
 }

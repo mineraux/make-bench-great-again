@@ -9,7 +9,7 @@ class ScrollMagicController {
     const controller = new ScrollMagic.Controller()
 
     const tweenPresentationText = new TimelineMax().to(
-      '.page-installation__presentation__installation-locked-description',
+      '.page-installation__presentation__text-content',
       0.5,
       {
         yPercent: -100,

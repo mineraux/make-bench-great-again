@@ -41,29 +41,32 @@ const Installation: FunctionComponent<Props> = ({ show, match }) => {
       <div className="page-installation">
         <div className="part1">
           <div className="page-installation__presentation">
-            <p className="page-installation__title">{installation.name}</p>
+            <p className="page-installation__presentation__title">
+              {installation.name}
+            </p>
             <img
               className="page-installation__presentation__installation-sketch"
               src={BenchImg}
               alt=""
             />
-            <div className="page-installation__text-content-wrapper">
-              <div className="mask" />
-              <p className="page-installation__text-content page-installation__presentation__installation-locked-description">
+            <div className="page-installation__presentation__text-content-wrapper">
+              <div className="page-installation__presentation__text-content-wrapper__mask" />
+              <p className="page-installation__presentation__text-content">
                 {installation.lockedDescription}
               </p>
             </div>
           </div>
 
           <div className="page-installation__testimony">
-            <p className="page-installation__title">Témoignage</p>
+            <p className="page-installation__testimony__title">Témoignage</p>
             <img
               className="page-installation__testimony__player"
               src={DummyPlayer}
               alt=""
             />
-            <div className="page-installation__text-content-wrapper page-installation__testimony__text-content-wrapper">
-              <p className="page-installation__text-content">
+            <div className="page-installation__testimony__text-content-wrapper">
+              <div className="page-installation__testimony__text-content-wrapper__mask" />
+              <p className="page-installation__testimony__text-content">
                 Ouais ouais les bancs ça pique. Jui plus apte à rester ici moi
               </p>
             </div>
