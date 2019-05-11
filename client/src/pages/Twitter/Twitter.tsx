@@ -1,16 +1,16 @@
-import React, { FunctionComponent, useState } from 'react'
+import React, { FunctionComponent, Fragment, useEffect, useState } from 'react'
 import Transition from './Transition'
 import { pageProps } from '../types'
-import { Tweet } from 'react-twitter-widgets'
 // styles
 import './twitter.scss'
-import TwitterThumbnail from '../../components/TwitterThumbnail/TwitterThumbnail'
+import TwitterGallery from '../../components/TwitterGallery/TwitterGallery'
+import TwitterDebug from '../../components/TwitterDebug/TwitterDebug'
 
-type Props = pageProps & {}
+type Props = pageProps
 
-const Twitter: FunctionComponent<Props> = ({ show, match }) => {
+const Twitter: FunctionComponent<Props> = () => {
   const [value, setValue] = useState<string>('')
-  const [tweets, setTweets] = useState<string[]>([])
+  const [hashtag, setHashtag] = useState<string[]>([])
 
   let input: HTMLInputElement | null = null
 
@@ -19,39 +19,7 @@ const Twitter: FunctionComponent<Props> = ({ show, match }) => {
   }
 
   const onClickSubmit = () => {
-    const hashtag: string = input!.value
-    fetchTweets(hashtag)
-  }
-
-  const fetchTweets = (hashtag: string) => {
-    fetch(`${process.env.REACT_APP_SERVER_URL}/twitter/${hashtag}`, {
-      method: 'POST',
-    })
-      .then(res => {
-        if (res.status !== 200 && res.status !== 201) {
-          throw Error('Failed to fetch tweets')
-        }
-        res.json().then(res2 => {
-          setTweets([])
-          res2.statuses.map((tweet: any) => {
-            setTweets(previousState => [...previousState, tweet.id_str])
-          })
-        })
-      })
-      .catch(err => {
-        console.log(err)
-      })
-  }
-
-  const renderTweets = () => {
-    if (tweets.length > 0) {
-      console.log('render tweets', tweets)
-      return tweets.map(tweet => (
-        <div className="page-twitter__tweets-container__tweet" key={tweet}>
-          <Tweet tweetId={tweet} />
-        </div>
-      ))
-    }
+    setHashtag([input!.value])
   }
 
   const pageContent = () => (
@@ -70,17 +38,17 @@ const Twitter: FunctionComponent<Props> = ({ show, match }) => {
           🐦 Search tweets 🐦
         </div>
       </div>
-      <TwitterThumbnail
-        url={'https://twitter.com'}
-        image={'https://via.placeholder.com/500x750'}
-        author={'TwitterFrance'}
-        likeCount={'103'}
-      />
-      <div className="page-twitter__tweets-container">{renderTweets()}</div>
+
+      {hashtag.length > 0 && (
+        <Fragment>
+          <TwitterGallery totalNumber={'200'} hashtags={hashtag} />
+          {/*<TwitterDebug hashtags={hashtag} />*/}
+        </Fragment>
+      )}
     </div>
   )
 
-  return <Transition show={show}>{pageContent()}</Transition>
+  return pageContent()
 }
 
 export default Twitter

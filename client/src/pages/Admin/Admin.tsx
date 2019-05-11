@@ -2,11 +2,10 @@ import React, { Component, createRef } from 'react'
 import Transition from './Transition'
 import ApiClient from '../../ApiClient/ApiClient'
 import { ApiInstallation } from '../../@types'
+import { pageProps } from '../types'
 import './admin.scss'
 
-type Props = {
-  show: boolean
-}
+type Props = pageProps
 
 type stateAdmin = {
   requestMessage: string
@@ -28,8 +27,6 @@ class Admin extends Component<Props, stateAdmin> {
   }
 
   render() {
-    const { show } = this.props
-
     const createInstallation = async (e: React.FormEvent<HTMLFormElement>) => {
       e.preventDefault()
 
@@ -235,193 +232,191 @@ class Admin extends Component<Props, stateAdmin> {
     }
 
     return (
-      <Transition show={show}>
-        <div className="admin-panel">
-          <h2>Admin interface</h2>
-          <h3>Ajouter une installation</h3>
-          {this.state.requestMessage.length > 0 && (
-            <p>{this.state.requestMessage}</p>
-          )}
-          <form
-            action="/"
-            onSubmit={createInstallation}
-            ref={el => (this.createInstallationForm = el)}
-            className="admin-panel__form"
-          >
-            <input
-              type="text"
-              name="name"
-              placeholder="Nom"
-              required
-              className="admin-panel__form__field"
-            />
-            <textarea
-              name="description"
-              placeholder="Description"
-              required
-              className="admin-panel__form__field"
-            />
-            <textarea
-              name="lockedDescription"
-              placeholder="Description bloquée"
-              required
-              className="admin-panel__form__field"
-            />
-            <input
-              type="text"
-              name="latitude"
-              placeholder="Latitude"
-              required
-              className="admin-panel__form__field"
-            />
-            <input
-              type="text"
-              name="longitude"
-              placeholder="Longitude"
-              required
-              className="admin-panel__form__field"
-            />
-            <input
-              type="text"
-              name="testimony"
-              placeholder="Témoignage"
-              required
-              className="admin-panel__form__field"
-            />
-            <input
-              type="text"
-              name="hashtags"
-              placeholder="Hastags"
-              required
-              className="admin-panel__form__field"
-            />
-            <button type="submit" className="admin-panel__form__submit-button">
-              Envoyer
-            </button>
-          </form>
+      <div className="admin-panel">
+        <h2>Admin interface</h2>
+        <h3>Ajouter une installation</h3>
+        {this.state.requestMessage.length > 0 && (
+          <p>{this.state.requestMessage}</p>
+        )}
+        <form
+          action="/"
+          onSubmit={createInstallation}
+          ref={el => (this.createInstallationForm = el)}
+          className="admin-panel__form"
+        >
+          <input
+            type="text"
+            name="name"
+            placeholder="Nom"
+            required
+            className="admin-panel__form__field"
+          />
+          <textarea
+            name="description"
+            placeholder="Description"
+            required
+            className="admin-panel__form__field"
+          />
+          <textarea
+            name="lockedDescription"
+            placeholder="Description bloquée"
+            required
+            className="admin-panel__form__field"
+          />
+          <input
+            type="text"
+            name="latitude"
+            placeholder="Latitude"
+            required
+            className="admin-panel__form__field"
+          />
+          <input
+            type="text"
+            name="longitude"
+            placeholder="Longitude"
+            required
+            className="admin-panel__form__field"
+          />
+          <input
+            type="text"
+            name="testimony"
+            placeholder="Témoignage"
+            required
+            className="admin-panel__form__field"
+          />
+          <input
+            type="text"
+            name="hashtags"
+            placeholder="Hastags"
+            required
+            className="admin-panel__form__field"
+          />
+          <button type="submit" className="admin-panel__form__submit-button">
+            Envoyer
+          </button>
+        </form>
 
-          <h3>Mettre à jour une installation</h3>
-          <form
-            action="/"
-            onSubmit={updateInstallation}
-            ref={el => (this.updateInstallationForm = el)}
-            className="admin-panel__form"
-          >
-            <input
-              type="text"
-              name="id"
-              placeholder="ID"
-              required
-              className="admin-panel__form__field"
-            />
-            <input
-              type="text"
-              name="name"
-              placeholder="Nom"
-              className="admin-panel__form__field"
-            />
-            <textarea
-              name="description"
-              placeholder="Description"
-              className="admin-panel__form__field"
-            />
-            <textarea
-              name="lockedDescription"
-              placeholder="Description bloquée"
-              className="admin-panel__form__field"
-            />
-            <input
-              type="text"
-              name="latitude"
-              placeholder="Latitude"
-              className="admin-panel__form__field"
-            />
-            <input
-              type="text"
-              name="longitude"
-              placeholder="Longitude"
-              className="admin-panel__form__field"
-            />
-            <input
-              type="text"
-              name="testimony"
-              placeholder="Témoignage"
-              className="admin-panel__form__field"
-            />
-            <input
-              type="text"
-              name="hashtags"
-              placeholder="Hashtags"
-              className="admin-panel__form__field"
-            />
-            <button type="submit" className="admin-panel__form__submit-button">
-              Envoyer
-            </button>
-          </form>
+        <h3>Mettre à jour une installation</h3>
+        <form
+          action="/"
+          onSubmit={updateInstallation}
+          ref={el => (this.updateInstallationForm = el)}
+          className="admin-panel__form"
+        >
+          <input
+            type="text"
+            name="id"
+            placeholder="ID"
+            required
+            className="admin-panel__form__field"
+          />
+          <input
+            type="text"
+            name="name"
+            placeholder="Nom"
+            className="admin-panel__form__field"
+          />
+          <textarea
+            name="description"
+            placeholder="Description"
+            className="admin-panel__form__field"
+          />
+          <textarea
+            name="lockedDescription"
+            placeholder="Description bloquée"
+            className="admin-panel__form__field"
+          />
+          <input
+            type="text"
+            name="latitude"
+            placeholder="Latitude"
+            className="admin-panel__form__field"
+          />
+          <input
+            type="text"
+            name="longitude"
+            placeholder="Longitude"
+            className="admin-panel__form__field"
+          />
+          <input
+            type="text"
+            name="testimony"
+            placeholder="Témoignage"
+            className="admin-panel__form__field"
+          />
+          <input
+            type="text"
+            name="hashtags"
+            placeholder="Hashtags"
+            className="admin-panel__form__field"
+          />
+          <button type="submit" className="admin-panel__form__submit-button">
+            Envoyer
+          </button>
+        </form>
 
-          <h3>Supprimer une installation</h3>
-          <form
-            action="/"
-            onSubmit={deleteInstallation}
-            ref={el => (this.deleteInstallationForm = el)}
-            className="admin-panel__form"
-          >
-            <input
-              type="text"
-              name="id"
-              placeholder="ID"
-              required
-              className="admin-panel__form__field"
-            />
-            <button type="submit" className="admin-panel__form__submit-button">
-              Envoyer
-            </button>
-          </form>
+        <h3>Supprimer une installation</h3>
+        <form
+          action="/"
+          onSubmit={deleteInstallation}
+          ref={el => (this.deleteInstallationForm = el)}
+          className="admin-panel__form"
+        >
+          <input
+            type="text"
+            name="id"
+            placeholder="ID"
+            required
+            className="admin-panel__form__field"
+          />
+          <button type="submit" className="admin-panel__form__submit-button">
+            Envoyer
+          </button>
+        </form>
 
-          <h3>Ajouter une petition</h3>
-          <form
-            action="/"
-            onSubmit={createPetition}
-            ref={el => (this.createPetitionForm = el)}
-            className="admin-panel__form"
-          >
-            <input
-              type="text"
-              name="subscribers"
-              placeholder="Abonnés"
-              className="admin-panel__form__field"
-            />
-            <input
-              type="text"
-              name="relatedInstallation"
-              placeholder="Installation reliée"
-              className="admin-panel__form__field"
-            />
-            <button type="submit" className="admin-panel__form__submit-button">
-              Envoyer
-            </button>
-          </form>
+        <h3>Ajouter une petition</h3>
+        <form
+          action="/"
+          onSubmit={createPetition}
+          ref={el => (this.createPetitionForm = el)}
+          className="admin-panel__form"
+        >
+          <input
+            type="text"
+            name="subscribers"
+            placeholder="Abonnés"
+            className="admin-panel__form__field"
+          />
+          <input
+            type="text"
+            name="relatedInstallation"
+            placeholder="Installation reliée"
+            className="admin-panel__form__field"
+          />
+          <button type="submit" className="admin-panel__form__submit-button">
+            Envoyer
+          </button>
+        </form>
 
-          <h3>Supprimer une pétition</h3>
-          <form
-            action="/"
-            onSubmit={deletePetition}
-            ref={el => (this.deletePetitionForm = el)}
-            className="admin-panel__form"
-          >
-            <input
-              type="text"
-              name="id"
-              placeholder="ID"
-              required
-              className="admin-panel__form__field"
-            />
-            <button type="submit" className="admin-panel__form__submit-button">
-              Envoyer
-            </button>
-          </form>
-        </div>
-      </Transition>
+        <h3>Supprimer une pétition</h3>
+        <form
+          action="/"
+          onSubmit={deletePetition}
+          ref={el => (this.deletePetitionForm = el)}
+          className="admin-panel__form"
+        >
+          <input
+            type="text"
+            name="id"
+            placeholder="ID"
+            required
+            className="admin-panel__form__field"
+          />
+          <button type="submit" className="admin-panel__form__submit-button">
+            Envoyer
+          </button>
+        </form>
+      </div>
     )
   }
 }

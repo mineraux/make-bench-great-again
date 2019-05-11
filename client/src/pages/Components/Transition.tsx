@@ -3,13 +3,12 @@ import { Transition } from 'react-transition-group'
 import { TimelineMax, TweenMax } from 'gsap'
 import { NavigationStore } from '../../store'
 import { observer } from 'mobx-react-lite'
+import { pageTransitionProps } from '../types'
+import Components from './Components'
 
-interface Props {
-  show: boolean
-  children: ReactNode
-}
+type Props = pageTransitionProps
 
-const TransitionComponent: FunctionComponent<Props> = ({ show, children }) => {
+const TransitionComponent: FunctionComponent<Props> = ({ show }) => {
   const { setCurrentPagePath, nextPagePath } = NavigationStore
 
   // Enter : start
@@ -63,7 +62,7 @@ const TransitionComponent: FunctionComponent<Props> = ({ show, children }) => {
       onExited={onExited}
       addEndListener={addEndListener}
     >
-      {children}
+      <Components />
     </Transition>
   )
 }
