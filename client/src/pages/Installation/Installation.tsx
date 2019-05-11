@@ -5,6 +5,8 @@ import { InstallationStore } from '../../store'
 import { ApiInstallation } from '../../@types'
 import './installation.scss'
 import ScrollMagicController from './ScrollMagicController'
+import BenchImg from '../../assets/images/bench.png'
+import DummyPlayer from '../../assets/images/dummy_player.png'
 
 type Props = pageProps & {}
 
@@ -37,27 +39,31 @@ const Installation: FunctionComponent<Props> = ({ show, match }) => {
   return (
     <Transition show={show}>
       <div className="page-installation">
-        <div id="part1">
-          <div className="presentation">
-            <p className="page-installation__installation-name">
-              {installation.name}
-            </p>
-            <div className="placeholder-img" />
-            <div className="page-installation__installation-text-content-wrapper">
-              <p
-                id="target"
-                className="page-installation__installation-locked-description"
-              >
+        <div className="part1">
+          <div className="page-installation__presentation">
+            <p className="page-installation__title">{installation.name}</p>
+            <img
+              className="page-installation__presentation__installation-sketch"
+              src={BenchImg}
+              alt=""
+            />
+            <div className="page-installation__text-content-wrapper">
+              <p className="page-installation__text-content page-installation__presentation__installation-locked-description">
                 {installation.lockedDescription}
               </p>
             </div>
           </div>
-          <div className="testimony">
-            <p className="page-installation__installation-title">Témoignage</p>
-            <div className="placeholder-img" />
-            <div className="page-installation__installation-text-content-wrapper">
-              <p className="page-installation__installation-locked-description">
-                Ouais ouais les bancs ça pique. Jui plus apte a rester ici moi
+
+          <div className="page-installation__testimony">
+            <p className="page-installation__title">Témoignage</p>
+            <img
+              className="page-installation__testimony__player"
+              src={DummyPlayer}
+              alt=""
+            />
+            <div className="page-installation__text-content-wrapper page-installation__testimony__text-content-wrapper">
+              <p className="page-installation__text-content">
+                Ouais ouais les bancs ça pique. Jui plus apte à rester ici moi
               </p>
             </div>
           </div>

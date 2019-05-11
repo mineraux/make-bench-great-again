@@ -4,8 +4,7 @@
   background-color: $color-blue;
   height: 100vh;
 
-  &__installation-name,
-  &__installation-title {
+  &__title {
     display: inline-block;
     margin: 3.5rem 0;
     width: 100%;
@@ -13,15 +12,10 @@
     font-size: 4rem;
     text-align: center;
     font-family: $font-infini-regular;
+    text-transform: uppercase;
   }
 
-  &__installation-text-content-wrapper {
-    max-height: 20em;
-    overflow: hidden;
-  }
-
-  &__installation-description,
-  &__installation-locked-description {
+  &__text-content {
     text-align: center;
     max-width: $content-width;
     padding: 0 $content-padding;
@@ -31,24 +25,40 @@
     font-size: 1.5rem;
   }
 
-  &__installation-description {
-    margin-bottom: 3rem;
+  &__text-content-wrapper {
+    max-height: 20em;
+    overflow: hidden;
   }
 
-  .testimony {
+  &__presentation {
+    &__installation-sketch {
+      max-width: $content-width;
+      margin: auto;
+      display: block;
+      margin-bottom: 3rem;
+    }
+
+    &__installation-description {
+      margin-bottom: 3rem;
+    }
+  }
+
+  &__testimony {
     position: absolute;
     top: 0;
     left: 0;
     right: 0;
     opacity: 0;
 
-    .page-installation__installation-locked-description {
+    &__player {
+      max-width: $content-width;
+      margin: auto;
+      display: block;
+      margin-bottom: 3rem;
+    }
+
+    &__text-content-wrapper {
       opacity: 0;
     }
-  }
-
-  .placeholder-img {
-    height: 35em;
-    width: 20em;
   }
 }

@@ -8,64 +8,61 @@ class ScrollMagicController {
   public initController = () => {
     const controller = new ScrollMagic.Controller()
 
-    const tweenPresentation = new TimelineMax()
-      .to(
-        '#target',
-        0.5,
-        {
-          yPercent: -100,
-        },
-        0
-      )
-      .to(
-        '.page-installation__installation-name',
-        0.5,
-        {
-          opacity: 0,
-        },
-        0
-      )
+    const tweenPresentationText = new TimelineMax().to(
+      '.page-installation__presentation__installation-locked-description',
+      0.5,
+      {
+        yPercent: -100,
+      }
+    )
+
+    const tweenPresentationFade = new TimelineMax().to(
+      '.page-installation__presentation',
+      0.5,
+      {
+        opacity: 0,
+      }
+    )
 
     const tweenTestimony = new TimelineMax().to(
-      '.testimony',
+      '.page-installation__testimony',
       0.5,
       {
         opacity: 1,
-      },
-      0
+      }
     )
 
     const tweenTestimonyText = new TimelineMax().to(
-      '.testimony .page-installation__installation-locked-description',
+      '.page-installation__testimony__text-content-wrapper',
       0.5,
       {
         opacity: 1,
-      },
-      0
+      }
     )
-
-    const textHeight = document
-      .querySelector('#target')!
-      .getBoundingClientRect().height
-
-    const pageHeight = document
-      .querySelector('.page-installation')!
-      .getBoundingClientRect().height
 
     const scenePart1Pin = new ScrollMagic.Scene({
       duration: 3000,
       triggerHook: 0,
     })
-      .setPin('#part1')
+      .setPin('.part1')
       .addIndicators({ name: 'Pin' })
       .addTo(controller)
 
-    const scenePresentation = new ScrollMagic.Scene({
+    const scenePresentationText = new ScrollMagic.Scene({
       duration: 1500,
       triggerHook: 0,
     })
-      .setTween(tweenPresentation)
-      .addIndicators({ name: 'Animation presentation' })
+      .setTween(tweenPresentationText)
+      .addIndicators({ name: 'Animation presentation translate text' })
+      .addTo(controller)
+
+    const scenePresentationFade = new ScrollMagic.Scene({
+      duration: 500,
+      offset: 1000,
+      triggerHook: 0,
+    })
+      .setTween(tweenPresentationFade)
+      .addIndicators({ name: 'Animation presentation fade' })
       .addTo(controller)
 
     const sceneTestimony = new ScrollMagic.Scene({
