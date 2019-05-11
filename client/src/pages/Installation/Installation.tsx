@@ -67,7 +67,12 @@ const Installation: FunctionComponent<Props> = ({ show, match }) => {
             <div className="page-installation__testimony__text-content-wrapper">
               <div className="page-installation__testimony__text-content-wrapper__mask" />
               <p className="page-installation__testimony__text-content">
-                Ouais ouais les bancs ça pique. Jui plus apte à rester ici moi
+                Avant je pouvais venir dormir ici mais depuis qu'ils ont mis en
+                place ces accoudoirs, je suis obliger de dormir sur le trottoir.
+                On était au calme ici, bla bla bla Lorem ipsum dolor, sit amet
+                consectetur adipisicing elit. Incidunt tenetur quas itaque
+                quisquam ipsum ipsa id minus laborum animi iusto tempore, harum
+                sit iste. Quod suscipit esse adipisci dicta omnis.
               </p>
             </div>
           </div>
