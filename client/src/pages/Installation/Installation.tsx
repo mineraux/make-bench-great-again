@@ -48,6 +48,7 @@ const Installation: FunctionComponent<Props> = ({ show, match }) => {
               alt=""
             />
             <div className="page-installation__text-content-wrapper">
+              <div className="mask" />
               <p className="page-installation__text-content page-installation__presentation__installation-locked-description">
                 {installation.lockedDescription}
               </p>
