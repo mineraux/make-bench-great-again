@@ -11,7 +11,7 @@ import Button, { themes as buttonThemes } from '../../components/Button/Button'
 
 type Props = pageProps & {}
 
-const Installation: FunctionComponent<Props> = ({ show, match }) => {
+const Installation: FunctionComponent<Props> = ({ match }) => {
   const [installation, setInstallation] = useState<ApiInstallation>({ _id: '' })
 
   useEffect(() => {
@@ -38,77 +38,75 @@ const Installation: FunctionComponent<Props> = ({ show, match }) => {
   }
 
   return (
-    <Transition show={show}>
-      <div className="page-installation">
-        <div className="page-installation__part1">
-          <div className="page-installation__presentation">
-            <p className="page-installation__presentation__title">
-              {installation.name}
+    <div className="page-installation">
+      <div className="page-installation__part1">
+        <div className="page-installation__presentation">
+          <p className="page-installation__presentation__title">
+            {installation.name}
+          </p>
+          <img
+            className="page-installation__presentation__installation-sketch"
+            src={BenchImg}
+            alt=""
+          />
+          <div className="page-installation__presentation__text-content-wrapper">
+            <div className="page-installation__presentation__text-content-wrapper__mask" />
+            <p className="page-installation__presentation__text-content">
+              {installation.lockedDescription}
             </p>
-            <img
-              className="page-installation__presentation__installation-sketch"
-              src={BenchImg}
-              alt=""
-            />
-            <div className="page-installation__presentation__text-content-wrapper">
-              <div className="page-installation__presentation__text-content-wrapper__mask" />
-              <p className="page-installation__presentation__text-content">
-                {installation.lockedDescription}
-              </p>
-            </div>
-          </div>
-
-          <div className="page-installation__testimony">
-            <p className="page-installation__testimony__title">Témoignage</p>
-            <img
-              className="page-installation__testimony__player"
-              src={DummyPlayer}
-              alt=""
-            />
-            <div className="page-installation__testimony__text-content-wrapper">
-              <div className="page-installation__testimony__text-content-wrapper__mask" />
-              <p className="page-installation__testimony__text-content">
-                Avant je pouvais venir dormir ici mais depuis qu'ils ont mis en
-                place ces accoudoirs, je suis obliger de dormir sur le trottoir.
-                On était au calme ici, bla bla bla Lorem ipsum dolor, sit amet
-                consectetur adipisicing elit. Incidunt tenetur quas itaque
-                quisquam ipsum ipsa id minus laborum animi iusto tempore, harum
-                sit iste. Quod suscipit esse adipisci dicta omnis.
-              </p>
-            </div>
           </div>
         </div>
-        <div className="page-installation__part2">
-          <div className="page-installation__part2 challenge">
-            <p className="page-installation__part2__challenge__title">
-              Es-tu assez souple pour réussir à t'allonger sur cette
-              installation ?
-            </p>
-            <div className="page-installation__part2__challenge__text-content">
-              <p>
-                Pour témoigner de ton indignation et nous aider à retirer ce
-                dispositifi anti-SDF. <br />
-                <span className="page-installation__part2__challenge__text-content--bold">
-                  Prends-toi en photo et poste ta performance sur Twitter, ta
-                  photo servira de signature pour notre pétition
-                </span>
-              </p>
-            </div>
-            <Button
-              className={
-                'page-installation__part2__challenge__sign-petition-button'
-              }
-              label="Signer la pétition"
-              theme={buttonThemes.Blue}
-            />
-            <p className="page-installation__part2__challenge__help">
-              Plus nous serons nombreux, plus nous aurons de chances d'être
-              entendus
+
+        <div className="page-installation__testimony">
+          <p className="page-installation__testimony__title">Témoignage</p>
+          <img
+            className="page-installation__testimony__player"
+            src={DummyPlayer}
+            alt=""
+          />
+          <div className="page-installation__testimony__text-content-wrapper">
+            <div className="page-installation__testimony__text-content-wrapper__mask" />
+            <p className="page-installation__testimony__text-content">
+              Avant je pouvais venir dormir ici mais depuis qu'ils ont mis en
+              place ces accoudoirs, je suis obliger de dormir sur le trottoir.
+              On était au calme ici, bla bla bla Lorem ipsum dolor, sit amet
+              consectetur adipisicing elit. Incidunt tenetur quas itaque
+              quisquam ipsum ipsa id minus laborum animi iusto tempore, harum
+              sit iste. Quod suscipit esse adipisci dicta omnis.
             </p>
           </div>
         </div>
       </div>
-    </Transition>
+      <div className="page-installation__part2">
+        <div className="page-installation__part2 challenge">
+          <p className="page-installation__part2__challenge__title">
+            Es-tu assez souple pour réussir à t'allonger sur cette installation
+            ?
+          </p>
+          <div className="page-installation__part2__challenge__text-content">
+            <p>
+              Pour témoigner de ton indignation et nous aider à retirer ce
+              dispositifi anti-SDF. <br />
+              <span className="page-installation__part2__challenge__text-content--bold">
+                Prends-toi en photo et poste ta performance sur Twitter, ta
+                photo servira de signature pour notre pétition
+              </span>
+            </p>
+          </div>
+          <Button
+            className={
+              'page-installation__part2__challenge__sign-petition-button'
+            }
+            label="Signer la pétition"
+            theme={buttonThemes.Blue}
+          />
+          <p className="page-installation__part2__challenge__help">
+            Plus nous serons nombreux, plus nous aurons de chances d'être
+            entendus
+          </p>
+        </div>
+      </div>
+    </div>
   )
 }
 
