@@ -74,15 +74,20 @@ app.use('/api', graphqlHttp({
   graphiql: true
 }))
 
-app.post('/twitter/:hashtag', (req, res) => {
+app.post('/twitter', (req, res) => {
 
-  const hashtag = req.params.hashtag
+  const { hashtags } = req.body
+  let hashtagsString = ''
 
-  console.log("🐦 API > /twitter/" + hashtag);
+  hashtags.forEach(hashtag => {
+    hashtagsString += `#${hashtag} `
+  })
+
+  console.log("🐦 API > /twitter/", hashtags, hashtagsString);
 
   client.get('search/tweets', {
-    q: "#" + hashtag,
-    count: 5,
+    q: hashtagsString + ' filter:twimg filter:images',
+    count: 15,
     result_type: "recent",
     lang: "fr",
     include_entities: true,
@@ -91,7 +96,7 @@ app.post('/twitter/:hashtag', (req, res) => {
     if (error) {
       console.log("🐦 Error getting tweets");
     } else {
-      console.log("🐦 Success getting tweets");
+      console.log("🐦 Success getting tweets", );
       res.json(tweets);
     }
 
