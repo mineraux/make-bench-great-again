@@ -86,7 +86,7 @@ const Installation: FunctionComponent<Props> = ({ show, match }) => {
             </p>
             <div className="page-installation__part2__challenge__text-content">
               <p>
-                Pour témoigner de ton indignationet nous aider à retirer ce
+                Pour témoigner de ton indignation et nous aider à retirer ce
                 dispositifi anti-SDF. <br />
                 <span className="page-installation__part2__challenge__text-content--bold">
                   Prends-toi en photo et poste ta performance sur Twitter, ta

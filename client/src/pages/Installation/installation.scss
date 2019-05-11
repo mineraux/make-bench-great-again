@@ -24,22 +24,24 @@
       &__title {
         display: inline-block;
         margin: 7rem 0;
-        padding: 0 1em;
+        padding: 0 1.7em;
         width: 100%;
         font-size: 2.5rem;
         text-align: center;
         color: $color-blue;
         text-transform: uppercase;
+        line-height: 1.5em;
       }
 
       &__text-content {
         text-align: center;
         max-width: $content-width;
-        padding: 3rem $content-padding 0 $content-padding;
+        padding: 3rem 4rem 0 4rem;
         margin-bottom: 3em;
         font-family: $font-infini-regular;
         color: $color-blue;
         font-size: 1.5rem;
+        line-height: 1.3em;
 
         &--bold {
           font-family: $font-infini-bold;
@@ -52,6 +54,7 @@
         font-size: 1.3em;
         max-width: $content-width;
         text-align: center;
+        line-height: 1.3em;
       }
     }
   }
@@ -78,6 +81,7 @@
       font-family: $font-infini-regular;
       color: $color-pink;
       font-size: 1.5rem;
+      line-height: 1.3em;
 
       &-wrapper {
         position: relative;

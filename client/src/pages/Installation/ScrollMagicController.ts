@@ -109,7 +109,7 @@ class ScrollMagicController {
 
     const scenePart2Pin = new ScrollMagic.Scene({
       triggerElement: '.page-installation__part2',
-      duration: 1000,
+      duration: 1,
       triggerHook: 0,
     })
       .setPin('.page-installation__part2')
