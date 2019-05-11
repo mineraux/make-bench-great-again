@@ -10,7 +10,7 @@ $progress-bar-height: 0.25;
   justify-content: space-between;
   height: $header-height;
   width: 100%;
-  padding: 0 2rem;
+  padding: 0 $border-gutter-width;
   position: relative;
   border-bottom: $color-pink solid #{$border-bottom-height}rem;
 
