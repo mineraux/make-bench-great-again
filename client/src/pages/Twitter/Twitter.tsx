@@ -42,7 +42,7 @@ const Twitter: FunctionComponent<Props> = ({ show, match }) => {
       {hashtag.length > 0 && (
         <Fragment>
           <TwitterGallery totalNumber={'200'} hashtags={hashtag} />
-          <TwitterDebug hashtags={hashtag} />
+          {/*<TwitterDebug hashtags={hashtag} />*/}
         </Fragment>
       )}
     </div>
