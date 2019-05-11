@@ -4,10 +4,10 @@ import { TimelineMax, TweenMax } from 'gsap'
 import { NavigationStore } from '../../store'
 import { observer } from 'mobx-react-lite'
 
-interface Props {
-  show: boolean
-  children: ReactNode
-}
+import { pageTransitionProps } from '../types'
+import Admin from './Admin'
+
+type Props = pageTransitionProps
 
 const TransitionComponent: FunctionComponent<Props> = ({ show, children }) => {
   const { setCurrentPagePath, nextPagePath } = NavigationStore
@@ -63,7 +63,7 @@ const TransitionComponent: FunctionComponent<Props> = ({ show, children }) => {
       onExited={onExited}
       addEndListener={addEndListener}
     >
-      {children}
+      <Admin />
     </Transition>
   )
 }

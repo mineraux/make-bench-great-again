@@ -6,9 +6,9 @@ import './twitter.scss'
 import TwitterGallery from '../../components/TwitterGallery/TwitterGallery'
 import TwitterDebug from '../../components/TwitterDebug/TwitterDebug'
 
-type Props = pageProps & {}
+type Props = pageProps
 
-const Twitter: FunctionComponent<Props> = ({ show, match }) => {
+const Twitter: FunctionComponent<Props> = () => {
   const [value, setValue] = useState<string>('')
   const [hashtag, setHashtag] = useState<string[]>([])
 
@@ -48,7 +48,7 @@ const Twitter: FunctionComponent<Props> = ({ show, match }) => {
     </div>
   )
 
-  return <Transition show={show}>{pageContent()}</Transition>
+  return pageContent()
 }
 
 export default Twitter

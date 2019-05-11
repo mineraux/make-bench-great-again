@@ -53,14 +53,10 @@ class Installation extends Component<Props, stateInstallation> {
   }
 
   render() {
-    const { show } = this.props
-
     return (
-      <Transition show={show}>
-        <div className="page-installation">
-          {this.state && <p>{this.state.installation.name}</p>}
-        </div>
-      </Transition>
+      <div className="page-installation">
+        {this.state && <p>{this.state.installation.name}</p>}
+      </div>
     )
   }
 }

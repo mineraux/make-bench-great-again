@@ -4,15 +4,13 @@ import ProtoMap from '../../components/map/ProtoMap'
 import { pageProps } from '../types'
 import 'mapbox-gl/dist/mapbox-gl.css'
 
-type props = pageProps & {}
+type props = pageProps
 
-const Map: FunctionComponent<props> = ({ show }) => {
+const Map: FunctionComponent<props> = () => {
   return (
-    <Transition show={show}>
-      <div className={'page-map'}>
-        <ProtoMap />
-      </div>
-    </Transition>
+    <div className={'page-map'}>
+      <ProtoMap />
+    </div>
   )
 }
 
