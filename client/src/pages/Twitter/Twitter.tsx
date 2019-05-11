@@ -4,7 +4,7 @@ import { pageProps } from '../types'
 import { Tweet } from 'react-twitter-widgets'
 // styles
 import './twitter.scss'
-import TwitterThumbnail from '../../components/TwitterThumbnail/TwitterThumbnail'
+import TwitterGallery from '../../components/TwitterGallery/TwitterGallery'
 
 type Props = pageProps & {}
 
@@ -70,11 +70,47 @@ const Twitter: FunctionComponent<Props> = ({ show, match }) => {
           🐦 Search tweets 🐦
         </div>
       </div>
-      <TwitterThumbnail
-        url={'https://twitter.com'}
-        image={'https://via.placeholder.com/500x750'}
-        author={'TwitterFrance'}
-        likeCount={'103'}
+
+      <TwitterGallery
+        totalNumber={'200'}
+        tweets={[
+          {
+            url: 'https://twitter.com',
+            image: 'https://via.placeholder.com/500x750',
+            author: 'TwitterFrance',
+            likeCount: '103',
+          },
+          {
+            url: 'https://twitter.com',
+            image: 'https://via.placeholder.com/500x750',
+            author: 'TwitterFrance',
+            likeCount: '103',
+          },
+          {
+            url: 'https://twitter.com',
+            image: 'https://via.placeholder.com/500x750',
+            author: 'TwitterFrance',
+            likeCount: '103',
+          },
+          {
+            url: 'https://twitter.com',
+            image: 'https://via.placeholder.com/500x750',
+            author: 'TwitterFrance',
+            likeCount: '103',
+          },
+          {
+            url: 'https://twitter.com',
+            image: 'https://via.placeholder.com/500x750',
+            author: 'TwitterFrance',
+            likeCount: '103',
+          },
+          {
+            url: 'https://twitter.com',
+            image: 'https://via.placeholder.com/500x750',
+            author: 'TwitterFrance',
+            likeCount: '103',
+          },
+        ]}
       />
       <div className="page-twitter__tweets-container">{renderTweets()}</div>
     </div>

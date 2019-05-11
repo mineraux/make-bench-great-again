@@ -3,7 +3,7 @@ import Classnames from 'classnames'
 import './twitter-thumbnail.scss'
 import { ReactComponent as Heart } from './heart.svg'
 
-type Props = {
+export interface Props {
   className?: string
   url: string
   image: string

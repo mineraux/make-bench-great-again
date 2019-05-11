@@ -1,0 +1,35 @@
+@import '../../assets/styles/global';
+
+.twitter-gallery {
+  margin: 0 $border-gutter-width;
+
+  &__informations {
+    display: flex;
+    align-items: center;
+    margin-bottom: 1.7rem;
+    p {
+      font-family: $font-infini-regular;
+      font-size: 1.4rem;
+      color: $color-pink;
+    }
+    svg {
+      width: 2rem;
+      margin-right: 1rem;
+      path {
+        fill: $color-pink;
+        margin-right: 1rem;
+      }
+    }
+  }
+
+  &__thumbnails {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+
+    &__thumbnail {
+      margin-bottom: 2rem;
+      flex: 0 0 calc(50% - #{$border-gutter-width / 2});
+    }
+  }
+}
