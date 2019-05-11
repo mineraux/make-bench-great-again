@@ -4,8 +4,61 @@
   background-color: $color-blue;
   height: 100vh;
 
+  &__part1 {
+    height: 100vh;
+    background: linear-gradient($color-blue 93%, $color-pink);
+    padding-bottom: 10rem;
+  }
+
+  &__part2 {
+    background-color: $color-pink;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    height: 100vh;
+
+    &__challenge {
+      font-family: $font-infini-regular;
+      color: $color-blue;
+
+      &__title {
+        display: inline-block;
+        margin: 7rem 0;
+        padding: 0 1em;
+        width: 100%;
+        font-size: 2.5rem;
+        text-align: center;
+        color: $color-blue;
+        text-transform: uppercase;
+      }
+
+      &__text-content {
+        text-align: center;
+        max-width: $content-width;
+        padding: 3rem $content-padding 0 $content-padding;
+        margin-bottom: 3em;
+        font-family: $font-infini-regular;
+        color: $color-blue;
+        font-size: 1.5rem;
+
+        &--bold {
+          font-family: $font-infini-bold;
+        }
+      }
+
+      &__help {
+        margin-top: 3em;
+        color: $color-blue;
+        font-size: 1.3em;
+        max-width: $content-width;
+        text-align: center;
+      }
+    }
+  }
+
   &__presentation,
-  &__testimony {
+  &__testimony,
+  &__challenge {
     &__title {
       display: inline-block;
       margin: 3.5rem 0;
@@ -64,6 +117,7 @@
     top: 0;
     left: 0;
     right: 0;
+    bottom: 0;
     opacity: 0;
 
     &__player {

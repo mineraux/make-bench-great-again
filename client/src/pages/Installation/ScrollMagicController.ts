@@ -9,10 +9,10 @@ class ScrollMagicController {
     const controller = new ScrollMagic.Controller()
 
     const scenePart1Pin = new ScrollMagic.Scene({
-      duration: 3000,
+      duration: 2700,
       triggerHook: 0,
     })
-      .setPin('.part1')
+      .setPin('.page-installation__part1')
       .addIndicators({ name: 'Pin' })
       .addTo(controller)
 
@@ -28,7 +28,7 @@ class ScrollMagicController {
     )
 
     const scenePresentationText = new ScrollMagic.Scene({
-      duration: 1500,
+      duration: 1000,
       triggerHook: 0,
     })
       .setTween(tweenPresentationText)
@@ -99,12 +99,21 @@ class ScrollMagicController {
     )
 
     const sceneTestimonyTextTranslate = new ScrollMagic.Scene({
-      duration: 1500,
+      duration: 1000,
       offset: 1700,
       triggerHook: 0,
     })
       .setTween(tweenTestimonyTextTranslate)
       .addIndicators({ name: 'Animation testimony translate text' })
+      .addTo(controller)
+
+    const scenePart2Pin = new ScrollMagic.Scene({
+      triggerElement: '.page-installation__part2',
+      duration: 1000,
+      triggerHook: 0,
+    })
+      .setPin('.page-installation__part2')
+      .addIndicators({ name: 'Pin 2' })
       .addTo(controller)
   }
 }
