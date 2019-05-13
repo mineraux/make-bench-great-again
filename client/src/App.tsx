@@ -25,7 +25,7 @@ const App: FunctionComponent = () => {
   const renderRoute = (route: any) => {
     return (
       <Route key={route.path} path={route.path} exact>
-        {({ match }) => {
+        {({ match, history }) => {
           // init currentPagePath if is not set
           if (match && currentPagePath === null) {
             setCurrentPagePath(match.path)
@@ -41,6 +41,7 @@ const App: FunctionComponent = () => {
                 (currentPagePath === match.path || currentPagePath === null)
               }
               match={match}
+              history={history}
             />
           )
         }}

@@ -53,6 +53,7 @@ const Button: FunctionComponent<Props> = ({
         target="_blank"
         href={url}
         className={Classnames(className, 'button', `theme-${theme}`)}
+        onClick={handleOnClick}
       >
         {icon && <TwitterIcon className="button__twitter-icon" />}
         <span className={Classnames('button__label', `theme-${theme}`)}>

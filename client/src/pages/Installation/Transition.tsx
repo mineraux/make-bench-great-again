@@ -8,7 +8,11 @@ import { NavigationStore } from '../../store'
 
 type Props = pageTransitionProps
 
-const TransitionComponent: FunctionComponent<Props> = ({ show, match }) => {
+const TransitionComponent: FunctionComponent<Props> = ({
+  show,
+  match,
+  history,
+}) => {
   const { setCurrentPagePath, nextPagePath } = NavigationStore
 
   // Enter : start
@@ -62,7 +66,7 @@ const TransitionComponent: FunctionComponent<Props> = ({ show, match }) => {
       onExited={onExited}
       addEndListener={addEndListener}
     >
-      <Installation match={match} />
+      <Installation match={match} history={history} />
     </Transition>
   )
 }

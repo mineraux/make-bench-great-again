@@ -12,7 +12,7 @@ import config from '../../config/config'
 
 type Props = pageProps & {}
 
-const Installation: FunctionComponent<Props> = ({ match }) => {
+const Installation: FunctionComponent<Props> = ({ match, history }) => {
   const [installation, setInstallation] = useState<ApiInstallation>({ _id: '' })
 
   useEffect(() => {
@@ -43,6 +43,10 @@ const Installation: FunctionComponent<Props> = ({ match }) => {
     sur des dispositifs anti-SDF...`
     const uri = `https://twitter.com/intent/tweet?text=${tweet}`
     return encodeURI(uri)
+  }
+
+  const redirectToHome = () => {
+    history.push('/')
   }
 
   return (
@@ -114,6 +118,7 @@ const Installation: FunctionComponent<Props> = ({ match }) => {
               theme={buttonThemes.Blue}
               url={getTwitterUrl()}
               icon={true}
+              onClick={redirectToHome}
             />
             <p className="page-installation__part2__challenge__help">
               Plus nous serons nombreux, plus nous aurons de chances d'être
