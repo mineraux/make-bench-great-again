@@ -1,0 +1,11 @@
+@import '../../assets/styles/global';
+
+.sprite-animation {
+  width: 70%;
+  margin: 0 auto;
+
+  &__input {
+    margin: 2rem auto !important;
+    display: block;
+  }
+}

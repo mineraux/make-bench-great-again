@@ -17,6 +17,7 @@ import { NavigationStore } from '../../store'
 import ScrollIndication, {
   themes as scrollIndicationThemes,
 } from '../../components/ScrollIndication/ScrollIndication'
+import SpriteAnimation from '../../components/SpriteAnimation/SpriteAnimation'
 
 type Props = pageProps
 
@@ -105,6 +106,10 @@ const Components: FunctionComponent<Props> = () => {
       {/***  SCROLL INDICATION ***/}
 
       <ScrollIndication theme={scrollIndicationThemes.Blue} />
+
+      <hr />
+
+      <SpriteAnimation />
     </div>
   )
 }
