@@ -22,11 +22,4 @@
   &.theme-pink {
     background: $color-pink;
   }
-
-  svg {
-    height: 2.5rem;
-    position: absolute;
-    top: calc(50% - 4rem);
-    left: calc(50% + 1.5rem);
-  }
 }

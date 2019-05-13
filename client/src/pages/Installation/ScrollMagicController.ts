@@ -3,6 +3,7 @@ import { TweenMax, TimelineMax } from 'gsap'
 import ScrollMagic from 'scrollmagic'
 import 'animation.gsap'
 import 'debug.addIndicators'
+import { Timeline } from 'react-twitter-widgets'
 
 class ScrollMagicController {
   public initController = () => {
@@ -114,6 +115,39 @@ class ScrollMagicController {
     })
       .setPin('.page-installation__part2')
       .addIndicators({ name: 'Pin 2' })
+      .addTo(controller)
+
+    const part2Height = document
+      .querySelector('.page-installation__part2')!
+      .getBoundingClientRect().height
+
+    const tweenMapButtonColor = new TimelineMax()
+      .to(
+        '.map-button',
+        3,
+        {
+          css: { className: 'map-button theme-blue' },
+        },
+        0
+      )
+
+      .to(
+        '.map-button__marker path',
+        3,
+        {
+          css: { className: 'theme-pink' },
+        },
+        0
+      )
+
+    const transitionMapButtonColor = new ScrollMagic.Scene({
+      triggerElement: '.page-installation__part2',
+      duration: part2Height,
+      triggerHook: 1,
+    })
+
+      .setTween(tweenMapButtonColor)
+      .addIndicators({ name: 'Transition Map button color' })
       .addTo(controller)
   }
 }

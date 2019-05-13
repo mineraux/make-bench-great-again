@@ -1,0 +1,22 @@
+@import '../../assets/styles/global';
+
+.map-button__marker {
+  height: 2.5rem;
+  position: absolute;
+  top: calc(50% - 4rem);
+  left: calc(50% + 1.5rem);
+
+  path {
+    &.theme-blue {
+      fill: $color-blue;
+    }
+
+    &.theme-green {
+      fill: $color-green;
+    }
+
+    &.theme-pink {
+      fill: $color-pink;
+    }
+  }
+}
