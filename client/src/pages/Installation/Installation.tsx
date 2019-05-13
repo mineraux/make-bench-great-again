@@ -87,10 +87,13 @@ const Installation: FunctionComponent<Props> = ({ match }) => {
         </div>
         <div className="page-installation__part2">
           <div className="page-installation__part2 challenge">
-            <p className="page-installation__part2__challenge__title">
-              Es-tu assez souple pour réussir à t'allonger sur cette
-              installation ?
-            </p>
+            <p
+              className="page-installation__part2__challenge__title"
+              dangerouslySetInnerHTML={{
+                __html:
+                  "Es-tu assez souple pour réussir à t'allonger sur cette installation&nbsp;?",
+              }}
+            />
             <div className="page-installation__part2__challenge__text-content">
               <p>
                 Pour témoigner de ton indignation et nous aider à retirer ce
