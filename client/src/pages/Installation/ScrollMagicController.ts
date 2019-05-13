@@ -3,7 +3,6 @@ import { TweenMax, TimelineMax } from 'gsap'
 import ScrollMagic from 'scrollmagic'
 import 'animation.gsap'
 import 'debug.addIndicators'
-import { Timeline } from 'react-twitter-widgets'
 
 class ScrollMagicController {
   public initController = () => {
