@@ -1,5 +1,4 @@
-import React, { FunctionComponent, useEffect, useRef, useState } from 'react'
-import Transition from './Transition'
+import React, { FunctionComponent, useEffect, useState } from 'react'
 import { pageProps } from '../types'
 import { InstallationStore } from '../../store'
 import { ApiInstallation } from '../../@types'
@@ -8,6 +7,8 @@ import ScrollMagicController from './ScrollMagicController'
 import BenchImg from '../../assets/images/bench.png'
 import DummyPlayer from '../../assets/images/dummy_player.png'
 import Button, { themes as buttonThemes } from '../../components/Button/Button'
+import MapButton from '../../components/MapButton/MapButton'
+import config from '../../config/config'
 
 type Props = pageProps & {}
 
@@ -47,6 +48,7 @@ const Installation: FunctionComponent<Props> = ({ match }) => {
   return (
     <div className="page-installation">
       <div className="page-installation__wrapper">
+        <MapButton theme={buttonThemes.Pink} link={config.routes.Map.path} />
         <div className="page-installation__part1">
           <div className="page-installation__presentation">
             <p className="page-installation__presentation__title">
