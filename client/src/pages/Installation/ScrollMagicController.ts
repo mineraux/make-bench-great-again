@@ -1,4 +1,4 @@
-import { TweenMax, TimelineMax } from 'gsap'
+import { TimelineMax } from 'gsap'
 //@ts-ignore
 import ScrollMagic from 'scrollmagic'
 import 'animation.gsap'
@@ -144,7 +144,6 @@ class ScrollMagicController {
       duration: part2Height,
       triggerHook: 1,
     })
-
       .setTween(tweenMapButtonColor)
       .addIndicators({ name: 'Transition Map button color' })
       .addTo(controller)

@@ -113,6 +113,7 @@ const Installation: FunctionComponent<Props> = ({ match }) => {
               label="Signer la pétition"
               theme={buttonThemes.Blue}
               url={getTwitterUrl()}
+              icon={true}
             />
             <p className="page-installation__part2__challenge__help">
               Plus nous serons nombreux, plus nous aurons de chances d'être
