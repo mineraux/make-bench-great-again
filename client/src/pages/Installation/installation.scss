@@ -4,10 +4,15 @@
   background-color: $color-blue;
   height: 100vh;
 
+  &__wrapper {
+    height: 100%;
+    width: 100%;
+  }
+
   &__part1 {
     height: 100vh;
-    background: linear-gradient($color-blue 93%, $color-pink);
     padding-bottom: 10rem;
+    left: 0 !important;
   }
 
   &__part2 {

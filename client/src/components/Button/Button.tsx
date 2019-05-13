@@ -15,6 +15,8 @@ type Props = {
   onClick?: () => any
   label: string
   theme: themes
+  url?: string
+  icon?: string
 }
 
 const Button: FunctionComponent<Props> = ({
@@ -23,6 +25,8 @@ const Button: FunctionComponent<Props> = ({
   label,
   link,
   theme,
+  url,
+  icon,
 }) => {
   const handleOnClick = () => {
     if (onClick) {
@@ -41,6 +45,18 @@ const Button: FunctionComponent<Props> = ({
           {label}
         </span>
       </Link>
+    )
+  } else if (url) {
+    return (
+      <a
+        target="_blank"
+        href={url}
+        className={Classnames(className, 'button', `theme-${theme}`)}
+      >
+        <span className={Classnames('button__label', `theme-${theme}`)}>
+          {label}
+        </span>
+      </a>
     )
   } else {
     return (
