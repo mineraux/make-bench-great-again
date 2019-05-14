@@ -3,22 +3,21 @@ import { TimelineMax } from 'gsap'
 import ScrollMagic from 'scrollmagic'
 import 'animation.gsap'
 import 'debug.addIndicators'
+import ScrollMagicStore from '../../store/ScrollMagicStore'
+import { NavigationStore } from '../../store'
 
 class ScrollMagicController {
   public initController = () => {
+    const { setScrollProgressFirstPart } = ScrollMagicStore
+    const { setScrollProgression } = NavigationStore
+
     const controller = new ScrollMagic.Controller()
 
-    const scenePart1Pin = new ScrollMagic.Scene({
-      duration: 2700,
-      triggerHook: 0,
-    })
-      .setPin('.page-installation__part1')
-      .addIndicators({ name: 'Pin' })
-      .addTo(controller)
-
     /**
-     * Tweens de présentation de l'installation
+     * PART 1
      */
+
+    // TWEENS
     const tweenPresentationText = new TimelineMax().to(
       '.page-installation__presentation__text-content',
       0.5,
@@ -26,14 +25,6 @@ class ScrollMagicController {
         yPercent: -100,
       }
     )
-
-    const scenePresentationText = new ScrollMagic.Scene({
-      duration: 1000,
-      triggerHook: 0,
-    })
-      .setTween(tweenPresentationText)
-      .addIndicators({ name: 'Animation presentation translate text' })
-      .addTo(controller)
 
     const tweenPresentationFade = new TimelineMax().to(
       '.page-installation__presentation',
@@ -43,19 +34,17 @@ class ScrollMagicController {
       }
     )
 
-    const scenePresentationFade = new ScrollMagic.Scene({
-      duration: 500,
-      offset: 1000,
-      triggerHook: 0,
-    })
-      .setTween(tweenPresentationFade)
-      .addIndicators({ name: 'Animation presentation fade' })
-      .addTo(controller)
+    const tweenTestimonyTextTranslate = new TimelineMax().to(
+      '.page-installation__testimony__text-content',
+      0.5,
+      {
+        yPercent: -100,
+      }
+    )
 
     /**
      * Tweens de témoignage de l'oeuvre
      */
-
     const tweenTestimony = new TimelineMax().to(
       '.page-installation__testimony',
       0.5,
@@ -63,15 +52,6 @@ class ScrollMagicController {
         opacity: 1,
       }
     )
-
-    const sceneTestimony = new ScrollMagic.Scene({
-      duration: 400,
-      triggerHook: 0,
-      offset: 1500,
-    })
-      .setTween(tweenTestimony)
-      .addIndicators({ name: 'Animation testimony' })
-      .addTo(controller)
 
     const tweenTestimonyTextFade = new TimelineMax().to(
       '.page-installation__testimony__text-content-wrapper',
@@ -81,22 +61,54 @@ class ScrollMagicController {
       }
     )
 
+    // SCENES
+    const part1Height = 2700
+    const scenePart1Pin = new ScrollMagic.Scene({
+      duration: part1Height,
+      triggerHook: 0,
+    })
+      .setPin('.page-installation__part1')
+      // .addIndicators({ name: 'Pin' })
+      .addTo(controller)
+
+    const scenePresentationText = new ScrollMagic.Scene({
+      duration: 1000,
+      triggerHook: 0,
+    })
+      .setTween(tweenPresentationText)
+      // .addIndicators({ name: 'Animation presentation translate text' })
+      .addTo(controller)
+
+    scenePresentationText.on('progress', (event: any) => {
+      setScrollProgressFirstPart(event.progress)
+    })
+
+    const scenePresentationFade = new ScrollMagic.Scene({
+      duration: 500,
+      offset: 1000,
+      triggerHook: 0,
+    })
+      .setTween(tweenPresentationFade)
+      // .addIndicators({ name: 'Animation presentation fade' })
+      .addTo(controller)
+
+    const sceneTestimony = new ScrollMagic.Scene({
+      duration: 400,
+      triggerHook: 0,
+      offset: 1500,
+    })
+      .setTween(tweenTestimony)
+      // .addIndicators({ name: 'Animation testimony' })
+      .addTo(controller)
+
     const sceneTestimonyTextFade = new ScrollMagic.Scene({
       duration: 100,
       triggerHook: 0,
       offset: 1500,
     })
       .setTween(tweenTestimonyTextFade)
-      .addIndicators({ name: 'Animation testimony text' })
+      // .addIndicators({ name: 'Animation testimony text' })
       .addTo(controller)
-
-    const tweenTestimonyTextTranslate = new TimelineMax().to(
-      '.page-installation__testimony__text-content',
-      0.5,
-      {
-        yPercent: -100,
-      }
-    )
 
     const sceneTestimonyTextTranslate = new ScrollMagic.Scene({
       duration: 1000,
@@ -104,22 +116,14 @@ class ScrollMagicController {
       triggerHook: 0,
     })
       .setTween(tweenTestimonyTextTranslate)
-      .addIndicators({ name: 'Animation testimony translate text' })
+      // .addIndicators({ name: 'Animation testimony translate text' })
       .addTo(controller)
 
-    const scenePart2Pin = new ScrollMagic.Scene({
-      triggerElement: '.page-installation__part2',
-      duration: 1,
-      triggerHook: 0,
-    })
-      .setPin('.page-installation__part2')
-      .addIndicators({ name: 'Pin 2' })
-      .addTo(controller)
+    /**
+     * PART 2
+     */
 
-    const part2Height = document
-      .querySelector('.page-installation__part2')!
-      .getBoundingClientRect().height
-
+    // TWENNS
     const tweenMapButtonColor = new TimelineMax()
       .to(
         '.map-button',
@@ -139,14 +143,37 @@ class ScrollMagicController {
         0
       )
 
+    // SCENES
+    const scenePart2Pin = new ScrollMagic.Scene({
+      triggerElement: '.page-installation__part2',
+      duration: 1,
+      triggerHook: 0,
+    })
+      .setPin('.page-installation__part2')
+      // .addIndicators({ name: 'Pin 2' })
+      .addTo(controller)
+
+    const part2Height = document
+      .querySelector('.page-installation__part2')!
+      .getBoundingClientRect().height
+
     const transitionMapButtonColor = new ScrollMagic.Scene({
       triggerElement: '.page-installation__part2',
       duration: part2Height,
       triggerHook: 1,
     })
       .setTween(tweenMapButtonColor)
-      .addIndicators({ name: 'Transition Map button color' })
+      // .addIndicators({ name: 'Transition Map button color' })
       .addTo(controller)
+
+    const scenePage = new ScrollMagic.Scene({
+      duration: part1Height + part2Height,
+      triggerHook: 0,
+    }).addTo(controller)
+
+    scenePage.on('progress', (event: any) => {
+      setScrollProgression(event.progress)
+    })
   }
 }
 

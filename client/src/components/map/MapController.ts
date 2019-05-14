@@ -9,6 +9,7 @@ class MapManager {
       zoom: 15,
       center: [2.40592, 48.8757],
       style: 'mapbox://styles/manonc/cjv267i2a04fm1fpj6vt354xd',
+      attributionControl: false,
     })
     return map
   }

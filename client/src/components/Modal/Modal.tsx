@@ -33,7 +33,7 @@ const Modal: FunctionComponent<Props> = ({
 
   return (
     <div
-      className={Classnames(className, 'modal', { hidden: !isModalOpen })}
+      className={Classnames(className, 'modal', { fade: !isModalOpen })}
       ref={el => (modal = el)}
     >
       <h3 className="modal__title">{modalTitle}</h3>

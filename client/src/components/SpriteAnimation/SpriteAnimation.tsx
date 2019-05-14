@@ -26,7 +26,7 @@ const SpriteAnimation: FunctionComponent<Props> = ({
   useEffect(() => {
     if (spritesheetInstance.current && progression >= 0) {
       const frame = Math.floor((steps - 1) * progression)
-      console.log(frame)
+      // console.log(frame, progression)
       // @ts-ignore
       spritesheetInstance.current.goToAndPause(frame)
     }
@@ -46,6 +46,7 @@ const SpriteAnimation: FunctionComponent<Props> = ({
       fps={fps}
       loop={loop}
       getInstance={getInstance}
+      autoplay={false}
     />
   )
 }
