@@ -94,7 +94,7 @@
 
       &-wrapper {
         position: relative;
-        max-height: 20em;
+        max-height: 25em;
         overflow: hidden;
 
         &__mask {
@@ -117,10 +117,19 @@
   }
 
   &__presentation {
+    &__title {
+      margin-bottom: 0;
+    }
     &__installation-sketch {
-      width: $content-width;
+      width: 100%;
       margin: auto;
-      margin-bottom: 3rem;
+    }
+
+    &__text-content {
+      &-wrapper {
+        transform: translateY(-6rem);
+        z-index: -1;
+      }
     }
   }
 
@@ -141,6 +150,7 @@
 
     &__text-content-wrapper {
       opacity: 0;
+      max-height: 25rem;
     }
   }
 }
