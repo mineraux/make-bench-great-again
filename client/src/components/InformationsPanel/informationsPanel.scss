@@ -12,7 +12,7 @@
   background-color: $color-pink;
   padding: 2rem;
   z-index: 10;
-  transform: translateY(68%);
+  transform: translateY(calc(100% - 6rem));
   transition: transform 0.5s cubic-bezier(0.23, 1, 0.32, 1);
   color: $color-blue;
   font-family: $font-infini-regular;
