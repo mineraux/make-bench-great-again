@@ -15,7 +15,6 @@ class InstallationStore {
     fieldToFetch: QueryApiInstallationReponse
   ) => {
     if (process.env.NODE_ENV === 'development') {
-      console.log('test2')
       this.installationList = [
         {
           _id: '1',
@@ -64,7 +63,6 @@ class InstallationStore {
 
     if (process.env.NODE_ENV === 'development') {
       this.installationList.map(installation => {
-        console.log(installation)
         if (installation._id === installationID) {
           data = installation
         }
