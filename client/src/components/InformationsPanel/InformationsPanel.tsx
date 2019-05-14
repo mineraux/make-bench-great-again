@@ -1,7 +1,6 @@
 import React, { FunctionComponent, useState, useEffect } from 'react'
 import { observer } from 'mobx-react-lite'
 import { Feature } from 'geojson'
-import { Link } from 'react-router-dom'
 import ClassNames from 'classnames'
 import './informationsPanel.scss'
 import Button, {
@@ -9,6 +8,7 @@ import Button, {
   themes,
 } from '../../components/Button/Button'
 import { ReactComponent as CrossIco } from '../../assets/images/close_ico.svg'
+import { ReactComponent as WalkIco } from '../../assets/images/ico_walk.svg'
 
 interface Props {
   marker: Feature
@@ -50,6 +50,14 @@ const InformationsPanel: FunctionComponent<Props> = ({
         open: isOpen,
       })}
     >
+      {travelTime && (
+        <div className="informations-panel__direction-informations">
+          <WalkIco className="informations-panel__direction-informations__walk-ico" />
+          <span className="informations-panel__direction-informations__direction-duration">
+            {travelTime} min
+          </span>
+        </div>
+      )}
       {installationTargetDescription && (
         <button
           className="informations-panel__close-ico"
@@ -84,14 +92,6 @@ const InformationsPanel: FunctionComponent<Props> = ({
           className={'informations-panel__set-direction-button'}
         />
       )}
-      <div className="informations-panel__travel-duration">
-        {travelTime && travelDistance && (
-          <p>
-            Nous vous prévoyons {travelTime} minutes de trajet ({travelDistance}{' '}
-            km)
-          </p>
-        )}
-      </div>
     </div>
   )
 }

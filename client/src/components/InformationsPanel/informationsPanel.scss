@@ -25,6 +25,25 @@
     }
   }
 
+  &__direction-informations {
+    position: absolute;
+    top: 1.9rem;
+    left: 2rem;
+    padding: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    &__walk-ico {
+      width: 1em;
+      margin-right: 0.5rem;
+    }
+
+    &__direction-duration {
+      font-size: 1.8rem;
+    }
+  }
+
   &__close-ico {
     position: absolute;
     top: 1.9rem;
@@ -43,7 +62,7 @@
 
   &__informations--installation {
     width: 100%;
-    margin-bottom: 4.5rem;
+    margin-bottom: 2.5rem;
 
     &__installation-name {
       display: block;
@@ -59,12 +78,6 @@
 
     &__installation-see-more {
       margin-bottom: 1rem;
-    }
-  }
-
-  &__travel-duration {
-    p {
-      margin: 0;
     }
   }
 }
