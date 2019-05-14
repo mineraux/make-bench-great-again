@@ -1,0 +1,44 @@
+@import '../../assets/styles/global';
+
+.map-button {
+  $self: &;
+  position: fixed;
+  left: 0;
+  bottom: 0;
+  height: 13rem;
+  width: 13rem;
+  z-index: 998;
+  border-radius: 50%;
+  //transform: translate(-50%, 50%);
+  cursor: pointer;
+  transition: background-color 0.4s ease;
+
+  &.theme-blue {
+    background: $color-blue;
+    #{$self}__icon {
+      path {
+        fill: $color-pink;
+      }
+    }
+  }
+
+  &.theme-pink {
+    background: $color-pink;
+    #{$self}__icon {
+      path {
+        fill: $color-blue;
+      }
+    }
+  }
+
+  &__icon {
+    height: 2.6rem;
+    position: absolute;
+    top: 30%;
+    left: 70%;
+    transform: translateX(-50%) translateY(-50%);
+    path {
+      transition: fill 0.4s ease;
+    }
+  }
+}

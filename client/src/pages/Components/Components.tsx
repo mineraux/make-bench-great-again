@@ -1,5 +1,6 @@
 /* tslint:disable:jsx-no-lambda */
 
+
 import React, { Fragment, FunctionComponent, useState } from 'react'
 import { pageProps } from '../types'
 import Button, { themes as ButtonThemes } from '../../components/Button/Button'
@@ -22,7 +23,11 @@ import { animationId } from '../../components/SpriteAnimation/animations'
 type Props = pageProps
 
 const Components: FunctionComponent<Props> = () => {
-  const { scrollProgression, setScrollProgression } = NavigationStore
+  const {
+    scrollProgression,
+    setScrollProgression,
+    setIsMapButtonVisible,
+  } = NavigationStore
 
   // ProgressBar
 
@@ -40,6 +45,10 @@ const Components: FunctionComponent<Props> = () => {
   ) => {
     setSpriteAnimationProgression(Number(e.target.value))
   }
+  
+  useEffect(() => {
+    setIsMapButtonVisible(true)
+  })
 
   return (
     <div className={'page-components'}>

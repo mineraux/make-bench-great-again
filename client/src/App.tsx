@@ -11,6 +11,8 @@ import Header from './components/Header/Header'
 import Nav from './components/Nav/Nav'
 // styles
 import './assets/styles/app.scss'
+import MapButton from './components/MapButton/MapButton'
+import { themes as buttonThemes } from './components/Button/Button'
 
 const App: FunctionComponent = () => {
   const {
@@ -25,7 +27,7 @@ const App: FunctionComponent = () => {
   const renderRoute = (route: any) => {
     return (
       <Route key={route.path} path={route.path} exact>
-        {({ match }) => {
+        {({ match, history }) => {
           // init currentPagePath if is not set
           if (match && currentPagePath === null) {
             setCurrentPagePath(match.path)
@@ -41,6 +43,7 @@ const App: FunctionComponent = () => {
                 (currentPagePath === match.path || currentPagePath === null)
               }
               match={match}
+              history={history}
             />
           )
         }}
@@ -60,6 +63,7 @@ const App: FunctionComponent = () => {
         </div>
         <Nav isOpen={isMenuOpen} links={Object.values(config.routes)} />
         {Object.values(config.routes).map(route => renderRoute(route))}
+        <MapButton />
       </BrowserRouter>
     </div>
   )

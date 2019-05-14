@@ -8,14 +8,18 @@ import { NavigationStore } from '../../store'
 
 type Props = pageTransitionProps
 
-const TransitionComponent: FunctionComponent<Props> = ({ show, match }) => {
+const TransitionComponent: FunctionComponent<Props> = ({
+  show,
+  match,
+  history,
+}) => {
   const { setCurrentPagePath, nextPagePath } = NavigationStore
 
   // Enter : start
   const onEnter = (node: HTMLElement) => {
     TweenMax.set(node, {
       autoAlpha: 0,
-      x: -100,
+      opacity: 0,
     })
   }
 
@@ -27,7 +31,7 @@ const TransitionComponent: FunctionComponent<Props> = ({ show, match }) => {
 
     tl.to(node, 1, {
       autoAlpha: 1,
-      x: 0,
+      opacity: 1,
     })
   }
 
@@ -39,7 +43,7 @@ const TransitionComponent: FunctionComponent<Props> = ({ show, match }) => {
 
     tl.to(node, 1, {
       autoAlpha: 0,
-      x: 100,
+      opacity: 0,
     })
   }
 
@@ -62,7 +66,7 @@ const TransitionComponent: FunctionComponent<Props> = ({ show, match }) => {
       onExited={onExited}
       addEndListener={addEndListener}
     >
-      <Installation match={match} />
+      <Installation match={match} history={history} />
     </Transition>
   )
 }

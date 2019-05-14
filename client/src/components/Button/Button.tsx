@@ -2,6 +2,7 @@ import React, { FunctionComponent } from 'react'
 import Classnames from 'classnames'
 import { Link } from 'react-router-dom'
 import './button.scss'
+import { ReactComponent as TwitterIcon } from '../../assets/images/ico_twitter.svg'
 
 export enum themes {
   Blue = 'blue',
@@ -15,6 +16,8 @@ type Props = {
   onClick?: () => any
   label: string
   theme: themes
+  url?: string
+  icon?: boolean
 }
 
 const Button: FunctionComponent<Props> = ({
@@ -23,6 +26,8 @@ const Button: FunctionComponent<Props> = ({
   label,
   link,
   theme,
+  url,
+  icon,
 }) => {
   const handleOnClick = () => {
     if (onClick) {
@@ -41,6 +46,20 @@ const Button: FunctionComponent<Props> = ({
           {label}
         </span>
       </Link>
+    )
+  } else if (url) {
+    return (
+      <a
+        target="_blank"
+        href={url}
+        className={Classnames(className, 'button', `theme-${theme}`)}
+        onClick={handleOnClick}
+      >
+        {icon && <TwitterIcon className="button__twitter-icon" />}
+        <span className={Classnames('button__label', `theme-${theme}`)}>
+          {label}
+        </span>
+      </a>
     )
   } else {
     return (
