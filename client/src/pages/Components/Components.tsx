@@ -1,6 +1,6 @@
 /* tslint:disable:jsx-no-lambda */
 
-import React, { FunctionComponent } from 'react'
+import React, { FunctionComponent, useEffect } from 'react'
 import Transition from './Transition'
 import { pageProps } from '../types'
 import Button, { themes as ButtonThemes } from '../../components/Button/Button'
@@ -21,13 +21,21 @@ import ScrollIndication, {
 type Props = pageProps
 
 const Components: FunctionComponent<Props> = () => {
-  const { scrollProgression, setScrollProgression } = NavigationStore
+  const {
+    scrollProgression,
+    setScrollProgression,
+    setIsMapButtonVisible,
+  } = NavigationStore
 
   const handleOnChangeProgression = (
     e: React.ChangeEvent<HTMLInputElement>
   ) => {
     setScrollProgression(Number(e.target.value))
   }
+
+  useEffect(() => {
+    setIsMapButtonVisible(true)
+  })
 
   return (
     <div className={'page-components'}>

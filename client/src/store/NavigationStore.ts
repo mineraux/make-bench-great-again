@@ -1,10 +1,12 @@
 import { action, observable } from 'mobx'
 
 import { themes as headerThemes } from '../components/Header/Header'
+import { themes as mapButtonThemes } from '../components/MapButton/MapButton'
 
 type currentPagePathType = string | null
 type nextPagePathType = string | null
 type isMenuOpenType = boolean
+type isMapButtonVisibleType = boolean
 type scrollProgressionType = number
 type headerTitleType = string
 
@@ -14,6 +16,10 @@ class NavigationStore {
   @observable nextPagePath: nextPagePathType = null
 
   @observable isMenuOpen: isMenuOpenType = false
+
+  @observable isMapButtonVisible: isMapButtonVisibleType = false
+
+  @observable mapButtonTheme: mapButtonThemes = mapButtonThemes.Pink
 
   @observable scrollProgression: scrollProgressionType = 0.5
 
@@ -31,6 +37,14 @@ class NavigationStore {
 
   @action setIsMenuOpen = (value: isMenuOpenType): void => {
     this.isMenuOpen = value
+  }
+
+  @action setIsMapButtonVisible = (value: isMapButtonVisibleType): void => {
+    this.isMapButtonVisible = value
+  }
+
+  @action setMapButttonThemes = (value: mapButtonThemes): void => {
+    this.mapButtonTheme = value
   }
 
   @action setScrollProgression = (value: scrollProgressionType): void => {

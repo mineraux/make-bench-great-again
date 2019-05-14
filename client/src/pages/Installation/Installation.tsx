@@ -9,16 +9,21 @@ import DummyPlayer from '../../assets/images/dummy_player.png'
 import Button, { themes as buttonThemes } from '../../components/Button/Button'
 import MapButton from '../../components/MapButton/MapButton'
 import config from '../../config/config'
+import { observer } from 'mobx-react-lite'
+import { NavigationStore } from '../../store'
 
 type Props = pageProps & {}
 
 const Installation: FunctionComponent<Props> = ({ match, history }) => {
   const [installation, setInstallation] = useState<ApiInstallation>({ _id: '' })
 
+  const { setIsMapButtonVisible } = NavigationStore
+
   useEffect(() => {
     if (match && installation._id.length === 0) {
       getInstallationInformation()
     }
+    setIsMapButtonVisible(true)
   }, [])
 
   const getInstallationInformation = async () => {
@@ -52,7 +57,6 @@ const Installation: FunctionComponent<Props> = ({ match, history }) => {
   return (
     <div className="page-installation">
       <div className="page-installation__wrapper">
-        <MapButton theme={buttonThemes.Pink} link={config.routes.Map.path} />
         <div className="page-installation__part1">
           <div className="page-installation__presentation">
             <p className="page-installation__presentation__title">
@@ -131,4 +135,4 @@ const Installation: FunctionComponent<Props> = ({ match, history }) => {
   )
 }
 
-export default Installation
+export default observer(Installation)

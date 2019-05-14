@@ -11,6 +11,8 @@ import Header from './components/Header/Header'
 import Nav from './components/Nav/Nav'
 // styles
 import './assets/styles/app.scss'
+import MapButton from './components/MapButton/MapButton'
+import { themes as buttonThemes } from './components/Button/Button'
 
 const App: FunctionComponent = () => {
   const {
@@ -61,6 +63,7 @@ const App: FunctionComponent = () => {
         </div>
         <Nav isOpen={isMenuOpen} links={Object.values(config.routes)} />
         {Object.values(config.routes).map(route => renderRoute(route))}
+        <MapButton />
       </BrowserRouter>
     </div>
   )

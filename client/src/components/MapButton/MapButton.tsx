@@ -1,25 +1,62 @@
-import React, { FunctionComponent } from 'react'
+import React, { FunctionComponent, useEffect, useRef } from 'react'
 import Classnames from 'classnames'
-import Marker from './Marker'
-import './mapButton.scss'
-import { themes } from '../Button/Button'
 import { Link } from 'react-router-dom'
+import config from '../../config/config'
+import { observer } from 'mobx-react-lite'
+import { NavigationStore } from '../../store'
+import { ReactComponent as MarkerIcon } from './marker.svg'
+import './mapButton.scss'
+import { TimelineMax } from 'gsap'
+
+export enum themes {
+  Blue = 'blue',
+  Pink = 'pink',
+}
 
 type Props = {
   className?: string
-  theme: themes
-  link: string
 }
 
-const MapButton: FunctionComponent<Props> = ({ className, theme, link }) => {
+const MapButton: FunctionComponent<Props> = ({ className }) => {
+  const {
+    isMapButtonVisible,
+    mapButtonTheme,
+    setIsMapButtonVisible,
+  } = NavigationStore
+
+  const ref = useRef<HTMLLinkElement>(null)
+
+  useEffect(() => {
+    const tl = new TimelineMax()
+    if (ref.current) {
+      tl.to(ref.current, 1, {
+        xPercent: isMapButtonVisible ? -50 : -100,
+        yPercent: isMapButtonVisible ? 50 : 100,
+        opacity: isMapButtonVisible ? 1 : 0,
+      })
+    }
+  }, [isMapButtonVisible])
+
+  const handleOnClick = () => {
+    setIsMapButtonVisible(false)
+  }
+
   return (
     <Link
-      to={link}
-      className={Classnames('map-button', className, `theme-${theme}`)}
+      // @ts-ignore
+      innerRef={ref}
+      to={config.routes.Map.path}
+      className={Classnames(
+        'map-button',
+        className,
+        `theme-${mapButtonTheme}`,
+        { visible: isMapButtonVisible }
+      )}
+      onClick={handleOnClick}
     >
-      <Marker parentTheme={theme} />
+      <MarkerIcon className={Classnames('map-button__icon')} />
     </Link>
   )
 }
 
-export default MapButton
+export default observer(MapButton)
