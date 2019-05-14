@@ -1,0 +1,74 @@
+@import '../../assets/styles/global';
+
+.page-finish {
+  $self: &;
+  position: relative;
+  min-height: calc(100vh - #{$header-height});
+
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+
+  > *:not(#{$self}__svg) {
+    z-index: 2;
+  }
+
+  &__svg {
+    position: absolute;
+    width: 80%;
+    left: 50%;
+    top: 50%;
+    transform: translateX(-50%) translateY(-50%);
+  }
+
+  &__counter {
+    font-family: $font-faune-regular;
+    font-size: 4rem;
+    color: $color-green;
+    margin-bottom: 0.5rem;
+  }
+
+  &__title {
+    font-family: $font-infini-regular;
+    font-size: 2rem;
+    color: $color-green;
+  }
+
+  &__text {
+    font-family: $font-infini-regular;
+    font-size: 1.5rem;
+    color: $color-pink;
+    text-align: center;
+    line-height: 1.8rem;
+    margin: 7.5rem 0 6rem 0;
+    width: 70%;
+  }
+
+  &__button {
+    background-color: $color-blue;
+    margin-bottom: 4rem;
+  }
+
+  &__container-1,
+  &__container-2 {
+    &__title {
+      font-size: 2.1rem;
+      font-family: $font-infini-regular;
+      color: $color-green;
+      text-align: center;
+      line-height: 2.5rem;
+      margin-bottom: 3.5rem;
+    }
+
+    &__text {
+      font-family: $font-infini-regular;
+      color: $color-pink;
+      font-size: 1.5rem;
+      text-align: center;
+      line-height: 1.8rem;
+      width: 23.8rem;
+      margin: 0 auto 1.5rem auto;
+    }
+  }
+}
