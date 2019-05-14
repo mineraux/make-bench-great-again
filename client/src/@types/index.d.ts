@@ -28,9 +28,9 @@ export interface queryApiInstallation {
   description?: boolean
   lockedDescription?: boolean
   geolocation?: boolean
-  hashTags?: string[]
-  testimony?: string
-  relatedPetition?: string
+  hashTags?: boolean
+  testimony?: boolean
+  relatedPetition?: boolean
 }
 
 export interface createApiInstallation {

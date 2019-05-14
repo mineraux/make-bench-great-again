@@ -1,7 +1,6 @@
 /* tslint:disable:jsx-no-lambda */
 
-
-import React, { Fragment, FunctionComponent, useState } from 'react'
+import React, { Fragment, FunctionComponent, useState, useEffect } from 'react'
 import { pageProps } from '../types'
 import Button, { themes as ButtonThemes } from '../../components/Button/Button'
 import config from '../../config/config'
@@ -45,7 +44,7 @@ const Components: FunctionComponent<Props> = () => {
   ) => {
     setSpriteAnimationProgression(Number(e.target.value))
   }
-  
+
   useEffect(() => {
     setIsMapButtonVisible(true)
   })
