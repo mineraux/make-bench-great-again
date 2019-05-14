@@ -12,7 +12,7 @@ import Nav from './components/Nav/Nav'
 // styles
 import './assets/styles/app.scss'
 import MapButton from './components/MapButton/MapButton'
-import { themes as buttonThemes } from './components/Button/Button'
+import { useWindowSize } from './utils/hooks'
 
 const App: FunctionComponent = () => {
   const {
@@ -23,6 +23,8 @@ const App: FunctionComponent = () => {
     headerTheme,
     isMenuOpen,
   } = NavigationStore
+
+  const windowHeight = useWindowSize().height
 
   const renderRoute = (route: any) => {
     return (
@@ -52,7 +54,12 @@ const App: FunctionComponent = () => {
   }
 
   return (
-    <div className="app">
+    <div
+      className="app"
+      style={{
+        minHeight: windowHeight,
+      }}
+    >
       <BrowserRouter>
         <div className={'app__header-container'}>
           <Header

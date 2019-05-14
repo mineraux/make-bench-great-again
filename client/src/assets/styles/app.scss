@@ -1,9 +1,7 @@
 @import './global';
 
 .app {
-  padding-top: $header-height;
   background-color: $color-blue;
-  min-height: 100vh;
 
   &__header-container {
     position: fixed;
@@ -11,5 +9,9 @@
     top: 0;
     left: 0;
     z-index: 998;
+  }
+
+  > *[class*='page'] {
+    padding-top: $header-height;
   }
 }

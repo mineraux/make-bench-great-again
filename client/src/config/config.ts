@@ -4,6 +4,7 @@ import TwitterTransition from '../pages/Twitter/Transition'
 import AdminTransition from '../pages/Admin/Transition'
 import ComponentsTransition from '../pages/Components/Transition'
 import InstallationTransition from '../pages/Installation/Transition'
+import FinishTransition from '../pages/Finish/Transition'
 
 export default {
   routes: {
@@ -41,6 +42,12 @@ export default {
       path: '/installation/:installationId',
       name: 'Installation',
       component: InstallationTransition,
+      inNav: false,
+    },
+    Finish: {
+      path: '/finish',
+      name: 'Finish',
+      component: FinishTransition,
       inNav: false,
     },
   },
