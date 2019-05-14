@@ -55,7 +55,7 @@ const Countdown: FunctionComponent<Props> = ({
 
   return (
     <div className={ClassNames('countdown', `theme-${theme}`)}>
-      {days && hours && minutes && (
+      {days !== null && hours !== null && minutes !== null && (
         <p>
           {days}:{('0' + hours).slice(-2)}
         </p>
