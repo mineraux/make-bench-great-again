@@ -7,6 +7,12 @@ import ScrollMagicStore from '../../store/ScrollMagicStore'
 import { NavigationStore } from '../../store'
 
 class ScrollMagicController {
+  scenes: ScrollMagic.Scene[]
+
+  constructor() {
+    this.scenes = []
+  }
+
   public initController = () => {
     const { setScrollProgressFirstPart } = ScrollMagicStore
     const { setScrollProgression } = NavigationStore
@@ -70,6 +76,7 @@ class ScrollMagicController {
       .setPin('.page-installation__part1')
       // .addIndicators({ name: 'Pin' })
       .addTo(controller)
+    this.scenes.push(scenePart1Pin)
 
     const scenePresentationText = new ScrollMagic.Scene({
       duration: 1000,
@@ -78,6 +85,7 @@ class ScrollMagicController {
       .setTween(tweenPresentationText)
       // .addIndicators({ name: 'Animation presentation translate text' })
       .addTo(controller)
+    this.scenes.push(scenePresentationText)
 
     scenePresentationText.on('progress', (event: any) => {
       setScrollProgressFirstPart(event.progress)
@@ -91,6 +99,7 @@ class ScrollMagicController {
       .setTween(tweenPresentationFade)
       // .addIndicators({ name: 'Animation presentation fade' })
       .addTo(controller)
+    this.scenes.push(scenePresentationFade)
 
     const sceneTestimony = new ScrollMagic.Scene({
       duration: 400,
@@ -109,6 +118,7 @@ class ScrollMagicController {
       .setTween(tweenTestimonyTextFade)
       // .addIndicators({ name: 'Animation testimony text' })
       .addTo(controller)
+    this.scenes.push(sceneTestimonyTextFade)
 
     const sceneTestimonyTextTranslate = new ScrollMagic.Scene({
       duration: 1000,
@@ -118,12 +128,12 @@ class ScrollMagicController {
       .setTween(tweenTestimonyTextTranslate)
       // .addIndicators({ name: 'Animation testimony translate text' })
       .addTo(controller)
-
+    this.scenes.push(sceneTestimonyTextTranslate)
     /**
      * PART 2
      */
 
-    // TWENNS
+    // TWEENS
     const tweenMapButtonColor = new TimelineMax()
       .to(
         '.map-button',
@@ -152,6 +162,7 @@ class ScrollMagicController {
       .setPin('.page-installation__part2')
       // .addIndicators({ name: 'Pin 2' })
       .addTo(controller)
+    this.scenes.push(scenePart2Pin)
 
     const part2Height = document
       .querySelector('.page-installation__part2')!
@@ -165,14 +176,22 @@ class ScrollMagicController {
       .setTween(tweenMapButtonColor)
       // .addIndicators({ name: 'Transition Map button color' })
       .addTo(controller)
+    this.scenes.push(transitionMapButtonColor)
 
     const scenePage = new ScrollMagic.Scene({
       duration: part1Height + part2Height,
       triggerHook: 0,
     }).addTo(controller)
+    this.scenes.push(scenePage)
 
     scenePage.on('progress', (event: any) => {
       setScrollProgression(event.progress)
+    })
+  }
+
+  public destroyScrollMagicScenes = () => {
+    this.scenes.forEach(scene => {
+      scene.destroy(true)
     })
   }
 }

@@ -29,10 +29,11 @@ const MapButton: FunctionComponent<Props> = ({ className }) => {
   useEffect(() => {
     const tl = new TimelineMax()
     if (ref.current) {
-      tl.to(ref.current, 1, {
+      tl.to(ref.current, 0.3, {
         xPercent: isMapButtonVisible ? -50 : -100,
         yPercent: isMapButtonVisible ? 50 : 100,
         opacity: isMapButtonVisible ? 1 : 0,
+        ease: 'Sine.easeInOut',
       })
     }
   }, [isMapButtonVisible])

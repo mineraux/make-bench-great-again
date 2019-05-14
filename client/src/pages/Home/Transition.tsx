@@ -14,8 +14,7 @@ const TransitionComponent: FunctionComponent<Props> = ({ show }) => {
   // Enter : start
   const onEnter = (node: HTMLElement): void => {
     TweenMax.set(node, {
-      autoAlpha: 0,
-      x: -100,
+      opacity: 0,
     })
   }
 
@@ -25,9 +24,9 @@ const TransitionComponent: FunctionComponent<Props> = ({ show }) => {
       onComplete: done,
     })
 
-    tl.to(node, 1, {
-      autoAlpha: 1,
-      x: 0,
+    tl.to(node, 0.25, {
+      opacity: 1,
+      ease: 'Sine.easeInOut',
     })
   }
 
@@ -37,9 +36,9 @@ const TransitionComponent: FunctionComponent<Props> = ({ show }) => {
       onComplete: done,
     })
 
-    tl.to(node, 1, {
-      autoAlpha: 0,
-      x: 100,
+    tl.to(node, 0.25, {
+      opacity: 0,
+      ease: 'Sine.easeInOut',
     })
   }
 
