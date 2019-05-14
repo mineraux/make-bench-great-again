@@ -130,7 +130,6 @@ const Installation: FunctionComponent<Props> = ({ match, history }) => {
               theme={buttonThemes.Blue}
               url={getTwitterUrl()}
               icon={true}
-              onClick={redirectOnTwitterShare}
             />
             <p className="page-installation__part2__challenge__help">
               Plus nous serons nombreux, plus nous aurons de chances d'être
