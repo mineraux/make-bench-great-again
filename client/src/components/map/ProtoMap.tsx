@@ -33,6 +33,11 @@ const ProtoMap: FunctionComponent = () => {
 
   const [targetInstallationID, setTargetInstallationID] = useState()
 
+  const [
+    isGeolocationPermissionGranted,
+    setIsGeolocationPermissionGranted,
+  ] = useState(true)
+
   const getInstallationList = async () => {
     await fetchInstallationList({
       name: true,
@@ -67,6 +72,7 @@ const ProtoMap: FunctionComponent = () => {
       })
 
       geolocate.current.on('geolocate', (e: EventData) => {
+        console.log('test')
         setUserLocation([e.coords.longitude, e.coords.latitude])
       })
 
@@ -78,7 +84,23 @@ const ProtoMap: FunctionComponent = () => {
         setTravelDistance((e.route[0].distance / 1000).toFixed(2))
       })
     })
+
+    test()
   }, [])
+
+  const test = async () => {
+    //@ts-ignore
+    navigator.permissions.query({ name: 'geolocation' }).then(function(result) {
+      if (result.state == 'granted') {
+        setIsGeolocationPermissionGranted(true)
+        geolocate.current.trigger()
+      } else if (result.state == 'prompt') {
+        setIsGeolocationPermissionGranted(false)
+      } else if (result.state == 'denied') {
+        setIsGeolocationPermissionGranted(false)
+      }
+    })
+  }
 
   // useEffect(() => {
   //   /**
@@ -136,15 +158,17 @@ const ProtoMap: FunctionComponent = () => {
   return (
     <div id="map">
       <div className="mapboxgl-map__mask" />
-      <Modal
-        modalTitle="Votre parcours commence !"
-        textContent="
+      {!isGeolocationPermissionGranted && (
+        <Modal
+          modalTitle="Votre parcours commence !"
+          textContent="
         Nous vous proposons de vous diriger vers l’installation la plus proche pour réaliser la performance et débloquer le contenu associé.
         Pour cela nous aurons besoin de votre localisation. 
         "
-        buttonLabel="Démarrer"
-        onButtonClick={initGeoLocate}
-      />
+          buttonLabel="Démarrer"
+          onButtonClick={initGeoLocate}
+        />
+      )}
       {markers && (
         <InformationsPanel
           marker={selectedMarker}
