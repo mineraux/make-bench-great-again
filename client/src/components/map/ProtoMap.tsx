@@ -78,20 +78,20 @@ const ProtoMap: FunctionComponent = () => {
     })
   }, [])
 
-  useEffect(() => {
-    /**
-     * Position d'une instal pour fake le GPS :
-     * 48,875100
-     * 2,407654
-     */
-    if (isTourStarted) {
-      DirectionsManager.setPathToInstallation(
-        directions.current,
-        featureCoords(selectedMarker),
-        userLocation
-      )
-    }
-  }, [isTourStarted, userLocation])
+  // useEffect(() => {
+  //   /**
+  //    * Position d'une instal pour fake le GPS :
+  //    * 48,875100
+  //    * 2,407654
+  //    */
+  //   if (isTourStarted) {
+  //     DirectionsManager.setPathToInstallation(
+  //       directions.current,
+  //       featureCoords(selectedMarker),
+  //       userLocation
+  //     )
+  //   }
+  // }, [isTourStarted, userLocation])
 
   useEffect(() => {
     if (map.current && !markers && map.current.isStyleLoaded()) {
