@@ -19,6 +19,12 @@
   text-align: center;
   letter-spacing: 0.1rem;
   z-index: 997;
+  transition: opacity 0.25s cubic-bezier(0.19, 1, 0.22, 1);
+
+  &.fade {
+    opacity: 0;
+    pointer-events: none;
+  }
 
   &__title {
     font-size: 2rem;
