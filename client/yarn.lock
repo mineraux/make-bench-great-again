@@ -5687,6 +5687,8 @@ extglob@^0.3.1:
   version "0.3.2"
   resolved "https://registry.yarnpkg.com/extglob/-/extglob-0.3.2.tgz#2e18ff3d2f49ab2765cec9023f011daa8d8349a1"
   integrity sha1-Lhj/PS9JqydlzskCPwEdqo2DSaE=
+  dependencies:
+    is-extglob "^1.0.0"
 
 extglob@^2.0.4:
   version "2.0.4"
@@ -10578,6 +10580,11 @@ react-lifecycles-compat@^3.0.4:
   version "3.0.4"
   resolved "https://registry.yarnpkg.com/react-lifecycles-compat/-/react-lifecycles-compat-3.0.4.tgz#4f1a273afdfc8f3488a8c516bfda78f872352362"
   integrity sha512-fBASbA6LnOU9dOU2eW7aQ8xmYBSXUIWr+UmF9b1efZBazGNO+rcXT/icdKnYm2pTwcRylVUYwW7H1PHfLekVzA==
+
+react-responsive-spritesheet@^2.3.9:
+  version "2.3.9"
+  resolved "https://registry.yarnpkg.com/react-responsive-spritesheet/-/react-responsive-spritesheet-2.3.9.tgz#58822bd7532a46de8d564042c40d90e1d2aaafc5"
+  integrity sha512-7x1co8f6mg01wy5a8KsRDGOQ6a1inxhakdc/z2gXVhOBgRPQznUipWdGYZXHw7ecI5kPdXC1uXvFIXmWip3vnA==
 
 react-router-dom@^5.0.0:
   version "5.0.0"

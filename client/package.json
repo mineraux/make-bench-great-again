@@ -60,6 +60,7 @@
     "react-dev-utils": "^8.0.0",
     "react-dom": "^16.8.4",
     "react-google-maps": "^9.4.5",
+    "react-responsive-spritesheet": "^2.3.9",
     "react-router-dom": "^5.0.0",
     "react-transition-group": "^2.9.0",
     "react-twitter-widgets": "^1.7.1",

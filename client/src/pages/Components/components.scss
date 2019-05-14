@@ -32,4 +32,11 @@
     height: 4px;
     background: #ddd;
   }
+
+  .sprite-animation {
+    &__input {
+      margin: 2rem auto !important;
+      display: block;
+    }
+  }
 }

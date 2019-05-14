@@ -1,7 +1,7 @@
 /* tslint:disable:jsx-no-lambda */
 
-import React, { FunctionComponent, useEffect } from 'react'
-import Transition from './Transition'
+
+import React, { Fragment, FunctionComponent, useState } from 'react'
 import { pageProps } from '../types'
 import Button, { themes as ButtonThemes } from '../../components/Button/Button'
 import config from '../../config/config'
@@ -17,6 +17,8 @@ import { NavigationStore } from '../../store'
 import ScrollIndication, {
   themes as scrollIndicationThemes,
 } from '../../components/ScrollIndication/ScrollIndication'
+import SpriteAnimation from '../../components/SpriteAnimation/SpriteAnimation'
+import { animationId } from '../../components/SpriteAnimation/animations'
 
 type Props = pageProps
 
@@ -27,12 +29,23 @@ const Components: FunctionComponent<Props> = () => {
     setIsMapButtonVisible,
   } = NavigationStore
 
+  // ProgressBar
+
   const handleOnChangeProgression = (
     e: React.ChangeEvent<HTMLInputElement>
   ) => {
     setScrollProgression(Number(e.target.value))
   }
 
+  // SpriteAnimation
+
+  const [spriteAnimationProgression, setSpriteAnimationProgression] = useState()
+  const handleSpriteAnimationInputChange = (
+    e: React.ChangeEvent<HTMLInputElement>
+  ) => {
+    setSpriteAnimationProgression(Number(e.target.value))
+  }
+  
   useEffect(() => {
     setIsMapButtonVisible(true)
   })
@@ -113,6 +126,23 @@ const Components: FunctionComponent<Props> = () => {
       {/***  SCROLL INDICATION ***/}
 
       <ScrollIndication theme={scrollIndicationThemes.Blue} />
+
+      <hr />
+
+      <SpriteAnimation
+        progression={spriteAnimationProgression}
+        animationID={animationId.bancMetro}
+      />
+
+      <input
+        className={'sprite-animation__input'}
+        type="range"
+        min={0}
+        max={1}
+        step={0.01}
+        value={spriteAnimationProgression}
+        onChange={handleSpriteAnimationInputChange}
+      />
     </div>
   )
 }
