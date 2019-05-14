@@ -7,8 +7,6 @@ import ScrollMagicController from './ScrollMagicController'
 import BenchImg from '../../assets/images/bench.png'
 import DummyPlayer from '../../assets/images/dummy_player.png'
 import Button, { themes as buttonThemes } from '../../components/Button/Button'
-import MapButton from '../../components/MapButton/MapButton'
-import config from '../../config/config'
 import { observer } from 'mobx-react-lite'
 import { NavigationStore } from '../../store'
 
@@ -16,10 +14,17 @@ type Props = pageProps & {}
 
 const Installation: FunctionComponent<Props> = ({ match, history }) => {
   const [installation, setInstallation] = useState<ApiInstallation>({ _id: '' })
-
+  const { installationList, fetchInstallationList } = InstallationStore
   const { setIsMapButtonVisible } = NavigationStore
 
   useEffect(() => {
+    if (match && installationList.length === 0) {
+      fetchInstallationList({
+        name: true,
+        description: true,
+        lockedDescription: true,
+      })
+    }
     if (match && installation._id.length === 0) {
       getInstallationInformation()
     }

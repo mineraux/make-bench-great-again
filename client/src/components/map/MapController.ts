@@ -41,7 +41,7 @@ class MapManager {
     })
     map.addLayer({
       id: 'markers',
-      type: 'symbol',
+      type: 'circle',
       source: {
         type: 'geojson',
         data: {
@@ -49,8 +49,12 @@ class MapManager {
           features: markers,
         },
       },
-      layout: {
-        'icon-image': 'rocket-15',
+      paint: {
+        'circle-radius': {
+          base: 20,
+          stops: [[10, 10], [20, 20]],
+        },
+        'circle-color': '#61f984',
       },
     })
 
