@@ -1,17 +1,28 @@
 @import '../../assets/styles/global';
 
 .splashscreen-animation {
+  position: fixed;
+  width: 100%;
+  overflow: hidden;
+  z-index: 2;
+  pointer-events: none;
+
   &__circle {
+    $circleSize: 20rem;
     position: absolute;
     left: 50%;
     top: 50%;
     transform: translate(-50%, -50%);
-
-    $circleSize: 20rem;
-
+    z-index: 10;
+    background-color: $color-green;
     width: $circleSize;
     height: $circleSize;
     border-radius: 50%;
+    filter: url(#splashscreen-animation__circle-blur);
+
+    &-blur {
+      display: none;
+    }
 
     &__half-1,
     &__half-2 {
@@ -48,6 +59,58 @@
       p {
         color: $color-blue;
         top: 0.7rem;
+      }
+    }
+  }
+
+  &__text-container {
+    height: 100%;
+    //filter: blur(1.2rem);
+    filter: url(#splashscreen-animation__text-container-blur);
+
+    &-blur {
+      display: none;
+    }
+
+    &__text-1,
+    &__text-2,
+    &__text-3 {
+      position: absolute;
+    }
+
+    &__text-1 {
+      z-index: 5;
+      font-family: $font-infini-bold;
+      color: $color-pink;
+      font-size: 7.8rem;
+      left: 50%;
+      top: 50%;
+      transform: translateX(-50%) translateY(-50%) translateX(-5rem)
+        translateY(-10rem);
+    }
+
+    &__text-2 {
+      z-index: 4;
+      height: 63.8rem;
+      left: 50%;
+      top: 50%;
+      transform: translateX(-50%) translateY(-50%) translateX(-0.5rem);
+    }
+
+    &__text-3 {
+      z-index: 3;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      left: 50%;
+      top: 50%;
+      transform: translateX(-50%) translateY(-50%) translateX(13rem);
+
+      span {
+        font-family: $font-infini-bold;
+        color: $color-pink;
+        font-size: 7.8rem;
+        line-height: 9.3rem;
       }
     }
   }

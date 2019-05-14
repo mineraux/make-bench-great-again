@@ -145,8 +145,6 @@ const Components: FunctionComponent<Props> = () => {
       />
 
       <hr />
-
-      <SplashscreenAnimation />
     </div>
   )
 }

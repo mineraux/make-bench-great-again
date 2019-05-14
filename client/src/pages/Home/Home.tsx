@@ -9,30 +9,72 @@ import { pageProps } from '../types'
 import config from '../../config/config'
 import Button, { themes as buttonThemes } from '../../components/Button/Button'
 import { useScrollSpeed } from '../../utils/hooks'
+import SplashscreenAnimation from '../../components/SplashscreenAnimation/SplashscreenAnimation'
+import { NavigationStore } from '../../store'
+import { TimelineMax, TweenMax, Power1, Power2 } from 'gsap'
 // styles
 import './home.scss'
-import SplashscreenAnimation from '../../components/SplashscreenAnimation/SplashscreenAnimation'
 
 type Props = pageProps
 
 const Home: FunctionComponent<Props> = ({ match }) => {
   const scrollSpeed = useScrollSpeed()
   const [isSplashscreenCompleted, setIsSplashscreenCompleted] = useState(false)
+  const [isTextReady, setIsTextReady] = useState(false)
   const ref = useRef<HTMLDivElement>(null)
+
+  const { setIsHeaderVisible } = NavigationStore
+
+  useEffect(() => {
+    if (isSplashscreenCompleted) {
+      setIsHeaderVisible(true)
+
+      if (ref.current) {
+        const tl = new TimelineMax({
+          onComplete: () => {
+            setIsTextReady(true)
+          },
+        })
+
+        tl.to(
+          ref.current.querySelector(
+            '#page-home__containers-blur > feGaussianBlur'
+          )!,
+          1.5,
+          {
+            attr: { stdDeviation: 0 },
+            ease: Power2.easeOut,
+          },
+          0
+        ).to(
+          ref.current.querySelectorAll("[class*='page-home__container']")!,
+          1,
+          {
+            opacity: 1,
+          },
+          0
+        )
+      }
+    }
+  }, [isSplashscreenCompleted])
 
   useEffect(() => {
     const minDelta = 0
     const maxDelta = 20
 
-    if (scrollSpeed !== null) {
+    if (scrollSpeed !== null && isTextReady && ref.current) {
+      const blur = ref.current.querySelector(
+        '#page-home__containers-blur > feGaussianBlur'
+      )!
       const clampedDelta = Math.max(minDelta, Math.min(scrollSpeed, maxDelta))
       const normalizedDelta = (clampedDelta - minDelta) / (maxDelta - minDelta)
       if (ref && ref.current) {
-        console.log(normalizedDelta)
-        ref.current.style.filter = `blur(${normalizedDelta * 0.12}rem)`
+        TweenMax.to(blur, 0.3, {
+          attr: { stdDeviation: normalizedDelta * 1.5 },
+        })
       }
     }
-  }, [scrollSpeed])
+  }, [scrollSpeed, isTextReady])
 
   const handleSplashscreenComplete = () => {
     setIsSplashscreenCompleted(true)
@@ -40,9 +82,21 @@ const Home: FunctionComponent<Props> = ({ match }) => {
 
   return (
     <div className={'page-home'} ref={ref}>
-      {!isSplashscreenCompleted ? (
-        <SplashscreenAnimation onComplete={handleSplashscreenComplete} />
-      ) : (
+      <SplashscreenAnimation onComplete={handleSplashscreenComplete} />
+
+      <svg className={'page-home__containers-blur'}>
+        <filter
+          id="page-home__containers-blur"
+          x="-50%"
+          y="-50%"
+          width="200%"
+          height="200%"
+        >
+          <feGaussianBlur in="SourceGraphic" stdDeviation="20" />
+        </filter>
+      </svg>
+
+      {isSplashscreenCompleted && (
         <Fragment>
           <div className="page-home__container-1">
             <p className="page-home__container-1__title">

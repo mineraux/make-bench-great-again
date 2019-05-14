@@ -8,6 +8,7 @@ type nextPagePathType = string | null
 type isMenuOpenType = boolean
 type isMapButtonVisibleType = boolean
 type scrollProgressionType = number
+type isHeaderVisibleType = boolean
 type headerTitleType = string
 
 class NavigationStore {
@@ -23,7 +24,9 @@ class NavigationStore {
 
   @observable scrollProgression: scrollProgressionType = 0.5
 
-  @observable headerTitle: headerTitleType = 'titre'
+  @observable isHeaderVisible: isHeaderVisibleType = false
+
+  @observable headerTitle: headerTitleType = 'Envers du décor'
 
   @observable headerTheme: headerThemes = headerThemes.Blue
 
@@ -49,6 +52,10 @@ class NavigationStore {
 
   @action setScrollProgression = (value: scrollProgressionType): void => {
     this.scrollProgression = value
+  }
+
+  @action setIsHeaderVisible = (value: isHeaderVisibleType): void => {
+    this.isHeaderVisible = value
   }
 
   @action setHeaderTitle = (value: headerTitleType): void => {

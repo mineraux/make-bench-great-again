@@ -32,10 +32,14 @@ type Props = {
 }
 
 const Header: FunctionComponent<Props> = ({ className, title, theme }) => {
-  const { scrollProgression } = NavigationStore
+  const { scrollProgression, isHeaderVisible } = NavigationStore
 
   return (
-    <header className={Classnames(className, 'header', `theme-${theme}`)}>
+    <header
+      className={Classnames(className, 'header', `theme-${theme}`, {
+        visible: isHeaderVisible,
+      })}
+    >
       <Countdown theme={theming.countdown[theme]} />
       <p className={Classnames(className, 'header__title')}>{title}</p>
       <BurgerButton theme={theming.burgerButton[theme]} />
