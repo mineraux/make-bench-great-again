@@ -3,9 +3,12 @@ import { TimelineMax } from 'gsap'
 import ScrollMagic from 'scrollmagic'
 import 'animation.gsap'
 import 'debug.addIndicators'
+import ScrollMagicStore from '../../store/ScrollMagicStore'
 
 class ScrollMagicController {
   public initController = () => {
+    const { setScrollProgress } = ScrollMagicStore
+
     const controller = new ScrollMagic.Controller()
 
     const scenePart1Pin = new ScrollMagic.Scene({
@@ -34,6 +37,10 @@ class ScrollMagicController {
       .setTween(tweenPresentationText)
       .addIndicators({ name: 'Animation presentation translate text' })
       .addTo(controller)
+
+    scenePresentationText.on('progress', (event: any) => {
+      setScrollProgress(event.progress)
+    })
 
     const tweenPresentationFade = new TimelineMax().to(
       '.page-installation__presentation',

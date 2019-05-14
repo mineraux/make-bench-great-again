@@ -9,13 +9,19 @@ import DummyPlayer from '../../assets/images/dummy_player.png'
 import Button, { themes as buttonThemes } from '../../components/Button/Button'
 import { observer } from 'mobx-react-lite'
 import { NavigationStore } from '../../store'
+import SpriteAnimation from '../../components/SpriteAnimation/SpriteAnimation'
+import ScrollMagicStore from '../../store/ScrollMagicStore'
+import { animationId } from '../../components/SpriteAnimation/animations'
 
 type Props = pageProps & {}
 
 const Installation: FunctionComponent<Props> = ({ match, history }) => {
   const [installation, setInstallation] = useState<ApiInstallation>({ _id: '' })
   const { installationList, fetchInstallationList } = InstallationStore
+
+  const { scrollProgress } = ScrollMagicStore
   const { setIsMapButtonVisible } = NavigationStore
+  const [spriteAnimationProgression, setSpriteAnimationProgression] = useState()
 
   useEffect(() => {
     if (match && installationList.length === 0) {
@@ -67,10 +73,10 @@ const Installation: FunctionComponent<Props> = ({ match, history }) => {
             <p className="page-installation__presentation__title">
               {installation.name}
             </p>
-            <img
-              className="page-installation__presentation__installation-sketch"
-              src={BenchImg}
-              alt=""
+            <SpriteAnimation
+              className={'page-installation__presentation__installation-sketch'}
+              progression={scrollProgress}
+              animationID={animationId.bancMetro}
             />
             <div className="page-installation__presentation__text-content-wrapper">
               <div className="page-installation__presentation__text-content-wrapper__mask" />
