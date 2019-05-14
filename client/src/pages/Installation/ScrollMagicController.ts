@@ -24,9 +24,12 @@ class ScrollMagicController {
      */
 
     // TWEENS
-    const tweenPresentationText = new TimelineMax().to(
+    const tweenPresentationText = new TimelineMax().fromTo(
       '.page-installation__presentation__text-content',
       0.5,
+      {
+        yPercent: 100,
+      },
       {
         yPercent: -100,
       }
@@ -40,9 +43,12 @@ class ScrollMagicController {
       }
     )
 
-    const tweenTestimonyTextTranslate = new TimelineMax().to(
+    const tweenTestimonyTextTranslate = new TimelineMax().fromTo(
       '.page-installation__testimony__text-content',
       0.5,
+      {
+        yPercent: 100,
+      },
       {
         yPercent: -100,
       }
