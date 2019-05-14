@@ -4,7 +4,6 @@ import { InstallationStore } from '../../store'
 import { ApiInstallation } from '../../@types'
 import './installation.scss'
 import ScrollMagicController from './ScrollMagicController'
-import BenchImg from '../../assets/images/bench.png'
 import DummyPlayer from '../../assets/images/dummy_player.png'
 import Button, { themes as buttonThemes } from '../../components/Button/Button'
 import { observer } from 'mobx-react-lite'
@@ -19,7 +18,7 @@ const Installation: FunctionComponent<Props> = ({ match, history }) => {
   const [installation, setInstallation] = useState<ApiInstallation>({ _id: '' })
   const { installationList, fetchInstallationList } = InstallationStore
 
-  const { scrollProgress } = ScrollMagicStore
+  const { scrollProgressFirstPart } = ScrollMagicStore
   const { setIsMapButtonVisible } = NavigationStore
   const [spriteAnimationProgression, setSpriteAnimationProgression] = useState()
 
@@ -75,7 +74,7 @@ const Installation: FunctionComponent<Props> = ({ match, history }) => {
             </p>
             <SpriteAnimation
               className={'page-installation__presentation__installation-sketch'}
-              progression={scrollProgress}
+              progression={scrollProgressFirstPart}
               animationID={animationId.bancMetro}
             />
             <div className="page-installation__presentation__text-content-wrapper">
