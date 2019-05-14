@@ -5,14 +5,21 @@ import Button, { themes as buttonThemes } from '../../components/Button/Button'
 import { ReactComponent as Progress } from './progress.svg'
 // styles
 import './finish.scss'
+import { useWindowSize } from '../../utils/hooks'
 
 type Props = pageProps
 
 const Finish: FunctionComponent<Props> = ({ match }) => {
   const ref = useRef<HTMLDivElement>(null)
-
+  const windowHeight = useWindowSize().height
   return (
-    <div className={'page-finish'} ref={ref}>
+    <div
+      className={'page-finish'}
+      ref={ref}
+      style={{
+        minHeight: windowHeight,
+      }}
+    >
       <Progress className={'page-finish__svg'} />
 
       <p className="page-finish__counter">01-05</p>
