@@ -16,7 +16,7 @@ class ScrollMagicController {
       triggerHook: 0,
     })
       .setPin('.page-installation__part1')
-      .addIndicators({ name: 'Pin' })
+      // .addIndicators({ name: 'Pin' })
       .addTo(controller)
 
     /**
@@ -35,7 +35,7 @@ class ScrollMagicController {
       triggerHook: 0,
     })
       .setTween(tweenPresentationText)
-      .addIndicators({ name: 'Animation presentation translate text' })
+      // .addIndicators({ name: 'Animation presentation translate text' })
       .addTo(controller)
 
     scenePresentationText.on('progress', (event: any) => {
@@ -56,7 +56,7 @@ class ScrollMagicController {
       triggerHook: 0,
     })
       .setTween(tweenPresentationFade)
-      .addIndicators({ name: 'Animation presentation fade' })
+      // .addIndicators({ name: 'Animation presentation fade' })
       .addTo(controller)
 
     /**
@@ -77,7 +77,7 @@ class ScrollMagicController {
       offset: 1500,
     })
       .setTween(tweenTestimony)
-      .addIndicators({ name: 'Animation testimony' })
+      // .addIndicators({ name: 'Animation testimony' })
       .addTo(controller)
 
     const tweenTestimonyTextFade = new TimelineMax().to(
@@ -94,7 +94,7 @@ class ScrollMagicController {
       offset: 1500,
     })
       .setTween(tweenTestimonyTextFade)
-      .addIndicators({ name: 'Animation testimony text' })
+      // .addIndicators({ name: 'Animation testimony text' })
       .addTo(controller)
 
     const tweenTestimonyTextTranslate = new TimelineMax().to(
@@ -111,7 +111,7 @@ class ScrollMagicController {
       triggerHook: 0,
     })
       .setTween(tweenTestimonyTextTranslate)
-      .addIndicators({ name: 'Animation testimony translate text' })
+      // .addIndicators({ name: 'Animation testimony translate text' })
       .addTo(controller)
 
     const scenePart2Pin = new ScrollMagic.Scene({
@@ -120,7 +120,7 @@ class ScrollMagicController {
       triggerHook: 0,
     })
       .setPin('.page-installation__part2')
-      .addIndicators({ name: 'Pin 2' })
+      // .addIndicators({ name: 'Pin 2' })
       .addTo(controller)
 
     const part2Height = document
@@ -152,7 +152,7 @@ class ScrollMagicController {
       triggerHook: 1,
     })
       .setTween(tweenMapButtonColor)
-      .addIndicators({ name: 'Transition Map button color' })
+      // .addIndicators({ name: 'Transition Map button color' })
       .addTo(controller)
   }
 }
