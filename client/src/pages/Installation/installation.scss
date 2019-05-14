@@ -106,8 +106,8 @@
           background: linear-gradient(
             to top,
             $color-blue,
-            transparent 20%,
-            transparent 80%,
+            rgba(25, 33, 147, 0) 20%,
+            rgba(25, 33, 147, 0) 80%,
             $color-blue
           );
           z-index: 1;
