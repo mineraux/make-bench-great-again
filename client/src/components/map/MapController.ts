@@ -51,8 +51,8 @@ class MapManager {
       },
       paint: {
         'circle-radius': {
-          base: 1.75,
-          stops: [[0, 0], [20, 20]],
+          base: 20,
+          stops: [[10, 10], [20, 20]],
         },
         'circle-color': '#61f984',
       },
