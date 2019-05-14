@@ -34,6 +34,11 @@ const Installation: FunctionComponent<Props> = ({ match, history }) => {
       getInstallationInformation()
     }
     setIsMapButtonVisible(true)
+
+    return () => {
+      ScrollMagicController.destroyScrollMagicScenes()
+      window.scrollTo(0, 0)
+    }
   }, [])
 
   const getInstallationInformation = async () => {
