@@ -18,6 +18,7 @@ import ScrollIndication, {
 } from '../../components/ScrollIndication/ScrollIndication'
 import SpriteAnimation from '../../components/SpriteAnimation/SpriteAnimation'
 import { animationId } from '../../components/SpriteAnimation/animations'
+import SplashscreenAnimation from '../../components/SplashscreenAnimation/SplashscreenAnimation'
 
 type Props = pageProps
 
@@ -142,6 +143,10 @@ const Components: FunctionComponent<Props> = () => {
         value={spriteAnimationProgression}
         onChange={handleSpriteAnimationInputChange}
       />
+
+      <hr />
+
+      <SplashscreenAnimation />
     </div>
   )
 }

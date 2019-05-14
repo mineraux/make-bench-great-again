@@ -1,0 +1,54 @@
+@import '../../assets/styles/global';
+
+.splashscreen-animation {
+  &__circle {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+
+    $circleSize: 20rem;
+
+    width: $circleSize;
+    height: $circleSize;
+    border-radius: 50%;
+
+    &__half-1,
+    &__half-2 {
+      position: relative;
+      width: $circleSize;
+      height: $circleSize / 2;
+
+      p {
+        font-family: $font-infini-bold;
+        font-size: 2rem;
+        text-transform: uppercase;
+        position: absolute;
+        left: 50%;
+        transform: translateX(-50%);
+        width: 100%;
+        text-align: center;
+      }
+    }
+
+    &__half-1 {
+      background-color: $color-blue;
+      border-top-left-radius: $circleSize / 2;
+      border-top-right-radius: $circleSize / 2;
+      box-shadow: 0 -0.4rem 1.3rem 0.4rem $color-green;
+      p {
+        color: $color-green;
+        bottom: 0.7rem;
+      }
+    }
+    &__half-2 {
+      background-color: $color-green;
+      border-bottom-left-radius: $circleSize / 2;
+      border-bottom-right-radius: $circleSize / 2;
+      p {
+        color: $color-blue;
+        top: 0.7rem;
+      }
+    }
+  }
+}
