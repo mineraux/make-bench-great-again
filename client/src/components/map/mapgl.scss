@@ -8,7 +8,11 @@
 
   &__mask {
     pointer-events: none;
-    background: radial-gradient(farthest-side, transparent 60%, #192193 100%);
+    background: radial-gradient(
+      farthest-side,
+      rgba(25, 33, 147, 0) 60%,
+      #192193 100%
+    );
     position: absolute;
     left: 0;
     top: 0;

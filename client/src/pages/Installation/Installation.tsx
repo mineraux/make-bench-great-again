@@ -20,7 +20,6 @@ const Installation: FunctionComponent<Props> = ({ match, history }) => {
 
   const { scrollProgressFirstPart } = ScrollMagicStore
   const { setIsMapButtonVisible } = NavigationStore
-  const [spriteAnimationProgression, setSpriteAnimationProgression] = useState()
 
   useEffect(() => {
     if (match && installationList.length === 0) {
@@ -54,13 +53,12 @@ const Installation: FunctionComponent<Props> = ({ match, history }) => {
   }
 
   const getTwitterUrl = (): string => {
-    const tweet = `À l'occasion de la Nuit Blanche, grace à l'Envers du décors, j'ai essayé de m'installer
-    sur des dispositifs anti-SDF...`
+    const tweet = `À l'occasion de la Nuit Blanche, grace à l'Envers du décors, j'ai essayé de m'installer sur des dispositifs anti-SDF...`
     const uri = `https://twitter.com/intent/tweet?text=${tweet}`
     return encodeURI(uri)
   }
 
-  const redirectToHome = () => {
+  const redirectOnTwitterShare = () => {
     history.push('/')
   }
 
@@ -132,7 +130,7 @@ const Installation: FunctionComponent<Props> = ({ match, history }) => {
               theme={buttonThemes.Blue}
               url={getTwitterUrl()}
               icon={true}
-              onClick={redirectToHome}
+              onClick={redirectOnTwitterShare}
             />
             <p className="page-installation__part2__challenge__help">
               Plus nous serons nombreux, plus nous aurons de chances d'être
