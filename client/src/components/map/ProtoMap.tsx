@@ -130,7 +130,6 @@ const ProtoMap: FunctionComponent = () => {
       userLocation
     )
     setTargetInstallationID(selectedMarker.properties._id)
-    console.log(targetInstallationID)
     setIsTourStarted(true)
   }
 
