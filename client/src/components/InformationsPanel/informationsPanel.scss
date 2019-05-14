@@ -49,6 +49,7 @@
       display: block;
       font-size: 2rem;
       margin-bottom: 3rem;
+      text-transform: uppercase;
     }
 
     &__installation-description {
@@ -57,22 +58,7 @@
     }
 
     &__installation-see-more {
-      color: $color-blue;
-      font-family: $font-infini-italic;
-      font-size: 1.5rem;
-      text-decoration: none;
-      position: relative;
-      margin-left: 0.5rem;
-
-      &::before {
-        content: '';
-        width: 100%;
-        height: 0.2rem;
-        position: absolute;
-        left: 0;
-        bottom: 0.3rem;
-        background-color: $color-blue;
-      }
+      margin-bottom: 1rem;
     }
   }
 

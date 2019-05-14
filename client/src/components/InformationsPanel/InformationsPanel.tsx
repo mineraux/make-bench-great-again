@@ -4,7 +4,10 @@ import { Feature } from 'geojson'
 import { Link } from 'react-router-dom'
 import ClassNames from 'classnames'
 import './informationsPanel.scss'
-import Button, { themes as ButtonThemes } from '../../components/Button/Button'
+import Button, {
+  themes as ButtonThemes,
+  themes,
+} from '../../components/Button/Button'
 import { ReactComponent as CrossIco } from '../../assets/images/close_ico.svg'
 
 interface Props {
@@ -64,17 +67,15 @@ const InformationsPanel: FunctionComponent<Props> = ({
         <span className="informations-panel__informations--installation__installation-description">
           {installationTargetDescription}
         </span>
-        {marker && marker.properties && (
-          <Link
-            to={`/installation/${marker.properties._id}`}
-            className={
-              'informations-panel__informations--installation__installation-see-more'
-            }
-          >
-            en savoir plus
-          </Link>
-        )}
       </div>
+      {marker && marker.properties && (
+        <Button
+          theme={themes.Blue}
+          label="En savoir plus"
+          link={`/installation/${marker.properties._id}`}
+          className="informations-panel__informations--installation__installation-see-more"
+        />
+      )}
       {!isTourStarted && (
         <Button
           onClick={onButtonClick}
