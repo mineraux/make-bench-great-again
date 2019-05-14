@@ -4,10 +4,12 @@ import ScrollMagic from 'scrollmagic'
 import 'animation.gsap'
 import 'debug.addIndicators'
 import ScrollMagicStore from '../../store/ScrollMagicStore'
+import { NavigationStore } from '../../store'
 
 class ScrollMagicController {
   public initController = () => {
     const { setScrollProgressFirstPart } = ScrollMagicStore
+    const { setScrollProgression } = NavigationStore
 
     const controller = new ScrollMagic.Controller()
 
@@ -60,8 +62,9 @@ class ScrollMagicController {
     )
 
     // SCENES
+    const part1Height = 2700
     const scenePart1Pin = new ScrollMagic.Scene({
-      duration: 2700,
+      duration: part1Height,
       triggerHook: 0,
     })
       .setPin('.page-installation__part1')
@@ -162,6 +165,15 @@ class ScrollMagicController {
       .setTween(tweenMapButtonColor)
       // .addIndicators({ name: 'Transition Map button color' })
       .addTo(controller)
+
+    const scenePage = new ScrollMagic.Scene({
+      duration: part1Height + part2Height,
+      triggerHook: 0,
+    }).addTo(controller)
+
+    scenePage.on('progress', (event: any) => {
+      setScrollProgression(event.progress)
+    })
   }
 }
 
