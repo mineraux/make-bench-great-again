@@ -79,12 +79,6 @@ const ProtoMap: FunctionComponent = () => {
   }, [])
 
   useEffect(() => {
-    if (!isTourStarted && userLocation && markers) {
-      setFastestPath()
-    }
-  }, [userLocation, markers])
-
-  useEffect(() => {
     /**
      * Position d'une instal pour fake le GPS :
      * 48,875100
