@@ -31,6 +31,8 @@ const ProtoMap: FunctionComponent = () => {
   const [travelTime, setTravelTime] = useState()
   const [travelDistance, setTravelDistance] = useState()
 
+  const [targetInstallationID, setTargetInstallationID] = useState()
+
   const getInstallationList = async () => {
     await fetchInstallationList({
       name: true,
@@ -127,6 +129,8 @@ const ProtoMap: FunctionComponent = () => {
       featureCoords(selectedMarker),
       userLocation
     )
+    setTargetInstallationID(selectedMarker.properties._id)
+    console.log(targetInstallationID)
     setIsTourStarted(true)
   }
 
@@ -142,13 +146,15 @@ const ProtoMap: FunctionComponent = () => {
         buttonLabel="Démarrer"
         onButtonClick={initGeoLocate}
       />
-      {markers && userLocation && (
+      {markers && (
         <InformationsPanel
           marker={selectedMarker}
           travelTime={travelTime}
           travelDistance={travelDistance}
           onButtonClick={setPath}
           isTourStarted={isTourStarted}
+          userLocation={userLocation}
+          targetInstallationID={targetInstallationID}
         />
       )}
     </div>
