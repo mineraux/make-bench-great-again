@@ -31,6 +31,8 @@ const ProtoMap: FunctionComponent = () => {
   const [travelTime, setTravelTime] = useState()
   const [travelDistance, setTravelDistance] = useState()
 
+  const [targetInstallationID, setTargetInstallationID] = useState()
+
   const getInstallationList = async () => {
     await fetchInstallationList({
       name: true,
@@ -78,26 +80,20 @@ const ProtoMap: FunctionComponent = () => {
     })
   }, [])
 
-  useEffect(() => {
-    if (!isTourStarted && userLocation && markers) {
-      setFastestPath()
-    }
-  }, [userLocation, markers])
-
-  useEffect(() => {
-    /**
-     * Position d'une instal pour fake le GPS :
-     * 48,875100
-     * 2,407654
-     */
-    if (isTourStarted) {
-      DirectionsManager.setPathToInstallation(
-        directions.current,
-        featureCoords(selectedMarker),
-        userLocation
-      )
-    }
-  }, [isTourStarted, userLocation])
+  // useEffect(() => {
+  //   /**
+  //    * Position d'une instal pour fake le GPS :
+  //    * 48,875100
+  //    * 2,407654
+  //    */
+  //   if (isTourStarted) {
+  //     DirectionsManager.setPathToInstallation(
+  //       directions.current,
+  //       featureCoords(selectedMarker),
+  //       userLocation
+  //     )
+  //   }
+  // }, [isTourStarted, userLocation])
 
   useEffect(() => {
     if (map.current && !markers && map.current.isStyleLoaded()) {
@@ -133,6 +129,7 @@ const ProtoMap: FunctionComponent = () => {
       featureCoords(selectedMarker),
       userLocation
     )
+    setTargetInstallationID(selectedMarker.properties._id)
     setIsTourStarted(true)
   }
 
@@ -148,13 +145,15 @@ const ProtoMap: FunctionComponent = () => {
         buttonLabel="Démarrer"
         onButtonClick={initGeoLocate}
       />
-      {markers && userLocation && (
+      {markers && (
         <InformationsPanel
           marker={selectedMarker}
           travelTime={travelTime}
           travelDistance={travelDistance}
           onButtonClick={setPath}
           isTourStarted={isTourStarted}
+          userLocation={userLocation}
+          targetInstallationID={targetInstallationID}
         />
       )}
     </div>

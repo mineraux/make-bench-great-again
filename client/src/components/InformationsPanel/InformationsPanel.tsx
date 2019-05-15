@@ -1,11 +1,15 @@
 import React, { FunctionComponent, useState, useEffect } from 'react'
 import { observer } from 'mobx-react-lite'
 import { Feature } from 'geojson'
-import { Link } from 'react-router-dom'
 import ClassNames from 'classnames'
 import './informationsPanel.scss'
-import Button, { themes as ButtonThemes } from '../../components/Button/Button'
+import Button, {
+  themes as ButtonThemes,
+  themes,
+} from '../../components/Button/Button'
 import { ReactComponent as CrossIco } from '../../assets/images/close_ico.svg'
+import { ReactComponent as WalkIco } from '../../assets/images/ico_walk.svg'
+import { Coords } from '../../@types'
 
 interface Props {
   marker: Feature
@@ -14,6 +18,8 @@ interface Props {
   className?: string
   onButtonClick: any
   isTourStarted: boolean
+  userLocation: Coords
+  targetInstallationID: string
 }
 
 const InformationsPanel: FunctionComponent<Props> = ({
@@ -22,7 +28,8 @@ const InformationsPanel: FunctionComponent<Props> = ({
   travelDistance,
   className,
   onButtonClick,
-  isTourStarted,
+  userLocation,
+  targetInstallationID,
 }) => {
   const [isOpen, setIsOpen] = useState(false)
   const [installationTargetName, setInstallationTargetName] = useState(
@@ -33,6 +40,8 @@ const InformationsPanel: FunctionComponent<Props> = ({
     setInstallationTargetDescription,
   ] = useState()
 
+  const [isCurrentTargetMatching, setIsCurrentTargetMatching] = useState(true)
+
   useEffect(() => {
     if (marker && marker.properties) {
       setInstallationTargetName(marker.properties.name)
@@ -41,12 +50,31 @@ const InformationsPanel: FunctionComponent<Props> = ({
     }
   }, [marker])
 
+  useEffect(() => {
+    if (marker && marker.properties && marker.properties._id) {
+      if (targetInstallationID === marker.properties._id) {
+        setIsCurrentTargetMatching(true)
+      } else {
+        setIsCurrentTargetMatching(false)
+      }
+    }
+  }, [marker, targetInstallationID])
+
   return (
     <div
       className={ClassNames('informations-panel', className, {
         open: isOpen,
       })}
     >
+      {travelTime && isCurrentTargetMatching && (
+        <div className="informations-panel__direction-informations">
+          <WalkIco className="informations-panel__direction-informations__walk-ico" />
+          <span className="informations-panel__direction-informations__direction-duration">
+            {travelTime} min
+          </span>
+        </div>
+      )}
+
       {installationTargetDescription && (
         <button
           className="informations-panel__close-ico"
@@ -57,6 +85,7 @@ const InformationsPanel: FunctionComponent<Props> = ({
           <CrossIco />
         </button>
       )}
+
       <div className="informations-panel__informations--installation">
         <span className="informations-panel__informations--installation__installation-name">
           {installationTargetName}
@@ -64,18 +93,17 @@ const InformationsPanel: FunctionComponent<Props> = ({
         <span className="informations-panel__informations--installation__installation-description">
           {installationTargetDescription}
         </span>
-        {marker && marker.properties && (
-          <Link
-            to={`/installation/${marker.properties._id}`}
-            className={
-              'informations-panel__informations--installation__installation-see-more'
-            }
-          >
-            en savoir plus
-          </Link>
-        )}
       </div>
-      {!isTourStarted && (
+
+      {marker && marker.properties && (
+        <Button
+          theme={themes.Blue}
+          label="En savoir plus"
+          link={`/installation/${marker.properties._id}`}
+          className="informations-panel__informations--installation__installation-see-more"
+        />
+      )}
+      {!isCurrentTargetMatching && userLocation && (
         <Button
           onClick={onButtonClick}
           label={'Calculer mon itinéraire'}
@@ -83,14 +111,6 @@ const InformationsPanel: FunctionComponent<Props> = ({
           className={'informations-panel__set-direction-button'}
         />
       )}
-      <div className="informations-panel__travel-duration">
-        {travelTime && travelDistance && (
-          <p>
-            Nous vous prévoyons {travelTime} minutes de trajet ({travelDistance}{' '}
-            km)
-          </p>
-        )}
-      </div>
     </div>
   )
 }
