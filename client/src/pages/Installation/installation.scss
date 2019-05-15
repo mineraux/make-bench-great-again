@@ -153,4 +153,22 @@
       max-height: 25rem;
     }
   }
+
+  &__part3 {
+    padding-top: 4rem;
+    padding-bottom: 5rem;
+    text-align: center;
+    &__title {
+      font-family: $font-infini-regular;
+      font-size: 2rem;
+      color: $color-green;
+      width: 100%;
+      text-align: center;
+    }
+
+    &__button {
+      margin: 3rem auto;
+      display: inline-block;
+    }
+  }
 }
