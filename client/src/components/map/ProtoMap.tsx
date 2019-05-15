@@ -60,6 +60,13 @@ const ProtoMap: FunctionComponent = () => {
         if (e.features && featureInFeaturesCoords(e)) {
           map.current!.flyTo({ center: featureInFeaturesCoords(e) })
           setSelectedMarker(e.features[0])
+          map.current!.removeLayer('markers')
+          const markers = MapManager.updateAllMarkers(
+            installationList,
+            map.current!,
+            e.features[0].properties!._id
+          )
+          setMarkers(markers)
         }
       })
 
@@ -72,7 +79,6 @@ const ProtoMap: FunctionComponent = () => {
       })
 
       geolocate.current.on('geolocate', (e: EventData) => {
-        console.log('test')
         setUserLocation([e.coords.longitude, e.coords.latitude])
       })
 

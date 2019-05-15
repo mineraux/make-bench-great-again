@@ -14,6 +14,86 @@ class MapManager {
     return map
   }
 
+  public updateAllMarkers = (
+    installationList: ApiInstallationReponseRoot,
+    map: mapboxgl.Map,
+    id: 'string'
+  ) => {
+    const markers: Feature[] = []
+
+    console.log(installationList.length, id)
+
+    if (installationList.length === 0) {
+      return
+    }
+
+    installationList.map(installation => {
+      let feature: Feature
+
+      if (installation._id == id) {
+        console.log(installation)
+        feature = {
+          type: 'Feature',
+          properties: {
+            _id: installation._id,
+            name: installation.name,
+            description: installation.description,
+            focus: 'true',
+          },
+          geometry: {
+            type: 'Point',
+            coordinates: installation.geolocation as number[],
+          },
+        }
+      } else {
+        feature = {
+          type: 'Feature',
+          properties: {
+            _id: installation._id,
+            name: installation.name,
+            description: installation.description,
+            focus: 'false',
+          },
+          geometry: {
+            type: 'Point',
+            coordinates: installation.geolocation as number[],
+          },
+        }
+      }
+
+      markers.push(feature)
+    })
+    map.addSource('markersSources', {
+      type: 'geojson',
+      data: {
+        type: 'FeatureCollection',
+        features: markers,
+      },
+    })
+    map.addLayer({
+      id: 'markerss',
+      type: 'circle',
+      source: 'markersSources',
+      paint: {
+        'circle-radius': {
+          base: 20,
+          stops: [[10, 10], [20, 20]],
+        },
+        'circle-color': [
+          'match',
+          ['get', 'focus'],
+          'true',
+          '#61f984',
+          '#1d1899',
+        ],
+        'circle-stroke-width': 3,
+        'circle-stroke-color': '#61f984',
+      },
+    })
+
+    return markers
+  }
+
   public setAllMarkers = (
     installationList: ApiInstallationReponseRoot,
     map: mapboxgl.Map
@@ -31,6 +111,7 @@ class MapManager {
           _id: installation._id,
           name: installation.name,
           description: installation.description,
+          focus: 'false',
         },
         geometry: {
           type: 'Point',
@@ -40,22 +121,31 @@ class MapManager {
 
       markers.push(feature)
     })
+    map.addSource('markersSource', {
+      type: 'geojson',
+      data: {
+        type: 'FeatureCollection',
+        features: markers,
+      },
+    })
     map.addLayer({
       id: 'markers',
       type: 'circle',
-      source: {
-        type: 'geojson',
-        data: {
-          type: 'FeatureCollection',
-          features: markers,
-        },
-      },
+      source: 'markersSource',
       paint: {
         'circle-radius': {
           base: 20,
           stops: [[10, 10], [20, 20]],
         },
-        'circle-color': '#61f984',
+        'circle-color': [
+          'match',
+          ['get', 'focus'],
+          'true',
+          '#61f984',
+          '#1d1899',
+        ],
+        'circle-stroke-width': 3,
+        'circle-stroke-color': '#61f984',
       },
     })
 
