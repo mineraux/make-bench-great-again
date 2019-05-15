@@ -1,4 +1,4 @@
-import React, { FunctionComponent } from 'react'
+import React, { FunctionComponent, useEffect, useRef } from 'react'
 import { observer } from 'mobx-react-lite'
 import { NavigationStore } from '../../store'
 import Classnames from 'classnames'
@@ -7,6 +7,7 @@ import BurgerButton, {
   themes as BurgerButtonThemes,
 } from '../BurgerButton/BurgerButton'
 import ProgressBar from '../ProgressBar/ProgressBar'
+import { TimelineMax, Power1 } from 'gsap'
 import './header.scss'
 
 export enum themes {
@@ -34,8 +35,21 @@ type Props = {
 const Header: FunctionComponent<Props> = ({ className, title, theme }) => {
   const { scrollProgression, isHeaderVisible } = NavigationStore
 
+  const ref = useRef<HTMLHeadElement>(null)
+  useEffect(() => {
+    if (ref.current && isHeaderVisible) {
+      const tl = new TimelineMax()
+
+      tl.to(ref.current, 1, {
+        transform: 'translateY(0)',
+        ease: Power1.easeInOut,
+      })
+    }
+  }, [isHeaderVisible])
+
   return (
     <header
+      ref={ref}
       className={Classnames(className, 'header', `theme-${theme}`, {
         visible: isHeaderVisible,
       })}

@@ -22,6 +22,7 @@ const App: FunctionComponent = () => {
     headerTitle,
     headerTheme,
     isMenuOpen,
+    setIsHeaderVisible,
   } = NavigationStore
 
   const windowHeight = useWindowSize().height
@@ -33,6 +34,10 @@ const App: FunctionComponent = () => {
           // init currentPagePath if is not set
           if (match && currentPagePath === null) {
             setCurrentPagePath(match.path)
+            // if is not home set header visible
+            if (match.path !== config.routes.Home.path) {
+              setIsHeaderVisible(true)
+            }
           }
           // If page match but is not current page in store : Queue page to nextPagePath
           if (match && currentPagePath !== match.path) {
