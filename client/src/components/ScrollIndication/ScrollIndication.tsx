@@ -9,19 +9,21 @@ export enum themes {
 }
 
 type Props = {
+  className?: string
   title?: string
   theme?: themes
   isVisible?: boolean
 }
 
 const ScrollIndication: FunctionComponent<Props> = ({
+  className,
   title = 'Scroll',
   theme = themes.Green,
   isVisible = true,
 }) => {
   return (
     <div
-      className={ClassNames('scroll-indication', `theme-${theme}`, {
+      className={ClassNames('scroll-indication', className, `theme-${theme}`, {
         visible: isVisible,
       })}
     >

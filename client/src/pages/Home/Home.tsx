@@ -1,105 +1,141 @@
-import React, { FunctionComponent, useEffect, useState, useRef } from 'react'
+import React, {
+  FunctionComponent,
+  Fragment,
+  useEffect,
+  useState,
+  useRef,
+} from 'react'
 import { pageProps } from '../types'
 import config from '../../config/config'
-import { throttle } from '../../utils'
 import Button, { themes as buttonThemes } from '../../components/Button/Button'
+import { useScrollSpeed } from '../../utils/hooks'
+import SplashscreenAnimation from '../../components/SplashscreenAnimation/SplashscreenAnimation'
+import { NavigationStore } from '../../store'
+import { TimelineMax, TweenMax, Power1, Power2 } from 'gsap'
 // styles
 import './home.scss'
 
 type Props = pageProps
 
-const minDelta = 0
-const maxDelta = 20
-
 const Home: FunctionComponent<Props> = ({ match }) => {
-  const [scrollSpeed, setScrollSpeed] = useState(0)
+  const scrollSpeed = useScrollSpeed()
+  const [isSplashscreenCompleted, setIsSplashscreenCompleted] = useState(false)
+  const [isTextReady, setIsTextReady] = useState(false)
   const ref = useRef<HTMLDivElement>(null)
 
+  const { setIsHeaderVisible } = NavigationStore
+
   useEffect(() => {
-    if (scrollSpeed !== null) {
+    if (isSplashscreenCompleted) {
+      setIsHeaderVisible(true)
+
+      if (ref.current) {
+        const tl = new TimelineMax({
+          onComplete: () => {
+            setIsTextReady(true)
+          },
+        })
+
+        tl.to(
+          ref.current.querySelector(
+            '#page-home__containers-blur > feGaussianBlur'
+          )!,
+          1.5,
+          {
+            attr: { stdDeviation: 0 },
+            ease: Power2.easeOut,
+          },
+          0
+        ).to(
+          ref.current.querySelectorAll("[class*='page-home__container']")!,
+          1,
+          {
+            opacity: 1,
+          },
+          0
+        )
+      }
+    }
+  }, [isSplashscreenCompleted])
+
+  useEffect(() => {
+    const minDelta = 0
+    const maxDelta = 20
+
+    if (scrollSpeed !== null && isTextReady && ref.current) {
+      const blur = ref.current.querySelector(
+        '#page-home__containers-blur > feGaussianBlur'
+      )!
       const clampedDelta = Math.max(minDelta, Math.min(scrollSpeed, maxDelta))
       const normalizedDelta = (clampedDelta - minDelta) / (maxDelta - minDelta)
       if (ref && ref.current) {
-        console.log(normalizedDelta)
-        ref.current.style.filter = `blur(${normalizedDelta * 0.12}rem)`
+        TweenMax.to(blur, 0.3, {
+          attr: { stdDeviation: normalizedDelta * 1.5 },
+        })
       }
     }
-  }, [scrollSpeed])
+  }, [scrollSpeed, isTextReady])
 
-  useEffect(() => {
-    let lastPos: number | null
-    let newPos: number | null
-    let timer: any
-    let delta: number = 0
-    const delayToClear: number = 200
-
-    const clear = () => {
-      lastPos = null
-      delta = 0
-      setScrollSpeed(0)
-    }
-
-    const getScrollSpeed = () => {
-      newPos = window.scrollY
-      if (lastPos != null) {
-        // && newPos < maxScroll
-        delta = newPos - lastPos
-      }
-      lastPos = newPos
-      clearTimeout(timer)
-      timer = setTimeout(clear, delayToClear)
-      return Math.abs(delta)
-    }
-
-    const handleScroll = () => {
-      setScrollSpeed(getScrollSpeed())
-    }
-
-    window.addEventListener('scroll', throttle(50, handleScroll))
-
-    console.log('mount')
-    return () => {
-      console.log('unmount')
-      window.removeEventListener('scroll', throttle(50, handleScroll))
-    }
-  }, [])
+  const handleSplashscreenComplete = () => {
+    setIsSplashscreenCompleted(true)
+  }
 
   return (
     <div className={'page-home'} ref={ref}>
-      <div className="page-home__container-1">
-        <p className="page-home__container-1__title">
-          UNE EXPERIENCE
-          <br />
-          INTERACTIVE
-        </p>
-        <p className="page-home__container-1__text">
-          L’envers du décors vous propose un parcours conçu sous forme de séries
-          de performances.
-        </p>
-        <p className="page-home__container-1__text">
-          Il s’agit de donner une place nouvelle aux talents émergents qui
-          investissent l’espace public, en proposant une déambulation visuelle
-          l’instant d’une nuit.
-        </p>
-      </div>
+      <SplashscreenAnimation onComplete={handleSplashscreenComplete} />
 
-      <div className="page-home__container-2">
-        <p className="page-home__container-2__title">COMMENT PARTICIPER ?</p>
-        <p className="page-home__container-2__text">
-          Pour prendre part à l’événement, vous serez amené à réaliser des
-          actions simples autour des installations
-        </p>
-        <p className="page-home__container-2__text">
-          Pour profiter pleinement de l’expérience,laissez-vous guider par notre
-          carte interactive.
-        </p>
-        <Button
-          className={'page-home__container-2__button'}
-          label={'Commencer'}
-          theme={buttonThemes.Green}
-          link={config.routes.Map.path}
-        />
-      </div>
+      <svg className={'page-home__containers-blur'}>
+        <filter
+          id="page-home__containers-blur"
+          x="-50%"
+          y="-50%"
+          width="200%"
+          height="200%"
+        >
+          <feGaussianBlur in="SourceGraphic" stdDeviation="20" />
+        </filter>
+      </svg>
+
+      {isSplashscreenCompleted && (
+        <Fragment>
+          <div className="page-home__container-1">
+            <p className="page-home__container-1__title">
+              UNE EXPERIENCE
+              <br />
+              INTERACTIVE
+            </p>
+            <p className="page-home__container-1__text">
+              L’envers du décors vous propose un parcours conçu sous forme de
+              séries de performances.
+            </p>
+            <p className="page-home__container-1__text">
+              Il s’agit de donner une place nouvelle aux talents émergents qui
+              investissent l’espace public, en proposant une déambulation
+              visuelle l’instant d’une nuit.
+            </p>
+          </div>
+
+          <div className="page-home__container-2">
+            <p className="page-home__container-2__title">
+              COMMENT PARTICIPER ?
+            </p>
+            <p className="page-home__container-2__text">
+              Pour prendre part à l’événement, vous serez amené à réaliser des
+              actions simples autour des installations
+            </p>
+            <p className="page-home__container-2__text">
+              Pour profiter pleinement de l’expérience,laissez-vous guider par
+              notre carte interactive.
+            </p>
+            <Button
+              className={'page-home__container-2__button'}
+              label={'Commencer'}
+              theme={buttonThemes.Green}
+              link={config.routes.Map.path}
+            />
+          </div>
+        </Fragment>
+      )}
     </div>
   )
 }

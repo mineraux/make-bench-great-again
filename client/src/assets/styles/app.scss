@@ -11,7 +11,7 @@
     z-index: 998;
   }
 
-  > *[class*='page'] {
+  > *[class*='page']:not([class*='home']) {
     padding-top: $header-height;
   }
 }
