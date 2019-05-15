@@ -11,6 +11,8 @@ import { NavigationStore } from '../../store'
 import SpriteAnimation from '../../components/SpriteAnimation/SpriteAnimation'
 import ScrollMagicStore from '../../store/ScrollMagicStore'
 import { animationId } from '../../components/SpriteAnimation/animations'
+import TwitterGallery from '../../components/TwitterGallery/TwitterGallery'
+import config from '../../config/config'
 
 type Props = pageProps & {}
 
@@ -141,6 +143,17 @@ const Installation: FunctionComponent<Props> = ({ match, history }) => {
               entendus
             </p>
           </div>
+        </div>
+        <div className="page-installation__part3">
+          <p className="page-installation__part3__title">ILS SE SONT ENGAGÉS</p>
+
+          <Button
+            className={'page-installation__part3__button'}
+            label={'Poursuivre le parcours'}
+            theme={buttonThemes.Green}
+            link={config.routes.Finish.path}
+          />
+          <TwitterGallery totalNumber={8} hashtags={['fake']} isFake={true} />
         </div>
       </div>
     </div>
