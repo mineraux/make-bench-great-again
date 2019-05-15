@@ -72,7 +72,6 @@ const ProtoMap: FunctionComponent = () => {
       })
 
       geolocate.current.on('geolocate', (e: EventData) => {
-        console.log('test')
         setUserLocation([e.coords.longitude, e.coords.latitude])
       })
 
@@ -85,10 +84,10 @@ const ProtoMap: FunctionComponent = () => {
       })
     })
 
-    test()
+    checkNavigatorPermission()
   }, [])
 
-  const test = async () => {
+  const checkNavigatorPermission = async () => {
     //@ts-ignore
     navigator.permissions.query({ name: 'geolocation' }).then(function(result) {
       if (result.state == 'granted') {
