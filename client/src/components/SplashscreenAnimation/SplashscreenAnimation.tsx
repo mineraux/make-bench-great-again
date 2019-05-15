@@ -11,6 +11,9 @@ import { observer } from 'mobx-react-lite'
 import { TimelineMax, Power1 } from 'gsap'
 import { useWindowSize } from '../../utils/hooks'
 import { ReactComponent as DateSvg } from './2019.svg'
+import ScrollIndication, {
+  themes as scrollIndicationThemes,
+} from '../ScrollIndication/ScrollIndication'
 
 type Props = {
   className?: string
@@ -59,6 +62,10 @@ const SplashscreenAnimation: FunctionComponent<Props> = ({
       const text3 = ref.current.querySelector(
         '.splashscreen-animation__text-container__text-3'
       )
+      const scrollIndication = ref.current.querySelector(
+        '.splashscreen-animation__scroll-indication'
+      )
+
       tl.add('part1')
         .to(
           [circleHalf1, circleHalf2],
@@ -132,6 +139,9 @@ const SplashscreenAnimation: FunctionComponent<Props> = ({
           },
           'part2+=2'
         )
+        .to(scrollIndication!, 1, {
+          opacity: 1,
+        })
         .add(() => {
           if (onComplete) {
             onComplete()
@@ -196,6 +206,12 @@ const SplashscreenAnimation: FunctionComponent<Props> = ({
           <span>E</span>
         </div>
       </div>
+
+      <ScrollIndication
+        className={'splashscreen-animation__scroll-indication'}
+        theme={scrollIndicationThemes.Blue}
+        isVisible={false}
+      />
     </div>
   )
 }
