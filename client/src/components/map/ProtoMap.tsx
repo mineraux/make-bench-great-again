@@ -36,7 +36,7 @@ const ProtoMap: FunctionComponent = () => {
   const [
     isGeolocationPermissionGranted,
     setIsGeolocationPermissionGranted,
-  ] = useState(true)
+  ] = useState(localStorage.getItem('geolocateGranted'))
 
   const getInstallationList = async () => {
     await fetchInstallationList({
@@ -73,6 +73,13 @@ const ProtoMap: FunctionComponent = () => {
 
       geolocate.current.on('geolocate', (e: EventData) => {
         setUserLocation([e.coords.longitude, e.coords.latitude])
+        localStorage.setItem('geolocateGranted', 'true')
+        setIsGeolocationPermissionGranted('true')
+      })
+
+      geolocate.current.on('error', (e: PositionError) => {
+        localStorage.setItem('geolocateGranted', 'false')
+        setIsGeolocationPermissionGranted('false')
       })
 
       directions.current.on('route', (e: EventData) => {
@@ -83,23 +90,7 @@ const ProtoMap: FunctionComponent = () => {
         setTravelDistance((e.route[0].distance / 1000).toFixed(2))
       })
     })
-
-    checkNavigatorPermission()
   }, [])
-
-  const checkNavigatorPermission = async () => {
-    //@ts-ignore
-    navigator.permissions.query({ name: 'geolocation' }).then(function(result) {
-      if (result.state == 'granted') {
-        setIsGeolocationPermissionGranted(true)
-        geolocate.current.trigger()
-      } else if (result.state == 'prompt') {
-        setIsGeolocationPermissionGranted(false)
-      } else if (result.state == 'denied') {
-        setIsGeolocationPermissionGranted(false)
-      }
-    })
-  }
 
   // useEffect(() => {
   //   /**
@@ -157,7 +148,8 @@ const ProtoMap: FunctionComponent = () => {
   return (
     <div id="map">
       <div className="mapboxgl-map__mask" />
-      {!isGeolocationPermissionGranted && (
+      {(!isGeolocationPermissionGranted ||
+        isGeolocationPermissionGranted === 'false') && (
         <Modal
           modalTitle="Votre parcours commence !"
           textContent="
