@@ -42,7 +42,7 @@ const ProtoMap: FunctionComponent = () => {
   const [
     isGeolocationPermissionGranted,
     setIsGeolocationPermissionGranted,
-  ] = useState(false)
+  ] = useState(localStorage.getItem('geolocateGranted'))
 
   useEffect(() => {
     const getInstallationList = () => {
@@ -132,6 +132,13 @@ const ProtoMap: FunctionComponent = () => {
 
       geolocate.current.on('geolocate', (e: EventData) => {
         setUserLocation([e.coords.longitude, e.coords.latitude])
+        localStorage.setItem('geolocateGranted', 'true')
+        setIsGeolocationPermissionGranted('true')
+      })
+
+      geolocate.current.on('error', (e: PositionError) => {
+        localStorage.setItem('geolocateGranted', 'false')
+        setIsGeolocationPermissionGranted('false')
       })
 
       directions.current.on('route', (e: EventData) => {
@@ -193,7 +200,8 @@ const ProtoMap: FunctionComponent = () => {
   return (
     <div id="map">
       <div className="mapboxgl-map__mask" />
-      {!isGeolocationPermissionGranted && (
+      {(!isGeolocationPermissionGranted ||
+        isGeolocationPermissionGranted === 'false') && (
         <Modal
           modalTitle="Votre parcours commence !"
           textContent="
