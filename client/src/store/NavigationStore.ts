@@ -22,7 +22,7 @@ class NavigationStore {
 
   @observable mapButtonTheme: mapButtonThemes = mapButtonThemes.Pink
 
-  @observable scrollProgression: scrollProgressionType = 0.5
+  @observable scrollProgression: scrollProgressionType = 0
 
   @observable isHeaderVisible: isHeaderVisibleType = false
 

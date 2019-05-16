@@ -1,12 +1,6 @@
 @import '../../assets/styles/global';
 
 .page-home {
-  transition: filter 0.3s linear;
-
-  &__containers-blur {
-    display: none;
-  }
-
   &__container-1 {
     height: 85vh;
     width: 100%;
@@ -27,7 +21,8 @@
   &__container-1,
   &__container-2 {
     opacity: 0;
-    filter: url(#page-home__containers-blur);
+    filter: blur(1.5rem);
+    will-change: filter;
     &__title {
       font-size: 2.1rem;
       font-family: $font-infini-regular;
