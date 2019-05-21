@@ -16,7 +16,8 @@ class MapManager {
 
   public setAllMarkers = (
     installationList: ApiInstallationReponseRoot,
-    map: mapboxgl.Map
+    map: mapboxgl.Map,
+    id?: 'string'
   ) => {
     const markers: Feature[] = []
 
@@ -24,38 +25,66 @@ class MapManager {
       return
     }
 
+    let feature: Feature
+
     installationList.map(installation => {
-      const feature: Feature = {
-        type: 'Feature',
-        properties: {
-          _id: installation._id,
-          name: installation.name,
-          description: installation.description,
-        },
-        geometry: {
-          type: 'Point',
-          coordinates: installation.geolocation as number[],
-        },
+      if (id && installation._id == id) {
+        feature = {
+          type: 'Feature',
+          properties: {
+            _id: installation._id,
+            name: installation.name,
+            description: installation.description,
+            focus: 'true',
+          },
+          geometry: {
+            type: 'Point',
+            coordinates: installation.geolocation as number[],
+          },
+        }
+      } else {
+        feature = {
+          type: 'Feature',
+          properties: {
+            _id: installation._id,
+            name: installation.name,
+            description: installation.description,
+            focus: 'false',
+          },
+          geometry: {
+            type: 'Point',
+            coordinates: installation.geolocation as number[],
+          },
+        }
       }
 
       markers.push(feature)
     })
+    map.addSource('markersSource', {
+      type: 'geojson',
+      data: {
+        type: 'FeatureCollection',
+        features: markers,
+      },
+    })
     map.addLayer({
       id: 'markers',
       type: 'circle',
-      source: {
-        type: 'geojson',
-        data: {
-          type: 'FeatureCollection',
-          features: markers,
-        },
-      },
+      source: 'markersSource',
       paint: {
         'circle-radius': {
           base: 20,
           stops: [[10, 10], [20, 20]],
         },
-        'circle-color': '#61f984',
+        'circle-color': [
+          'match',
+          ['get', 'focus'],
+          'true',
+          '#61f984',
+          '#1d1899',
+        ],
+        'circle-stroke-width': 3,
+        'circle-stroke-color': '#61f984',
       },
     })
 

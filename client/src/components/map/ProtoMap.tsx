@@ -18,9 +18,11 @@ import Modal from '../Modal/Modal'
 const ProtoMap: FunctionComponent = () => {
   const { installationList, fetchInstallationList } = InstallationStore
 
-  const map = useRef<MapboxGlMap | null>(null)
+  // const map = useRef<MapboxGlMap | null>(null)
   const directions = useRef(DirectionsManager.initMapboxDirections())
   const geolocate = useRef<GeolocateControl>(GeoLocationManager.initGeolocate())
+
+  const [map, setMap] = useState()
 
   const [isTourStarted, setIsTourStarted] = useState(false)
 
@@ -33,37 +35,99 @@ const ProtoMap: FunctionComponent = () => {
 
   const [targetInstallationID, setTargetInstallationID] = useState()
 
-  const getInstallationList = async () => {
-    await fetchInstallationList({
-      name: true,
-      description: true,
-      geolocation: true,
-    })
-  }
+  const [isMapLoaded, setIsMapLoaded] = useState(false)
+
+  const [mapStylesLoaded, setMapStylesLoaded] = useState(false)
+
+  const [
+    isGeolocationPermissionGranted,
+    setIsGeolocationPermissionGranted,
+  ] = useState(false)
 
   useEffect(() => {
+    const getInstallationList = () => {
+      fetchInstallationList({
+        name: true,
+        description: true,
+        geolocation: true,
+      })
+    }
+
+    getInstallationList()
+
     mapboxgl.accessToken = process.env.REACT_APP_MAPBOX_ACCESS_TOKEN as string
+    setMap(MapManager.initMapCanvas())
+  }, [])
 
-    map.current = MapManager.initMapCanvas()
-    map.current.addControl(geolocate.current)
-    map.current.addControl(directions.current)
+  useEffect(() => {
+    if (map) {
+      map.addControl(geolocate.current)
+      map.addControl(directions.current)
+      map.on('load', () => {
+        setIsMapLoaded(true)
 
-    map.current.on('load', () => {
-      getInstallationList()
+        map.on('styledata', () => {
+          if (map.isStyleLoaded()) {
+            setMapStylesLoaded(true)
+          }
+        })
+      })
+    }
 
-      map.current!.on('click', 'markers', e => {
+    return () => {
+      if (map) {
+        map.remove()
+      }
+    }
+  }, [map])
+
+  useEffect(() => {
+    if (
+      map &&
+      isMapLoaded &&
+      installationList.length > 0 &&
+      mapStylesLoaded &&
+      !markers
+    ) {
+      const onClickMarker = (e: any) => {
         if (e.features && featureInFeaturesCoords(e)) {
-          map.current!.flyTo({ center: featureInFeaturesCoords(e) })
+          map.flyTo({ center: featureInFeaturesCoords(e) })
           setSelectedMarker(e.features[0])
+
+          if (map.getLayer('markers')) {
+            map.removeLayer('markers')
+            map.removeSource('markersSource')
+          } else if (map.getLayer('markers-focus')) {
+            map.removeLayer('markers-focus')
+            map.removeSource('markers-focus-sources')
+          }
+
+          const markers = MapManager.setAllMarkers(
+            installationList,
+            map,
+            e.features[0].properties!._id
+          )
+          setMarkers(markers)
         }
+      }
+
+      const markers = MapManager.setAllMarkers(installationList, map)
+      setMarkers(markers)
+
+      map.on('click', 'markers', (e: any) => {
+        onClickMarker(e)
       })
 
-      map.current!.on('mouseenter', 'markers', () => {
-        map.current!.getCanvas().style.cursor = 'pointer'
+      map.on('click', 'markers-focus', (e: any) => {
+        onClickMarker(e)
       })
 
-      map.current!.on('mouseleave', 'markers', () => {
-        map.current!.getCanvas().style.cursor = ''
+      map.on('mouseenter', 'markers', () => {
+        map.getCanvas().style.cursor = 'pointer'
+      })
+
+      map.on('mouseleave', 'markers', () => {
+        map.getCanvas().style.cursor = ''
       })
 
       geolocate.current.on('geolocate', (e: EventData) => {
@@ -77,8 +141,8 @@ const ProtoMap: FunctionComponent = () => {
         // // Returned value is in meters => conversion to km
         setTravelDistance((e.route[0].distance / 1000).toFixed(2))
       })
-    })
-  }, [])
+    }
+  }, [map, isMapLoaded, installationList, markers, mapStylesLoaded])
 
   // useEffect(() => {
   //   /**
@@ -94,13 +158,6 @@ const ProtoMap: FunctionComponent = () => {
   //     )
   //   }
   // }, [isTourStarted, userLocation])
-
-  useEffect(() => {
-    if (map.current && !markers && map.current.isStyleLoaded()) {
-      const markers = MapManager.setAllMarkers(installationList, map.current)
-      setMarkers(markers)
-    }
-  }, [installationList])
 
   useEffect(() => {
     if (travelDistance === 0 || travelTime === 0) {
@@ -136,15 +193,17 @@ const ProtoMap: FunctionComponent = () => {
   return (
     <div id="map">
       <div className="mapboxgl-map__mask" />
-      <Modal
-        modalTitle="Votre parcours commence !"
-        textContent="
+      {!isGeolocationPermissionGranted && (
+        <Modal
+          modalTitle="Votre parcours commence !"
+          textContent="
         Nous vous proposons de vous diriger vers l’installation la plus proche pour réaliser la performance et débloquer le contenu associé.
         Pour cela nous aurons besoin de votre localisation. 
         "
-        buttonLabel="Démarrer"
-        onButtonClick={initGeoLocate}
-      />
+          buttonLabel="Démarrer"
+          onButtonClick={initGeoLocate}
+        />
+      )}
       {markers && (
         <InformationsPanel
           marker={selectedMarker}
