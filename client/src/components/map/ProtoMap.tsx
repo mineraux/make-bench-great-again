@@ -63,11 +63,12 @@ const ProtoMap: FunctionComponent = () => {
     if (map) {
       map.addControl(geolocate.current)
       map.addControl(directions.current)
+
       map.on('load', () => {
         setIsMapLoaded(true)
 
         map.on('styledata', () => {
-          if (map.isStyleLoaded()) {
+          if (map.style._loaded) {
             setMapStylesLoaded(true)
           }
         })
@@ -148,8 +149,19 @@ const ProtoMap: FunctionComponent = () => {
         // // Returned value is in meters => conversion to km
         setTravelDistance((e.route[0].distance / 1000).toFixed(2))
       })
+
+      if (isGeolocationPermissionGranted) {
+        initGeoLocate()
+      }
     }
-  }, [map, isMapLoaded, installationList, markers, mapStylesLoaded])
+  }, [
+    map,
+    isMapLoaded,
+    installationList,
+    markers,
+    mapStylesLoaded,
+    isGeolocationPermissionGranted,
+  ])
 
   // useEffect(() => {
   //   /**
@@ -165,7 +177,6 @@ const ProtoMap: FunctionComponent = () => {
   //     )
   //   }
   // }, [isTourStarted, userLocation])
-
   useEffect(() => {
     if (travelDistance === 0 || travelTime === 0) {
       console.log('User close to installation')
