@@ -6,6 +6,7 @@
   overflow: hidden;
   z-index: 2;
   pointer-events: none;
+  transition: height 0.7s ease;
 
   &__circle {
     $circleSize: 20rem;
@@ -18,11 +19,8 @@
     width: $circleSize;
     height: $circleSize;
     border-radius: 50%;
-    filter: url(#splashscreen-animation__circle-blur);
-
-    &-blur {
-      display: none;
-    }
+    filter: blur(0px);
+    will-change: filter;
 
     &__half-1,
     &__half-2 {
@@ -65,12 +63,8 @@
 
   &__text-container {
     height: 100%;
-    //filter: blur(1.2rem);
-    filter: url(#splashscreen-animation__text-container-blur);
-
-    &-blur {
-      display: none;
-    }
+    filter: blur(15px);
+    will-change: filter;
 
     &__text-1,
     &__text-2,

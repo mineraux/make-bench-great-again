@@ -30,6 +30,10 @@ const Home: FunctionComponent<Props> = ({ match }) => {
       setIsHeaderVisible(true)
 
       if (ref.current) {
+        const containers = ref.current.querySelectorAll(
+          '.page-home__container-1, .page-home__container-2'
+        )
+
         const tl = new TimelineMax({
           onComplete: () => {
             setIsTextReady(true)
@@ -37,17 +41,16 @@ const Home: FunctionComponent<Props> = ({ match }) => {
         })
 
         tl.to(
-          ref.current.querySelector(
-            '#page-home__containers-blur > feGaussianBlur'
-          )!,
+          containers,
           1.5,
           {
-            attr: { stdDeviation: 0 },
+            filter: 'blur(0rem)',
+            autoRound: false,
             ease: Power2.easeOut,
           },
           0
         ).to(
-          ref.current.querySelectorAll("[class*='page-home__container']")!,
+          containers!,
           1,
           {
             opacity: 1,
@@ -59,18 +62,17 @@ const Home: FunctionComponent<Props> = ({ match }) => {
   }, [isSplashscreenCompleted])
 
   useEffect(() => {
-    const minDelta = 0
-    const maxDelta = 20
-
     if (scrollSpeed !== null && isTextReady && ref.current) {
-      const blur = ref.current.querySelector(
-        '#page-home__containers-blur > feGaussianBlur'
-      )!
+      const containers = ref.current.querySelectorAll(
+        '.page-home__container-1, .page-home__container-2'
+      )
+      const minDelta = 0
+      const maxDelta = 20
       const clampedDelta = Math.max(minDelta, Math.min(scrollSpeed, maxDelta))
       const normalizedDelta = (clampedDelta - minDelta) / (maxDelta - minDelta)
       if (ref && ref.current) {
-        TweenMax.to(blur, 0.3, {
-          attr: { stdDeviation: normalizedDelta * 1.5 },
+        TweenMax.to(containers, 0.8, {
+          filter: `blur(${normalizedDelta * 0.15}rem)`,
         })
       }
     }
@@ -83,18 +85,6 @@ const Home: FunctionComponent<Props> = ({ match }) => {
   return (
     <div className={'page-home'} ref={ref}>
       <SplashscreenAnimation onComplete={handleSplashscreenComplete} />
-
-      <svg className={'page-home__containers-blur'}>
-        <filter
-          id="page-home__containers-blur"
-          x="-50%"
-          y="-50%"
-          width="200%"
-          height="200%"
-        >
-          <feGaussianBlur in="SourceGraphic" stdDeviation="20" />
-        </filter>
-      </svg>
 
       {isSplashscreenCompleted && (
         <Fragment>
