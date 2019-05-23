@@ -3,6 +3,7 @@ import MapTransition from '../pages/Map/Transition'
 import TwitterTransition from '../pages/Twitter/Transition'
 import AdminTransition from '../pages/Admin/Transition'
 import ComponentsTransition from '../pages/Components/Transition'
+import MenuTransition from '../pages/Menu/Transition'
 import InstallationTransition from '../pages/Installation/Transition'
 import FinishTransition from '../pages/Finish/Transition'
 
@@ -34,8 +35,14 @@ export default {
     },
     Components: {
       path: '/components',
-      name: 'Components',
+      name: 'Component',
       component: ComponentsTransition,
+      inNav: true,
+    },
+    Menu: {
+      path: '/menu',
+      name: 'Menu',
+      component: MenuTransition,
       inNav: true,
     },
     Installation: {

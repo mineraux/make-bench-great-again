@@ -1,0 +1,59 @@
+@import '../../assets/styles/global';
+
+.page-menu {
+  display: flex;
+  flex-direction: column;
+
+  &__top,
+  &__bottom {
+    width: 100%;
+  }
+
+  &__top {
+    display: flex;
+    flex: 1;
+    background-color: $color-green;
+    justify-content: center;
+    align-items: center;
+
+    &__round {
+      border-radius: 50%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      background-color: $color-blue;
+      width: 45vh;
+      height: 45vh;
+      max-height: 100%;
+
+      &__text {
+        font-family: $font-infini-regular;
+        font-size: 2rem;
+        color: $color-pink;
+        text-transform: uppercase;
+      }
+    }
+  }
+
+  &__bottom {
+    background-color: $color-blue;
+    position: relative;
+    &__text {
+      position: absolute;
+      transform: translateY(-50%);
+      top: 50%;
+      right: 15%;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+
+      span {
+        font-family: $font-infini-regular;
+        font-size: 2rem;
+        color: $color-pink;
+        text-transform: uppercase;
+        margin: 0.3rem 0;
+      }
+    }
+  }
+}

@@ -1,4 +1,4 @@
-import React, { FunctionComponent, useEffect, useRef } from 'react'
+import React, { FunctionComponent, useEffect, useState, useRef } from 'react'
 import Classnames from 'classnames'
 import { Link } from 'react-router-dom'
 import config from '../../config/config'
@@ -6,12 +6,13 @@ import { observer } from 'mobx-react-lite'
 import { NavigationStore } from '../../store'
 import { ReactComponent as MarkerIcon } from './marker.svg'
 import './mapButton.scss'
-import { TimelineMax } from 'gsap'
+import { TimelineMax, Sine } from 'gsap'
 
 export enum themes {
   Blue = 'blue',
   Pink = 'pink',
 }
+export const sizeInMenu = 500
 
 type Props = {
   className?: string
@@ -22,10 +23,12 @@ const MapButton: FunctionComponent<Props> = ({ className }) => {
     isMapButtonVisible,
     mapButtonTheme,
     setIsMapButtonVisible,
+    currentPagePath,
   } = NavigationStore
 
   const ref = useRef<HTMLLinkElement>(null)
 
+  // Hide / show animation
   useEffect(() => {
     const tl = new TimelineMax()
     if (ref.current) {
@@ -33,10 +36,29 @@ const MapButton: FunctionComponent<Props> = ({ className }) => {
         xPercent: isMapButtonVisible ? -50 : -100,
         yPercent: isMapButtonVisible ? 50 : 100,
         opacity: isMapButtonVisible ? 1 : 0,
-        ease: 'Sine.easeInOut',
+        ease: Sine.easeInOut,
       })
     }
   }, [isMapButtonVisible])
+
+  // Menu animation
+  useEffect(() => {
+    const tl = new TimelineMax()
+    if (ref.current) {
+      if (currentPagePath === config.routes.Menu.path) {
+        const currentSize = ref.current.clientWidth
+        tl.to(ref.current, 1, {
+          scale: sizeInMenu / currentSize,
+          ease: Sine.easeInOut,
+        })
+      } else {
+        tl.to(ref.current, 0.5, {
+          scale: 1,
+          ease: Sine.easeInOut,
+        })
+      }
+    }
+  }, [currentPagePath])
 
   const handleOnClick = () => {
     setIsMapButtonVisible(false)
