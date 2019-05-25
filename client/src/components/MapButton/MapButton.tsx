@@ -12,6 +12,7 @@ export enum themes {
   Blue = 'blue',
   Pink = 'pink',
 }
+
 export const sizeInMenu = 500
 
 type Props = {
@@ -55,10 +56,6 @@ const MapButton: FunctionComponent<Props> = ({ className }) => {
     }
   }, [isMapButtonMenu])
 
-  const handleOnClick = () => {
-    setIsMapButtonVisible(false)
-  }
-
   const animationMenuIn = () => {
     if (ref.current) {
       console.log('MapButton : animationMenuIn')
@@ -69,7 +66,7 @@ const MapButton: FunctionComponent<Props> = ({ className }) => {
       const scale = sizeInMenu / currentSize
       tl.to(
         icon!,
-        0.4,
+        0.5,
         {
           opacity: 0,
           ease: Power2.easeInOut,
@@ -162,6 +159,10 @@ const MapButton: FunctionComponent<Props> = ({ className }) => {
           ease: Power2.easeInOut,
         })
     }
+  }
+
+  const handleOnClick = () => {
+    setIsMapButtonVisible(false)
   }
 
   return (

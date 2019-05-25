@@ -1,6 +1,6 @@
 import React, { FunctionComponent, ReactNode } from 'react'
 import { Transition } from 'react-transition-group'
-import { TimelineMax, TweenMax, Sine, Power1, Power2 } from 'gsap'
+import { TimelineMax, TweenMax, Sine, Power1, Power2, Power3 } from 'gsap'
 import { NavigationStore } from '../../store'
 import { observer } from 'mobx-react-lite'
 import { pageTransitionProps } from '../types'
@@ -41,21 +41,22 @@ const TransitionComponent: FunctionComponent<Props> = ({ show }) => {
       '.map-button__menu-text span'
     )
 
-    tl.fromTo(
-      top!,
-      0.8,
-      {
-        scaleY: 0,
-      },
-      {
-        scaleY: 1,
-        ease: Power2.easeInOut,
-      }
-    )
+    tl.add(() => {
+      setIsMapButtonMenu(true)
+    }, 0)
+      .fromTo(
+        top!,
+        0.8,
+        {
+          scaleY: 0,
+        },
+        {
+          scaleY: 1,
+          ease: Power2.easeInOut,
+        },
+        '+=0'
+      )
       .add('topEnd')
-      .add(() => {
-        setIsMapButtonMenu(true)
-      }, 'topEnd-=0.3')
       .fromTo(
         topRound!,
         0.8,
@@ -64,16 +65,22 @@ const TransitionComponent: FunctionComponent<Props> = ({ show }) => {
         },
         {
           scale: 1,
+          autoRound: false,
           ease: Power2.easeInOut,
         },
-        'topEnd-=0.2'
+        'topEnd-=0.25'
       )
-      .add('letters', '+=0.2')
+
+    // letters
+
+    const staggerTotalTime = 0.4
+
+    tl.add('letters', '-=0.2')
       .staggerFromTo(
         topRoundTextLetters,
         0.8,
         {
-          filter: 'blur(1rem)',
+          filter: 'blur(15px)',
           opacity: 0,
         },
         {
@@ -82,14 +89,14 @@ const TransitionComponent: FunctionComponent<Props> = ({ show }) => {
           filter: 'blur(0)',
           ease: Power2.easeOut,
         },
-        0.04,
+        staggerTotalTime / 13,
         'letters'
       )
       .staggerFromTo(
         bottomTextLetters,
         0.8,
         {
-          filter: 'blur(1rem)',
+          filter: 'blur(15px)',
           opacity: 0,
         },
         {
@@ -98,7 +105,7 @@ const TransitionComponent: FunctionComponent<Props> = ({ show }) => {
           filter: 'blur(0)',
           ease: Power2.easeOut,
         },
-        0.04,
+        staggerTotalTime / 5,
         'letters'
       )
       .set(
@@ -112,7 +119,7 @@ const TransitionComponent: FunctionComponent<Props> = ({ show }) => {
         mapButtonTextLetters,
         0.8,
         {
-          filter: 'blur(1rem)',
+          filter: 'blur(15px)',
           opacity: 0,
         },
         {
@@ -121,7 +128,7 @@ const TransitionComponent: FunctionComponent<Props> = ({ show }) => {
           filter: 'blur(0)',
           ease: Power2.easeOut,
         },
-        0.04,
+        staggerTotalTime / 3,
         'letters'
       )
   }
@@ -132,12 +139,33 @@ const TransitionComponent: FunctionComponent<Props> = ({ show }) => {
       onComplete: done,
     })
 
-    tl.to(node, 1, {
-      opacity: 0,
-      ease: Sine.easeInOut,
-    }).add(() => {
+    tl.add(() => {
       setIsMapButtonMenu(false)
     }, 0)
+      .fromTo(
+        node,
+        0.8,
+        {
+          filter: 'blur(0)',
+        },
+        {
+          filter: 'blur(15px)',
+          autoRound: false,
+          ease: Power2.easeInOut,
+        }
+      )
+      .fromTo(
+        node,
+        0.8,
+        {
+          opacity: 1,
+        },
+        {
+          opacity: 0,
+          ease: Power2.easeInOut,
+        },
+        0.2
+      )
   }
 
   // Exit : end
