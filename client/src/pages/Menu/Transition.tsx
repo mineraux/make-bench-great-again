@@ -136,7 +136,6 @@ const TransitionComponent: FunctionComponent<Props> = ({ show }) => {
       opacity: 0,
       ease: Sine.easeInOut,
     }).add(() => {
-      console.log('exit')
       setIsMapButtonMenu(false)
     }, 0)
   }

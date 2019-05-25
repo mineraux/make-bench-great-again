@@ -25,6 +25,7 @@ const MapButton: FunctionComponent<Props> = ({ className }) => {
     mapButtonTheme,
     setIsMapButtonVisible,
     currentPagePath,
+    nextPagePath,
   } = NavigationStore
 
   const ref = useRef<HTMLLinkElement>(null)
@@ -32,9 +33,8 @@ const MapButton: FunctionComponent<Props> = ({ className }) => {
   // Hide / show animation
   useEffect(() => {
     const tl = new TimelineMax()
-    // console.log(currentPagePath, isMapButtonVisible);
+    console.log('show', isMapButtonVisible, currentPagePath)
     if (ref.current) {
-      console.log('show', isMapButtonMenu, isMapButtonVisible)
       tl.to(ref.current, 0.7, {
         xPercent: isMapButtonVisible ? -50 : -100,
         yPercent: isMapButtonVisible ? 50 : 100,
@@ -46,82 +46,122 @@ const MapButton: FunctionComponent<Props> = ({ className }) => {
 
   // Menu animation
   useEffect(() => {
-    const tl = new TimelineMax()
     if (ref.current) {
-      const icon = ref.current.querySelector('.map-button__icon')
-      const text = ref.current.querySelector('.map-button__menu-text')
       if (isMapButtonMenu) {
-        // IN
-        console.log('map in')
-        const currentSize = ref.current.clientWidth
-        const scale = sizeInMenu / currentSize
-        tl.to(
-          icon!,
-          0.4,
-          {
-            opacity: 0,
-            ease: Power2.easeInOut,
-          },
-          0
-        )
-          .add('iconEnd')
-          .to(
-            ref.current,
-            0.7,
-            {
-              xPercent: -50,
-              yPercent: 50,
-            },
-            'iconEnd'
-          )
-          .to(
-            ref.current,
-            1,
-            {
-              opacity: 1,
-            },
-            'iconEnd'
-          )
-          .add('scale', 'iconEnd')
-          .to(
-            ref.current,
-            0.7,
-            {
-              scale,
-              ease: Power2.easeInOut,
-            },
-            'scale'
-          )
-          .to(
-            text!,
-            0.7,
-            {
-              scale: 1 / scale,
-              ease: Power2.easeInOut,
-            },
-            'scale'
-          )
+        animationMenuIn()
       } else {
-        console.log('map out')
-        // OUT
-        tl.to(text!, 0.4, {
-          opacity: 0,
-          ease: Power2.easeInOut,
-        })
-          .to([ref.current, text], 0.7, {
-            scale: 1,
-            ease: Power2.easeInOut,
-          })
-          .to(icon!, 0.7, {
-            opacity: 1,
-            ease: Power2.easeInOut,
-          })
+        animationMenuOut()
       }
     }
   }, [isMapButtonMenu])
 
   const handleOnClick = () => {
     setIsMapButtonVisible(false)
+  }
+
+  const animationMenuIn = () => {
+    if (ref.current) {
+      console.log('MapButton : animationMenuIn')
+      const tl = new TimelineMax()
+      const icon = ref.current.querySelector('.map-button__icon')
+      const text = ref.current.querySelector('.map-button__menu-text')
+      const currentSize = ref.current.clientWidth
+      const scale = sizeInMenu / currentSize
+      tl.to(
+        icon!,
+        0.4,
+        {
+          opacity: 0,
+          ease: Power2.easeInOut,
+          overwrite: true,
+        },
+        0
+      )
+        .add('iconEnd')
+        .to(
+          ref.current,
+          0.8,
+          {
+            xPercent: -50,
+            yPercent: 50,
+          },
+          'iconEnd'
+        )
+        .to(
+          ref.current,
+          1,
+          {
+            opacity: 1,
+          },
+          'iconEnd'
+        )
+        .add('scale', 'iconEnd')
+        .to(
+          ref.current,
+          0.8,
+          {
+            scale,
+            ease: Power2.easeInOut,
+          },
+          'scale'
+        )
+        .to(
+          text!,
+          0.8,
+          {
+            scale: 1 / scale,
+            ease: Power2.easeInOut,
+          },
+          'scale'
+        )
+    }
+  }
+
+  const animationMenuOut = () => {
+    if (ref.current) {
+      console.log('MapButton: animationMenuOut', nextPagePath)
+      const tl = new TimelineMax()
+      const icon = ref.current.querySelector('.map-button__icon')
+      const text = ref.current.querySelector('.map-button__menu-text')
+
+      const routesArrray = Object.keys(config.routes).map(
+        key => config.routes[key]
+      )
+      const nextRoute = routesArrray.find(route => route.path === nextPagePath)
+      const isMapButtonOnNextPage = nextRoute!.isMapButtonVisible
+
+      console.log('MapButton : isMapButtonOnNextPage', isMapButtonOnNextPage)
+
+      tl.to(text!, 0.4, {
+        opacity: 0,
+        ease: Power2.easeInOut,
+      })
+        .add('textEnd')
+        .to(
+          ref.current,
+          0.7,
+          {
+            xPercent: isMapButtonOnNextPage ? -50 : -100,
+            yPercent: isMapButtonOnNextPage ? 50 : 100,
+            opacity: isMapButtonOnNextPage ? 1 : 0,
+            ease: Power2.easeInOut,
+          },
+          'textEnd'
+        )
+        .to(
+          [ref.current, text],
+          0.7,
+          {
+            scale: 1,
+            ease: Power2.easeInOut,
+          },
+          'textEnd'
+        )
+        .to(icon!, 0.7, {
+          opacity: 1,
+          ease: Power2.easeInOut,
+        })
+    }
   }
 
   return (
@@ -140,9 +180,8 @@ const MapButton: FunctionComponent<Props> = ({ className }) => {
       <MarkerIcon className={Classnames('map-button__icon')} />
       <p className="map-button__menu-text">
         <span>M</span>
-        <span>E</span>
-        <span>N</span>
-        <span>U</span>
+        <span>A</span>
+        <span>P</span>
       </p>
     </Link>
   )

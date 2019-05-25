@@ -19,7 +19,7 @@ const Menu: FunctionComponent<Props> = () => {
   const { setIsMapButtonVisible } = NavigationStore
 
   useEffect(() => {
-    // setIsMapButtonVisible(false)
+    // setIsMapButtonVisible(true)
   }, [])
 
   return (
