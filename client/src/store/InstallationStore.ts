@@ -83,7 +83,6 @@ class InstallationStore {
     installationID: ApiInstallation['_id']
   ) => {
     this.unlockedInstallations.push(installationID)
-    console.log(this.unlockedInstallations)
   }
 
   @action public removeUnlockedInstallation = (
@@ -94,8 +93,6 @@ class InstallationStore {
     if (index > -1) {
       this.unlockedInstallations.splice(index, 1)
     }
-
-    console.log(this.unlockedInstallations)
   }
 
   mergeById = (data: ApiInstallationReponseRoot) => {
