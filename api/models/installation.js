@@ -2,6 +2,10 @@ const mongoose = require('mongoose')
 const Schema = mongoose.Schema
 
 const installationSchema = new Schema({   
+  slug: {
+    type: String,
+    required: true
+  },
   name: {
     type: String,
     required: true

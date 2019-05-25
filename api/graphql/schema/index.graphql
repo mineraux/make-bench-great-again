@@ -3,6 +3,7 @@ const { buildSchema } = require('graphql')
 module.exports = buildSchema(`
   type Installation {
     _id: ID!
+    slug: String!
     name: String!
     description: String!
     lockedDescription: String!
@@ -19,6 +20,7 @@ module.exports = buildSchema(`
   }
   
   input InstallationInput {
+    slug: String!
     name: String!
     description: String!
     lockedDescription: String!
@@ -30,6 +32,7 @@ module.exports = buildSchema(`
 
   input UpdateInstallationInput {
     _id: ID!
+    slug: String
     name: String
     description: String
     lockedDescription: String
