@@ -39,7 +39,7 @@ export default {
       inNav: true,
     },
     Installation: {
-      path: '/installation/:installationId',
+      path: '/installation/:installationSlug',
       name: 'Installation',
       component: InstallationTransition,
       inNav: false,

@@ -12,6 +12,7 @@ export type Coords = [number, number]
 
 export interface ApiInstallation {
   _id: string
+  slug?: string
   name?: string
   description?: string
   lockedDescription?: string
@@ -24,6 +25,7 @@ export interface ApiInstallation {
 }
 
 export interface queryApiInstallation {
+  slug?: boolean
   name?: boolean
   description?: boolean
   lockedDescription?: boolean
@@ -34,6 +36,7 @@ export interface queryApiInstallation {
 }
 
 export interface createApiInstallation {
+  slug: string
   name: string
   description: string
   lockedDescription: string

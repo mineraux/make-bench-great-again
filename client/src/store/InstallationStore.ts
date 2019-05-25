@@ -18,6 +18,7 @@ class InstallationStore {
       this.installationList = [
         {
           _id: '1',
+          slug: 'exedros',
           name: 'L’Exedros',
           description:
             'Vestige du 19e siècle, cette sculpture aux courbes parfaites...',
@@ -27,6 +28,7 @@ class InstallationStore {
         },
         {
           _id: '2',
+          slug: 'glissant',
           name: 'Super banc',
           description:
             'Vestige du 19e siècle, cette sculpture aux courbes parfaites...',
@@ -36,6 +38,7 @@ class InstallationStore {
         },
         {
           _id: '3',
+          slug: 'piquant',
           name: 'Ça pique',
           description:
             'Vestige du 19e siècle, cette sculpture aux courbes parfaites...',

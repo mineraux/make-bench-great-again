@@ -99,7 +99,7 @@ const InformationsPanel: FunctionComponent<Props> = ({
         <Button
           theme={themes.Blue}
           label="En savoir plus"
-          link={`/installation/${marker.properties._id}`}
+          link={`/installation/${marker.properties.slug}`}
           className="informations-panel__informations--installation__installation-see-more"
         />
       )}
