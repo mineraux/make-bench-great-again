@@ -14,6 +14,7 @@ export enum themes {
 }
 
 export const sizeInMenu = 500
+export const sizeNormal = 130
 
 type Props = {
   className?: string
@@ -62,8 +63,6 @@ const MapButton: FunctionComponent<Props> = ({ className }) => {
       const tl = new TimelineMax()
       const icon = ref.current.querySelector('.map-button__icon')
       const text = ref.current.querySelector('.map-button__menu-text')
-      const currentSize = ref.current.clientWidth
-      const scale = sizeInMenu / currentSize
       tl.to(
         icon!,
         0.5,
@@ -97,7 +96,7 @@ const MapButton: FunctionComponent<Props> = ({ className }) => {
           ref.current,
           0.8,
           {
-            scale,
+            scale: 1,
             ease: Power2.easeInOut,
           },
           'scale'
@@ -106,7 +105,7 @@ const MapButton: FunctionComponent<Props> = ({ className }) => {
           text!,
           0.8,
           {
-            scale: 1 / scale,
+            scale: 1,
             ease: Power2.easeInOut,
           },
           'scale'
@@ -120,6 +119,8 @@ const MapButton: FunctionComponent<Props> = ({ className }) => {
       const tl = new TimelineMax()
       const icon = ref.current.querySelector('.map-button__icon')
       const text = ref.current.querySelector('.map-button__menu-text')
+
+      const scale = sizeNormal / sizeInMenu
 
       const routesArrray = Object.keys(config.routes).map(
         key => config.routes[key]
@@ -149,7 +150,7 @@ const MapButton: FunctionComponent<Props> = ({ className }) => {
           [ref.current, text],
           0.7,
           {
-            scale: 1,
+            scale,
             ease: Power2.easeInOut,
           },
           'textEnd'
@@ -177,8 +178,17 @@ const MapButton: FunctionComponent<Props> = ({ className }) => {
         { visible: isMapButtonVisible }
       )}
       onClick={handleOnClick}
+      style={{
+        width: `${sizeInMenu / 10}rem`,
+        height: `${sizeInMenu / 10}rem`,
+      }}
     >
-      <MarkerIcon className={Classnames('map-button__icon')} />
+      <MarkerIcon
+        className={Classnames('map-button__icon')}
+        style={{
+          height: `${(sizeInMenu / sizeNormal) * 2.6}rem`,
+        }}
+      />
       <p className="map-button__menu-text">
         <span>M</span>
         <span>A</span>

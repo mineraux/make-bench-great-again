@@ -14,7 +14,7 @@ type Props = pageProps
 const Menu: FunctionComponent<Props> = () => {
   const {} = NavigationStore
 
-  const windowHeight = useWindowSize().height
+  const windowSize = useWindowSize()
 
   const { setIsMapButtonVisible } = NavigationStore
 
@@ -22,8 +22,13 @@ const Menu: FunctionComponent<Props> = () => {
     // setIsMapButtonVisible(true)
   }, [])
 
+  useEffect(() => {
+    // setIsMapButtonVisible(true)
+    console.log('cc', windowSize)
+  })
+
   return (
-    <div className={'page-menu'} style={{ height: windowHeight }}>
+    <div className={'page-menu'} style={{ height: windowSize.height }}>
       <div className="page-menu__top">
         <div className="page-menu__top__round">
           <p className="page-menu__top__round__text">

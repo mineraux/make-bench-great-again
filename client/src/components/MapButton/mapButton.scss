@@ -5,9 +5,8 @@
   position: fixed;
   left: 0;
   bottom: 0;
-  height: 13rem;
-  width: 13rem;
   z-index: 998;
+  transform: scale(0);
   border-radius: 50%;
   opacity: 0;
   cursor: pointer;
@@ -33,7 +32,6 @@
 
   &__icon {
     opacity: 0;
-    height: 2.6rem;
     position: absolute;
     top: 30%;
     left: 70%;
