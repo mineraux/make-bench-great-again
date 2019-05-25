@@ -46,6 +46,7 @@ const ProtoMap: FunctionComponent = () => {
   useEffect(() => {
     const getInstallationList = () => {
       fetchInstallationList({
+        slug: true,
         name: true,
         description: true,
         geolocation: true,
@@ -178,7 +179,8 @@ const ProtoMap: FunctionComponent = () => {
   // }, [isTourStarted, userLocation])
   useEffect(() => {
     if (travelDistance === 0 || travelTime === 0) {
-      console.log('User close to installation')
+      console.log(`User close to installation (ID : ${targetInstallationID})`)
+      InstallationStore.addUnlockedInstallation(targetInstallationID)
     }
   }, [travelDistance])
 

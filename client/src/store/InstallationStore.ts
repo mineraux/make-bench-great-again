@@ -10,6 +10,7 @@ import ApiClient from '../ApiClient/ApiClient'
 class InstallationStore {
   @observable installationList: ApiInstallationReponseRoot = []
   @observable installationListTemp: ApiInstallationReponseRoot = []
+  @observable unlockedInstallations: string[] = []
 
   @action public fetchInstallationList = async (
     fieldToFetch: QueryApiInstallationReponse
@@ -76,6 +77,25 @@ class InstallationStore {
 
     this.installationList = this.mergeById([data])
     return data
+  }
+
+  @action public addUnlockedInstallation = (
+    installationID: ApiInstallation['_id']
+  ) => {
+    this.unlockedInstallations.push(installationID)
+    console.log(this.unlockedInstallations)
+  }
+
+  @action public removeUnlockedInstallation = (
+    installationID: ApiInstallation['_id']
+  ) => {
+    const index = this.unlockedInstallations.indexOf(installationID, 0)
+
+    if (index > -1) {
+      this.unlockedInstallations.splice(index, 1)
+    }
+
+    console.log(this.unlockedInstallations)
   }
 
   mergeById = (data: ApiInstallationReponseRoot) => {
