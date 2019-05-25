@@ -19,14 +19,28 @@ const Menu: FunctionComponent<Props> = () => {
   const { setIsMapButtonVisible } = NavigationStore
 
   useEffect(() => {
-    setIsMapButtonVisible(true)
+    // setIsMapButtonVisible(false)
   }, [])
 
   return (
     <div className={'page-menu'} style={{ height: windowHeight }}>
       <div className="page-menu__top">
         <div className="page-menu__top__round">
-          <p className="page-menu__top__round__text">Programmation</p>
+          <p className="page-menu__top__round__text">
+            <span>P</span>
+            <span>R</span>
+            <span>O</span>
+            <span>G</span>
+            <span>R</span>
+            <span>A</span>
+            <span>M</span>
+            <span>M</span>
+            <span>A</span>
+            <span>T</span>
+            <span>I</span>
+            <span>O</span>
+            <span>N</span>
+          </p>
         </div>
       </div>
       <div

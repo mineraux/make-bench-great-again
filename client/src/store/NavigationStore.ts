@@ -7,6 +7,7 @@ type currentPagePathType = string | null
 type nextPagePathType = string | null
 type isMenuOpenType = boolean
 type isMapButtonVisibleType = boolean
+type isMapButtonMenuType = boolean
 type scrollProgressionType = number
 type isHeaderVisibleType = boolean
 type headerTitleType = string
@@ -19,6 +20,8 @@ class NavigationStore {
   @observable isMenuOpen: isMenuOpenType = false
 
   @observable isMapButtonVisible: isMapButtonVisibleType = false
+
+  @observable isMapButtonMenu: isMapButtonMenuType = false
 
   @observable mapButtonTheme: mapButtonThemes = mapButtonThemes.Pink
 
@@ -44,6 +47,10 @@ class NavigationStore {
 
   @action setIsMapButtonVisible = (value: isMapButtonVisibleType): void => {
     this.isMapButtonVisible = value
+  }
+
+  @action setIsMapButtonMenu = (value: isMapButtonMenuType): void => {
+    this.isMapButtonMenu = value
   }
 
   @action setMapButttonThemes = (value: mapButtonThemes): void => {
