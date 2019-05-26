@@ -1,0 +1,85 @@
+@import '../../assets/styles/global';
+
+.page-about {
+  display: flex;
+  flex-direction: column;
+
+  &__top,
+  &__bottom {
+    width: 100%;
+    height: 50%;
+  }
+
+  &__top {
+    position: relative;
+    background-color: $color-pink;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    &__round {
+      top: 50%;
+      left: 50%;
+      transform: translateX(-50%) translateY(-50%);
+      position: absolute;
+      background-color: $color-green;
+      filter: blur(25px);
+      width: 20rem;
+      height: 20rem;
+      border-radius: 50%;
+    }
+
+    &__texts {
+      position: relative;
+      &__text-1,
+      &__text-2 {
+        width: 29rem;
+        font-family: $font-infini-regular;
+        font-size: 1.5rem;
+        line-height: 1.8rem;
+        color: $color-blue;
+        text-align: center;
+      }
+      &__text-1 {
+        margin-bottom: 1.5rem;
+      }
+    }
+  }
+
+  &__bottom {
+    background-color: $color-blue;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+
+    &__texts {
+      margin-bottom: 2.5rem;
+
+      &__text-1,
+      &__text-2 {
+        width: 29rem;
+        font-family: $font-infini-regular;
+        font-size: 1.5rem;
+        line-height: 1.8rem;
+        text-align: center;
+        color: $color-pink;
+      }
+      &__text-1 {
+        margin-bottom: 1.5rem;
+      }
+    }
+
+    &__logos {
+      display: flex;
+      align-items: center;
+      > svg {
+        height: 4.2rem;
+        margin: 0 2rem;
+        path {
+          fill: $color-pink;
+        }
+      }
+    }
+  }
+}
