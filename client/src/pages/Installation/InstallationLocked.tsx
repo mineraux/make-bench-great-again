@@ -5,8 +5,6 @@ import { ApiInstallation } from '../../@types'
 import './installation.scss'
 import { observer } from 'mobx-react-lite'
 import { NavigationStore } from '../../store'
-import SpriteAnimation from '../../components/SpriteAnimation/SpriteAnimation'
-import { animationId } from '../../components/SpriteAnimation/animations'
 
 type Props = pageProps & {}
 
@@ -29,41 +27,27 @@ const InstallationLocked: FunctionComponent<Props> = ({ match, history }) => {
   }, [])
 
   const getInstallationInformation = async () => {
-    await InstallationStore.fetchSingleInstallation(
-      match.params.installationId,
-      {
-        name: true,
-        description: true,
-        lockedDescription: true,
-      }
-    ).then(res => {
+    'match.params.installationId'
+    await InstallationStore.fetchSingleInstallation('1', {
+      name: true,
+      description: true,
+      lockedDescription: true,
+    }).then(res => {
       setInstallation(res)
+      console.log(installation)
     })
   }
 
   return (
-    <div className="page-installation">
-      {/* <div className="page-installation__wrapper">
-        <div className="page-installation__part1">
-          <div className="page-installation__presentation">
-            <p className="page-installation__presentation__title">
-              {installation.name}
-            </p>
-            <SpriteAnimation
-              className={'page-installation__presentation__installation-sketch'}
-              progression={0}
-              animationID={animationId.bancMetro}
-            />
-            <div className="page-installation__presentation__text-content-wrapper">
-              <div className="page-installation__presentation__text-content-wrapper__mask" />
-              <p className="page-installation__presentation__text-content">
-                {installation.description}
-              </p>
-            </div>
-          </div>
-        </div>
-      </div> */}
-      <p>Content locked</p>
+    <div className="page-installation--locked">
+      <div className="page-installation--locked__presentation">
+        <p className="page-installation--locked__presentation__title">
+          {installation.name}
+        </p>
+        <p className="page-installation--locked__presentation__text-content">
+          {installation.description}
+        </p>
+      </div>
     </div>
   )
 }
