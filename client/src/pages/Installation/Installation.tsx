@@ -15,10 +15,6 @@ const Installation: FunctionComponent<Props> = ({ match, history }) => {
   const [installationSlug, setInstallationSlug] = useState()
 
   useEffect(() => {
-    InstallationStore.unlockedInstallations.forEach(element => {
-      console.log(element)
-    })
-
     setInstallationSlug(match.params.installationSlug)
   }, [])
 
