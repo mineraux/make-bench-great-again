@@ -38,6 +38,8 @@ const ProtoMap: FunctionComponent = () => {
 
   const [mapStylesLoaded, setMapStylesLoaded] = useState(false)
 
+  const [targetInstallationSlug, setTargetInstallationSlug] = useState()
+
   const [
     isGeolocationPermissionGranted,
     setIsGeolocationPermissionGranted,
@@ -206,6 +208,7 @@ const ProtoMap: FunctionComponent = () => {
       userLocation
     )
     setTargetInstallationID(selectedMarker.properties._id)
+    setTargetInstallationID(selectedMarker.properties.slug)
     setIsTourStarted(true)
   }
 

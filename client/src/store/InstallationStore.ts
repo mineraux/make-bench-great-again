@@ -80,19 +80,34 @@ class InstallationStore {
   }
 
   @action public addUnlockedInstallation = (
-    installationID: ApiInstallation['_id']
+    installationSlug: ApiInstallation['slug']
   ) => {
-    this.unlockedInstallations.push(installationID)
+    this.unlockedInstallations.push(installationSlug!)
   }
 
   @action public removeUnlockedInstallation = (
-    installationID: ApiInstallation['_id']
+    installationSlug: ApiInstallation['slug']
   ) => {
-    const index = this.unlockedInstallations.indexOf(installationID, 0)
+    const index = this.unlockedInstallations.indexOf(installationSlug!, 0)
 
     if (index > -1) {
       this.unlockedInstallations.splice(index, 1)
     }
+  }
+
+  @action public isInstallationUnlocked = (
+    installationSlug: ApiInstallation['slug']
+  ): boolean => {
+    let isUnlocked = false
+    this.unlockedInstallations.forEach(slug => {
+      if (slug === installationSlug) {
+        isUnlocked = true
+      } else {
+        isUnlocked = false
+      }
+    })
+
+    return isUnlocked
   }
 
   mergeById = (data: ApiInstallationReponseRoot) => {
