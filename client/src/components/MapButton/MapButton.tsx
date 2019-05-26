@@ -21,6 +21,8 @@ type Props = {
 }
 
 const MapButton: FunctionComponent<Props> = ({ className }) => {
+  const ref = useRef<HTMLLinkElement>(null)
+
   const {
     isMapButtonVisible,
     isMapButtonMenu,
@@ -29,8 +31,6 @@ const MapButton: FunctionComponent<Props> = ({ className }) => {
     currentPagePath,
     nextPagePath,
   } = NavigationStore
-
-  const ref = useRef<HTMLLinkElement>(null)
 
   // Hide / show animation
   useEffect(() => {

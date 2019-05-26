@@ -1,4 +1,10 @@
-import React, { Fragment, FunctionComponent, useState, useEffect } from 'react'
+import React, {
+  Fragment,
+  FunctionComponent,
+  useState,
+  useEffect,
+  useRef,
+} from 'react'
 import { pageProps } from '../types'
 import config from '../../config/config'
 import { useWindowSize } from '../../utils/hooks'
@@ -12,25 +18,27 @@ import { NavigationStore } from '../../store'
 type Props = pageProps
 
 const Menu: FunctionComponent<Props> = () => {
-  const {} = NavigationStore
+  const refTop = useRef<HTMLDivElement>(null)
+  const refTopRound = useRef<HTMLDivElement>(null)
 
   const windowSize = useWindowSize()
 
   const { setIsMapButtonVisible } = NavigationStore
 
   useEffect(() => {
-    // setIsMapButtonVisible(true)
+    if (refTop.current && refTopRound.current) {
+      // max size = 90% parent height
+      refTopRound.current.style.maxWidth = `${refTop.current.clientHeight *
+        0.9}px`
+      refTopRound.current.style.maxHeight = `${refTop.current.clientHeight *
+        0.9}px`
+    }
   }, [])
-
-  useEffect(() => {
-    // setIsMapButtonVisible(true)
-    console.log('cc', windowSize)
-  })
 
   return (
     <div className={'page-menu'} style={{ height: windowSize.height }}>
-      <div className="page-menu__top">
-        <div className="page-menu__top__round">
+      <div className="page-menu__top" ref={refTop}>
+        <div className="page-menu__top__round" ref={refTopRound}>
           <p className="page-menu__top__round__text">
             <span>P</span>
             <span>R</span>
