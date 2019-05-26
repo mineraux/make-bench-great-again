@@ -31,6 +31,9 @@ class Admin extends Component<Props, stateAdmin> {
       e.preventDefault()
 
       if (this.createInstallationForm) {
+        const slug: string = (this.createInstallationForm.querySelector(
+          '[name="slug"]'
+        ) as HTMLInputElement).value
         const name: string = (this.createInstallationForm.querySelector(
           '[name="name"]'
         ) as HTMLInputElement).value
@@ -54,6 +57,7 @@ class Admin extends Component<Props, stateAdmin> {
         ) as HTMLInputElement).value.split(' ')
 
         if (
+          slug.length > 0 &&
           name.length > 0 &&
           description.length > 0 &&
           lockedDescription.length > 0 &&
@@ -61,6 +65,7 @@ class Admin extends Component<Props, stateAdmin> {
           longitude.length > 0
         ) {
           await ApiClient.createInstallation({
+            slug,
             name,
             description,
             lockedDescription,
@@ -94,6 +99,9 @@ class Admin extends Component<Props, stateAdmin> {
         const id: string = (this.updateInstallationForm.querySelector(
           '[name="id"]'
         ) as HTMLInputElement).value
+        const slug: string = (this.updateInstallationForm.querySelector(
+          '[name="slug"]'
+        ) as HTMLInputElement).value
         const name: string = (this.updateInstallationForm.querySelector(
           '[name="name"]'
         ) as HTMLInputElement).value
@@ -118,6 +126,10 @@ class Admin extends Component<Props, stateAdmin> {
 
         const fieldsToUpdate: ApiInstallation = {
           _id: id,
+        }
+
+        if (slug.length > 0) {
+          fieldsToUpdate.slug = slug
         }
 
         if (name.length > 0) {
@@ -246,6 +258,13 @@ class Admin extends Component<Props, stateAdmin> {
         >
           <input
             type="text"
+            name="slug"
+            placeholder="Slug"
+            required
+            className="admin-panel__form__field"
+          />
+          <input
+            type="text"
             name="name"
             placeholder="Nom"
             required
@@ -308,6 +327,12 @@ class Admin extends Component<Props, stateAdmin> {
             name="id"
             placeholder="ID"
             required
+            className="admin-panel__form__field"
+          />
+          <input
+            type="text"
+            name="slug"
+            placeholder="Slug"
             className="admin-panel__form__field"
           />
           <input

@@ -33,6 +33,7 @@ class MapManager {
           type: 'Feature',
           properties: {
             _id: installation._id,
+            slug: installation.slug,
             name: installation.name,
             description: installation.description,
             focus: 'true',
@@ -47,6 +48,7 @@ class MapManager {
           type: 'Feature',
           properties: {
             _id: installation._id,
+            slug: installation.slug,
             name: installation.name,
             description: installation.description,
             focus: 'false',

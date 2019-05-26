@@ -18,7 +18,6 @@ import Modal from '../Modal/Modal'
 const ProtoMap: FunctionComponent = () => {
   const { installationList, fetchInstallationList } = InstallationStore
 
-  // const map = useRef<MapboxGlMap | null>(null)
   const directions = useRef(DirectionsManager.initMapboxDirections())
   const geolocate = useRef<GeolocateControl>(GeoLocationManager.initGeolocate())
 

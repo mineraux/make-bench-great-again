@@ -35,6 +35,7 @@ module.exports = {
         return {
           ...installation._doc,
           _id: installation.id,
+          slug: installation.slug,
           name: installation.name,
           description: installation.description,
           lockedDescription: installation.lockedDescription,
@@ -58,6 +59,7 @@ module.exports = {
   },
   createInstallation: async args => {
     const installation = new Installation({
+      slug: args.installationInput.slug,
       name: args.installationInput.name,
       description: args.installationInput.description,
       lockedDescription: args.installationInput.lockedDescription,
@@ -105,6 +107,7 @@ module.exports = {
   updateInstallation: async args => {
     var fieldsToUpdate = {};
 
+    if (args.updateInstallationInput.slug) fieldsToUpdate.slug = args.updateInstallationInput.slug
     if (args.updateInstallationInput.name) fieldsToUpdate.name = args.updateInstallationInput.name
     if (args.updateInstallationInput.description) fieldsToUpdate.description = args.updateInstallationInput.description
     if (args.updateInstallationInput.lockedDescription) fieldsToUpdate.lockedDescription = args.updateInstallationInput.lockedDescription
