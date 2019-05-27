@@ -28,10 +28,22 @@ const TransitionComponent: FunctionComponent<Props> = ({ show }) => {
       onComplete: done,
     })
 
-    tl.to(node, 0.25, {
+    tl.to(node, 2, {
       opacity: 1,
-      ease: 'Sine.easeInOut',
-    })
+      ease: Power2.easeInOut,
+    }).fromTo(
+      node,
+      1.5,
+      {
+        filter: 'blur(15px)',
+      },
+      {
+        filter: 'blur(0)',
+        autoRound: false,
+        ease: Power2.easeInOut,
+      },
+      0
+    )
   }
 
   // Exit : transition
@@ -40,10 +52,26 @@ const TransitionComponent: FunctionComponent<Props> = ({ show }) => {
       onComplete: done,
     })
 
-    tl.to(node, 0.25, {
-      opacity: 0,
-      ease: 'Sine.easeInOut',
-    })
+    tl.fromTo(
+      node,
+      0.8,
+      {
+        filter: 'blur(0)',
+      },
+      {
+        filter: 'blur(15px)',
+        autoRound: false,
+        ease: Power2.easeInOut,
+      }
+    ).to(
+      node,
+      0.8,
+      {
+        opacity: 0,
+        ease: Power2.easeInOut,
+      },
+      0.2
+    )
   }
 
   // Exit : end

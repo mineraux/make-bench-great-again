@@ -13,6 +13,7 @@ const Map: FunctionComponent<props> = () => {
   const windowHeight = useWindowSize().height
 
   useEffect(() => {
+    console.log('map mounted')
     setIsMapButtonVisible(false)
   }, [])
   return (

@@ -1,6 +1,6 @@
 import React, { FunctionComponent, ReactNode } from 'react'
 import { Transition } from 'react-transition-group'
-import { TimelineMax, TweenMax, Sine, Power2 } from 'gsap'
+import { TimelineMax, TweenMax, Sine, Power1, Power2, Power3 } from 'gsap'
 import { NavigationStore } from '../../store'
 import { observer } from 'mobx-react-lite'
 import Map from './Map'
@@ -24,10 +24,22 @@ const TransitionComponent: FunctionComponent<Props> = ({ show }) => {
       onComplete: done,
     })
 
-    tl.to(node, 1, {
+    tl.to(node, 2.5, {
       opacity: 1,
-      ease: Power2.easeOut,
-    })
+      ease: Power3.easeInOut,
+    }).fromTo(
+      node,
+      2.5,
+      {
+        filter: 'blur(15px)',
+      },
+      {
+        filter: 'blur(0)',
+        autoRound: false,
+        ease: Power3.easeInOut,
+      },
+      0.5
+    )
   }
 
   // Exit : transition
@@ -38,10 +50,29 @@ const TransitionComponent: FunctionComponent<Props> = ({ show }) => {
       },
     })
 
-    tl.to(node, 0.25, {
-      opacity: 0,
-      ease: 'Sine.easeInOut',
-    })
+    tl.fromTo(
+      node,
+      0.8,
+      {
+        filter: 'blur(0)',
+      },
+      {
+        filter: 'blur(15px)',
+        autoRound: false,
+        ease: Power2.easeInOut,
+      }
+    ).fromTo(
+      node,
+      0.8,
+      {
+        opacity: 1,
+      },
+      {
+        opacity: 0,
+        ease: Power2.easeInOut,
+      },
+      0.2
+    )
   }
 
   // Exit : end
@@ -62,6 +93,7 @@ const TransitionComponent: FunctionComponent<Props> = ({ show }) => {
       onEnter={onEnter}
       onExited={onExited}
       addEndListener={addEndListener}
+      appear={true}
     >
       <Map />
     </Transition>
