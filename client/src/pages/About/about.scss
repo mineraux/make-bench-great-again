@@ -54,7 +54,7 @@
     flex-direction: column;
 
     &__texts {
-      margin-bottom: 2.5rem;
+      margin: auto 0;
 
       &__text-1,
       &__text-2 {
@@ -73,6 +73,7 @@
     &__logos {
       display: flex;
       align-items: center;
+      margin-bottom: 2.5rem;
       > svg {
         height: 4.2rem;
         margin: 0 2rem;
