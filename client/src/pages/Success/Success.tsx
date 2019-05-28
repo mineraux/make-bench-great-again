@@ -4,6 +4,7 @@ import './success.scss'
 import { observer } from 'mobx-react-lite'
 import { MapStore } from '../../store'
 import Button, { themes as ButtonThemes } from '../../components/Button/Button'
+import { ReactComponent as Background } from './background.svg'
 
 type Props = pageProps & {}
 
@@ -14,6 +15,7 @@ const Success: FunctionComponent<Props> = ({ match, history }) => {
 
   return (
     <div className="page-success">
+      <Background className={'page-success__svg'} />
       <div className="page-success__presentation">
         <p className="page-success__presentation__title">
           {MapStore.targetInstallation.name}
@@ -25,7 +27,7 @@ const Success: FunctionComponent<Props> = ({ match, history }) => {
         <Button
           label={'Découvrir'}
           theme={ButtonThemes.Blue}
-          className={'page-success__discover-button'}
+          className={'page-success__presentation__discover-button'}
         />
       </div>
     </div>

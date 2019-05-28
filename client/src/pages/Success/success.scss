@@ -3,6 +3,20 @@
 .page-success {
   background-color: $color-green;
   height: 100vh;
+  $self: &;
+
+  > *:not(#{$self}__svg) {
+    z-index: 2;
+  }
+
+  &__svg {
+    position: absolute;
+    width: 80%;
+    left: 50%;
+    top: calc(50% + #{$header-height / 2});
+    transform: translateX(-50%) translateY(-50%);
+    z-index: 1;
+  }
 
   &__presentation {
     max-width: $content-width;
@@ -21,7 +35,7 @@
       text-transform: uppercase;
       display: flex;
       justify-content: center;
-      min-height: 22rem;
+      min-height: 18rem;
       background: radial-gradient(
         circle closest-side,
         rgba(239, 202, 202, 1) 0%,
@@ -38,9 +52,11 @@
       font-size: 1.5rem;
       line-height: 1.3em;
     }
-  }
 
-  &__discover-button {
-    margin-top: 10rem;
+    &__discover-button {
+      z-index: 2;
+      margin-top: 8rem;
+      background-color: $color-green;
+    }
   }
 }
