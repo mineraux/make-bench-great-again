@@ -25,6 +25,7 @@ const Success: FunctionComponent<Props> = ({ match, history }) => {
           contenu est maintenant débloqué.
         </p>
         <Button
+          link={`/installation/${MapStore.targetInstallation.slug}`}
           label={'Découvrir'}
           theme={ButtonThemes.Blue}
           className={'page-success__presentation__discover-button'}
