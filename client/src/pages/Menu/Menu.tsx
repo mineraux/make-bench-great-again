@@ -5,6 +5,7 @@ import React, {
   useEffect,
   useRef,
 } from 'react'
+import { Link } from 'react-router-dom'
 import { pageProps } from '../types'
 import config from '../../config/config'
 import { useWindowSize } from '../../utils/hooks'
@@ -56,7 +57,8 @@ const Menu: FunctionComponent<Props> = () => {
           </p>
         </div>
       </div>
-      <div
+      <Link
+        to={config.routes.About.path}
         className="page-menu__bottom"
         style={{
           flex: `0 0 ${MapButtonSizeInMenu / 10 / 2}rem`,
@@ -69,7 +71,7 @@ const Menu: FunctionComponent<Props> = () => {
           <span>U</span>
           <span>T</span>
         </p>
-      </div>
+      </Link>
     </div>
   )
 }

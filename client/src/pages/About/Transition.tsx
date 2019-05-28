@@ -3,13 +3,17 @@ import { Transition } from 'react-transition-group'
 import { TimelineMax, TweenMax, Sine, Power1, Power2, Power3 } from 'gsap'
 import { NavigationStore } from '../../store'
 import { observer } from 'mobx-react-lite'
-import Map from './Map'
 import { pageTransitionProps } from '../types'
+import Menu from './About'
 
 type Props = pageTransitionProps
 
 const TransitionComponent: FunctionComponent<Props> = ({ show }) => {
-  const { setCurrentPagePath, nextPagePath } = NavigationStore
+  const {
+    setCurrentPagePath,
+    nextPagePath,
+    setIsMapButtonMenu,
+  } = NavigationStore
 
   // Enter : start
   const onEnter = (node: HTMLElement): void => {
@@ -24,30 +28,28 @@ const TransitionComponent: FunctionComponent<Props> = ({ show }) => {
       onComplete: done,
     })
 
-    tl.to(node, 2.5, {
+    tl.to(node, 2, {
       opacity: 1,
-      ease: Power3.easeInOut,
+      ease: Power2.easeInOut,
     }).fromTo(
       node,
-      2.5,
+      1.5,
       {
         filter: 'blur(15px)',
       },
       {
         filter: 'blur(0)',
         autoRound: false,
-        ease: Power3.easeInOut,
+        ease: Power2.easeInOut,
       },
-      0.5
+      0
     )
   }
 
   // Exit : transition
   const onExitTransition = (node: HTMLElement, done: () => void): void => {
     const tl = new TimelineMax({
-      onComplete: () => {
-        done()
-      },
+      onComplete: done,
     })
 
     tl.fromTo(
@@ -61,12 +63,9 @@ const TransitionComponent: FunctionComponent<Props> = ({ show }) => {
         autoRound: false,
         ease: Power2.easeInOut,
       }
-    ).fromTo(
+    ).to(
       node,
       0.8,
-      {
-        opacity: 1,
-      },
       {
         opacity: 0,
         ease: Power2.easeInOut,
@@ -95,7 +94,7 @@ const TransitionComponent: FunctionComponent<Props> = ({ show }) => {
       addEndListener={addEndListener}
       appear={true}
     >
-      <Map />
+      <Menu />
     </Transition>
   )
 }

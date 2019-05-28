@@ -4,6 +4,7 @@ import TwitterTransition from '../pages/Twitter/Transition'
 import AdminTransition from '../pages/Admin/Transition'
 import ComponentsTransition from '../pages/Components/Transition'
 import MenuTransition from '../pages/Menu/Transition'
+import AboutTransition from '../pages/About/Transition'
 import InstallationTransition from '../pages/Installation/Transition'
 import FinishTransition from '../pages/Finish/Transition'
 
@@ -66,6 +67,13 @@ const config: configInterface = {
       component: MenuTransition,
       inNav: true,
       isMapButtonVisible: false,
+    },
+    About: {
+      path: '/about',
+      name: 'About',
+      component: AboutTransition,
+      inNav: true,
+      isMapButtonVisible: true,
     },
     Installation: {
       path: '/installation/:installationSlug',
