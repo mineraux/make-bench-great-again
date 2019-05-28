@@ -1,4 +1,4 @@
-import React, { FunctionComponent, useEffect, useRef } from 'react'
+import React, { FunctionComponent, useEffect, useState, useRef } from 'react'
 import Classnames from 'classnames'
 import { Link } from 'react-router-dom'
 import config from '../../config/config'
@@ -6,37 +6,161 @@ import { observer } from 'mobx-react-lite'
 import { NavigationStore } from '../../store'
 import { ReactComponent as MarkerIcon } from './marker.svg'
 import './mapButton.scss'
-import { TimelineMax } from 'gsap'
+import { TimelineMax, Sine, Power2 } from 'gsap'
 
 export enum themes {
   Blue = 'blue',
   Pink = 'pink',
 }
 
+export const sizeInMenu = 500
+export const sizeNormal = 130
+
 type Props = {
   className?: string
 }
 
 const MapButton: FunctionComponent<Props> = ({ className }) => {
-  const {
-    isMapButtonVisible,
-    mapButtonTheme,
-    setIsMapButtonVisible,
-  } = NavigationStore
-
   const ref = useRef<HTMLLinkElement>(null)
 
+  const {
+    isMapButtonVisible,
+    isMapButtonMenu,
+    mapButtonTheme,
+    setIsMapButtonVisible,
+    currentPagePath,
+    nextPagePath,
+  } = NavigationStore
+
+  // Hide / show animation
   useEffect(() => {
     const tl = new TimelineMax()
+    console.log('show', isMapButtonVisible, currentPagePath)
     if (ref.current) {
-      tl.to(ref.current, 0.3, {
+      tl.to(ref.current, 0.7, {
         xPercent: isMapButtonVisible ? -50 : -100,
         yPercent: isMapButtonVisible ? 50 : 100,
         opacity: isMapButtonVisible ? 1 : 0,
-        ease: 'Sine.easeInOut',
+        ease: Power2.easeInOut,
       })
     }
   }, [isMapButtonVisible])
+
+  // Menu animation
+  useEffect(() => {
+    if (ref.current) {
+      if (isMapButtonMenu) {
+        animationMenuIn()
+      } else {
+        animationMenuOut()
+      }
+    }
+  }, [isMapButtonMenu])
+
+  const animationMenuIn = () => {
+    if (ref.current) {
+      console.log('MapButton : animationMenuIn')
+      const tl = new TimelineMax()
+      const icon = ref.current.querySelector('.map-button__icon')
+      const text = ref.current.querySelector('.map-button__menu-text')
+      tl.to(
+        icon!,
+        0.5,
+        {
+          opacity: 0,
+          ease: Power2.easeInOut,
+          overwrite: true,
+        },
+        0
+      )
+        .add('iconEnd')
+        .to(
+          ref.current,
+          0.8,
+          {
+            xPercent: -50,
+            yPercent: 50,
+          },
+          'iconEnd'
+        )
+        .to(
+          ref.current,
+          1,
+          {
+            opacity: 1,
+          },
+          'iconEnd'
+        )
+        .add('scale', 'iconEnd')
+        .to(
+          ref.current,
+          0.8,
+          {
+            scale: 1,
+            ease: Power2.easeInOut,
+          },
+          'scale'
+        )
+        .to(
+          text!,
+          0.8,
+          {
+            scale: 1,
+            ease: Power2.easeInOut,
+          },
+          'scale'
+        )
+    }
+  }
+
+  const animationMenuOut = () => {
+    if (ref.current) {
+      console.log('MapButton: animationMenuOut', nextPagePath)
+      const tl = new TimelineMax()
+      const icon = ref.current.querySelector('.map-button__icon')
+      const text = ref.current.querySelector('.map-button__menu-text')
+
+      const scale = sizeNormal / sizeInMenu
+
+      const routesArrray = Object.keys(config.routes).map(
+        key => config.routes[key]
+      )
+      const nextRoute = routesArrray.find(route => route.path === nextPagePath)
+      const isMapButtonOnNextPage = nextRoute!.isMapButtonVisible
+
+      console.log('MapButton : isMapButtonOnNextPage', isMapButtonOnNextPage)
+
+      tl.to(text!, 0.4, {
+        opacity: 0,
+        ease: Power2.easeInOut,
+      })
+        .add('textEnd')
+        .to(
+          ref.current,
+          0.7,
+          {
+            xPercent: isMapButtonOnNextPage ? -50 : -100,
+            yPercent: isMapButtonOnNextPage ? 50 : 100,
+            opacity: isMapButtonOnNextPage ? 1 : 0,
+            ease: Power2.easeInOut,
+          },
+          'textEnd'
+        )
+        .to(
+          [ref.current, text],
+          0.7,
+          {
+            scale,
+            ease: Power2.easeInOut,
+          },
+          'textEnd'
+        )
+        .to(icon!, 0.7, {
+          opacity: 1,
+          ease: Power2.easeInOut,
+        })
+    }
+  }
 
   const handleOnClick = () => {
     setIsMapButtonVisible(false)
@@ -54,8 +178,22 @@ const MapButton: FunctionComponent<Props> = ({ className }) => {
         { visible: isMapButtonVisible }
       )}
       onClick={handleOnClick}
+      style={{
+        width: `${sizeInMenu / 10}rem`,
+        height: `${sizeInMenu / 10}rem`,
+      }}
     >
-      <MarkerIcon className={Classnames('map-button__icon')} />
+      <MarkerIcon
+        className={Classnames('map-button__icon')}
+        style={{
+          height: `${(sizeInMenu / sizeNormal) * 2.6}rem`,
+        }}
+      />
+      <p className="map-button__menu-text">
+        <span>M</span>
+        <span>A</span>
+        <span>P</span>
+      </p>
     </Link>
   )
 }

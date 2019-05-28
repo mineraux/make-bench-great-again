@@ -36,7 +36,7 @@ const TransitionComponent: FunctionComponent<Props> = ({ show }) => {
       onComplete: done,
     })
 
-    tl.to(node, 0.25, {
+    tl.to(node, 1, {
       opacity: 0,
       ease: 'Sine.easeInOut',
     })
