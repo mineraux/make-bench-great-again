@@ -65,7 +65,11 @@
         color: $color-blue;
         text-transform: uppercase;
         line-height: 1.5em;
-        background: radial-gradient(circle closest-side, #8ef48f, transparent);
+        background: radial-gradient(
+          circle closest-side,
+          rgba(97, 249, 132, 1),
+          rgba(97, 249, 132, 0)
+        );
       }
 
       &__text-content {

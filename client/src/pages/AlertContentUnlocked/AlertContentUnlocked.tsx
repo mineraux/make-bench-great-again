@@ -3,6 +3,7 @@ import { pageProps } from '../types'
 import './alertContentUnlocked.scss'
 import { observer } from 'mobx-react-lite'
 import { MapStore } from '../../store'
+import Button, { themes as ButtonThemes } from '../../components/Button/Button'
 
 type Props = pageProps & {}
 
@@ -18,8 +19,14 @@ const AlertContentUnlocked: FunctionComponent<Props> = ({ match, history }) => {
           {MapStore.targetInstallation.name}
         </p>
         <p className="alert-content-unlocked__presentation__text-content">
-          test
+          Vous êtes arrivé devant {MapStore.targetInstallation.name}. Son
+          contenu est maintenant débloqué.
         </p>
+        <Button
+          label={'Découvrir'}
+          theme={ButtonThemes.Blue}
+          className={'alert-content-unlocked__discover-button'}
+        />
       </div>
     </div>
   )
