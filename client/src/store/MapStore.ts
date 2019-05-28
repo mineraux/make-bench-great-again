@@ -4,7 +4,6 @@ import { ApiInstallation } from '../@types'
 class MapStore {
   @observable targetInstallation: ApiInstallation = {
     _id: '',
-    name: "l'Exedros",
   }
 
   @action setTargetInstallation = (installation: ApiInstallation) => {
