@@ -2,7 +2,7 @@ import React, { FunctionComponent } from 'react'
 import { Transition } from 'react-transition-group'
 import { TimelineMax, TweenMax } from 'gsap'
 import { pageTransitionProps } from '../types'
-import AlertContentUnlocked from './AlertContentUnlocked'
+import Success from './Success'
 import { observer } from 'mobx-react-lite'
 import { NavigationStore } from '../../store'
 
@@ -65,7 +65,7 @@ const TransitionComponent: FunctionComponent<Props> = ({
       onExited={onExited}
       addEndListener={addEndListener}
     >
-      <AlertContentUnlocked match={match} history={history} />
+      <Success match={match} history={history} />
     </Transition>
   )
 }

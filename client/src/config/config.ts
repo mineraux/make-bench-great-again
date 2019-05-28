@@ -5,7 +5,7 @@ import AdminTransition from '../pages/Admin/Transition'
 import ComponentsTransition from '../pages/Components/Transition'
 import InstallationTransition from '../pages/Installation/Transition'
 import FinishTransition from '../pages/Finish/Transition'
-import AlertContentUnlockedTransition from '../pages/AlertContentUnlocked/Transition'
+import SuccessTransition from '../pages/Success/Transition'
 
 export default {
   routes: {
@@ -45,10 +45,10 @@ export default {
       component: InstallationTransition,
       inNav: false,
     },
-    AlertContentUnlocked: {
-      path: '/content-unlocked/:installationName',
-      name: 'AlertContentUnlocked',
-      component: AlertContentUnlockedTransition,
+    Success: {
+      path: '/success/:installationName',
+      name: 'Success',
+      component: SuccessTransition,
       inNav: false,
     },
     Finish: {

@@ -185,7 +185,7 @@ const ProtoMap: FunctionComponent<Props> = ({ match, history }) => {
         `User close to installation (ID : ${MapStore.targetInstallation._id})`
       )
       InstallationStore.addUnlockedInstallation(MapStore.targetInstallation._id)
-      history.push(`/content-unlocked/${MapStore.targetInstallation.slug}`)
+      history.push(`/success/${MapStore.targetInstallation.slug}`)
     }
   }, [travelDistance])
 
