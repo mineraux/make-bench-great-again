@@ -1,11 +1,8 @@
 import React, { FunctionComponent, useEffect, useState } from 'react'
 import { pageProps } from '../types'
 import { InstallationStore } from '../../store'
-import { ApiInstallation } from '../../@types'
 import './installation.scss'
 import { observer } from 'mobx-react-lite'
-import { NavigationStore } from '../../store'
-import config from '../../config/config'
 import InstallationUnlocked from './InstallationUnlocked'
 import InstallationLocked from './InstallationLocked'
 
@@ -20,7 +17,6 @@ const Installation: FunctionComponent<Props> = ({ match, history }) => {
 
   return (
     <>
-      match &&{' '}
       {InstallationStore.isInstallationUnlocked(installationSlug) ? (
         <InstallationUnlocked match={match} history={history} />
       ) : (

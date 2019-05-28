@@ -8,7 +8,7 @@ import { useWindowSize } from '../../utils/hooks'
 
 type props = pageProps
 
-const Map: FunctionComponent<props> = () => {
+const Map: FunctionComponent<props> = ({ match, history }) => {
   const { setIsMapButtonVisible } = NavigationStore
   const windowHeight = useWindowSize().height
 
@@ -22,7 +22,7 @@ const Map: FunctionComponent<props> = () => {
         height: windowHeight,
       }}
     >
-      <ProtoMap />
+      <ProtoMap match={match} history={history} />
     </div>
   )
 }

@@ -5,6 +5,7 @@ import AdminTransition from '../pages/Admin/Transition'
 import ComponentsTransition from '../pages/Components/Transition'
 import InstallationTransition from '../pages/Installation/Transition'
 import FinishTransition from '../pages/Finish/Transition'
+import AlertContentUnlockedTransition from '../pages/AlertContentUnlocked/Transition'
 
 export default {
   routes: {
@@ -42,6 +43,12 @@ export default {
       path: '/installation/:installationSlug',
       name: 'Installation',
       component: InstallationTransition,
+      inNav: false,
+    },
+    AlertContentUnlocked: {
+      path: '/content-unlocked/:installationName',
+      name: 'AlertContentUnlocked',
+      component: AlertContentUnlockedTransition,
       inNav: false,
     },
     Finish: {

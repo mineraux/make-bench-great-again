@@ -1,7 +1,7 @@
 import React, { FunctionComponent, useEffect, useRef, useState } from 'react'
 import './mapgl.scss'
 import { observer } from 'mobx-react-lite'
-import { InstallationStore } from '../../store'
+import { InstallationStore, MapStore } from '../../store'
 import mapboxgl, {
   GeolocateControl,
   Map as MapboxGlMap,
@@ -14,8 +14,11 @@ import GeoLocationManager from './GeoLocationController'
 import InformationsPanel from '../InformationsPanel/InformationsPanel'
 import { featureCoords } from '../../utils/map'
 import Modal from '../Modal/Modal'
+import { pageProps } from '../../pages/types'
 
-const ProtoMap: FunctionComponent = () => {
+type Props = pageProps & {}
+
+const ProtoMap: FunctionComponent<Props> = ({ match, history }) => {
   const { installationList, fetchInstallationList } = InstallationStore
 
   const directions = useRef(DirectionsManager.initMapboxDirections())
@@ -31,14 +34,11 @@ const ProtoMap: FunctionComponent = () => {
 
   const [travelTime, setTravelTime] = useState()
   const [travelDistance, setTravelDistance] = useState()
-
-  const [targetInstallationID, setTargetInstallationID] = useState()
+  const [targetInstallationSlug, setTargetInstallationSlug] = useState()
 
   const [isMapLoaded, setIsMapLoaded] = useState(false)
 
   const [mapStylesLoaded, setMapStylesLoaded] = useState(false)
-
-  const [targetInstallationSlug, setTargetInstallationSlug] = useState()
 
   const [
     isGeolocationPermissionGranted,
@@ -181,8 +181,11 @@ const ProtoMap: FunctionComponent = () => {
   // }, [isTourStarted, userLocation])
   useEffect(() => {
     if (travelDistance === 0 || travelTime === 0) {
-      console.log(`User close to installation (ID : ${targetInstallationID})`)
-      InstallationStore.addUnlockedInstallation(targetInstallationID)
+      console.log(
+        `User close to installation (ID : ${MapStore.targetInstallation._id})`
+      )
+      InstallationStore.addUnlockedInstallation(MapStore.targetInstallation._id)
+      history.push(`/content-unlocked/${MapStore.targetInstallation.slug}`)
     }
   }, [travelDistance])
 
@@ -207,8 +210,8 @@ const ProtoMap: FunctionComponent = () => {
       featureCoords(selectedMarker),
       userLocation
     )
-    setTargetInstallationID(selectedMarker.properties._id)
-    setTargetInstallationID(selectedMarker.properties.slug)
+    MapStore.setTargetInstallation(selectedMarker.properties)
+    setTargetInstallationSlug(MapStore.targetInstallation.slug)
     setIsTourStarted(true)
   }
 
@@ -235,7 +238,7 @@ const ProtoMap: FunctionComponent = () => {
           onButtonClick={setPath}
           isTourStarted={isTourStarted}
           userLocation={userLocation}
-          targetInstallationID={targetInstallationID}
+          targetInstallationID={targetInstallationSlug}
         />
       )}
     </div>

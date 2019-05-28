@@ -34,7 +34,6 @@ const InstallationLocked: FunctionComponent<Props> = ({ match, history }) => {
       lockedDescription: true,
     }).then(res => {
       setInstallation(res)
-      console.log(installation)
     })
   }
 

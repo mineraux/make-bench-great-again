@@ -1,0 +1,47 @@
+@import '../../assets/styles/global';
+
+.alert-content-unlocked {
+  background-color: $color-green;
+  height: 100vh;
+
+  &__presentation {
+    &__title {
+      display: inline-block;
+      margin: 3.5rem 0;
+      width: 100%;
+      color: $color-green;
+      font-size: 4rem;
+      text-align: center;
+      font-family: $font-infini-regular;
+      text-transform: uppercase;
+    }
+
+    &__text-content {
+      text-align: center;
+      max-width: $content-width;
+      padding: 3rem $content-padding 0 $content-padding;
+      margin: auto;
+      font-family: $font-infini-regular;
+      color: $color-pink;
+      font-size: 1.5rem;
+      line-height: 1.3em;
+    }
+  }
+
+  &__presentation {
+    &__title {
+      margin-bottom: 0;
+    }
+    &__installation-sketch {
+      width: 100%;
+      margin: auto;
+    }
+
+    &__text-content {
+      &-wrapper {
+        transform: translateY(-6rem);
+        z-index: -1;
+      }
+    }
+  }
+}

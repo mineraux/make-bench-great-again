@@ -1,10 +1,10 @@
-import React, { FunctionComponent, ReactNode } from 'react'
+import React, { FunctionComponent } from 'react'
 import { Transition } from 'react-transition-group'
 import { TimelineMax, TweenMax } from 'gsap'
-import { NavigationStore } from '../../store'
-import { observer } from 'mobx-react-lite'
-import Map from './Map'
 import { pageTransitionProps } from '../types'
+import AlertContentUnlocked from './AlertContentUnlocked'
+import { observer } from 'mobx-react-lite'
+import { NavigationStore } from '../../store'
 
 type Props = pageTransitionProps
 
@@ -16,7 +16,7 @@ const TransitionComponent: FunctionComponent<Props> = ({
   const { setCurrentPagePath, nextPagePath } = NavigationStore
 
   // Enter : start
-  const onEnter = (node: HTMLElement): void => {
+  const onEnter = (node: HTMLElement) => {
     TweenMax.set(node, {
       opacity: 0,
     })
@@ -32,8 +32,6 @@ const TransitionComponent: FunctionComponent<Props> = ({
       opacity: 1,
       ease: 'Sine.easeInOut',
     })
-
-    console.log(history)
   }
 
   // Exit : transition
@@ -67,7 +65,7 @@ const TransitionComponent: FunctionComponent<Props> = ({
       onExited={onExited}
       addEndListener={addEndListener}
     >
-      <Map match={match} history={history} />
+      <AlertContentUnlocked match={match} history={history} />
     </Transition>
   )
 }
