@@ -10,7 +10,7 @@ import ApiClient from '../ApiClient/ApiClient'
 class InstallationStore {
   @observable installationList: ApiInstallationReponseRoot = []
   @observable installationListTemp: ApiInstallationReponseRoot = []
-  @observable unlockedInstallations: string[] = ['']
+  @observable unlockedInstallations: string[] = []
 
   @action public fetchInstallationList = async (
     fieldToFetch: QueryApiInstallationReponse
@@ -58,8 +58,9 @@ class InstallationStore {
   }
 
   @action public fetchSingleInstallation = async (
-    installationID: ApiInstallation['_id'],
-    fieldToFetch: QueryApiInstallationReponse
+    fieldToFetch: QueryApiInstallationReponse,
+    installationID?: ApiInstallation['_id'],
+    installationSlug?: ApiInstallation['slug']
   ): Promise<ApiInstallation> => {
     let data: ApiSingleInstallationReponseRoot = {
       _id: '',
@@ -67,12 +68,21 @@ class InstallationStore {
 
     if (process.env.NODE_ENV === 'development') {
       this.installationList.map(installation => {
-        if (installation._id === installationID) {
-          data = installation
+        if (installationID) {
+          if (installation._id === installationID) {
+            data = installation
+          }
+        } else if (installationSlug) {
+          if (installation.slug === installationSlug) {
+            data = installation
+          }
         }
       })
     } else {
-      data = await ApiClient.getSingleInstallation(installationID, fieldToFetch)
+      data = await ApiClient.getSingleInstallation(
+        installationID!,
+        fieldToFetch
+      )
     }
 
     this.installationList = this.mergeById([data])
@@ -96,11 +106,13 @@ class InstallationStore {
   }
 
   @action public isInstallationUnlocked = (
-    installationID: ApiInstallation['_id']
+    installationSlug?: ApiInstallation['slug']
   ): boolean => {
     let isUnlocked = false
-    this.unlockedInstallations.forEach(id => {
-      if (id === installationID) {
+
+    this.unlockedInstallations.forEach(slug => {
+      console.log(slug, installationSlug)
+      if (slug === installationSlug) {
         isUnlocked = true
       } else {
         isUnlocked = false

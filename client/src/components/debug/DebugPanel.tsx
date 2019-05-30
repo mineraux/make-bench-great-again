@@ -26,7 +26,7 @@ const DebugPanel: FunctionComponent = () => {
   }
 
   const queryOneInstallation = async () => {
-    await fetchSingleInstallation('5cc8779779be4460aef65efc', { name: true })
+    await fetchSingleInstallation({ name: true }, '5cc8779779be4460aef65efc')
   }
 
   return (

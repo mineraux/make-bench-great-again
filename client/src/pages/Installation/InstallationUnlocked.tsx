@@ -44,12 +44,17 @@ const Installation: FunctionComponent<Props> = ({ match, history }) => {
 
   const getInstallationInformation = async () => {
     await InstallationStore.fetchSingleInstallation(
-      MapStore.selectedInstallation._id,
       {
         name: true,
         description: true,
         lockedDescription: true,
-      }
+      },
+      MapStore.selectedInstallation._id
+        ? MapStore.selectedInstallation._id
+        : undefined,
+      !MapStore.selectedInstallation._id
+        ? match.params.installationSlug
+        : undefined
     )
       .then(res => {
         setInstallation(res)

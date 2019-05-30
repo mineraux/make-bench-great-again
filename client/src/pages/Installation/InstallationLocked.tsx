@@ -27,12 +27,15 @@ const InstallationLocked: FunctionComponent<Props> = ({ match, history }) => {
   }, [])
 
   const getInstallationInformation = async () => {
-    'match.params.installationId'
-    await InstallationStore.fetchSingleInstallation('1', {
-      name: true,
-      description: true,
-      lockedDescription: true,
-    }).then(res => {
+    await InstallationStore.fetchSingleInstallation(
+      {
+        name: true,
+        description: true,
+        lockedDescription: true,
+      },
+      undefined,
+      match.params.installationSlug
+    ).then(res => {
       setInstallation(res)
     })
   }

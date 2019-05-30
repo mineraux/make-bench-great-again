@@ -9,11 +9,19 @@ import InstallationLocked from './InstallationLocked'
 type Props = pageProps & {}
 
 const Installation: FunctionComponent<Props> = ({ match, history }) => {
+  const [installationIdentifier, setInstallationIdentifier] = useState()
+
+  useEffect(() => {
+    setInstallationIdentifier(
+      MapStore.selectedInstallation._id
+        ? MapStore.selectedInstallation._id
+        : match.params.installationSlug
+    )
+  }, [])
+
   return (
     <>
-      {InstallationStore.isInstallationUnlocked(
-        MapStore.selectedInstallation._id
-      ) ? (
+      {InstallationStore.isInstallationUnlocked(installationIdentifier) ? (
         <InstallationUnlocked match={match} history={history} />
       ) : (
         <InstallationLocked match={match} history={history} />

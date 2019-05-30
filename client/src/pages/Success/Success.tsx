@@ -9,10 +9,6 @@ import { ReactComponent as Background } from './background.svg'
 type Props = pageProps & {}
 
 const Success: FunctionComponent<Props> = ({ match, history }) => {
-  useEffect(() => {
-    console.log(MapStore.targetInstallation.name)
-  }, [])
-
   return (
     <div className="page-success">
       <Background className={'page-success__svg'} />
