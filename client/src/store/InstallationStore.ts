@@ -100,7 +100,6 @@ class InstallationStore {
   ): boolean => {
     let isUnlocked = false
     this.unlockedInstallations.forEach(id => {
-      console.log(id, installationID)
       if (id === installationID) {
         isUnlocked = true
       } else {

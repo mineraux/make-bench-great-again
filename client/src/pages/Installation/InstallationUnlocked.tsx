@@ -1,6 +1,6 @@
 import React, { FunctionComponent, useEffect, useState } from 'react'
 import { pageProps } from '../types'
-import { InstallationStore } from '../../store'
+import { InstallationStore, MapStore } from '../../store'
 import { ApiInstallation } from '../../@types'
 import './installation.scss'
 import ScrollMagicController from './ScrollMagicController'
@@ -44,7 +44,7 @@ const Installation: FunctionComponent<Props> = ({ match, history }) => {
 
   const getInstallationInformation = async () => {
     await InstallationStore.fetchSingleInstallation(
-      match.params.installationId,
+      MapStore.selectedInstallation._id,
       {
         name: true,
         description: true,
