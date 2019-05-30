@@ -6,8 +6,16 @@ class MapStore {
     _id: '',
   }
 
+  @observable selectedInstallation: ApiInstallation = {
+    _id: '',
+  }
+
   @action setTargetInstallation = (installation: ApiInstallation) => {
     this.targetInstallation = installation
+  }
+
+  @action setSelectedInstallation = (installation: ApiInstallation) => {
+    this.selectedInstallation = installation
   }
 }
 

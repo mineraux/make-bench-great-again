@@ -10,7 +10,7 @@ import ApiClient from '../ApiClient/ApiClient'
 class InstallationStore {
   @observable installationList: ApiInstallationReponseRoot = []
   @observable installationListTemp: ApiInstallationReponseRoot = []
-  @observable unlockedInstallations: string[] = ['exedros']
+  @observable unlockedInstallations: string[] = ['']
 
   @action public fetchInstallationList = async (
     fieldToFetch: QueryApiInstallationReponse
@@ -96,11 +96,12 @@ class InstallationStore {
   }
 
   @action public isInstallationUnlocked = (
-    installationSlug: ApiInstallation['slug']
+    installationID: ApiInstallation['_id']
   ): boolean => {
     let isUnlocked = false
-    this.unlockedInstallations.forEach(slug => {
-      if (slug === installationSlug) {
+    this.unlockedInstallations.forEach(id => {
+      console.log(id, installationID)
+      if (id === installationID) {
         isUnlocked = true
       } else {
         isUnlocked = false

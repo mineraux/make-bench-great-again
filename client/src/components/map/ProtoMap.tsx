@@ -111,6 +111,7 @@ const ProtoMap: FunctionComponent<Props> = ({ match, history }) => {
             e.features[0].properties!._id
           )
           setMarkers(markers)
+          MapStore.setSelectedInstallation(e.features[0].properties!)
         }
       }
 
