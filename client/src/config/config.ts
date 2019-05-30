@@ -88,6 +88,7 @@ const config: configInterface = {
       name: 'Success',
       component: SuccessTransition,
       inNav: false,
+      isMapButtonVisible: true,
     },
     Finish: {
       path: '/finish',
