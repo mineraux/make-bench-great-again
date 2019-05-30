@@ -93,6 +93,25 @@ class InstallationStore {
     installationID: ApiInstallation['_id']
   ) => {
     this.unlockedInstallations.push(installationID!)
+
+    if (!this.isInstallationInLocalStorage(installationID)) {
+      localStorage.setItem(
+        'unlockedInstallations',
+        JSON.stringify(this.unlockedInstallations)
+      )
+    }
+  }
+
+  @action public setUnlockedInstallationFromLocalStorage = () => {
+    const storageUnlockedInstallations = localStorage.getItem(
+      'unlockedInstallations'
+    )
+
+    if (storageUnlockedInstallations) {
+      JSON.parse(storageUnlockedInstallations).forEach((id: string) => {
+        this.addUnlockedInstallation(id)
+      })
+    }
   }
 
   @action public removeUnlockedInstallation = (
@@ -105,6 +124,29 @@ class InstallationStore {
     }
   }
 
+  @action public isInstallationInLocalStorage = (
+    installationID?: ApiInstallation['_id']
+  ): boolean => {
+    let is = false
+
+    const storageUnlockedInstallations = localStorage.getItem(
+      'unlockedInstallations'
+    )
+
+    if (storageUnlockedInstallations) {
+      JSON.parse(storageUnlockedInstallations).forEach((id: string) => {
+        if (id === installationID) {
+          is = true
+          return
+        } else {
+          is = false
+        }
+      })
+    }
+
+    return is
+  }
+
   @action public isInstallationUnlocked = (
     installationID?: ApiInstallation['_id']
   ): boolean => {
@@ -113,6 +155,7 @@ class InstallationStore {
     this.unlockedInstallations.forEach(id => {
       if (id === installationID) {
         isUnlocked = true
+        return
       } else {
         isUnlocked = false
       }
