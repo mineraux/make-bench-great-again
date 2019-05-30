@@ -84,7 +84,7 @@ const config: configInterface = {
       isMapButtonVisible: true,
     },
     Success: {
-      path: '/success/:installationName',
+      path: '/success/:installationSlug',
       name: 'Success',
       component: SuccessTransition,
       inNav: false,
