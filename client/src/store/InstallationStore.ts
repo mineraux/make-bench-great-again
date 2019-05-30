@@ -90,15 +90,15 @@ class InstallationStore {
   }
 
   @action public addUnlockedInstallation = (
-    installationSlug: ApiInstallation['slug']
+    installationID: ApiInstallation['_id']
   ) => {
-    this.unlockedInstallations.push(installationSlug!)
+    this.unlockedInstallations.push(installationID!)
   }
 
   @action public removeUnlockedInstallation = (
-    installationSlug: ApiInstallation['slug']
+    installationID: ApiInstallation['_id']
   ) => {
-    const index = this.unlockedInstallations.indexOf(installationSlug!, 0)
+    const index = this.unlockedInstallations.indexOf(installationID!, 0)
 
     if (index > -1) {
       this.unlockedInstallations.splice(index, 1)
@@ -106,13 +106,12 @@ class InstallationStore {
   }
 
   @action public isInstallationUnlocked = (
-    installationSlug?: ApiInstallation['slug']
+    installationID?: ApiInstallation['_id']
   ): boolean => {
     let isUnlocked = false
 
-    this.unlockedInstallations.forEach(slug => {
-      console.log(slug, installationSlug)
-      if (slug === installationSlug) {
+    this.unlockedInstallations.forEach(id => {
+      if (id === installationID) {
         isUnlocked = true
       } else {
         isUnlocked = false
