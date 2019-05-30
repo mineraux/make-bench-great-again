@@ -10,6 +10,7 @@ import ApiClient from '../ApiClient/ApiClient'
 class InstallationStore {
   @observable installationList: ApiInstallationReponseRoot = []
   @observable installationListTemp: ApiInstallationReponseRoot = []
+  @observable unlockedInstallations: string[] = []
 
   @action public fetchInstallationList = async (
     fieldToFetch: QueryApiInstallationReponse
@@ -21,7 +22,7 @@ class InstallationStore {
           slug: 'exedros',
           name: 'L’Exedros',
           description:
-            'Vestige du 19e siècle, cette sculpture aux courbes parfaites...',
+            'Conçue comme une véritable ode à la nature, sa structure en courbes rappelle la forme délicate et organique des feuillages, ramenant une touche printanière dans la ville.',
           lockedDescription:
             'Derrière cette forme conviviale et propice à l’échange, se cache pourtant une volonté de rejeter une partie de la population, empêchant les sans domicile fixes de s’allonger.Cette assise publique voit le jour dans l’écrin Parisien que constitue le boulevard Président Wilson en 2016. Son succès est tel qu’elle.Derrière cette forme conviviale et propice à l’échange, se cache pourtant une volonté de rejeter une partie de la population, empêchant les sans domicile fixes de s’allonger.Cette assise publique voit le jour dans l’écrin Parisien que constitue le boulevard Président Wilson en 2016. Son succès est tel qu’elle. Derrière cette forme conviviale et propice à l’échange, se cache pourtant une volonté de rejeter une partie de la population, empêchant les sans domicile fixes de s’allonger.Cette assise publique voit le jour dans l’écrin Parisien que constitue le boulevard Président Wilson en 2016. Son succès est tel qu’elle.Derrière cette forme conviviale et propice à l’échange, se cache pourtant une volonté de rejeter une partie de la population, empêchant les sans domicile fixes de s’allonger.Cette assise publique voit le jour dans l’écrin Parisien que constitue le boulevard Président Wilson en 2016. Son succès est tel qu’elle',
           geolocation: [2.402, 48.8787],
@@ -57,8 +58,9 @@ class InstallationStore {
   }
 
   @action public fetchSingleInstallation = async (
-    installationID: ApiInstallation['_id'],
-    fieldToFetch: QueryApiInstallationReponse
+    fieldToFetch: QueryApiInstallationReponse,
+    installationID?: ApiInstallation['_id'],
+    installationSlug?: ApiInstallation['slug']
   ): Promise<ApiInstallation> => {
     let data: ApiSingleInstallationReponseRoot = {
       _id: '',
@@ -66,16 +68,57 @@ class InstallationStore {
 
     if (process.env.NODE_ENV === 'development') {
       this.installationList.map(installation => {
-        if (installation._id === installationID) {
-          data = installation
+        if (installationID) {
+          if (installation._id === installationID) {
+            data = installation
+          }
+        } else if (installationSlug) {
+          if (installation.slug === installationSlug) {
+            data = installation
+          }
         }
       })
     } else {
-      data = await ApiClient.getSingleInstallation(installationID, fieldToFetch)
+      data = await ApiClient.getSingleInstallation(
+        installationID!,
+        fieldToFetch
+      )
     }
 
     this.installationList = this.mergeById([data])
     return data
+  }
+
+  @action public addUnlockedInstallation = (
+    installationID: ApiInstallation['_id']
+  ) => {
+    this.unlockedInstallations.push(installationID!)
+  }
+
+  @action public removeUnlockedInstallation = (
+    installationID: ApiInstallation['_id']
+  ) => {
+    const index = this.unlockedInstallations.indexOf(installationID!, 0)
+
+    if (index > -1) {
+      this.unlockedInstallations.splice(index, 1)
+    }
+  }
+
+  @action public isInstallationUnlocked = (
+    installationID?: ApiInstallation['_id']
+  ): boolean => {
+    let isUnlocked = false
+
+    this.unlockedInstallations.forEach(id => {
+      if (id === installationID) {
+        isUnlocked = true
+      } else {
+        isUnlocked = false
+      }
+    })
+
+    return isUnlocked
   }
 
   mergeById = (data: ApiInstallationReponseRoot) => {

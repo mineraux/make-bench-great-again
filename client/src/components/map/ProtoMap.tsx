@@ -1,7 +1,7 @@
 import React, { FunctionComponent, useEffect, useRef, useState } from 'react'
 import './mapgl.scss'
 import { observer } from 'mobx-react-lite'
-import { InstallationStore } from '../../store'
+import { InstallationStore, MapStore } from '../../store'
 import mapboxgl, {
   GeolocateControl,
   Map as MapboxGlMap,
@@ -14,8 +14,11 @@ import GeoLocationManager from './GeoLocationController'
 import InformationsPanel from '../InformationsPanel/InformationsPanel'
 import { featureCoords } from '../../utils/map'
 import Modal from '../Modal/Modal'
+import { pageProps } from '../../pages/types'
 
-const ProtoMap: FunctionComponent = () => {
+type Props = pageProps & {}
+
+const ProtoMap: FunctionComponent<Props> = ({ match, history }) => {
   const { installationList, fetchInstallationList } = InstallationStore
 
   const directions = useRef(DirectionsManager.initMapboxDirections())
@@ -31,8 +34,7 @@ const ProtoMap: FunctionComponent = () => {
 
   const [travelTime, setTravelTime] = useState()
   const [travelDistance, setTravelDistance] = useState()
-
-  const [targetInstallationID, setTargetInstallationID] = useState()
+  const [targetInstallationSlug, setTargetInstallationSlug] = useState()
 
   const [isMapLoaded, setIsMapLoaded] = useState(false)
 
@@ -46,6 +48,7 @@ const ProtoMap: FunctionComponent = () => {
   useEffect(() => {
     const getInstallationList = () => {
       fetchInstallationList({
+        slug: true,
         name: true,
         description: true,
         geolocation: true,
@@ -108,6 +111,7 @@ const ProtoMap: FunctionComponent = () => {
             e.features[0].properties!._id
           )
           setMarkers(markers)
+          MapStore.setSelectedInstallation(e.features[0].properties!)
         }
       }
 
@@ -178,7 +182,19 @@ const ProtoMap: FunctionComponent = () => {
   // }, [isTourStarted, userLocation])
   useEffect(() => {
     if (travelDistance === 0 || travelTime === 0) {
-      console.log('User close to installation')
+      console.log(
+        `User close to installation (ID : ${MapStore.targetInstallation._id})`
+      )
+      if (
+        !InstallationStore.isInstallationUnlocked(
+          MapStore.targetInstallation._id
+        )
+      ) {
+        InstallationStore.addUnlockedInstallation(
+          MapStore.targetInstallation._id
+        )
+        history.push(`/success/${MapStore.targetInstallation.slug}`)
+      }
     }
   }, [travelDistance])
 
@@ -203,7 +219,8 @@ const ProtoMap: FunctionComponent = () => {
       featureCoords(selectedMarker),
       userLocation
     )
-    setTargetInstallationID(selectedMarker.properties._id)
+    MapStore.setTargetInstallation(selectedMarker.properties)
+    setTargetInstallationSlug(MapStore.targetInstallation.slug)
     setIsTourStarted(true)
   }
 
@@ -230,7 +247,7 @@ const ProtoMap: FunctionComponent = () => {
           onButtonClick={setPath}
           isTourStarted={isTourStarted}
           userLocation={userLocation}
-          targetInstallationID={targetInstallationID}
+          targetInstallationID={targetInstallationSlug}
         />
       )}
     </div>

@@ -3,10 +3,7 @@ import { observer } from 'mobx-react-lite'
 import { Feature } from 'geojson'
 import ClassNames from 'classnames'
 import './informationsPanel.scss'
-import Button, {
-  themes as ButtonThemes,
-  themes,
-} from '../../components/Button/Button'
+import Button, { themes as ButtonThemes } from '../../components/Button/Button'
 import { ReactComponent as CrossIco } from '../../assets/images/close_ico.svg'
 import { ReactComponent as WalkIco } from '../../assets/images/ico_walk.svg'
 import { Coords } from '../../@types'
@@ -66,7 +63,7 @@ const InformationsPanel: FunctionComponent<Props> = ({
         open: isOpen,
       })}
     >
-      {travelTime && isCurrentTargetMatching && (
+      {travelTime && travelTime > 0 && isCurrentTargetMatching && (
         <div className="informations-panel__direction-informations">
           <WalkIco className="informations-panel__direction-informations__walk-ico" />
           <span className="informations-panel__direction-informations__direction-duration">
@@ -97,7 +94,7 @@ const InformationsPanel: FunctionComponent<Props> = ({
 
       {marker && marker.properties && (
         <Button
-          theme={themes.Blue}
+          theme={ButtonThemes.Blue}
           label="En savoir plus"
           link={`/installation/${marker.properties.slug}`}
           className="informations-panel__informations--installation__installation-see-more"

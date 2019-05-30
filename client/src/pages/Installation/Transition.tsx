@@ -1,4 +1,4 @@
-import React, { FunctionComponent, ReactNode } from 'react'
+import React, { FunctionComponent } from 'react'
 import { Transition } from 'react-transition-group'
 import { TimelineMax, TweenMax } from 'gsap'
 import { pageTransitionProps } from '../types'

@@ -7,6 +7,7 @@ import MenuTransition from '../pages/Menu/Transition'
 import AboutTransition from '../pages/About/Transition'
 import InstallationTransition from '../pages/Installation/Transition'
 import FinishTransition from '../pages/Finish/Transition'
+import SuccessTransition from '../pages/Success/Transition'
 
 interface routeInterface {
   path: string
@@ -79,6 +80,13 @@ const config: configInterface = {
       path: '/installation/:installationSlug',
       name: 'Installation',
       component: InstallationTransition,
+      inNav: false,
+      isMapButtonVisible: true,
+    },
+    Success: {
+      path: '/success/:installationSlug',
+      name: 'Success',
+      component: SuccessTransition,
       inNav: false,
       isMapButtonVisible: true,
     },

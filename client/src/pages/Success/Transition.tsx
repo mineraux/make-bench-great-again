@@ -1,10 +1,10 @@
-import React, { FunctionComponent, ReactNode } from 'react'
+import React, { FunctionComponent } from 'react'
 import { Transition } from 'react-transition-group'
-import { TimelineMax, TweenMax, Sine, Power1, Power2, Power3 } from 'gsap'
-import { NavigationStore } from '../../store'
-import { observer } from 'mobx-react-lite'
-import Map from './Map'
+import { TimelineMax, TweenMax } from 'gsap'
 import { pageTransitionProps } from '../types'
+import Success from './Success'
+import { observer } from 'mobx-react-lite'
+import { NavigationStore } from '../../store'
 
 type Props = pageTransitionProps
 
@@ -16,7 +16,7 @@ const TransitionComponent: FunctionComponent<Props> = ({
   const { setCurrentPagePath, nextPagePath } = NavigationStore
 
   // Enter : start
-  const onEnter = (node: HTMLElement): void => {
+  const onEnter = (node: HTMLElement) => {
     TweenMax.set(node, {
       opacity: 0,
     })
@@ -28,55 +28,22 @@ const TransitionComponent: FunctionComponent<Props> = ({
       onComplete: done,
     })
 
-    tl.to(node, 2.5, {
+    tl.to(node, 0.25, {
       opacity: 1,
-      ease: Power3.easeInOut,
-    }).fromTo(
-      node,
-      2.5,
-      {
-        filter: 'blur(15px)',
-      },
-      {
-        filter: 'blur(0)',
-        autoRound: false,
-        ease: Power3.easeInOut,
-      },
-      0.5
-    )
+      ease: 'Sine.easeInOut',
+    })
   }
 
   // Exit : transition
   const onExitTransition = (node: HTMLElement, done: () => void): void => {
     const tl = new TimelineMax({
-      onComplete: () => {
-        done()
-      },
+      onComplete: done,
     })
 
-    tl.fromTo(
-      node,
-      0.8,
-      {
-        filter: 'blur(0)',
-      },
-      {
-        filter: 'blur(15px)',
-        autoRound: false,
-        ease: Power2.easeInOut,
-      }
-    ).fromTo(
-      node,
-      0.8,
-      {
-        opacity: 1,
-      },
-      {
-        opacity: 0,
-        ease: Power2.easeInOut,
-      },
-      0.2
-    )
+    tl.to(node, 0.25, {
+      opacity: 0,
+      ease: 'Sine.easeInOut',
+    })
   }
 
   // Exit : end
@@ -97,9 +64,8 @@ const TransitionComponent: FunctionComponent<Props> = ({
       onEnter={onEnter}
       onExited={onExited}
       addEndListener={addEndListener}
-      appear={true}
     >
-      <Map match={match} history={history} />
+      <Success match={match} history={history} />
     </Transition>
   )
 }
