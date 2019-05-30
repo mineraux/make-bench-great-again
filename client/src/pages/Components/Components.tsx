@@ -19,6 +19,9 @@ import ScrollIndication, {
 import SpriteAnimation from '../../components/SpriteAnimation/SpriteAnimation'
 import { animationId } from '../../components/SpriteAnimation/animations'
 import SplashscreenAnimation from '../../components/SplashscreenAnimation/SplashscreenAnimation'
+import AudioPlayer, {
+  audios as AudioPlayerAudios,
+} from '../../components/AudioPlayer/AudioPlayer'
 
 type Props = pageProps
 
@@ -28,6 +31,11 @@ const Components: FunctionComponent<Props> = () => {
     setScrollProgression,
     setIsMapButtonVisible,
   } = NavigationStore
+
+  // Audio player
+
+  const [audioPlayerIsPlay, setAudioPlayerIsPlay] = useState(false)
+  const [audioPlayerProgress, setAudioPlayerProgress] = useState(0)
 
   // ProgressBar
 
@@ -58,7 +66,49 @@ const Components: FunctionComponent<Props> = () => {
 
       {/*** BurgerButton ***/}
 
-      <BurgerButton theme={BurgerButtonThemes.Blue} />
+      <BurgerButton theme={BurgerButtonThemes.Green} />
+
+      <hr />
+
+      <AudioPlayer
+        audio={AudioPlayerAudios.Audio1}
+        onProgress={progress => {
+          console.log('AudioPlayer progression', progress)
+          setAudioPlayerProgress(progress)
+        }}
+        onTogglePlay={isPlaying => {
+          console.log('AudioPlayer isPlaying', isPlaying)
+          setAudioPlayerIsPlay(isPlaying)
+        }}
+        play={audioPlayerIsPlay}
+        progress={audioPlayerProgress}
+      />
+
+      <button
+        onClick={() => {
+          setAudioPlayerIsPlay(true)
+        }}
+      >
+        Play
+      </button>
+      <button
+        onClick={() => {
+          setAudioPlayerIsPlay(false)
+        }}
+      >
+        Pause
+      </button>
+
+      <input
+        type="range"
+        min="0"
+        max="1"
+        step="0.01"
+        value={audioPlayerProgress}
+        onChange={e => {
+          setAudioPlayerProgress(Number(e.target.value))
+        }}
+      />
 
       <hr />
 
