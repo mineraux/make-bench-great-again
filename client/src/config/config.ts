@@ -5,6 +5,7 @@ import AdminTransition from '../pages/Admin/Transition'
 import ComponentsTransition from '../pages/Components/Transition'
 import MenuTransition from '../pages/Menu/Transition'
 import AboutTransition from '../pages/About/Transition'
+import ProgrammationTransition from '../pages/Programmation/Transition'
 import InstallationTransition from '../pages/Installation/Transition'
 import FinishTransition from '../pages/Finish/Transition'
 import SuccessTransition from '../pages/Success/Transition'
@@ -73,6 +74,13 @@ const config: configInterface = {
       path: '/about',
       name: 'About',
       component: AboutTransition,
+      inNav: true,
+      isMapButtonVisible: true,
+    },
+    Programmation: {
+      path: '/programmation',
+      name: 'Programmation',
+      component: ProgrammationTransition,
       inNav: true,
       isMapButtonVisible: true,
     },

@@ -20,7 +20,7 @@ type Props = pageProps
 
 const Menu: FunctionComponent<Props> = () => {
   const refTop = useRef<HTMLDivElement>(null)
-  const refTopRound = useRef<HTMLDivElement>(null)
+  const refTopRound = useRef<HTMLAnchorElement>(null)
 
   const windowSize = useWindowSize()
 
@@ -39,7 +39,12 @@ const Menu: FunctionComponent<Props> = () => {
   return (
     <div className={'page-menu'} style={{ height: windowSize.height }}>
       <div className="page-menu__top" ref={refTop}>
-        <div className="page-menu__top__round" ref={refTopRound}>
+        <Link
+          to={config.routes.Programmation.path}
+          className="page-menu__top__round"
+          // @ts-ignore
+          innerRef={refTopRound}
+        >
           <p className="page-menu__top__round__text">
             <span>P</span>
             <span>R</span>
@@ -55,7 +60,7 @@ const Menu: FunctionComponent<Props> = () => {
             <span>O</span>
             <span>N</span>
           </p>
-        </div>
+        </Link>
       </div>
       <Link
         to={config.routes.About.path}

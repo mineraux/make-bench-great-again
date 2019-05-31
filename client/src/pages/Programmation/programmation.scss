@@ -1,0 +1,13 @@
+@import '../../assets/styles/global';
+
+.page-programmation {
+  $self: &;
+
+  display: flex;
+  flex-wrap: wrap;
+  align-content: flex-start;
+
+  &__installation-thumbnail {
+    opacity: 0;
+  }
+}
