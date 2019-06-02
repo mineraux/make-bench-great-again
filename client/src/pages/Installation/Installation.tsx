@@ -20,6 +20,8 @@ const Installation: FunctionComponent<Props> = ({ match, history }) => {
         ? selectedInstallation._id
         : match.params.installationSlug
     )
+
+    InstallationStore.setUnlockedInstallationFromLocalStorage()
   }, [])
 
   return (

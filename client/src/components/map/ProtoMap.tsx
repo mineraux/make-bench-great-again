@@ -60,7 +60,9 @@ const ProtoMap: FunctionComponent<Props> = ({ match, history }) => {
     getInstallationList()
 
     mapboxgl.accessToken = process.env.REACT_APP_MAPBOX_ACCESS_TOKEN as string
+
     setMap(MapController.initMapCanvas())
+    InstallationStore.setUnlockedInstallationFromLocalStorage()
   }, [])
 
   useEffect(() => {
@@ -192,6 +194,7 @@ const ProtoMap: FunctionComponent<Props> = ({ match, history }) => {
           MapStore.targetInstallation._id
         )
       ) {
+        console.log(MapStore.targetInstallation._id)
         InstallationStore.addUnlockedInstallation(
           MapStore.targetInstallation._id
         )
