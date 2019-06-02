@@ -13,17 +13,30 @@
     z-index: 2;
   }
 
-  &__svg {
+  &__svg,
+  &__background {
     position: absolute;
     height: 80%;
     left: 50%;
     top: calc(50% + #{$header-height / 2});
     transform: translateX(-50%) translateY(-50%);
+  }
+
+  &__svg {
+    path#progressPath {
+      stroke: $color-green;
+    }
 
     circle {
       fill: $color-blue;
       stroke: $color-pink;
-      opacity: 0;
+
+      &.filled {
+        fill: $color-green;
+      }
+      &.stroked {
+        stroke: $color-green;
+      }
     }
   }
 

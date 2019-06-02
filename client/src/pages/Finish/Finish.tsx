@@ -2,11 +2,11 @@ import React, { FunctionComponent, useEffect, useState, useRef } from 'react'
 import { pageProps } from '../types'
 import config from '../../config/config'
 import Button, { themes as buttonThemes } from '../../components/Button/Button'
-import { ReactComponent as Progress } from './progress.svg'
+import { ReactComponent as BackgroundSvg } from './background.svg'
 // styles
 import './finish.scss'
 import { useWindowSize } from '../../utils/hooks'
-import { TweenMax, TimelineMax } from 'gsap'
+import { TimelineMax, Power1 } from 'gsap'
 
 type Props = pageProps
 
@@ -15,40 +15,90 @@ const Finish: FunctionComponent<Props> = ({ match }) => {
   const windowHeight = useWindowSize().height
   const [strokeDashArray, setStrokeDashArray] = useState(0)
 
-  // const currentStep = 4;
-  // const totalStep = 5;
+  const currentStep = 3
+  const totalStep = 5
 
   useEffect(() => {
     if (ref.current) {
+      const svg = ref.current.querySelector('.page-finish__svg') as SVGElement
+
       const path = ref.current.querySelector(
         '.page-finish__svg #progressPath'
       ) as SVGPathElement
       const length = path.getTotalLength()
       setStrokeDashArray(length)
 
+      const circles = ref.current.querySelectorAll(
+        '.page-finish__svg circle'
+      ) as NodeListOf<SVGCircleElement>
+
+      // init circle style
+      for (let i = 0; i <= currentStep; i++) {
+        if (i === currentStep) {
+          circles[i].classList.add('stroked')
+          circles[i].setAttribute('stroke-width', '3')
+          console.dir()
+        } else {
+          circles[i].classList.add('filled')
+        }
+      }
+
       const tl = new TimelineMax()
+
       tl.fromTo(
-        path,
-        5,
+        svg,
+        1.5,
         {
-          strokeDashoffset: length - length / 6,
+          opacity: 0,
         },
         {
-          strokeDashoffset: 0,
-          delay: 1.5,
+          opacity: 1,
         }
       )
+        .fromTo(
+          path,
+          3.5,
+          {
+            strokeDashoffset: length - (length / totalStep) * (currentStep - 1),
+          },
+          {
+            strokeDashoffset: length - (length / totalStep) * currentStep,
+            ease: Power1.easeInOut,
+          },
+          '+=0.2'
+        )
+        .to(
+          circles[currentStep],
+          1.5,
+          {
+            fill: '#61F984',
+          },
+          '-=0.5'
+        )
     }
   }, [])
 
-  const steps = [
-    { color: 'red' },
-    { color: 'green' },
-    { color: 'yellow' },
-    { color: 'purple' },
-    { color: '#ff9800' },
-    { color: 'yellow' },
-  ]
+  const renderCircles = () => {
+    const circles = []
+
+    for (let index = 0; index < totalStep; index++) {
+      circles.push(
+        <circle r="20" strokeWidth="0.5" key={index} id={`circle-${index}`}>
+          <animateMotion
+            calcMode="linear"
+            dur="0.1s"
+            keyPoints={`${(1 / totalStep) * index};${(1 / totalStep) * index}`}
+            keyTimes="0;1"
+            repeatCount={1}
+            fill="freeze"
+          >
+            <mpath xlinkHref="#motionPath" />
+          </animateMotion>
+        </circle>
+      )
+    }
+    return circles
+  }
 
   const renderSvg = () => (
     <svg
@@ -69,36 +119,11 @@ const Finish: FunctionComponent<Props> = ({ match }) => {
         id="progressPath"
         d="m280.75.25c154.92 0 280.5 125.58 280.5 280.5v510c0 154.92-125.58 280.5-280.5 280.5-154.92 0-280.5-125.58-280.5-280.5v-510c0-154.92 125.58-280.5 280.5-280.5z"
         fill="none"
-        stroke="red"
         strokeMiterlimit="10"
         strokeWidth="5"
         strokeDasharray={strokeDashArray}
       />
-      {steps.map((step, index) => (
-        <circle r="20" strokeWidth="0.5" key={index}>
-          <animateMotion
-            calcMode="linear"
-            dur="0s"
-            keyPoints={`${(1 / steps.length) * index};${(1 / steps.length) *
-              index}`}
-            keyTimes="0;1"
-            repeatCount={1}
-            fill="freeze"
-          >
-            <mpath xlinkHref="#motionPath" />
-          </animateMotion>
-          <animate
-            attributeType="CSS"
-            attributeName="opacity"
-            begin="0"
-            from="0"
-            to="1"
-            dur="1s"
-            repeatCount="1"
-            fill="freeze"
-          />
-        </circle>
-      ))}
+      {renderCircles()}
     </svg>
   )
   return (
@@ -109,10 +134,12 @@ const Finish: FunctionComponent<Props> = ({ match }) => {
         minHeight: windowHeight,
       }}
     >
-      {/*<Progress className={'page-finish__svg'} />*/}
+      <BackgroundSvg className={'page-finish__background'} />
       {renderSvg()}
 
-      <p className="page-finish__counter">01-05</p>
+      <p className="page-finish__counter">
+        {('0' + currentStep).slice(-2)}-{('0' + totalStep).slice(-2)}
+      </p>
 
       <p className="page-finish__title">Pétition(s) signée(s)</p>
 
