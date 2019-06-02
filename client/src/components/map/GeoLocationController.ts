@@ -1,14 +1,14 @@
 import * as turf from '@turf/turf'
-import { GeolocateControl } from "mapbox-gl";
-import { Coords } from "../../@types";
-import { featureCoords } from "../../utils/map";
-import { Feature } from 'geojson';
+import { GeolocateControl } from 'mapbox-gl'
+import { Coords } from '../../@types'
+import { featureCoords } from '../../utils/map'
+import { Feature } from 'geojson'
 
-class GeoLocationManager {
+class GeoLocationController {
   public initGeolocate = () => {
     const geolocate = new GeolocateControl({
       positionOptions: {
-        enableHighAccuracy: true
+        enableHighAccuracy: true,
       },
       trackUserLocation: true,
     })
@@ -32,7 +32,13 @@ class GeoLocationManager {
     })
     return nearestMarker
   }
+
+  public getDistanceToMarker = (
+    markerCoords: Coords,
+    userLocation: Coords
+  ): number => {
+    return turf.distance(userLocation, markerCoords, { units: 'meters' })
+  }
 }
 
-export default new GeoLocationManager()
-
+export default new GeoLocationController()

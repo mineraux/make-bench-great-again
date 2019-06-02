@@ -2,7 +2,7 @@ import { ApiInstallationReponseRoot, Coords } from '../../@types'
 import mapboxgl, { Map as MapboxGlMap } from 'mapbox-gl'
 import { Feature } from 'geojson'
 
-class MapManager {
+class MapController {
   public initMapCanvas = () => {
     const map = new MapboxGlMap({
       container: 'map',
@@ -94,4 +94,4 @@ class MapManager {
   }
 }
 
-export default new MapManager()
+export default new MapController()

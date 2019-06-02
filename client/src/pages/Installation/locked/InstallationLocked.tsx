@@ -1,10 +1,10 @@
 import React, { FunctionComponent, useEffect, useState } from 'react'
-import { pageProps } from '../types'
-import { InstallationStore } from '../../store'
-import { ApiInstallation } from '../../@types'
-import './installation.scss'
+import { pageProps } from '../../types'
+import { InstallationStore } from '../../../store'
+import { ApiInstallation } from '../../../@types'
+import './installation-locked.scss'
 import { observer } from 'mobx-react-lite'
-import { NavigationStore } from '../../store'
+import { NavigationStore } from '../../../store'
 
 type Props = pageProps & {}
 

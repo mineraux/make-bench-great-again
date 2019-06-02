@@ -7,11 +7,13 @@ import Button, { themes as ButtonThemes } from '../../components/Button/Button'
 import { ReactComponent as CrossIco } from '../../assets/images/close_ico.svg'
 import { ReactComponent as WalkIco } from '../../assets/images/ico_walk.svg'
 import { Coords } from '../../@types'
+import { featureCoords } from '../../utils/map'
+import GeoLocationController from '../map/GeoLocationController'
+import { MapStore, InstallationStore } from '../../store'
 
 interface Props {
   marker: Feature
   travelTime: Number
-  travelDistance: Number
   className?: string
   onButtonClick: any
   isTourStarted: boolean
@@ -22,7 +24,6 @@ interface Props {
 const InformationsPanel: FunctionComponent<Props> = ({
   marker,
   travelTime,
-  travelDistance,
   className,
   onButtonClick,
   userLocation,
@@ -56,6 +57,26 @@ const InformationsPanel: FunctionComponent<Props> = ({
       }
     }
   }, [marker, targetInstallationID])
+
+  const onClickSeeMore = () => {
+    const distance = GeoLocationController.getDistanceToMarker(
+      featureCoords(marker),
+      userLocation
+    )
+
+    // if distance < 10 meters
+    if (distance < 10) {
+      if (
+        !InstallationStore.isInstallationUnlocked(
+          MapStore.selectedInstallation._id
+        )
+      ) {
+        InstallationStore.addUnlockedInstallation(
+          MapStore.selectedInstallation._id
+        )
+      }
+    }
+  }
 
   return (
     <div
@@ -96,6 +117,7 @@ const InformationsPanel: FunctionComponent<Props> = ({
         <Button
           theme={ButtonThemes.Blue}
           label="En savoir plus"
+          onClick={onClickSeeMore}
           link={`/installation/${marker.properties.slug}`}
           className="informations-panel__informations--installation__installation-see-more"
         />

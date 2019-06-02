@@ -3,13 +3,10 @@ import React, {
   useEffect,
   useState,
   useRef,
-  ReactEventHandler,
   SyntheticEvent,
 } from 'react'
 import Classnames from 'classnames'
-import config from '../../config/config'
 import { observer } from 'mobx-react-lite'
-import { NavigationStore } from '../../store'
 import { ReactComponent as PlayIcon } from './play.svg'
 import { ReactComponent as PauseIcon } from './pause.svg'
 import './audio-player.scss'
@@ -47,6 +44,7 @@ const AudioPlayer: FunctionComponent<Props> = ({
   const refRounProgressValue = useRef<SVGCircleElement>(null)
 
   const [isMetadaLoaded, setIsMetadaLoaded] = useState(false)
+  const [progressState, setProgressState] = useState(progress)
 
   const radius = 54
   const circumference: number = 2 * Math.PI * radius
@@ -60,24 +58,35 @@ const AudioPlayer: FunctionComponent<Props> = ({
   }, [])
 
   useEffect(() => {
+    console.log('play', play)
     if (refAudio.current) {
       play ? refAudio.current.play() : refAudio.current.pause()
     }
   }, [play])
 
+  // set currentTime if progress is different from progressState
+  useEffect(() => {
+    if (refAudio.current && isMetadaLoaded && progress !== progressState) {
+      refAudio.current.currentTime = refAudio.current.duration * progress
+      setProgressState(progress)
+    }
+  }, [progress, progressState, isMetadaLoaded])
+
+  // set currentTime when metadata is loaded
   useEffect(() => {
     if (refAudio.current && isMetadaLoaded) {
       refAudio.current.currentTime = refAudio.current.duration * progress
     }
-  }, [progress, isMetadaLoaded])
+  }, [isMetadaLoaded])
 
+  // animate svg on progress
   useEffect(() => {
     if (refRounProgressValue.current) {
       TweenMax.to(refRounProgressValue.current, 0.5, {
-        strokeDashoffset: `${circumference * (1 - progress)}`,
+        strokeDashoffset: `${circumference * (1 - progressState)}`,
       })
     }
-  }, [progress])
+  }, [progressState])
 
   const handleOnClick = () => {
     if (refAudio.current) {
@@ -94,6 +103,7 @@ const AudioPlayer: FunctionComponent<Props> = ({
   const handleOnTimeUpdateAudio = (e: SyntheticEvent<HTMLAudioElement>) => {
     const audioProgress =
       refAudio.current!.currentTime / refAudio.current!.duration
+    setProgressState(audioProgress)
     if (onProgress) {
       onProgress(audioProgress)
     }
