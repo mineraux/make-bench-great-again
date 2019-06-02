@@ -15,10 +15,16 @@
 
   &__svg {
     position: absolute;
-    width: 80%;
+    height: 80%;
     left: 50%;
     top: calc(50% + #{$header-height / 2});
     transform: translateX(-50%) translateY(-50%);
+
+    circle {
+      fill: $color-blue;
+      stroke: $color-pink;
+      opacity: 0;
+    }
   }
 
   &__counter {
