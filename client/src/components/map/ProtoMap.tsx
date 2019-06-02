@@ -7,10 +7,10 @@ import mapboxgl, {
   Map as MapboxGlMap,
   EventData,
 } from 'mapbox-gl'
-import MapManager from './MapController'
+import MapController from './MapController'
 import { featureInFeaturesCoords } from '../../utils/map'
-import DirectionsManager from './DirectionsController'
-import GeoLocationManager from './GeoLocationController'
+import DirectionsController from './DirectionsController'
+import GeoLocationController from './GeoLocationController'
 import InformationsPanel from '../InformationsPanel/InformationsPanel'
 import { featureCoords } from '../../utils/map'
 import Modal from '../Modal/Modal'
@@ -21,8 +21,10 @@ type Props = pageProps & {}
 const ProtoMap: FunctionComponent<Props> = ({ match, history }) => {
   const { installationList, fetchInstallationList } = InstallationStore
 
-  const directions = useRef(DirectionsManager.initMapboxDirections())
-  const geolocate = useRef<GeolocateControl>(GeoLocationManager.initGeolocate())
+  const directions = useRef(DirectionsController.initMapboxDirections())
+  const geolocate = useRef<GeolocateControl>(
+    GeoLocationController.initGeolocate()
+  )
 
   const [map, setMap] = useState()
 
@@ -58,7 +60,7 @@ const ProtoMap: FunctionComponent<Props> = ({ match, history }) => {
     getInstallationList()
 
     mapboxgl.accessToken = process.env.REACT_APP_MAPBOX_ACCESS_TOKEN as string
-    setMap(MapManager.initMapCanvas())
+    setMap(MapController.initMapCanvas())
   }, [])
 
   useEffect(() => {
@@ -105,7 +107,7 @@ const ProtoMap: FunctionComponent<Props> = ({ match, history }) => {
             map.removeSource('markers-focus-sources')
           }
 
-          const markers = MapManager.setAllMarkers(
+          const markers = MapController.setAllMarkers(
             installationList,
             map,
             e.features[0].properties!._id
@@ -115,7 +117,7 @@ const ProtoMap: FunctionComponent<Props> = ({ match, history }) => {
         }
       }
 
-      const markers = MapManager.setAllMarkers(installationList, map)
+      const markers = MapController.setAllMarkers(installationList, map)
       setMarkers(markers)
 
       map.on('click', 'markers', (e: any) => {
@@ -173,7 +175,7 @@ const ProtoMap: FunctionComponent<Props> = ({ match, history }) => {
   //    * 2,407654
   //    */
   //   if (isTourStarted) {
-  //     DirectionsManager.setPathToInstallation(
+  //     DirectionsController.setPathToInstallation(
   //       directions.current,
   //       featureCoords(selectedMarker),
   //       userLocation
@@ -200,7 +202,7 @@ const ProtoMap: FunctionComponent<Props> = ({ match, history }) => {
 
   const setFastestPath = () => {
     setSelectedMarker(
-      DirectionsManager.setFastestPath(
+      DirectionsController.setFastestPath(
         directions.current,
         markers,
         userLocation
@@ -214,7 +216,7 @@ const ProtoMap: FunctionComponent<Props> = ({ match, history }) => {
   }
 
   const setPath = () => {
-    DirectionsManager.setPathToInstallation(
+    DirectionsController.setPathToInstallation(
       directions.current,
       featureCoords(selectedMarker),
       userLocation
@@ -243,7 +245,6 @@ const ProtoMap: FunctionComponent<Props> = ({ match, history }) => {
         <InformationsPanel
           marker={selectedMarker}
           travelTime={travelTime}
-          travelDistance={travelDistance}
           onButtonClick={setPath}
           isTourStarted={isTourStarted}
           userLocation={userLocation}
