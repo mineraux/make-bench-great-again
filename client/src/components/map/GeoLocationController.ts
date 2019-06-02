@@ -32,6 +32,13 @@ class GeoLocationController {
     })
     return nearestMarker
   }
+
+  public getDistanceToMarker = (
+    markerCoords: Coords,
+    userLocation: Coords
+  ): number => {
+    return turf.distance(userLocation, markerCoords, { units: 'meters' })
+  }
 }
 
 export default new GeoLocationController()
