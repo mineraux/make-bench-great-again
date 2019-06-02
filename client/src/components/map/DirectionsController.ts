@@ -4,12 +4,12 @@ const MapboxDirections = require('@mapbox/mapbox-gl-directions/dist/mapbox-gl-di
 /* tslint:enable:no-var-requires */
 import mapboxgl from 'mapbox-gl'
 import { featureCoords } from '../../utils/map'
-import GeoLocationManager from './GeoLocationController'
+import GeoLocationController from './GeoLocationController'
 import { Coords } from '../../@types'
 import { Feature } from 'geojson'
 import style from './DirectionsStyles'
 
-class DirectionsManager {
+class DirectionsController {
   public initMapboxDirections = () => {
     const directions = new MapboxDirections({
       accessToken: mapboxgl.accessToken,
@@ -28,7 +28,7 @@ class DirectionsManager {
     markers: Feature[],
     userLocation: Coords
   ): Feature => {
-    const nearestMarker = GeoLocationManager.getNearestMarker(
+    const nearestMarker = GeoLocationController.getNearestMarker(
       markers,
       userLocation
     )
@@ -50,4 +50,4 @@ class DirectionsManager {
   }
 }
 
-export default new DirectionsManager()
+export default new DirectionsController()

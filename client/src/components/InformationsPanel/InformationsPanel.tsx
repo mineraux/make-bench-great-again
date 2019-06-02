@@ -11,7 +11,6 @@ import { Coords } from '../../@types'
 interface Props {
   marker: Feature
   travelTime: Number
-  travelDistance: Number
   className?: string
   onButtonClick: any
   isTourStarted: boolean
@@ -22,7 +21,6 @@ interface Props {
 const InformationsPanel: FunctionComponent<Props> = ({
   marker,
   travelTime,
-  travelDistance,
   className,
   onButtonClick,
   userLocation,
