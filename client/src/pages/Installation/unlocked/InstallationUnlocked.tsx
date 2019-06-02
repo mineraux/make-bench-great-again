@@ -79,34 +79,38 @@ const Installation: FunctionComponent<Props> = ({ match, history }) => {
   return (
     <div className="page-installation">
       <div className="page-installation__wrapper">
-        <div className="page-installation__part1">
-          <div className="page-installation__presentation">
-            <p className="page-installation__presentation__title">
+        <div className="page-installation__wrapper__part--first-part">
+          <div className="page-installation__wrapper__part--first-part__presentation">
+            <p className="page-installation__wrapper__part--first-part__presentation__title">
               {installation.name}
             </p>
             <SpriteAnimation
-              className={'page-installation__presentation__installation-sketch'}
+              className={
+                'page-installation__wrapper__part--first-part__presentation__installation-sketch'
+              }
               progression={scrollProgressFirstPart}
               animationID={animationId.bancMetro}
             />
-            <div className="page-installation__presentation__text-content-wrapper">
-              <div className="page-installation__presentation__text-content-wrapper__mask" />
-              <p className="page-installation__presentation__text-content">
+            <div className="page-installation__wrapper__part--first-part__presentation__text-content-wrapper">
+              <div className="page-installation__wrapper__part--first-part__presentation__text-content-wrapper__mask" />
+              <p className="page-installation__wrapper__part--first-part__presentation__text-content-wrapper__text-content">
                 {installation.lockedDescription}
               </p>
             </div>
           </div>
 
-          <div className="page-installation__testimony">
-            <p className="page-installation__testimony__title">Témoignage</p>
+          <div className="page-installation__wrapper__part--first-part__testimony">
+            <p className="page-installation__wrapper__part--first-part__testimony__title">
+              Témoignage
+            </p>
             <img
-              className="page-installation__testimony__player"
+              className="page-installation__wrapper__part--first-part__testimony__player"
               src={DummyPlayer}
               alt=""
             />
-            <div className="page-installation__testimony__text-content-wrapper">
-              <div className="page-installation__testimony__text-content-wrapper__mask" />
-              <p className="page-installation__testimony__text-content">
+            <div className="page-installation__wrapper__part--first-part__testimony__text-content-wrapper">
+              <div className="page-installation__wrapper__part--first-part__testimony__text-content-wrapper__mask" />
+              <p className="page-installation__wrapper__part--first-part__testimony__text-content-wrapper__text-content">
                 Avant je pouvais venir dormir ici mais depuis qu'ils ont mis en
                 place ces accoudoirs, je suis obliger de dormir sur le trottoir.
                 On était au calme ici, bla bla bla Lorem ipsum dolor, sit amet
@@ -117,20 +121,20 @@ const Installation: FunctionComponent<Props> = ({ match, history }) => {
             </div>
           </div>
         </div>
-        <div className="page-installation__part2">
-          <div className="page-installation__part2 challenge">
+        <div className="page-installation__wrapper__part--second-part">
+          <div className="page-installation__wrapper__part--second-part__challenge">
             <p
-              className="page-installation__part2__challenge__title"
+              className="page-installation__wrapper__part--second-part__challenge__title"
               dangerouslySetInnerHTML={{
                 __html:
                   "Es-tu assez souple pour réussir à t'allonger sur cette installation&nbsp;?",
               }}
             />
-            <div className="page-installation__part2__challenge__text-content">
+            <div className="page-installation__wrapper__part--second-part__challenge__text-content">
               <p>
                 Pour témoigner de ton indignation et nous aider à retirer ce
                 dispositifi anti-SDF. <br />
-                <span className="page-installation__part2__challenge__text-content--bold">
+                <span className="page-installation__wrapper__part--second-part__challenge__text-content--bold">
                   Prends-toi en photo et poste ta performance sur Twitter, ta
                   photo servira de signature pour notre pétition
                 </span>
@@ -138,24 +142,26 @@ const Installation: FunctionComponent<Props> = ({ match, history }) => {
             </div>
             <Button
               className={
-                'page-installation__part2__challenge__sign-petition-button'
+                'page-installation__wrapper__part--second-part__challenge__sign-petition-button'
               }
               label="Signer la pétition"
               theme={buttonThemes.Blue}
               url={getTwitterUrl()}
               icon={true}
             />
-            <p className="page-installation__part2__challenge__help">
+            <p className="page-installation__wrapper__part--second-part__challenge__help">
               Plus nous serons nombreux, plus nous aurons de chances d'être
               entendus
             </p>
           </div>
         </div>
-        <div className="page-installation__part3">
-          <p className="page-installation__part3__title">ILS SE SONT ENGAGÉS</p>
+        <div className="page-installation__wrapper__part--third-part">
+          <p className="page-installation__wrapper__part--third-part__title">
+            ILS SE SONT ENGAGÉS
+          </p>
 
           <Button
-            className={'page-installation__part3__button'}
+            className={'page-installation__wrapper__part--third-part__button'}
             label={'Poursuivre le parcours'}
             theme={buttonThemes.Green}
             link={config.routes.Finish.path}
