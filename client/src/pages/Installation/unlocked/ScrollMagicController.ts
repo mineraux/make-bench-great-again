@@ -3,8 +3,8 @@ import { TimelineMax } from 'gsap'
 import ScrollMagic from 'scrollmagic'
 import 'animation.gsap'
 import 'debug.addIndicators'
-import ScrollMagicStore from '../../store/ScrollMagicStore'
-import { NavigationStore } from '../../store'
+import ScrollMagicStore from '../../../store/ScrollMagicStore'
+import { NavigationStore } from '../../../store'
 
 class ScrollMagicController {
   scenes: ScrollMagic.Scene[]

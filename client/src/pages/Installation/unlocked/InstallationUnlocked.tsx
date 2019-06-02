@@ -1,18 +1,20 @@
 import React, { FunctionComponent, useEffect, useState } from 'react'
-import { pageProps } from '../types'
-import { InstallationStore, MapStore } from '../../store'
-import { ApiInstallation } from '../../@types'
-import './installation.scss'
+import { pageProps } from '../../types'
+import { InstallationStore, MapStore } from '../../../store'
+import { ApiInstallation } from '../../../@types'
+import './installation-unlocked.scss'
 import ScrollMagicController from './ScrollMagicController'
-import DummyPlayer from '../../assets/images/dummy_player.png'
-import Button, { themes as buttonThemes } from '../../components/Button/Button'
+import DummyPlayer from './../../../assets/images/dummy_player.png'
+import Button, {
+  themes as buttonThemes,
+} from '../../../components/Button/Button'
 import { observer } from 'mobx-react-lite'
-import { NavigationStore } from '../../store'
-import SpriteAnimation from '../../components/SpriteAnimation/SpriteAnimation'
-import ScrollMagicStore from '../../store/ScrollMagicStore'
-import { animationId } from '../../components/SpriteAnimation/animations'
-import TwitterGallery from '../../components/TwitterGallery/TwitterGallery'
-import config from '../../config/config'
+import { NavigationStore } from '../../../store'
+import SpriteAnimation from '../../../components/SpriteAnimation/SpriteAnimation'
+import ScrollMagicStore from '../../../store/ScrollMagicStore'
+import { animationId } from '../../../components/SpriteAnimation/animations'
+import TwitterGallery from '../../../components/TwitterGallery/TwitterGallery'
+import config from '../../../config/config'
 
 type Props = pageProps & {}
 

@@ -1,27 +1,30 @@
 import React, { FunctionComponent, useEffect, useState } from 'react'
 import { pageProps } from '../types'
 import { InstallationStore, MapStore } from '../../store'
-import './installation.scss'
+import './unlocked/installation-unlocked.scss'
 import { observer } from 'mobx-react-lite'
-import InstallationUnlocked from './InstallationUnlocked'
-import InstallationLocked from './InstallationLocked'
+import InstallationUnlocked from './unlocked/InstallationUnlocked'
+import InstallationLocked from './locked/InstallationLocked'
 
 type Props = pageProps & {}
 
 const Installation: FunctionComponent<Props> = ({ match, history }) => {
   const [installationIdentifier, setInstallationIdentifier] = useState()
 
+  const { isInstallationUnlocked } = InstallationStore
+  const { selectedInstallation } = MapStore
+
   useEffect(() => {
     setInstallationIdentifier(
-      MapStore.selectedInstallation._id
-        ? MapStore.selectedInstallation._id
+      selectedInstallation._id
+        ? selectedInstallation._id
         : match.params.installationSlug
     )
   }, [])
 
   return (
     <>
-      {InstallationStore.isInstallationUnlocked(installationIdentifier) ? (
+      {isInstallationUnlocked(installationIdentifier) ? (
         <InstallationUnlocked match={match} history={history} />
       ) : (
         <InstallationLocked match={match} history={history} />
