@@ -35,7 +35,7 @@ const Components: FunctionComponent<Props> = () => {
   // Audio player
 
   const [audioPlayerIsPlay, setAudioPlayerIsPlay] = useState(false)
-  const [audioPlayerProgress, setAudioPlayerProgress] = useState(0)
+  const [audioPlayerProgress, setAudioPlayerProgress] = useState(0.5)
 
   // ProgressBar
 
