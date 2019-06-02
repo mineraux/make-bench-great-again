@@ -15,6 +15,7 @@ import ScrollMagicStore from '../../../store/ScrollMagicStore'
 import { animationId } from '../../../components/SpriteAnimation/animations'
 import TwitterGallery from '../../../components/TwitterGallery/TwitterGallery'
 import config from '../../../config/config'
+import { TweenMax, Power2 } from 'gsap'
 
 type Props = pageProps & {}
 
@@ -37,6 +38,16 @@ const Installation: FunctionComponent<Props> = ({ match, history }) => {
       getInstallationInformation()
     }
     setIsMapButtonVisible(true)
+
+    TweenMax.to(
+      '.page-installation__wrapper__part--first-part__presentation__installation-sketch',
+      2,
+      {
+        opacity: 1,
+        delay: 1,
+        ease: Power2.easeInOut,
+      }
+    )
 
     return () => {
       ScrollMagicController.destroyScrollMagicScenes()
