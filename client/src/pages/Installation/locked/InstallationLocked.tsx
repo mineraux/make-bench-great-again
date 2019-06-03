@@ -69,7 +69,7 @@ const InstallationLocked: FunctionComponent<Props> = ({ match, history }) => {
             }}
           >
             <div className="page-installation--locked__presentation__content-wrapper__mask" />
-            <div className="test">
+            <div className="page-installation--locked__presentation__content-wrapper__fake-scroll-wrapper">
               <img
                 src={Bench}
                 alt=""
