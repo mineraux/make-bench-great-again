@@ -87,16 +87,17 @@ const MapButton: FunctionComponent<Props> = ({ className }) => {
         .add('iconEnd', '-=0.1')
         .to(
           ref.current,
-          1,
+          1.4,
           {
             xPercent: -50,
             yPercent: 50,
+            ease: Power1.easeInOut,
           },
           'iconEnd'
         )
         .to(
           ref.current,
-          1,
+          1.4,
           {
             opacity: 1,
             scale: 1,
@@ -107,9 +108,9 @@ const MapButton: FunctionComponent<Props> = ({ className }) => {
         // .add('scale', 'iconEnd')
         .to(
           ref.current,
-          1,
+          1.4,
           {
-            filter: 'blur(15px)',
+            filter: 'blur(20px)',
             autoRound: false,
             ease: Power1.easeInOut,
           },
@@ -117,7 +118,7 @@ const MapButton: FunctionComponent<Props> = ({ className }) => {
         )
         .to(
           text!,
-          1,
+          1.4,
           {
             scale: 1,
             ease: Power1.easeInOut,
