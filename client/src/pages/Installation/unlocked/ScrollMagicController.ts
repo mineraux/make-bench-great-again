@@ -25,7 +25,7 @@ class ScrollMagicController {
 
     // TWEENS
     const tweenPresentationText = new TimelineMax().fromTo(
-      '.page-installation__presentation__text-content',
+      '.page-installation__wrapper__part--first-part__presentation__text-content-wrapper__text-content',
       0.5,
       {
         yPercent: 100,
@@ -36,7 +36,7 @@ class ScrollMagicController {
     )
 
     const tweenPresentationFade = new TimelineMax().to(
-      '.page-installation__presentation',
+      '.page-installation__wrapper__part--first-part__presentation',
       0.5,
       {
         opacity: 0,
@@ -44,7 +44,7 @@ class ScrollMagicController {
     )
 
     const tweenTestimonyTextTranslate = new TimelineMax().fromTo(
-      '.page-installation__testimony__text-content',
+      '.page-installation__wrapper__part--first-part__testimony__text-content-wrapper__text-content',
       0.5,
       {
         yPercent: 100,
@@ -58,7 +58,7 @@ class ScrollMagicController {
      * Tweens de témoignage de l'oeuvre
      */
     const tweenTestimony = new TimelineMax().to(
-      '.page-installation__testimony',
+      '.page-installation__wrapper__part--first-part__testimony',
       0.5,
       {
         opacity: 1,
@@ -66,7 +66,7 @@ class ScrollMagicController {
     )
 
     const tweenTestimonyTextFade = new TimelineMax().to(
-      '.page-installation__testimony__text-content-wrapper',
+      '.page-installation__wrapper__part--first-part__testimony__text-content-wrapper',
       0.5,
       {
         opacity: 1,
@@ -79,7 +79,7 @@ class ScrollMagicController {
       duration: part1Height,
       triggerHook: 0,
     })
-      .setPin('.page-installation__part1')
+      .setPin('.page-installation__wrapper__part--first-part')
       // .addIndicators({ name: 'Pin' })
       .addTo(controller)
     this.scenes.push(scenePart1Pin)
@@ -161,21 +161,21 @@ class ScrollMagicController {
 
     // SCENES
     const scenePart2Pin = new ScrollMagic.Scene({
-      triggerElement: '.page-installation__part2',
+      triggerElement: '.page-installation__wrapper__part--second-part',
       duration: 1,
       triggerHook: 0,
     })
-      .setPin('.page-installation__part2')
+      .setPin('.page-installation__wrapper__part--second-part')
       // .addIndicators({ name: 'Pin 2' })
       .addTo(controller)
     this.scenes.push(scenePart2Pin)
 
     const part2Height = document
-      .querySelector('.page-installation__part2')!
+      .querySelector('.page-installation__wrapper__part--second-part')!
       .getBoundingClientRect().height
 
     const transitionMapButtonColor = new ScrollMagic.Scene({
-      triggerElement: '.page-installation__part2',
+      triggerElement: '.page-installation__wrapper__part--second-part',
       duration: part2Height,
       triggerHook: 1,
     })

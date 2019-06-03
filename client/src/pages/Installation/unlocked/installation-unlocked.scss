@@ -7,172 +7,182 @@
   &__wrapper {
     height: 100%;
     width: 100%;
-  }
 
-  &__part1 {
-    height: 100vh;
-    padding-bottom: 10rem;
-    left: 0 !important;
-  }
+    &__part {
+      &--first-part,
+      &--second-part,
+      &--third-part {
+        &__presentation,
+        &__testimony,
+        &__challenge {
+          &__title {
+            display: inline-block;
+            margin: 3.5rem 0;
+            width: 100%;
+            color: $color-green;
+            font-size: 4rem;
+            text-align: center;
+            font-family: $font-infini-regular;
+            text-transform: uppercase;
+          }
 
-  &__part2 {
-    background-color: $color-pink;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    height: 100vh;
+          &__text-content-wrapper {
+            position: relative;
+            max-height: 25em;
+            overflow: hidden;
 
-    &__challenge {
-      font-family: $font-infini-regular;
-      color: $color-blue;
+            &__text-content {
+              text-align: center;
+              max-width: $content-width;
+              padding: 3rem $content-padding 0 $content-padding;
+              margin: auto;
+              font-family: $font-infini-regular;
+              color: $color-pink;
+              font-size: 1.5rem;
+              line-height: 1.3em;
+            }
 
-      &__title {
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        min-height: 20rem;
-        margin: 7rem 0 2rem;
-        padding: 0 1.7em;
-        width: 100%;
-        font-size: 2.5rem;
-        text-align: center;
-        color: $color-blue;
-        text-transform: uppercase;
-        line-height: 1.5em;
-        background: radial-gradient(
-          circle closest-side,
-          rgba(97, 249, 132, 1),
-          rgba(97, 249, 132, 0)
-        );
-      }
-
-      &__text-content {
-        text-align: center;
-        max-width: $content-width;
-        padding: 3rem 4rem 0 4rem;
-        margin-bottom: 3em;
-        font-family: $font-infini-regular;
-        color: $color-blue;
-        font-size: 1.5rem;
-        line-height: 1.3em;
-
-        &--bold {
-          font-family: $font-infini-bold;
+            &__mask {
+              position: absolute;
+              top: 0;
+              left: 0;
+              right: 0;
+              bottom: 0;
+              background: linear-gradient(
+                to top,
+                $color-blue,
+                rgba(25, 33, 147, 0) 20%,
+                rgba(25, 33, 147, 0) 80%,
+                $color-blue
+              );
+              z-index: 1;
+            }
+          }
         }
       }
 
-      &__help {
-        margin-top: 3em;
-        color: $color-blue;
-        font-size: 1.3em;
-        max-width: $content-width;
-        text-align: center;
-        line-height: 1.3em;
-      }
-    }
-  }
+      &--first-part {
+        height: 100vh;
+        padding-bottom: 10rem;
+        left: 0 !important;
 
-  &__presentation,
-  &__testimony,
-  &__challenge {
-    &__title {
-      display: inline-block;
-      margin: 3.5rem 0;
-      width: 100%;
-      color: $color-green;
-      font-size: 4rem;
-      text-align: center;
-      font-family: $font-infini-regular;
-      text-transform: uppercase;
-    }
+        &__presentation {
+          &__title {
+            margin-bottom: 0;
+          }
 
-    &__text-content {
-      text-align: center;
-      max-width: $content-width;
-      padding: 3rem $content-padding 0 $content-padding;
-      margin: auto;
-      font-family: $font-infini-regular;
-      color: $color-pink;
-      font-size: 1.5rem;
-      line-height: 1.3em;
+          &__installation-sketch {
+            width: 100%;
+            margin: auto;
+            opacity: 0;
+          }
 
-      &-wrapper {
-        position: relative;
-        max-height: 25em;
-        overflow: hidden;
+          &__text-content-wrapper {
+            transform: translateY(-6rem);
+            z-index: -1;
+          }
+        }
 
-        &__mask {
+        &__testimony {
           position: absolute;
           top: 0;
           left: 0;
           right: 0;
           bottom: 0;
-          background: linear-gradient(
-            to top,
-            $color-blue,
-            rgba(25, 33, 147, 0) 20%,
-            rgba(25, 33, 147, 0) 80%,
-            $color-blue
-          );
-          z-index: 1;
+          opacity: 0;
+
+          &__player {
+            max-width: 15rem;
+            margin: auto;
+            display: block;
+            margin-bottom: 3rem;
+          }
+
+          &__text-content-wrapper {
+            opacity: 0;
+            max-height: 25rem;
+          }
         }
       }
-    }
-  }
 
-  &__presentation {
-    &__title {
-      margin-bottom: 0;
-    }
-    &__installation-sketch {
-      width: 100%;
-      margin: auto;
-    }
+      &--second-part {
+        background-color: $color-pink;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        height: 100vh;
 
-    &__text-content {
-      &-wrapper {
-        transform: translateY(-6rem);
-        z-index: -1;
+        &__challenge {
+          font-family: $font-infini-regular;
+          color: $color-blue;
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+
+          &__title {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            min-height: 20rem;
+            margin: 7rem 0 2rem;
+            padding: 0 1.7em;
+            width: 100%;
+            font-size: 2.5rem;
+            text-align: center;
+            color: $color-blue;
+            text-transform: uppercase;
+            line-height: 1.5em;
+            background: radial-gradient(
+              circle closest-side,
+              rgba(97, 249, 132, 1),
+              rgba(97, 249, 132, 0)
+            );
+          }
+
+          &__text-content {
+            text-align: center;
+            max-width: $content-width;
+            padding: 3rem 4rem 0 4rem;
+            margin: 0 auto 3em auto;
+            font-family: $font-infini-regular;
+            color: $color-blue;
+            font-size: 1.5rem;
+            line-height: 1.3em;
+
+            &--bold {
+              font-family: $font-infini-bold;
+            }
+          }
+
+          &__help {
+            margin-top: 3em;
+            color: $color-blue;
+            font-size: 1.3em;
+            max-width: $content-width;
+            text-align: center;
+            line-height: 1.3em;
+          }
+        }
       }
-    }
-  }
 
-  &__testimony {
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    opacity: 0;
+      &--third-part {
+        padding-top: 4rem;
+        padding-bottom: 5rem;
+        text-align: center;
 
-    &__player {
-      max-width: 15rem;
-      margin: auto;
-      display: block;
-      margin-bottom: 3rem;
-    }
+        &__title {
+          font-family: $font-infini-regular;
+          font-size: 2rem;
+          color: $color-green;
+          width: 100%;
+          text-align: center;
+        }
 
-    &__text-content-wrapper {
-      opacity: 0;
-      max-height: 25rem;
-    }
-  }
-
-  &__part3 {
-    padding-top: 4rem;
-    padding-bottom: 5rem;
-    text-align: center;
-    &__title {
-      font-family: $font-infini-regular;
-      font-size: 2rem;
-      color: $color-green;
-      width: 100%;
-      text-align: center;
-    }
-
-    &__button {
-      margin: 3rem auto;
-      display: inline-block;
+        &__button {
+          margin: 3rem auto;
+          display: inline-block;
+        }
+      }
     }
   }
 }
