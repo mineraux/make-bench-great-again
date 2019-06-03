@@ -1,10 +1,11 @@
 import React, { FunctionComponent } from 'react'
 import { Transition } from 'react-transition-group'
-import { TimelineMax, TweenMax } from 'gsap'
+import { TimelineMax, TweenMax, Power2, Power0, Power1 } from 'gsap'
 import { pageTransitionProps } from '../types'
 import Success from './Success'
 import { observer } from 'mobx-react-lite'
 import { NavigationStore } from '../../store'
+import { themes } from '../../components/Header/Header'
 
 type Props = pageTransitionProps
 
@@ -32,6 +33,75 @@ const TransitionComponent: FunctionComponent<Props> = ({
       opacity: 1,
       ease: 'Sine.easeInOut',
     })
+      .add(() => {
+        NavigationStore.setHeaderThemes(themes.Green)
+      })
+      .add('background')
+      .fromTo(
+        '.page-success__presentation__radial-circle',
+        2,
+        {
+          filter: 'blur(12px)',
+          opacity: 0,
+          scale: 0,
+        },
+        {
+          autoRound: false,
+          opacity: 1,
+          filter: 'blur(0)',
+          scale: 1,
+          ease: Power2.easeInOut,
+        },
+        'background'
+      )
+      .fromTo(
+        ['.page-success__svg'],
+        1,
+        {
+          filter: 'blur(12px)',
+          opacity: 0,
+        },
+        {
+          autoRound: false,
+          opacity: 1,
+          filter: 'blur(0)',
+          ease: Power2.easeInOut,
+        },
+        'background+=1'
+      )
+      .fromTo(
+        [
+          '.page-success__presentation__title',
+          '.page-success__presentation__text-content',
+          '.page-success__presentation__discover-button',
+        ],
+        0.8,
+        {
+          filter: 'blur(8px)',
+          opacity: 0,
+        },
+        {
+          autoRound: false,
+          opacity: 1,
+          filter: 'blur(0)',
+        },
+        'background+=1.5'
+      )
+      .add('animationOnLoadFinished')
+      .fromTo(
+        '.page-success__presentation__radial-circle',
+        2,
+        {
+          scale: 1,
+        },
+        {
+          scale: 1.2,
+          ease: Power2.easeInOut,
+          repeat: -1,
+          yoyo: true,
+        },
+        'animationOnLoadFinished'
+      )
   }
 
   // Exit : transition
@@ -40,10 +110,17 @@ const TransitionComponent: FunctionComponent<Props> = ({
       onComplete: done,
     })
 
-    tl.to(node, 0.25, {
-      opacity: 0,
-      ease: 'Sine.easeInOut',
-    })
+    tl.to(
+      node,
+      0.25,
+      {
+        opacity: 0,
+        ease: 'Sine.easeInOut',
+      },
+      1
+    ).add(() => {
+      NavigationStore.setHeaderThemes(themes.Blue)
+    }, 1)
   }
 
   // Exit : end
@@ -64,6 +141,7 @@ const TransitionComponent: FunctionComponent<Props> = ({
       onEnter={onEnter}
       onExited={onExited}
       addEndListener={addEndListener}
+      appear={true}
     >
       <Success match={match} history={history} />
     </Transition>

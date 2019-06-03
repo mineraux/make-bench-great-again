@@ -13,6 +13,7 @@ const Success: FunctionComponent<Props> = ({ match, history }) => {
     <div className="page-success">
       <Background className={'page-success__svg'} />
       <div className="page-success__presentation">
+        <div className="page-success__presentation__radial-circle" />
         <p className="page-success__presentation__title">
           {MapStore.targetInstallation.name}
         </p>
