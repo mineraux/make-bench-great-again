@@ -20,8 +20,8 @@ class ScrollMagicController {
     const controller = new ScrollMagic.Controller()
 
     // TWEENS
-    const tweenPresentationText = new TimelineMax().fromTo(
-      '.test',
+    const tweenFakeScroll = new TimelineMax().fromTo(
+      '.page-installation--locked__presentation__content-wrapper__fake-scroll-wrapper',
       0.5,
       {
         yPercent: 0,
@@ -31,9 +31,8 @@ class ScrollMagicController {
       }
     )
 
-    const tweenPresentation = new TimelineMax()
+    const tweenBlurPresentation = new TimelineMax()
       .add('blurPresentation')
-
       .fromTo(
         '.page-installation--locked__presentation',
         0.5,
@@ -66,54 +65,33 @@ class ScrollMagicController {
     const durationPart2 = 1000
     console.log(headerHeight)
 
-    // const scenePart1Pin = new ScrollMagic.Scene({
-    //   duration: durationPart1,
-    //   triggerHook: 0,
-    // })
-    //   .setPin('.page-installation--locked__presentation')
-    //   .addIndicators({ name: 'Pin' })
-    //   .setTween(tweenPresentationText)
-    //   .addTo(controller)
-    // this.scenes.push(scenePart1Pin)
-
-    // const scenePart2Pin = new ScrollMagic.Scene({
-    //   offset: durationPart1,
-    //   duration: durationPart1 + durationPart2,
-    //   triggerHook: 0,
-    // })
-    //   .setPin('.page-installation--locked__go-to-installation')
-    //   .addIndicators({ name: 'Pin2' })
-    //   .setTween(tweenPresentation)
-    //   .addTo(controller)
-    // this.scenes.push(scenePart2Pin)
-
-    const scenePart1Pin = new ScrollMagic.Scene({
+    const scenePage = new ScrollMagic.Scene({
       duration: durationPart1 + durationPart2 + headerHeight,
       triggerHook: 0,
     })
       .setPin('.page-installation--locked__wrapper')
       .addIndicators({ name: 'Pin' })
       .addTo(controller)
-    this.scenes.push(scenePart1Pin)
+    this.scenes.push(scenePage)
 
-    const scenePresentationText = new ScrollMagic.Scene({
+    const scenePresentation = new ScrollMagic.Scene({
       duration: durationPart1 + headerHeight,
       triggerHook: 0,
     })
-      .setTween(tweenPresentationText)
+      .setTween(tweenFakeScroll)
       .addIndicators({ name: 'Pin 2' })
       .addTo(controller)
-    this.scenes.push(scenePresentationText)
+    this.scenes.push(scenePresentation)
 
-    const sceneTestimonyTextFade = new ScrollMagic.Scene({
+    const sceneGoToInstallation = new ScrollMagic.Scene({
       duration: durationPart2 + headerHeight,
       triggerHook: 0,
       offset: durationPart1,
     })
-      .setTween(tweenPresentation)
+      .setTween(tweenBlurPresentation)
       .addIndicators({ name: 'Pin 3' })
       .addTo(controller)
-    this.scenes.push(sceneTestimonyTextFade)
+    this.scenes.push(sceneGoToInstallation)
   }
 
   public destroyScrollMagicScenes = () => {
