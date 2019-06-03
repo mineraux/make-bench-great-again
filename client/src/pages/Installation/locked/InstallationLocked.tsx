@@ -51,9 +51,9 @@ const InstallationLocked: FunctionComponent<Props> = ({ match, history }) => {
       })
   }
 
-  const windowHeight = useWindowSize().height - 90
-
-  const yolo = windowHeight - 42.5
+  const windowHeight = useWindowSize().height
+  const wrapperHeight = windowHeight - 42.5 - 46 - 35 - 35 - 1
+  const pushHeight = windowHeight - 42.5
 
   return (
     <div className="page-installation--locked">
@@ -65,7 +65,7 @@ const InstallationLocked: FunctionComponent<Props> = ({ match, history }) => {
           <div
             className="page-installation--locked__presentation__content-wrapper"
             style={{
-              height: yolo,
+              height: wrapperHeight,
             }}
           >
             <div className="page-installation--locked__presentation__content-wrapper__mask" />
@@ -84,7 +84,7 @@ const InstallationLocked: FunctionComponent<Props> = ({ match, history }) => {
         <div
           className="page-installation--locked__go-to-installation"
           style={{
-            height: windowHeight,
+            height: pushHeight,
           }}
         >
           <p>Rendez vous devant l'oeuvre pour débloquer le contenu</p>

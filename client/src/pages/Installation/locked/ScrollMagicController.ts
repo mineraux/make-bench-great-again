@@ -58,15 +58,15 @@ class ScrollMagicController {
         'blurPresentation+=0.1'
       )
 
-    const headerHeight = document
-      .querySelector('header')!
-      .getBoundingClientRect().height
-    const durationPart1 = 1000
-    const durationPart2 = 1000
-    console.log(headerHeight)
+    // const headerHeight = document
+    //   .querySelector('header')!
+    //   .getBoundingClientRect().height
+    const headerHeight = 42.5
+    const durationPart1 = 1000 - headerHeight
+    const durationPart2 = 1000 - headerHeight
 
     const scenePage = new ScrollMagic.Scene({
-      duration: durationPart1 + durationPart2 + headerHeight,
+      duration: durationPart1 + durationPart2,
       triggerHook: 0,
     })
       .setPin('.page-installation--locked__wrapper')
@@ -75,7 +75,7 @@ class ScrollMagicController {
     this.scenes.push(scenePage)
 
     const scenePresentation = new ScrollMagic.Scene({
-      duration: durationPart1 + headerHeight,
+      duration: durationPart1 - headerHeight,
       triggerHook: 0,
     })
       .setTween(tweenFakeScroll)
@@ -84,9 +84,9 @@ class ScrollMagicController {
     this.scenes.push(scenePresentation)
 
     const sceneGoToInstallation = new ScrollMagic.Scene({
-      duration: durationPart2 + headerHeight,
+      duration: durationPart2,
       triggerHook: 0,
-      offset: durationPart1,
+      offset: durationPart1 - 200,
     })
       .setTween(tweenBlurPresentation)
       .addIndicators({ name: 'Pin 3' })
