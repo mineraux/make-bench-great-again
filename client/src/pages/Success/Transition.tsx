@@ -39,6 +39,7 @@ const TransitionComponent: FunctionComponent<Props> = ({
       .add('background', '+=0.5')
       .staggerFromTo(
         [
+          '.page-success__svg',
           '.page-success__presentation',
           '.page-success__presentation__title',
           '.page-success__presentation__text-content',
@@ -55,7 +56,7 @@ const TransitionComponent: FunctionComponent<Props> = ({
           filter: 'blur(0)',
           ease: Power2.easeInOut,
         },
-        0.15,
+        0.25,
         'background'
       )
   }
