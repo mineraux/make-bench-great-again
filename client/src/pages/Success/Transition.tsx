@@ -38,16 +38,19 @@ const TransitionComponent: FunctionComponent<Props> = ({
       })
       .add('background')
       .fromTo(
-        ['.page-success__presentation__radial-circle'],
+        '.page-success__presentation__radial-circle',
         2,
         {
           filter: 'blur(12px)',
           opacity: 0,
+          scale: 0,
         },
         {
           autoRound: false,
           opacity: 1,
           filter: 'blur(0)',
+          scale: 1,
+          ease: Power2.easeInOut,
         },
         'background'
       )
@@ -83,6 +86,21 @@ const TransitionComponent: FunctionComponent<Props> = ({
           filter: 'blur(0)',
         },
         'background+=1.5'
+      )
+      .add('animationOnLoadFinished')
+      .fromTo(
+        '.page-success__presentation__radial-circle',
+        2,
+        {
+          scale: 1,
+        },
+        {
+          scale: 1.2,
+          ease: Power2.easeInOut,
+          repeat: -1,
+          yoyo: true,
+        },
+        'animationOnLoadFinished'
       )
   }
 
