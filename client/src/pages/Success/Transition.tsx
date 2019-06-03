@@ -1,6 +1,6 @@
 import React, { FunctionComponent } from 'react'
 import { Transition } from 'react-transition-group'
-import { TimelineMax, TweenMax, Power2 } from 'gsap'
+import { TimelineMax, TweenMax, Power2, Power0, Power1 } from 'gsap'
 import { pageTransitionProps } from '../types'
 import Success from './Success'
 import { observer } from 'mobx-react-lite'
@@ -36,16 +36,24 @@ const TransitionComponent: FunctionComponent<Props> = ({
       .add(() => {
         NavigationStore.setHeaderThemes(themes.Green)
       })
-      .add('background', '+=0.5')
-      .staggerFromTo(
-        [
-          '.page-success__svg',
-          '.page-success__presentation',
-          '.page-success__presentation__title',
-          '.page-success__presentation__text-content',
-          '.page-success__presentation__discover-button',
-        ],
-        0.8,
+      .add('background')
+      .fromTo(
+        ['.page-success__presentation__radial-circle'],
+        2,
+        {
+          filter: 'blur(12px)',
+          opacity: 0,
+        },
+        {
+          autoRound: false,
+          opacity: 1,
+          filter: 'blur(0)',
+        },
+        'background'
+      )
+      .fromTo(
+        ['.page-success__svg'],
+        1,
         {
           filter: 'blur(12px)',
           opacity: 0,
@@ -56,8 +64,25 @@ const TransitionComponent: FunctionComponent<Props> = ({
           filter: 'blur(0)',
           ease: Power2.easeInOut,
         },
-        0.25,
-        'background'
+        'background+=1'
+      )
+      .fromTo(
+        [
+          '.page-success__presentation__title',
+          '.page-success__presentation__text-content',
+          '.page-success__presentation__discover-button',
+        ],
+        0.8,
+        {
+          filter: 'blur(8px)',
+          opacity: 0,
+        },
+        {
+          autoRound: false,
+          opacity: 1,
+          filter: 'blur(0)',
+        },
+        'background+=1.5'
       )
   }
 

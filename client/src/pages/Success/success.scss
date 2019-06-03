@@ -24,15 +24,23 @@
     display: flex;
     flex-direction: column;
     align-items: center;
-    background: radial-gradient(
-      circle closest-side,
-      rgba(239, 202, 202, 1) 0%,
-      rgba(239, 202, 202, 1) 40%,
-      rgba(239, 202, 202, 0)
-    );
-    background-repeat: no-repeat;
-    background-position-y: -10rem;
     height: 100%;
+
+    &__radial-circle {
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: radial-gradient(
+        circle closest-side,
+        rgba(239, 202, 202, 1) 0%,
+        rgba(239, 202, 202, 1) 40%,
+        rgba(239, 202, 202, 0)
+      );
+      background-repeat: no-repeat;
+      background-position-y: -10rem;
+    }
 
     &__title {
       display: inline-block;
@@ -47,7 +55,7 @@
     &__text-content {
       text-align: center;
       padding: 0 $content-padding;
-      margin-top: 10rem;
+      margin-top: 15rem;
       font-family: $font-infini-regular;
       font-size: 1.5rem;
       line-height: 1.3em;
@@ -55,7 +63,7 @@
 
     &__discover-button {
       z-index: 2;
-      margin-top: 15rem;
+      margin-top: 10rem;
       background-color: $color-green;
     }
   }
