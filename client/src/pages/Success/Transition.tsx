@@ -1,6 +1,6 @@
 import React, { FunctionComponent } from 'react'
 import { Transition } from 'react-transition-group'
-import { TimelineMax, TweenMax } from 'gsap'
+import { TimelineMax, TweenMax, Power2 } from 'gsap'
 import { pageTransitionProps } from '../types'
 import Success from './Success'
 import { observer } from 'mobx-react-lite'
@@ -32,9 +32,32 @@ const TransitionComponent: FunctionComponent<Props> = ({
     tl.to(node, 0.25, {
       opacity: 1,
       ease: 'Sine.easeInOut',
-    }).add(() => {
-      NavigationStore.setHeaderThemes(themes.Green)
     })
+      .add(() => {
+        NavigationStore.setHeaderThemes(themes.Green)
+      })
+      .add('background', '+=0.5')
+      .staggerFromTo(
+        [
+          '.page-success__presentation',
+          '.page-success__presentation__title',
+          '.page-success__presentation__text-content',
+          '.page-success__presentation__discover-button',
+        ],
+        0.8,
+        {
+          filter: 'blur(12px)',
+          opacity: 0,
+        },
+        {
+          autoRound: false,
+          opacity: 1,
+          filter: 'blur(0)',
+          ease: Power2.easeInOut,
+        },
+        0.15,
+        'background'
+      )
   }
 
   // Exit : transition
@@ -74,6 +97,7 @@ const TransitionComponent: FunctionComponent<Props> = ({
       onEnter={onEnter}
       onExited={onExited}
       addEndListener={addEndListener}
+      appear={true}
     >
       <Success match={match} history={history} />
     </Transition>
