@@ -4,6 +4,7 @@
   background-color: $color-green;
   height: 100vh;
   $self: &;
+  color: $color-blue;
 
   > *:not(#{$self}__svg) {
     z-index: 2;
