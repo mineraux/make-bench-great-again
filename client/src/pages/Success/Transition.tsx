@@ -5,6 +5,7 @@ import { pageTransitionProps } from '../types'
 import Success from './Success'
 import { observer } from 'mobx-react-lite'
 import { NavigationStore } from '../../store'
+import { themes } from '../../components/Header/Header'
 
 type Props = pageTransitionProps
 
@@ -31,6 +32,8 @@ const TransitionComponent: FunctionComponent<Props> = ({
     tl.to(node, 0.25, {
       opacity: 1,
       ease: 'Sine.easeInOut',
+    }).add(() => {
+      NavigationStore.setHeaderThemes(themes.Green)
     })
   }
 
@@ -40,10 +43,17 @@ const TransitionComponent: FunctionComponent<Props> = ({
       onComplete: done,
     })
 
-    tl.to(node, 0.25, {
-      opacity: 0,
-      ease: 'Sine.easeInOut',
-    })
+    tl.to(
+      node,
+      0.25,
+      {
+        opacity: 0,
+        ease: 'Sine.easeInOut',
+      },
+      1
+    ).add(() => {
+      NavigationStore.setHeaderThemes(themes.Blue)
+    }, 1)
   }
 
   // Exit : end
