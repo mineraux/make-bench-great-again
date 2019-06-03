@@ -6,6 +6,7 @@ import { themes as mapButtonThemes } from '../components/MapButton/MapButton'
 type currentPagePathType = string | null
 type nextPagePathType = string | null
 type isMenuOpenType = boolean
+type isDevNavOpenType = boolean
 type isMapButtonVisibleType = boolean
 type isMapButtonMenuType = boolean
 type scrollProgressionType = number
@@ -18,6 +19,8 @@ class NavigationStore {
   @observable nextPagePath: nextPagePathType = null
 
   @observable isMenuOpen: isMenuOpenType = false
+
+  @observable isDevNavOpen: isMenuOpenType = false
 
   @observable isMapButtonVisible: isMapButtonVisibleType = false
 
@@ -43,6 +46,10 @@ class NavigationStore {
 
   @action setIsMenuOpen = (value: isMenuOpenType): void => {
     this.isMenuOpen = value
+  }
+
+  @action setIsDevNavOpen = (value: isDevNavOpenType): void => {
+    this.isDevNavOpen = value
   }
 
   @action setIsMapButtonVisible = (value: isMapButtonVisibleType): void => {
