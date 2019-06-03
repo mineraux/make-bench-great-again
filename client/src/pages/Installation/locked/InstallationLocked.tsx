@@ -51,40 +51,44 @@ const InstallationLocked: FunctionComponent<Props> = ({ match, history }) => {
       })
   }
 
-  const windowHeight = useWindowSize().height - 42.5
-  const yolo = windowHeight - 46
+  const windowHeight = useWindowSize().height - 90
+
+  const yolo = windowHeight - 42.5
+
   return (
     <div className="page-installation--locked">
-      <div className="page-installation--locked__presentation">
-        <p className="page-installation--locked__presentation__title">
-          {installation.name}
-        </p>
-        <div
-          className="page-installation--locked__presentation__content-wrapper"
-          style={{
-            height: yolo,
-          }}
-        >
-          <div className="page-installation--locked__presentation__content-wrapper__mask" />
-          <div className="test">
-            <img
-              src={Bench}
-              alt=""
-              className="page-installation--locked__presentation__content-wrapper__installation-sketch"
-            />
-            <p className="page-installation--locked__presentation__content-wrapper__text-content">
-              {installation.description}
-            </p>
+      <div className="page-installation--locked__wrapper">
+        <div className="page-installation--locked__presentation">
+          <p className="page-installation--locked__presentation__title">
+            {installation.name}
+          </p>
+          <div
+            className="page-installation--locked__presentation__content-wrapper"
+            style={{
+              height: yolo,
+            }}
+          >
+            <div className="page-installation--locked__presentation__content-wrapper__mask" />
+            <div className="test">
+              <img
+                src={Bench}
+                alt=""
+                className="page-installation--locked__presentation__content-wrapper__installation-sketch"
+              />
+              <p className="page-installation--locked__presentation__content-wrapper__text-content">
+                {installation.description}
+              </p>
+            </div>
           </div>
         </div>
-      </div>
-      <div
-        className="page-installation--locked__go-to-installation"
-        style={{
-          height: windowHeight,
-        }}
-      >
-        <p>Rendez vous devant l'oeuvre pour débloquer le contenu</p>
+        <div
+          className="page-installation--locked__go-to-installation"
+          style={{
+            height: windowHeight,
+          }}
+        >
+          <p>Rendez vous devant l'oeuvre pour débloquer le contenu</p>
+        </div>
       </div>
     </div>
   )
