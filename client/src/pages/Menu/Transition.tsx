@@ -17,9 +17,10 @@ const TransitionComponent: FunctionComponent<Props> = ({ show }) => {
 
   // Enter : start
   const onEnter = (node: HTMLElement): void => {
-    // TweenMax.set(node, {
-    //   opacity: 0,
-    // })
+    TweenMax.set(node, {
+      opacity: 0,
+      filter: 'blur(15px)',
+    })
   }
 
   // Enter : transition
@@ -36,6 +37,7 @@ const TransitionComponent: FunctionComponent<Props> = ({ show }) => {
     const bottomTextLetters = node.querySelectorAll(
       '.page-menu__bottom__text span'
     )
+    const mapButton = document.querySelectorAll('.map-button')
     const mapButtonText = document.querySelectorAll('.map-button__menu-text')
     const mapButtonTextLetters = document.querySelectorAll(
       '.map-button__menu-text span'
@@ -44,93 +46,115 @@ const TransitionComponent: FunctionComponent<Props> = ({ show }) => {
     tl.add(() => {
       setIsMapButtonMenu(true)
     }, 0)
-      .fromTo(
-        top!,
+      .to(
+        node,
         0.8,
         {
-          scaleY: 0,
+          opacity: 1,
         },
+        '+=0.1'
+      )
+      .to(
+        [node, mapButton],
+        1.5,
         {
-          scaleY: 1,
-          ease: Power2.easeInOut,
+          filter: 'blur(0)',
+          autoRound: false,
         },
         '+=0'
       )
-      .add('topEnd')
-      .fromTo(
-        topRound!,
-        0.8,
-        {
-          scale: 0,
-        },
-        {
-          scale: 1,
-          autoRound: false,
-          ease: Power2.easeInOut,
-        },
-        'topEnd-=0.25'
-      )
+    // .fromTo(
+    //   top!,
+    //   0.8,
+    //   {
+    //     // scaleY: 1,
+    //     filter: "blur(15px)"
+    //   },
+    //   {
+    //     // scaleY: 1,
+    //     filter: "blur(0)",
+    //     autoRound: false,
+    //     ease: Power2.easeInOut,
+    //   },
+    //   '+=0'
+    // )
+    // .add('topEnd')
+    // .fromTo(
+    //   topRound!,
+    //   0.8,
+    //   {
+    //     scale: 1,
+    //     filter: "blur(15px)",
+    //   },
+    //   {
+    //     scale: 1,
+    //     filter: "blur(0)",
+    //     autoRound: false,
+    //     ease: Power2.easeInOut,
+    //   },
+    //   'topEnd-=0.25'
+    // )
 
     // letters
 
-    const staggerTotalTime = 0.4
+    const staggerTotalTime = 0.05
 
-    tl.add('letters', '-=0.2')
-      .staggerFromTo(
-        topRoundTextLetters,
-        0.8,
-        {
-          filter: 'blur(15px)',
-          opacity: 0,
-        },
-        {
-          autoRound: false,
-          opacity: 1,
-          filter: 'blur(0)',
-          ease: Power2.easeOut,
-        },
-        staggerTotalTime / 13,
-        'letters'
-      )
-      .staggerFromTo(
-        bottomTextLetters,
-        0.8,
-        {
-          filter: 'blur(15px)',
-          opacity: 0,
-        },
-        {
-          autoRound: false,
-          opacity: 1,
-          filter: 'blur(0)',
-          ease: Power2.easeOut,
-        },
-        staggerTotalTime / 5,
-        'letters'
-      )
-      .set(
-        mapButtonText,
-        {
-          opacity: 1,
-        },
-        'letters'
-      )
-      .staggerFromTo(
-        mapButtonTextLetters,
-        0.8,
-        {
-          filter: 'blur(15px)',
-          opacity: 0,
-        },
-        {
-          autoRound: false,
-          opacity: 1,
-          filter: 'blur(0)',
-          ease: Power2.easeOut,
-        },
-        staggerTotalTime / 3,
-        'letters'
-      )
+    // tl.add('letters', '+=0')
+    //   .staggerFromTo(
+    //     topRoundTextLetters,
+    //     1.2,
+    //     {
+    //       filter: 'blur(15px)',
+    //       opacity: 0,
+    //     },
+    //     {
+    //       autoRound: false,
+    //       opacity: 1,
+    //       filter: 'blur(0)',
+    //       // ease: Power2.easeOut,
+    //     },
+    //     staggerTotalTime / 13,
+    //     'letters'
+    //   )
+    //   .staggerFromTo(
+    //     bottomTextLetters,
+    //     1.2,
+    //     {
+    //       filter: 'blur(15px)',
+    //       opacity: 0,
+    //     },
+    //     {
+    //       autoRound: false,
+    //       opacity: 1,
+    //       filter: 'blur(0)',
+    //       // ease: Power2.easeOut,
+    //     },
+    //     staggerTotalTime / 5,
+    //     'letters'
+    //   )
+    //   .set(
+    //     mapButtonText,
+    //     {
+    //       opacity: 1,
+    //     },
+    //     'letters'
+    //   )
+    //   .staggerFromTo(
+    //     mapButtonTextLetters,
+    //     1.3,
+    //     {
+    //       filter: 'blur(15px)',
+    //       opacity: 0,
+    //     },
+    //     {
+    //       autoRound: false,
+    //       opacity: 1,
+    //       filter: 'blur(0)',
+    //       // ease: Power2.easeOut,
+    //     },
+    //     staggerTotalTime / 3,
+    //     'letters'
+    //   )
   }
 
   // Exit : transition

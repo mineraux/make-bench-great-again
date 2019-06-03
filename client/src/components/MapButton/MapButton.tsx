@@ -6,7 +6,7 @@ import { observer } from 'mobx-react-lite'
 import { NavigationStore } from '../../store'
 import { ReactComponent as MarkerIcon } from './marker.svg'
 import './mapButton.scss'
-import { TimelineMax, Sine, Power2 } from 'gsap'
+import { TimelineMax, Sine, Power1, Power2 } from 'gsap'
 
 export enum themes {
   Blue = 'blue',
@@ -65,15 +65,17 @@ const MapButton: FunctionComponent<Props> = ({ className }) => {
       const text = ref.current.querySelector('.map-button__menu-text')
       tl.to(
         icon!,
-        0.5,
+        0.3,
         {
           opacity: 0,
-          ease: Power2.easeInOut,
+          filter: 'blur(3px)',
+          autoRound: false,
+          ease: Power1.easeInOut,
           overwrite: true,
         },
         0
       )
-        .add('iconEnd')
+        .add('iconEnd', '-=0.2')
         .to(
           ref.current,
           0.8,
@@ -97,6 +99,8 @@ const MapButton: FunctionComponent<Props> = ({ className }) => {
           0.8,
           {
             scale: 1,
+            filter: 'blur(15px)',
+            autoRound: false,
             ease: Power2.easeInOut,
           },
           'scale'
@@ -106,6 +110,7 @@ const MapButton: FunctionComponent<Props> = ({ className }) => {
           0.8,
           {
             scale: 1,
+            opacity: 1,
             ease: Power2.easeInOut,
           },
           'scale'
@@ -151,12 +156,15 @@ const MapButton: FunctionComponent<Props> = ({ className }) => {
           0.7,
           {
             scale,
+            filter: 'blur(0)',
+            autoRound: false,
             ease: Power2.easeInOut,
           },
           'textEnd'
         )
         .to(icon!, 0.7, {
           opacity: 1,
+          filter: 'blur(0)',
           ease: Power2.easeInOut,
         })
     }
