@@ -4,6 +4,8 @@
   background-color: $color-blue;
   height: 100vh;
   &--locked {
+    height: 100%;
+
     &__presentation {
       &__title {
         display: inline-block;
@@ -16,15 +18,62 @@
         text-transform: uppercase;
       }
 
-      &__text-content {
-        text-align: center;
-        max-width: $content-width;
-        padding: 3rem $content-padding 0 $content-padding;
-        margin: auto;
-        font-family: $font-infini-regular;
-        color: $color-pink;
-        font-size: 1.5rem;
-        line-height: 1.3em;
+      &__content-wrapper {
+        position: relative;
+        overflow: hidden;
+
+        &__installation-sketch {
+          display: block;
+          max-width: 100%;
+          max-height: 50rem;
+          margin: 0 auto;
+          padding: 5rem 0;
+        }
+
+        &__text-content {
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          text-align: center;
+          max-width: $content-width;
+          padding: 3rem $content-padding 0 $content-padding;
+          margin: auto;
+          font-family: $font-infini-regular;
+          color: $color-pink;
+          font-size: 1.5rem;
+          line-height: 1.3em;
+          height: 50rem;
+        }
+
+        &__mask {
+          position: absolute;
+          top: 0;
+          left: 0;
+          right: 0;
+          bottom: 0;
+          background: linear-gradient(
+            to top,
+            $color-blue,
+            rgba(25, 33, 147, 0) 20%,
+            rgba(25, 33, 147, 0) 80%,
+            $color-blue
+          );
+          z-index: 1;
+        }
+      }
+    }
+
+    &__go-to-installation {
+      // height: calc(100vh - 4.25rem);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+
+      p {
+        color: $color-green;
+        font-family: $font-infini-bold;
+        font-size: 2.5rem;
       }
     }
   }
