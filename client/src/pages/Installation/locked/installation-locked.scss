@@ -2,10 +2,7 @@
 
 .page-installation {
   background-color: $color-blue;
-  height: 100vh;
   &--locked {
-    height: 100%;
-
     &__presentation {
       &__title {
         display: inline-block;
