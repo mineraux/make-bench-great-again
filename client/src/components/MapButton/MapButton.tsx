@@ -25,9 +25,10 @@ const MapButton: FunctionComponent<Props> = ({ className }) => {
 
   const {
     isMapButtonVisible,
-    isMapButtonMenu,
-    mapButtonTheme,
     setIsMapButtonVisible,
+    isMapButtonMenu,
+    setIsMapButtonMenu,
+    mapButtonTheme,
     currentPagePath,
     nextPagePath,
   } = NavigationStore
@@ -46,6 +47,13 @@ const MapButton: FunctionComponent<Props> = ({ className }) => {
     }
   }, [isMapButtonVisible])
 
+  useEffect(() => {
+    if (nextPagePath === config.routes.Menu.path) {
+      console.log('next page is menu')
+      setIsMapButtonMenu(true)
+    }
+  }, [nextPagePath])
+
   // Menu animation
   useEffect(() => {
     if (ref.current) {
@@ -63,22 +71,23 @@ const MapButton: FunctionComponent<Props> = ({ className }) => {
       const tl = new TimelineMax()
       const icon = ref.current.querySelector('.map-button__icon')
       const text = ref.current.querySelector('.map-button__menu-text')
+
       tl.to(
         icon!,
-        0.3,
+        0.5,
         {
           opacity: 0,
-          filter: 'blur(3px)',
+          filter: 'blur(4px)',
           autoRound: false,
           ease: Power1.easeInOut,
           overwrite: true,
         },
         0
       )
-        .add('iconEnd', '-=0.2')
+        .add('iconEnd', '-=0.1')
         .to(
           ref.current,
-          0.8,
+          1,
           {
             xPercent: -50,
             yPercent: 50,
@@ -90,30 +99,30 @@ const MapButton: FunctionComponent<Props> = ({ className }) => {
           1,
           {
             opacity: 1,
+            scale: 1,
+            ease: Power1.easeInOut,
           },
           'iconEnd'
         )
-        .add('scale', 'iconEnd')
+        // .add('scale', 'iconEnd')
         .to(
           ref.current,
-          0.8,
+          1,
           {
-            scale: 1,
             filter: 'blur(15px)',
             autoRound: false,
-            ease: Power2.easeInOut,
+            ease: Power1.easeInOut,
           },
-          'scale'
+          'iconEnd'
         )
         .to(
           text!,
-          0.8,
+          1,
           {
             scale: 1,
-            opacity: 1,
-            ease: Power2.easeInOut,
+            ease: Power1.easeInOut,
           },
-          'scale'
+          'iconEnd'
         )
     }
   }
@@ -137,12 +146,14 @@ const MapButton: FunctionComponent<Props> = ({ className }) => {
 
       tl.to(text!, 0.4, {
         opacity: 0,
+        filter: 'blur(4px)',
+        autoRound: false,
         ease: Power2.easeInOut,
       })
         .add('textEnd')
         .to(
           ref.current,
-          0.7,
+          0.8,
           {
             xPercent: isMapButtonOnNextPage ? -50 : -100,
             yPercent: isMapButtonOnNextPage ? 50 : 100,
@@ -153,7 +164,7 @@ const MapButton: FunctionComponent<Props> = ({ className }) => {
         )
         .to(
           [ref.current, text],
-          0.7,
+          0.8,
           {
             scale,
             filter: 'blur(0)',
@@ -162,7 +173,7 @@ const MapButton: FunctionComponent<Props> = ({ className }) => {
           },
           'textEnd'
         )
-        .to(icon!, 0.7, {
+        .to(icon!, 0.8, {
           opacity: 1,
           filter: 'blur(0)',
           ease: Power2.easeInOut,

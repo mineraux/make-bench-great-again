@@ -37,31 +37,37 @@ const TransitionComponent: FunctionComponent<Props> = ({ show }) => {
     const bottomTextLetters = node.querySelectorAll(
       '.page-menu__bottom__text span'
     )
-    const mapButton = document.querySelectorAll('.map-button')
+    const mapButton = document.querySelector('.map-button')
     const mapButtonText = document.querySelectorAll('.map-button__menu-text')
     const mapButtonTextLetters = document.querySelectorAll(
       '.map-button__menu-text span'
     )
 
+    console.log(mapButton)
+
     tl.add(() => {
       setIsMapButtonMenu(true)
     }, 0)
       .to(
-        node,
-        0.8,
+        [node],
+        1.8,
         {
           opacity: 1,
+          filter: 'blur(0)',
+          autoRound: false,
+          ease: Power2.easeInOut,
         },
-        '+=0.1'
+        0
       )
       .to(
-        [node, mapButton],
-        1.5,
+        mapButton!,
+        1.8,
         {
           filter: 'blur(0)',
           autoRound: false,
+          ease: Power2.easeInOut,
         },
-        '+=0'
+        0
       )
     // .fromTo(
     //   top!,
@@ -99,62 +105,62 @@ const TransitionComponent: FunctionComponent<Props> = ({ show }) => {
 
     const staggerTotalTime = 0.05
 
-    // tl.add('letters', '+=0')
-    //   .staggerFromTo(
-    //     topRoundTextLetters,
-    //     1.2,
-    //     {
-    //       filter: 'blur(15px)',
-    //       opacity: 0,
-    //     },
-    //     {
-    //       autoRound: false,
-    //       opacity: 1,
-    //       filter: 'blur(0)',
-    //       // ease: Power2.easeOut,
-    //     },
-    //     staggerTotalTime / 13,
-    //     'letters'
-    //   )
-    //   .staggerFromTo(
-    //     bottomTextLetters,
-    //     1.2,
-    //     {
-    //       filter: 'blur(15px)',
-    //       opacity: 0,
-    //     },
-    //     {
-    //       autoRound: false,
-    //       opacity: 1,
-    //       filter: 'blur(0)',
-    //       // ease: Power2.easeOut,
-    //     },
-    //     staggerTotalTime / 5,
-    //     'letters'
-    //   )
-    //   .set(
-    //     mapButtonText,
-    //     {
-    //       opacity: 1,
-    //     },
-    //     'letters'
-    //   )
-    //   .staggerFromTo(
-    //     mapButtonTextLetters,
-    //     1.3,
-    //     {
-    //       filter: 'blur(15px)',
-    //       opacity: 0,
-    //     },
-    //     {
-    //       autoRound: false,
-    //       opacity: 1,
-    //       filter: 'blur(0)',
-    //       // ease: Power2.easeOut,
-    //     },
-    //     staggerTotalTime / 3,
-    //     'letters'
-    //   )
+    tl.add('letters', '-=0.7')
+      .staggerFromTo(
+        topRoundTextLetters,
+        1.2,
+        {
+          filter: 'blur(15px)',
+          opacity: 0,
+        },
+        {
+          autoRound: false,
+          opacity: 1,
+          filter: 'blur(0)',
+          // ease: Power2.easeOut,
+        },
+        staggerTotalTime / 13,
+        'letters'
+      )
+      .staggerFromTo(
+        bottomTextLetters,
+        1.2,
+        {
+          filter: 'blur(15px)',
+          opacity: 0,
+        },
+        {
+          autoRound: false,
+          opacity: 1,
+          filter: 'blur(0)',
+          // ease: Power2.easeOut,
+        },
+        staggerTotalTime / 5,
+        'letters'
+      )
+      .set(
+        mapButtonText,
+        {
+          opacity: 1,
+        },
+        'letters'
+      )
+      .staggerFromTo(
+        mapButtonTextLetters,
+        1.3,
+        {
+          filter: 'blur(15px)',
+          opacity: 0,
+        },
+        {
+          autoRound: false,
+          opacity: 1,
+          filter: 'blur(0)',
+          // ease: Power2.easeOut,
+        },
+        staggerTotalTime / 3,
+        'letters'
+      )
   }
 
   // Exit : transition
