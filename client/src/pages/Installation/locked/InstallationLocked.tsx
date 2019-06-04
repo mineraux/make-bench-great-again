@@ -6,9 +6,7 @@ import './installation-locked.scss'
 import { observer } from 'mobx-react-lite'
 import { NavigationStore } from '../../../store'
 import ScrollMagicController from './ScrollMagicController'
-import SpriteAnimation from '../../../components/SpriteAnimation/SpriteAnimation'
 import ScrollMagicStore from '../../../store/ScrollMagicStore'
-import { animationId } from '../../../components/SpriteAnimation/animations'
 import Bench from '../../../assets/images/banc_metro_01.png'
 import {
   useWindowSize,
@@ -86,8 +84,18 @@ const InstallationLocked: FunctionComponent<Props> = ({ match, history }) => {
                     src={Bench}
                     alt=""
                     className="page-installation--locked__presentation__content-wrapper__installation-sketch"
+                    style={{
+                      height:
+                        windowHeight - getHeaderHeight() - rectTitle.height,
+                    }}
                   />
-                  <p className="page-installation--locked__presentation__content-wrapper__text-content">
+                  <p
+                    className="page-installation--locked__presentation__content-wrapper__text-content"
+                    style={{
+                      height:
+                        windowHeight - getHeaderHeight() - rectTitle.height,
+                    }}
+                  >
                     {installation.description}
                   </p>
                 </div>
