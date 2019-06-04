@@ -78,13 +78,13 @@
     }
 
     &__go-to-installation {
-      // height: calc(100vh - 4.25rem);
       position: absolute;
       top: 0;
       left: 0;
       right: 0;
       bottom: 0;
       display: flex;
+      flex-direction: column;
       align-items: center;
       justify-content: center;
       text-align: center;
@@ -95,6 +95,7 @@
         font-size: 2.5rem;
         text-transform: uppercase;
         padding: 0 10rem;
+        margin-bottom: 5rem;
       }
     }
   }
