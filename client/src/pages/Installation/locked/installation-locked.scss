@@ -3,10 +3,25 @@
 .page-installation {
   background-color: $color-blue;
   &--locked {
+    $self: &;
+
+    > *:not(#{$self}__svg) {
+      z-index: 2;
+    }
+
     &__presentation {
+      &__svg {
+        position: absolute;
+        width: 80%;
+        left: 50%;
+        top: calc(50% + #{$header-height / 2});
+        transform: translateX(-50%) translateY(-50%);
+        opacity: 0;
+        z-index: -1;
+      }
+
       &__title {
         display: inline-block;
-        // padding: 3.5rem 0;
         margin: 3.5rem 0;
         width: 100%;
         color: $color-green;
