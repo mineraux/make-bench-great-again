@@ -37,7 +37,7 @@ const Installation: FunctionComponent<Props> = ({ match, history }) => {
     if (match && installation._id.length === 0) {
       getInstallationInformation()
     }
-    setIsMapButtonVisible(true)
+    // setIsMapButtonVisible(true)
 
     TweenMax.to(
       '.page-installation__wrapper__part--first-part__presentation__installation-sketch',

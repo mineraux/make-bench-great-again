@@ -3,6 +3,7 @@ import { action, observable } from 'mobx'
 import { themes as headerThemes } from '../components/Header/Header'
 import { themes as mapButtonThemes } from '../components/MapButton/MapButton'
 
+type previousPagePathType = string | null
 type currentPagePathType = string | null
 type nextPagePathType = string | null
 type isMenuOpenType = boolean
@@ -14,6 +15,8 @@ type isHeaderVisibleType = boolean
 type headerTitleType = string
 
 class NavigationStore {
+  @observable previousPagePath: previousPagePathType = null
+
   @observable currentPagePath: currentPagePathType = null
 
   @observable nextPagePath: nextPagePathType = null
@@ -36,7 +39,12 @@ class NavigationStore {
 
   @observable headerTheme: headerThemes = headerThemes.Blue
 
+  @action setPreviousPagePath = (value: previousPagePathType): void => {
+    this.previousPagePath = value
+  }
+
   @action setCurrentPagePath = (value: currentPagePathType): void => {
+    this.setPreviousPagePath(this.currentPagePath)
     this.currentPagePath = value
   }
 

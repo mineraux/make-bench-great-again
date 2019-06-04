@@ -43,32 +43,24 @@ const TransitionComponent: FunctionComponent<Props> = ({ show }) => {
       '.map-button__menu-text span'
     )
 
-    console.log(mapButton)
-
-    tl.add(() => {
-      setIsMapButtonMenu(true)
-    }, 0)
-      .to(
-        [node],
-        1.8,
-        {
-          opacity: 1,
-          filter: 'blur(0)',
-          autoRound: false,
-          ease: Power2.easeInOut,
-        },
-        0
-      )
-      .to(
-        mapButton!,
-        1.8,
-        {
-          filter: 'blur(0)',
-          autoRound: false,
-          ease: Power2.easeInOut,
-        },
-        0
-      )
+    tl.to(
+      [node],
+      1.8,
+      {
+        opacity: 1,
+        ease: Power2.easeInOut,
+      },
+      0
+    ).to(
+      [node, mapButton],
+      1.8,
+      {
+        filter: 'blur(0)',
+        autoRound: false,
+        ease: Power2.easeInOut,
+      },
+      0
+    )
     // .fromTo(
     //   top!,
     //   0.8,

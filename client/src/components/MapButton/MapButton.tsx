@@ -22,6 +22,7 @@ type Props = {
 
 const MapButton: FunctionComponent<Props> = ({ className }) => {
   const ref = useRef<HTMLLinkElement>(null)
+  const [isMenuTransition, setIsMenuTransition] = useState(false)
 
   const {
     isMapButtonVisible,
@@ -33,33 +34,79 @@ const MapButton: FunctionComponent<Props> = ({ className }) => {
     nextPagePath,
   } = NavigationStore
 
-  // Hide / show animation
   useEffect(() => {
-    const tl = new TimelineMax()
-    console.log('show', isMapButtonVisible, currentPagePath)
-    if (ref.current) {
-      tl.to(ref.current, 0.7, {
-        xPercent: isMapButtonVisible ? -50 : -100,
-        yPercent: isMapButtonVisible ? 50 : 100,
-        opacity: isMapButtonVisible ? 1 : 0,
-        ease: Power2.easeInOut,
-      })
+    const routesArrray = Object.keys(config.routes).map(
+      key => config.routes[key]
+    )
+
+    const currentRoute = routesArrray.find(
+      route => route.path === currentPagePath
+    )
+    const isMapButtonOnCurrentPage = currentRoute!.isMapButtonVisible
+
+    if (isMapButtonOnCurrentPage) {
+      setIsMapButtonVisible(true)
+    } else {
+      setIsMapButtonVisible(false)
     }
-  }, [isMapButtonVisible])
+  }, [currentPagePath])
 
   useEffect(() => {
     if (nextPagePath === config.routes.Menu.path) {
-      console.log('next page is menu')
       setIsMapButtonMenu(true)
     }
   }, [nextPagePath])
+
+  // Hide / show animation
+  useEffect(() => {
+    if (
+      ref.current &&
+      currentPagePath !== config.routes.Menu.path &&
+      !isMenuTransition
+    ) {
+      const icon = ref.current.querySelector('.map-button__icon')
+      const tl = new TimelineMax()
+      if (isMapButtonVisible) {
+        const scale = sizeNormal / sizeInMenu
+        tl.to(ref.current, 0.8, {
+          scale,
+          opacity: 1,
+          ease: Power1.easeInOut,
+          overwrite: false,
+        }).to(icon!, 0.6, {
+          opacity: 1,
+          filter: 'blur(0)',
+          autoRound: false,
+          ease: Power1.easeInOut,
+          overwrite: false,
+        })
+      } else {
+        tl.to(icon!, 0.4, {
+          opacity: 0,
+          filter: 'blur(4px)',
+          autoRound: false,
+          ease: Power1.easeInOut,
+          overwrite: false,
+        }).to(
+          ref.current,
+          0.8,
+          {
+            scale: 0,
+            ease: Power1.easeInOut,
+            overwrite: false,
+          },
+          '-=0.1'
+        )
+      }
+    }
+  }, [isMapButtonVisible])
 
   // Menu animation
   useEffect(() => {
     if (ref.current) {
       if (isMapButtonMenu) {
         animationMenuIn()
-      } else {
+      } else if (currentPagePath === config.routes.Menu.path) {
         animationMenuOut()
       }
     }
@@ -68,7 +115,7 @@ const MapButton: FunctionComponent<Props> = ({ className }) => {
   const animationMenuIn = () => {
     if (ref.current) {
       console.log('MapButton : animationMenuIn')
-      const tl = new TimelineMax()
+      const tl = new TimelineMax({})
       const icon = ref.current.querySelector('.map-button__icon')
       const text = ref.current.querySelector('.map-button__menu-text')
 
@@ -89,30 +136,23 @@ const MapButton: FunctionComponent<Props> = ({ className }) => {
           ref.current,
           1.4,
           {
-            xPercent: -50,
-            yPercent: 50,
-            ease: Power1.easeInOut,
-          },
-          'iconEnd'
-        )
-        .to(
-          ref.current,
-          1.4,
-          {
             opacity: 1,
             scale: 1,
             ease: Power1.easeInOut,
           },
           'iconEnd'
         )
-        // .add('scale', 'iconEnd')
         .to(
           ref.current,
           1.4,
           {
-            filter: 'blur(20px)',
+            filter:
+              currentPagePath === config.routes.Menu.path
+                ? 'blur(0)'
+                : 'blur(20px)',
             autoRound: false,
             ease: Power1.easeInOut,
+            overwrite: false,
           },
           'iconEnd'
         )
@@ -131,7 +171,14 @@ const MapButton: FunctionComponent<Props> = ({ className }) => {
   const animationMenuOut = () => {
     if (ref.current) {
       console.log('MapButton: animationMenuOut', nextPagePath)
-      const tl = new TimelineMax()
+      const tl = new TimelineMax({
+        onStart: () => {
+          setIsMenuTransition(true)
+        },
+        onComplete: () => {
+          setIsMenuTransition(false)
+        },
+      })
       const icon = ref.current.querySelector('.map-button__icon')
       const text = ref.current.querySelector('.map-button__menu-text')
 
@@ -143,8 +190,6 @@ const MapButton: FunctionComponent<Props> = ({ className }) => {
       const nextRoute = routesArrray.find(route => route.path === nextPagePath)
       const isMapButtonOnNextPage = nextRoute!.isMapButtonVisible
 
-      console.log('MapButton : isMapButtonOnNextPage', isMapButtonOnNextPage)
-
       tl.to(text!, 0.4, {
         opacity: 0,
         filter: 'blur(4px)',
@@ -153,21 +198,10 @@ const MapButton: FunctionComponent<Props> = ({ className }) => {
       })
         .add('textEnd')
         .to(
-          ref.current,
-          0.8,
-          {
-            xPercent: isMapButtonOnNextPage ? -50 : -100,
-            yPercent: isMapButtonOnNextPage ? 50 : 100,
-            opacity: isMapButtonOnNextPage ? 1 : 0,
-            ease: Power2.easeInOut,
-          },
-          'textEnd'
-        )
-        .to(
           [ref.current, text],
-          0.8,
+          1,
           {
-            scale,
+            scale: isMapButtonOnNextPage ? scale : 0,
             filter: 'blur(0)',
             autoRound: false,
             ease: Power2.easeInOut,
@@ -175,8 +209,9 @@ const MapButton: FunctionComponent<Props> = ({ className }) => {
           'textEnd'
         )
         .to(icon!, 0.8, {
-          opacity: 1,
+          opacity: isMapButtonOnNextPage ? 1 : 0,
           filter: 'blur(0)',
+          autoRound: false,
           ease: Power2.easeInOut,
         })
     }
