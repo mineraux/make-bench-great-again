@@ -21,6 +21,7 @@ class InstallationStore {
           _id: '1',
           slug: 'exedros',
           name: 'L’Exedros',
+          lockedName: 'Pas pratique',
           description:
             'Conçue comme une véritable ode à la nature, sa structure en courbes rappelle la forme délicate et organique des feuillages, ramenant une touche printanière dans la ville.',
           lockedDescription:
@@ -31,6 +32,7 @@ class InstallationStore {
           _id: '2',
           slug: 'glissant',
           name: 'Super banc',
+          lockedName: 'Pas tant que ça',
           description:
             'Vestige du 19e siècle, cette sculpture aux courbes parfaites...',
           lockedDescription:
@@ -40,7 +42,8 @@ class InstallationStore {
         {
           _id: '3',
           slug: 'piquant',
-          name: 'Ça pique',
+          name: 'Confortable',
+          lockedName: 'Ça pique',
           description:
             'Vestige du 19e siècle, cette sculpture aux courbes parfaites...',
           lockedDescription:
