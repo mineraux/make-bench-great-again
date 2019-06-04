@@ -28,22 +28,32 @@ const TransitionComponent: FunctionComponent<Props> = ({
       onComplete: done,
     })
 
-    tl.to(node, 2.5, {
-      opacity: 1,
-      ease: Power3.easeInOut,
-    }).fromTo(
+    const informationsPanelNode = node.querySelector('.informations-panel')
+
+    tl.to(
       node,
       2.5,
       {
-        filter: 'blur(15px)',
-      },
-      {
-        filter: 'blur(0)',
-        autoRound: false,
+        opacity: 1,
         ease: Power3.easeInOut,
       },
-      0.5
+      0
     )
+      .set(informationsPanelNode!, { className: '+=close' }, 0)
+      .fromTo(
+        node,
+        2.5,
+        {
+          filter: 'blur(15px)',
+        },
+        {
+          filter: 'blur(0)',
+          autoRound: false,
+          ease: Power3.easeInOut,
+        },
+        0.5
+      )
+      .set(informationsPanelNode!, { className: '-=close' })
   }
 
   // Exit : transition
