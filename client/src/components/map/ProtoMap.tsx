@@ -15,11 +15,16 @@ import InformationsPanel from '../InformationsPanel/InformationsPanel'
 import { featureCoords } from '../../utils/map'
 import Modal from '../Modal/Modal'
 import { pageProps } from '../../pages/types'
+import { Feature } from 'geojson'
 
 type Props = pageProps & {}
 
 const ProtoMap: FunctionComponent<Props> = ({ match, history }) => {
   const { installationList, fetchInstallationList } = InstallationStore
+  const {
+    calculatePathFromAnotherPage,
+    setCalculatePathFromAnotherPage,
+  } = MapStore
 
   const directions = useRef(DirectionsController.initMapboxDirections())
   const geolocate = useRef<GeolocateControl>(
@@ -194,7 +199,6 @@ const ProtoMap: FunctionComponent<Props> = ({ match, history }) => {
           MapStore.targetInstallation._id
         )
       ) {
-        console.log(MapStore.targetInstallation._id)
         InstallationStore.addUnlockedInstallation(
           MapStore.targetInstallation._id
         )
@@ -228,6 +232,56 @@ const ProtoMap: FunctionComponent<Props> = ({ match, history }) => {
     setTargetInstallationSlug(MapStore.targetInstallation.slug)
     setIsTourStarted(true)
   }
+
+  useEffect(() => {
+    if (
+      map &&
+      isMapLoaded &&
+      installationList &&
+      markers &&
+      installationList &&
+      mapStylesLoaded &&
+      isGeolocationPermissionGranted &&
+      calculatePathFromAnotherPage
+    ) {
+      markers.forEach((marker: Feature) => {
+        if (marker.properties!.slug === MapStore.targetInstallation.slug) {
+          setSelectedMarker(marker)
+        }
+      })
+      setTargetInstallationSlug(MapStore.targetInstallation.slug)
+      setIsTourStarted(true)
+    }
+  }, [
+    map,
+    isMapLoaded,
+    installationList,
+    markers,
+    mapStylesLoaded,
+    isGeolocationPermissionGranted,
+    calculatePathFromAnotherPage,
+  ])
+
+  useEffect(() => {
+    if (
+      directions &&
+      selectedMarker &&
+      calculatePathFromAnotherPage &&
+      userLocation
+    ) {
+      DirectionsController.setPathToInstallation(
+        directions.current,
+        featureCoords(selectedMarker),
+        userLocation
+      )
+      setCalculatePathFromAnotherPage(false)
+    }
+  }, [
+    directions.current,
+    calculatePathFromAnotherPage,
+    selectedMarker,
+    userLocation,
+  ])
 
   return (
     <div id="map">
