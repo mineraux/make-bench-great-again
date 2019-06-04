@@ -52,49 +52,57 @@
 
   .mapboxgl-user-location-dot {
     background-color: $color-blue;
+    border: 1px solid $color-pink;
+    box-shadow: none;
+    position: relative;
+    transform-style: preserve-3d;
 
-    &:after {
+    &::after {
       // background-color: $color-blue;
       // border-color: $color-pink;
+      position: absolute;
       background-color: $color-green;
       border: none;
       animation: mapboxgl-user-location-dot-big 10s infinite;
       z-index: -1;
+      transform: translateZ(-1px);
     }
 
     &::before {
+      position: absolute;
       background-color: $color-green;
       animation: mapboxgl-user-location-dot 2s infinite;
       z-index: -1;
+      transform: translateZ(-1px);
     }
   }
 
   @keyframes mapboxgl-user-location-dot {
     0% {
-      transform: scale(1);
+      transform: scale(1) translateZ(-1px);
       opacity: 1;
     }
     70% {
-      transform: scale(6);
+      transform: scale(3) translateZ(-1px);
       opacity: 0;
     }
     100% {
-      transform: scale(1);
+      transform: scale(1) translateZ(-1px);
       opacity: 0;
     }
   }
 
   @keyframes mapboxgl-user-location-dot-big {
     0% {
-      transform: scale(6);
+      transform: scale(3) translateZ(-1px);
       opacity: 0.5;
     }
     50% {
-      transform: scale(7);
+      transform: scale(4) translateZ(-1px);
       opacity: 0.5;
     }
     100% {
-      transform: scale(6);
+      transform: scale(3) translateZ(-1px);
       opacity: 0.5;
     }
   }
