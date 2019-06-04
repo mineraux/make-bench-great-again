@@ -298,7 +298,7 @@ const ProtoMap: FunctionComponent<Props> = ({ match, history }) => {
           onButtonClick={initGeoLocate}
         />
       )}
-      {markers && (
+      {
         <InformationsPanel
           marker={selectedMarker}
           travelTime={travelTime}
@@ -307,7 +307,7 @@ const ProtoMap: FunctionComponent<Props> = ({ match, history }) => {
           userLocation={userLocation}
           targetInstallationID={targetInstallationSlug}
         />
-      )}
+      }
     </div>
   )
 }
