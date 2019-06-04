@@ -10,7 +10,11 @@ import SpriteAnimation from '../../../components/SpriteAnimation/SpriteAnimation
 import ScrollMagicStore from '../../../store/ScrollMagicStore'
 import { animationId } from '../../../components/SpriteAnimation/animations'
 import Bench from '../../../assets/images/banc_metro_01.png'
-import { useWindowSize } from '../../../utils/hooks'
+import {
+  useWindowSize,
+  useClientRect,
+  getHeaderHeight,
+} from '../../../utils/hooks'
 
 type Props = pageProps & {}
 
@@ -19,6 +23,7 @@ const InstallationLocked: FunctionComponent<Props> = ({ match, history }) => {
   const { installationList, fetchInstallationList } = InstallationStore
   const { setIsMapButtonVisible } = NavigationStore
   const { scrollProgressFirstPart } = ScrollMagicStore
+  const [rectTitle, refTitle] = useClientRect()
 
   useEffect(() => {
     if (match && installationList.length === 0) {
@@ -52,39 +57,47 @@ const InstallationLocked: FunctionComponent<Props> = ({ match, history }) => {
   }
 
   const windowHeight = useWindowSize().height
-  const wrapperHeight = windowHeight - 42.5 - 46 - 35 - 35 - 1
-  const pushHeight = windowHeight - 42.5
 
   return (
     <div className="page-installation--locked">
       <div className="page-installation--locked__wrapper">
         <div className="page-installation--locked__presentation">
-          <p className="page-installation--locked__presentation__title">
-            {installation.name}
-          </p>
           <div
-            className="page-installation--locked__presentation__content-wrapper"
-            style={{
-              height: wrapperHeight,
-            }}
+            ref={refTitle}
+            className="page-installation--locked__presentation__title--wrapper"
           >
-            <div className="page-installation--locked__presentation__content-wrapper__mask" />
-            <div className="page-installation--locked__presentation__content-wrapper__fake-scroll-wrapper">
-              <img
-                src={Bench}
-                alt=""
-                className="page-installation--locked__presentation__content-wrapper__installation-sketch"
-              />
-              <p className="page-installation--locked__presentation__content-wrapper__text-content">
-                {installation.description}
-              </p>
-            </div>
+            <p className="page-installation--locked__presentation__title">
+              {installation.name}
+            </p>
           </div>
+
+          {rectTitle !== null &&
+            installation.name &&
+            installation.name.length > 0 && (
+              <div
+                className="page-installation--locked__presentation__content-wrapper"
+                style={{
+                  height: windowHeight - getHeaderHeight() - rectTitle.height,
+                }}
+              >
+                <div className="page-installation--locked__presentation__content-wrapper__mask" />
+                <div className="page-installation--locked__presentation__content-wrapper__fake-scroll-wrapper">
+                  <img
+                    src={Bench}
+                    alt=""
+                    className="page-installation--locked__presentation__content-wrapper__installation-sketch"
+                  />
+                  <p className="page-installation--locked__presentation__content-wrapper__text-content">
+                    {installation.description}
+                  </p>
+                </div>
+              </div>
+            )}
         </div>
         <div
           className="page-installation--locked__go-to-installation"
           style={{
-            height: pushHeight,
+            height: windowHeight - getHeaderHeight(),
           }}
         >
           <p>Rendez vous devant l'oeuvre pour débloquer le contenu</p>
