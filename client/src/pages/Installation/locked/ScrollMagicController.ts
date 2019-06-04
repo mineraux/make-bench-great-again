@@ -71,7 +71,7 @@ class ScrollMagicController {
         'blurPresentation'
       )
       .fromTo(
-        '.page-installation--locked__go-to-installation p',
+        '.page-installation--locked__go-to-installation',
         0.5,
         {
           opacity: 0,

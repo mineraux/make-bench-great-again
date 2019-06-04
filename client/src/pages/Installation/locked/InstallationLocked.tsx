@@ -14,6 +14,9 @@ import {
   getHeaderHeight,
 } from '../../../utils/hooks'
 import { ReactComponent as Progress } from './progress.svg'
+import Button, {
+  themes as ButtonThemes,
+} from '../../../components/Button/Button'
 
 type Props = pageProps & {}
 
@@ -35,6 +38,11 @@ const InstallationLocked: FunctionComponent<Props> = ({ match, history }) => {
       getInstallationInformation()
     }
     setIsMapButtonVisible(true)
+
+    return () => {
+      ScrollMagicController.destroyScrollMagicScenes()
+      window.scrollTo(0, 0)
+    }
   }, [])
 
   const getInstallationInformation = async () => {
@@ -56,6 +64,10 @@ const InstallationLocked: FunctionComponent<Props> = ({ match, history }) => {
   }
 
   const windowHeight = useWindowSize().height
+
+  const onButtonClick = () => {
+    console.log('test')
+  }
 
   return (
     <div className="page-installation--locked">
@@ -113,6 +125,14 @@ const InstallationLocked: FunctionComponent<Props> = ({ match, history }) => {
           }}
         >
           <p>Rendez vous devant l'oeuvre pour débloquer le contenu</p>
+
+          <Button
+            onClick={onButtonClick}
+            label={'Calculer mon itinéraire'}
+            theme={ButtonThemes.Green}
+            link={'/map'}
+            className={'informations-panel__set-direction-button'}
+          />
         </div>
       </div>
     </div>
