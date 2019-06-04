@@ -52,5 +52,9 @@
     font-family: $font-infini-regular;
     color: $color-blue;
     text-transform: uppercase;
+
+    span {
+      margin: 0 0.05rem;
+    }
   }
 }

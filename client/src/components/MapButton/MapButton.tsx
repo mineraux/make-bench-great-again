@@ -6,7 +6,7 @@ import { observer } from 'mobx-react-lite'
 import { NavigationStore } from '../../store'
 import { ReactComponent as MarkerIcon } from './marker.svg'
 import './mapButton.scss'
-import { TimelineMax, Sine, Power1, Power2 } from 'gsap'
+import { TimelineMax, Power1, Power2 } from 'gsap'
 
 export enum themes {
   Blue = 'blue',
@@ -67,18 +67,26 @@ const MapButton: FunctionComponent<Props> = ({ className }) => {
       const icon = ref.current.querySelector('.map-button__icon')
       const tl = new TimelineMax()
       if (isMapButtonVisible) {
+        console.log('MapButton : visible')
         const scale = sizeNormal / sizeInMenu
-        tl.to(ref.current, 0.8, {
-          scale,
-          opacity: 1,
-          ease: Power1.easeInOut,
-          overwrite: false,
-        }).to(icon!, 0.6, {
+        tl.fromTo(
+          ref.current,
+          0.8,
+          {
+            scale: 0,
+          },
+          {
+            scale,
+            opacity: 1,
+            ease: Power1.easeInOut,
+            overwrite: true,
+          }
+        ).to(icon!, 0.6, {
           opacity: 1,
           filter: 'blur(0)',
           autoRound: false,
           ease: Power1.easeInOut,
-          overwrite: false,
+          overwrite: true,
         })
       } else {
         tl.to(icon!, 0.4, {
@@ -86,14 +94,14 @@ const MapButton: FunctionComponent<Props> = ({ className }) => {
           filter: 'blur(4px)',
           autoRound: false,
           ease: Power1.easeInOut,
-          overwrite: false,
+          // overwrite: false,
         }).to(
           ref.current,
           0.8,
           {
             scale: 0,
             ease: Power1.easeInOut,
-            overwrite: false,
+            // overwrite: false,
           },
           '-=0.1'
         )
@@ -121,7 +129,7 @@ const MapButton: FunctionComponent<Props> = ({ className }) => {
 
       tl.to(
         icon!,
-        0.5,
+        0.8,
         {
           opacity: 0,
           filter: 'blur(4px)',
@@ -131,7 +139,7 @@ const MapButton: FunctionComponent<Props> = ({ className }) => {
         },
         0
       )
-        .add('iconEnd', '-=0.1')
+        .add('iconEnd', '-=0')
         .to(
           ref.current,
           1.4,
@@ -170,7 +178,7 @@ const MapButton: FunctionComponent<Props> = ({ className }) => {
 
   const animationMenuOut = () => {
     if (ref.current) {
-      console.log('MapButton: animationMenuOut', nextPagePath)
+      console.log('MapButton: animationMenuOut')
       const tl = new TimelineMax({
         onStart: () => {
           setIsMenuTransition(true)
@@ -194,25 +202,25 @@ const MapButton: FunctionComponent<Props> = ({ className }) => {
         opacity: 0,
         filter: 'blur(4px)',
         autoRound: false,
-        ease: Power2.easeInOut,
+        ease: Power1.easeInOut,
       })
         .add('textEnd')
         .to(
           [ref.current, text],
-          1,
+          1.2,
           {
             scale: isMapButtonOnNextPage ? scale : 0,
             filter: 'blur(0)',
             autoRound: false,
-            ease: Power2.easeInOut,
+            ease: Power1.easeInOut,
           },
-          'textEnd'
+          'textEnd-=0.1'
         )
         .to(icon!, 0.8, {
           opacity: isMapButtonOnNextPage ? 1 : 0,
           filter: 'blur(0)',
           autoRound: false,
-          ease: Power2.easeInOut,
+          ease: Power1.easeInOut,
         })
     }
   }
