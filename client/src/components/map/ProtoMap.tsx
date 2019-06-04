@@ -103,7 +103,7 @@ const ProtoMap: FunctionComponent<Props> = ({ match, history }) => {
     ) {
       const onClickMarker = (e: any) => {
         if (e.features && featureInFeaturesCoords(e)) {
-          map.flyTo({ center: featureInFeaturesCoords(e) })
+          map.flyTo({ center: featureInFeaturesCoords(e), offset: [0, -150] })
           setSelectedMarker(e.features[0])
 
           if (map.getLayer('markers')) {
