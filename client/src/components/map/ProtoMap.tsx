@@ -207,6 +207,12 @@ const ProtoMap: FunctionComponent<Props> = ({ match, history }) => {
     }
   }, [travelDistance])
 
+  useEffect(() => {
+    if (!MapStore.isInformationsPanelOpen && selectedMarker) {
+      map.flyTo({ center: selectedMarker._geometry.coordinates })
+    }
+  }, [MapStore.isInformationsPanelOpen, selectedMarker])
+
   const setFastestPath = () => {
     setSelectedMarker(
       DirectionsController.setFastestPath(
