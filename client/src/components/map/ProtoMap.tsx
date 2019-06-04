@@ -194,7 +194,6 @@ const ProtoMap: FunctionComponent<Props> = ({ match, history }) => {
           MapStore.targetInstallation._id
         )
       ) {
-        console.log(MapStore.targetInstallation._id)
         InstallationStore.addUnlockedInstallation(
           MapStore.targetInstallation._id
         )
@@ -202,6 +201,12 @@ const ProtoMap: FunctionComponent<Props> = ({ match, history }) => {
       }
     }
   }, [travelDistance])
+
+  useEffect(() => {
+    if (!MapStore.isInformationsPanelOpen && selectedMarker) {
+      map.flyTo({ center: selectedMarker._geometry.coordinates })
+    }
+  }, [MapStore.isInformationsPanelOpen, selectedMarker])
 
   const setFastestPath = () => {
     setSelectedMarker(

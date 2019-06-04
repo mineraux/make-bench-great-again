@@ -40,6 +40,7 @@ const TransitionComponent: FunctionComponent<Props> = ({
       0
     )
       .set(informationsPanelNode!, { className: '+=close' }, 0)
+      .set(informationsPanelNode!, { className: '-=open' }, 0)
       .fromTo(
         node,
         2.5,

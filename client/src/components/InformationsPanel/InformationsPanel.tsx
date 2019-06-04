@@ -29,7 +29,7 @@ const InformationsPanel: FunctionComponent<Props> = ({
   userLocation,
   targetInstallationID,
 }) => {
-  const [isOpen, setIsOpen] = useState(false)
+  const { isInformationsPanelOpen, setIsInformationsPanelOpen } = MapStore
   const [installationTargetName, setInstallationTargetName] = useState(
     'Choisissez une oeuvre'
   )
@@ -44,7 +44,7 @@ const InformationsPanel: FunctionComponent<Props> = ({
     if (marker && marker.properties) {
       setInstallationTargetName(marker.properties.name)
       setInstallationTargetDescription(marker.properties.description)
-      setIsOpen(true)
+      setIsInformationsPanelOpen(true)
     }
   }, [marker])
 
@@ -81,7 +81,7 @@ const InformationsPanel: FunctionComponent<Props> = ({
   return (
     <div
       className={ClassNames('informations-panel', className, {
-        open: isOpen,
+        open: isInformationsPanelOpen,
       })}
     >
       {travelTime && travelTime > 0 && isCurrentTargetMatching && (
@@ -97,7 +97,7 @@ const InformationsPanel: FunctionComponent<Props> = ({
         <button
           className="informations-panel__close-ico"
           onClick={() => {
-            setIsOpen(!isOpen)
+            setIsInformationsPanelOpen(!isInformationsPanelOpen)
           }}
         >
           <CrossIco />
