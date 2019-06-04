@@ -32,6 +32,10 @@
         font-size: 2.1rem;
         color: $color-pink;
         text-transform: uppercase;
+
+        span {
+          margin: 0 0.05rem;
+        }
       }
     }
   }
@@ -53,7 +57,7 @@
         font-size: 2.1rem;
         color: $color-pink;
         text-transform: uppercase;
-        margin: 0;
+        margin: -0.1rem 0;
       }
     }
   }

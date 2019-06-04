@@ -23,6 +23,7 @@ const App: FunctionComponent = () => {
     headerTheme,
     isMenuOpen,
     setIsHeaderVisible,
+    isDevNavOpen,
   } = NavigationStore
 
   const windowHeight = useWindowSize().height
@@ -67,13 +68,18 @@ const App: FunctionComponent = () => {
     >
       <BrowserRouter>
         <div className={'app__header-container'}>
-          <Header
-            title={headerTitle}
-            theme={headerTheme}
-            className="app__header-container__header"
-          />
+          <Route>
+            {({ history }) => (
+              <Header
+                title={headerTitle}
+                theme={headerTheme}
+                className="app__header-container__header"
+                history={history}
+              />
+            )}
+          </Route>
         </div>
-        <Nav isOpen={isMenuOpen} links={Object.values(config.routes)} />
+        <Nav isOpen={isDevNavOpen} links={Object.values(config.routes)} />
         {Object.values(config.routes).map(route => renderRoute(route))}
         <MapButton />
       </BrowserRouter>

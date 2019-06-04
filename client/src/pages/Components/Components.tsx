@@ -55,7 +55,7 @@ const Components: FunctionComponent<Props> = () => {
   }
 
   useEffect(() => {
-    setIsMapButtonVisible(true)
+    // setIsMapButtonVisible(true)
   })
 
   return (

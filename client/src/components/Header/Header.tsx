@@ -7,6 +7,7 @@ import BurgerButton, {
   themes as BurgerButtonThemes,
 } from '../BurgerButton/BurgerButton'
 import ProgressBar from '../ProgressBar/ProgressBar'
+import config from '../../config/config'
 import { TimelineMax, Power1 } from 'gsap'
 import './header.scss'
 
@@ -30,10 +31,21 @@ type Props = {
   className?: string
   title: string
   theme: themes
+  history?: any
 }
 
-const Header: FunctionComponent<Props> = ({ className, title, theme }) => {
-  const { scrollProgression, isHeaderVisible } = NavigationStore
+const Header: FunctionComponent<Props> = ({
+  className,
+  title,
+  theme,
+  history,
+}) => {
+  const {
+    scrollProgression,
+    isHeaderVisible,
+    isDevNavOpen,
+    setIsDevNavOpen,
+  } = NavigationStore
 
   const ref = useRef<HTMLHeadElement>(null)
   useEffect(() => {
@@ -47,6 +59,10 @@ const Header: FunctionComponent<Props> = ({ className, title, theme }) => {
     }
   }, [isHeaderVisible])
 
+  const handleTitleClick = () => {
+    setIsDevNavOpen(!isDevNavOpen)
+  }
+
   return (
     <header
       ref={ref}
@@ -55,8 +71,13 @@ const Header: FunctionComponent<Props> = ({ className, title, theme }) => {
       })}
     >
       <Countdown theme={theming.countdown[theme]} />
-      <p className={Classnames(className, 'header__title')}>{title}</p>
-      <BurgerButton theme={theming.burgerButton[theme]} />
+      <p
+        className={Classnames(className, 'header__title')}
+        onClick={handleTitleClick}
+      >
+        {title}
+      </p>
+      <BurgerButton theme={theming.burgerButton[theme]} history={history} />
       <ProgressBar
         progression={scrollProgression}
         className={'header__progress-bar'}

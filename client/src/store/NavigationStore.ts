@@ -3,9 +3,11 @@ import { action, observable } from 'mobx'
 import { themes as headerThemes } from '../components/Header/Header'
 import { themes as mapButtonThemes } from '../components/MapButton/MapButton'
 
+type previousPagePathType = string | null
 type currentPagePathType = string | null
 type nextPagePathType = string | null
 type isMenuOpenType = boolean
+type isDevNavOpenType = boolean
 type isMapButtonVisibleType = boolean
 type isMapButtonMenuType = boolean
 type scrollProgressionType = number
@@ -13,11 +15,15 @@ type isHeaderVisibleType = boolean
 type headerTitleType = string
 
 class NavigationStore {
+  @observable previousPagePath: previousPagePathType = null
+
   @observable currentPagePath: currentPagePathType = null
 
   @observable nextPagePath: nextPagePathType = null
 
   @observable isMenuOpen: isMenuOpenType = false
+
+  @observable isDevNavOpen: isMenuOpenType = false
 
   @observable isMapButtonVisible: isMapButtonVisibleType = false
 
@@ -33,7 +39,12 @@ class NavigationStore {
 
   @observable headerTheme: headerThemes = headerThemes.Blue
 
+  @action setPreviousPagePath = (value: previousPagePathType): void => {
+    this.previousPagePath = value
+  }
+
   @action setCurrentPagePath = (value: currentPagePathType): void => {
+    this.setPreviousPagePath(this.currentPagePath)
     this.currentPagePath = value
   }
 
@@ -43,6 +54,10 @@ class NavigationStore {
 
   @action setIsMenuOpen = (value: isMenuOpenType): void => {
     this.isMenuOpen = value
+  }
+
+  @action setIsDevNavOpen = (value: isDevNavOpenType): void => {
+    this.isDevNavOpen = value
   }
 
   @action setIsMapButtonVisible = (value: isMapButtonVisibleType): void => {

@@ -14,7 +14,7 @@ const Map: FunctionComponent<props> = ({ match, history }) => {
 
   useEffect(() => {
     console.log('map mounted')
-    setIsMapButtonVisible(false)
+    // setIsMapButtonVisible(false)
   }, [])
   return (
     <div

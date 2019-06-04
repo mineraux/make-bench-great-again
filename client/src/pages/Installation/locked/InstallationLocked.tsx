@@ -23,7 +23,7 @@ const InstallationLocked: FunctionComponent<Props> = ({ match, history }) => {
     if (match && installation._id.length === 0) {
       getInstallationInformation()
     }
-    setIsMapButtonVisible(true)
+    // setIsMapButtonVisible(true)
   }, [])
 
   const getInstallationInformation = async () => {
