@@ -15,6 +15,10 @@ const About: FunctionComponent<Props> = () => {
   const windowSize = useWindowSize()
   const { setIsMapButtonVisible } = NavigationStore
 
+  useEffect(() => {
+    // setIsMapButtonVisible(true)
+  }, [])
+
   return (
     <div className={'page-about'} style={{ height: windowSize.height }}>
       <div className="page-about__top">

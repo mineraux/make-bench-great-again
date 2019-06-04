@@ -37,12 +37,12 @@ const InstallationLocked: FunctionComponent<Props> = ({ match, history }) => {
     if (match && installation._id.length === 0) {
       getInstallationInformation()
     }
-    setIsMapButtonVisible(true)
 
     return () => {
       ScrollMagicController.destroyScrollMagicScenes()
       window.scrollTo(0, 0)
     }
+    // setIsMapButtonVisible(true)
   }, [])
 
   const getInstallationInformation = async () => {

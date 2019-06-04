@@ -102,7 +102,7 @@ const config: configInterface = {
       path: '/finish',
       name: 'Finish',
       component: FinishTransition,
-      inNav: false,
+      inNav: true,
       isMapButtonVisible: false,
     },
   },

@@ -1,0 +1,13 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 561 1071">
+  <g id="Calque_2" data-name="Calque 2">
+    <g id="B_02_ECRAN_OEUVRE_BLOQUE">
+      <g id="_02" data-name="02">
+        <g>
+          <path d="M280.5,0h0C435.42,0,561,125.58,561,280.5v510C561,945.42,435.42,1071,280.5,1071h0C125.58,1071,0,945.42,0,790.5v-510C0,125.58,125.58,0,280.5,0Z" style="fill: none"/>
+          <path d="M280.5,121.5h0c103.83,0,188,84.17,188,188v463c0,103.83-84.17,188-188,188h0c-103.83,0-188-84.17-188-188v-463C92.5,205.67,176.67,121.5,280.5,121.5Z" style="fill: none;stroke: #efcaca;stroke-miterlimit: 10;stroke-width: 0.5px"/>
+          <path d="M281,234.5h0A109.49,109.49,0,0,1,390.5,344V727A109.49,109.49,0,0,1,281,836.5h0A109.49,109.49,0,0,1,171.5,727V344A109.49,109.49,0,0,1,281,234.5Z" style="fill: none;stroke: #efcaca;stroke-miterlimit: 10;stroke-width: 0.5px"/>
+        </g>
+      </g>
+    </g>
+  </g>
+</svg>
