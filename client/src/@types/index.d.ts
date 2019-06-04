@@ -14,6 +14,7 @@ export interface ApiInstallation {
   _id: string
   slug?: string
   name?: string
+  lockedName?: string
   description?: string
   lockedDescription?: string
   geolocation?: Coords
@@ -27,6 +28,7 @@ export interface ApiInstallation {
 export interface queryApiInstallation {
   slug?: boolean
   name?: boolean
+  lockedName?: boolean
   description?: boolean
   lockedDescription?: boolean
   geolocation?: boolean
@@ -38,6 +40,7 @@ export interface queryApiInstallation {
 export interface createApiInstallation {
   slug: string
   name: string
+  lockedName: string
   description: string
   lockedDescription: string
   latitude: number
