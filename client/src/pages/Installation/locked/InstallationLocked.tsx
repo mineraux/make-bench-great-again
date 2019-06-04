@@ -13,6 +13,7 @@ import {
   useClientRect,
   getHeaderHeight,
 } from '../../../utils/hooks'
+import { ReactComponent as Progress } from './progress.svg'
 
 type Props = pageProps & {}
 
@@ -60,6 +61,9 @@ const InstallationLocked: FunctionComponent<Props> = ({ match, history }) => {
     <div className="page-installation--locked">
       <div className="page-installation--locked__wrapper">
         <div className="page-installation--locked__presentation">
+          <Progress
+            className={'page-installation--locked__presentation__svg'}
+          />
           <div
             ref={refTitle}
             className="page-installation--locked__presentation__title--wrapper"

@@ -5,6 +5,7 @@ import 'animation.gsap'
 import 'debug.addIndicators'
 import ScrollMagicStore from '../../../store/ScrollMagicStore'
 import { NavigationStore } from '../../../store'
+import { getHeaderHeight } from '../../../utils/hooks'
 
 class ScrollMagicController {
   scenes: ScrollMagic.Scene[]
@@ -32,6 +33,29 @@ class ScrollMagicController {
     )
 
     const tweenBlurPresentation = new TimelineMax()
+      .add('progressAppear')
+      .fromTo(
+        '.page-installation--locked__presentation__svg',
+        0.5,
+        {
+          opacity: 0,
+        },
+        {
+          opacity: 1,
+        },
+        'progressAppear'
+      )
+      .fromTo(
+        '.page-installation--locked__presentation__content-wrapper__mask',
+        0.5,
+        {
+          opacity: 1,
+        },
+        {
+          opacity: 0,
+        },
+        'progressAppear-=0.2'
+      )
       .add('blurPresentation')
       .fromTo(
         '.page-installation--locked__presentation',
@@ -41,7 +65,7 @@ class ScrollMagicController {
         },
         {
           autoRound: false,
-          filter: 'blur(12px)',
+          filter: 'blur(8px)',
           ease: Power2.easeInOut,
         },
         'blurPresentation'
@@ -55,13 +79,10 @@ class ScrollMagicController {
         {
           opacity: 1,
         },
-        'blurPresentation+=0.1'
+        'blurPresentation+=0.2'
       )
 
-    // const headerHeight = document
-    //   .querySelector('header')!
-    //   .getBoundingClientRect().height
-    const headerHeight = 42.5
+    const headerHeight = getHeaderHeight()
     const durationPart1 = 1000 - headerHeight
     const durationPart2 = 1000 - headerHeight
 
