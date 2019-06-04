@@ -1,6 +1,6 @@
 import React, { FunctionComponent, useEffect, useState } from 'react'
 import { pageProps } from '../../types'
-import { InstallationStore } from '../../../store'
+import { InstallationStore, MapStore } from '../../../store'
 import { ApiInstallation } from '../../../@types'
 import './installation-locked.scss'
 import { observer } from 'mobx-react-lite'
@@ -66,7 +66,11 @@ const InstallationLocked: FunctionComponent<Props> = ({ match, history }) => {
   const windowHeight = useWindowSize().height
 
   const onButtonClick = () => {
-    console.log('test')
+    MapStore.setCalculatePathFromAnotherPage(true)
+    const target = InstallationStore.getInstallationBySlug(
+      match.params.installationSlug
+    )
+    MapStore.setTargetInstallation(target)
   }
 
   return (

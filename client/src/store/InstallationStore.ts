@@ -164,6 +164,22 @@ class InstallationStore {
     return isUnlocked
   }
 
+  @action public getInstallationBySlug = (
+    installationSlug: ApiInstallation['slug']
+  ): ApiInstallation => {
+    let installationToReturn = {
+      _id: '',
+    }
+
+    this.installationList.forEach(installation => {
+      if (installation.slug === installationSlug) {
+        installationToReturn = installation
+      }
+    })
+
+    return installationToReturn
+  }
+
   mergeById = (data: ApiInstallationReponseRoot) => {
     let mergedData
     if (this.installationList.length > 0) {

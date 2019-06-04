@@ -10,12 +10,18 @@ class MapStore {
     _id: '',
   }
 
+  @observable calculatePathFromAnotherPage: boolean = false
+
   @action setTargetInstallation = (installation: ApiInstallation) => {
     this.targetInstallation = installation
   }
 
   @action setSelectedInstallation = (installation: ApiInstallation) => {
     this.selectedInstallation = installation
+  }
+
+  @action setCalculatePathFromAnotherPage = (state: boolean) => {
+    this.calculatePathFromAnotherPage = state
   }
 }
 
