@@ -21,6 +21,7 @@ export interface ApiInstallation {
   hashTags?: string[]
   testimony?: string
   relatedPetition?: string
+  caption?: string
 
   replace?(arg0: RegExp, arg1: string)
 }
@@ -35,6 +36,7 @@ export interface queryApiInstallation {
   hashTags?: boolean
   testimony?: boolean
   relatedPetition?: boolean
+  caption?: boolean
 }
 
 export interface createApiInstallation {
@@ -48,6 +50,7 @@ export interface createApiInstallation {
   hashtags: string[]
   testimony: string
   relatedPetition?: string
+  caption: string
 }
 
 export interface updateApiInstallation extends createApiInstallation {
