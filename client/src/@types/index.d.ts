@@ -10,6 +10,17 @@ window.twttr = window.twttr || {}
 
 export type Coords = [number, number]
 
+type TestimonyTextContentType = {
+  text: string
+  talkerID: number
+}
+
+type TestimonyTalkersType = {
+  id: number
+  name: string
+  details?: string
+}
+
 export interface ApiInstallation {
   _id: string
   slug?: string
@@ -19,7 +30,11 @@ export interface ApiInstallation {
   lockedDescription?: string
   geolocation?: Coords
   hashTags?: string[]
-  testimony?: string
+  testimony?: {
+    fileUrl: string
+    talkers: TestimonyTalkersType[]
+    textContent: TestimonyTextContentType[]
+  }
   relatedPetition?: string
   caption?: string
 
