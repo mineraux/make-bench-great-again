@@ -10,6 +10,8 @@ class MapStore {
     _id: '',
   }
 
+  @observable isInformationsPanelOpen: boolean = false
+
   @observable calculatePathFromAnotherPage: boolean = false
 
   @action setTargetInstallation = (installation: ApiInstallation) => {
@@ -22,6 +24,10 @@ class MapStore {
 
   @action setCalculatePathFromAnotherPage = (state: boolean) => {
     this.calculatePathFromAnotherPage = state
+  }
+
+  @action setIsInformationsPanelOpen = (state: boolean) => {
+    this.isInformationsPanelOpen = state
   }
 }
 

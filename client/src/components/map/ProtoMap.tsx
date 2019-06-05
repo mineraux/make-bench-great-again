@@ -103,7 +103,7 @@ const ProtoMap: FunctionComponent<Props> = ({ match, history }) => {
     ) {
       const onClickMarker = (e: any) => {
         if (e.features && featureInFeaturesCoords(e)) {
-          map.flyTo({ center: featureInFeaturesCoords(e) })
+          map.flyTo({ center: featureInFeaturesCoords(e), offset: [0, -150] })
           setSelectedMarker(e.features[0])
 
           if (map.getLayer('markers')) {
@@ -207,6 +207,12 @@ const ProtoMap: FunctionComponent<Props> = ({ match, history }) => {
     }
   }, [travelDistance])
 
+  useEffect(() => {
+    if (!MapStore.isInformationsPanelOpen && selectedMarker) {
+      map.flyTo({ center: selectedMarker._geometry.coordinates })
+    }
+  }, [MapStore.isInformationsPanelOpen, selectedMarker])
+
   const setFastestPath = () => {
     setSelectedMarker(
       DirectionsController.setFastestPath(
@@ -298,7 +304,7 @@ const ProtoMap: FunctionComponent<Props> = ({ match, history }) => {
           onButtonClick={initGeoLocate}
         />
       )}
-      {markers && (
+      {
         <InformationsPanel
           marker={selectedMarker}
           travelTime={travelTime}
@@ -307,7 +313,7 @@ const ProtoMap: FunctionComponent<Props> = ({ match, history }) => {
           userLocation={userLocation}
           targetInstallationID={targetInstallationSlug}
         />
-      )}
+      }
     </div>
   )
 }
