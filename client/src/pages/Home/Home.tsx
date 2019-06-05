@@ -101,18 +101,25 @@ const Home: FunctionComponent<Props> = ({ match }) => {
         /* right swipe */
       }
     } else {
+      const animationDuration = 1.5
       if (ref.current) {
-        const containers = ref.current.querySelectorAll(
-          '.page-home__containers-wrapper__container-1, .page-home__containers-wrapper__container-2'
-        )
+        // const containers = ref.current.querySelectorAll(
+        //   '.page-home__containers-wrapper__container-1, .page-home__containers-wrapper__container-2'
+        // )
 
         if (ref && ref.current) {
-          TweenMax.to(containers, 0.8, {
-            filter: `blur(1rem)`,
+          TweenMax.to('.page-home__containers-wrapper', animationDuration / 2, {
+            autoRound: false,
+            filter: `blur(1px)`,
             onComplete: () => {
-              TweenMax.to(containers, 0.8, {
-                filter: `blur(0)`,
-              })
+              TweenMax.to(
+                '.page-home__containers-wrapper',
+                animationDuration / 2,
+                {
+                  autoRound: false,
+                  filter: `blur(0)`,
+                }
+              )
             },
           })
         }
@@ -120,15 +127,13 @@ const Home: FunctionComponent<Props> = ({ match }) => {
 
       if (yDiff > 0) {
         /* up swipe */
-        TweenMax.to('.page-home__containers-wrapper', 0.8, {
+        TweenMax.to('.page-home__containers-wrapper', animationDuration, {
           y: -refContainer.current!.clientHeight,
-          ease: Power1.easeInOut,
         })
       } else {
         /* down swipe */
-        window.scrollTo(0, 0) // for safari top bar
-        TweenMax.to('.page-home__containers-wrapper', 0.8, {
-          ease: Power1.easeInOut,
+        // window.scrollTo(0, 0) // for safari top bar
+        TweenMax.to('.page-home__containers-wrapper', animationDuration, {
           y: 0,
         })
       }
@@ -161,15 +166,18 @@ const Home: FunctionComponent<Props> = ({ match }) => {
   }
 
   return (
-    <div className={'page-home'} ref={ref}>
+    <div className={'page-home'} ref={ref} style={{ height: windowHeight }}>
       <SplashscreenAnimation onComplete={handleSplashscreenComplete} />
 
       {isSplashscreenCompleted && (
         <div
           className="page-home__containers-wrapper"
-          style={{ maxHeight: windowHeight - getHeaderHeight() }}
+          style={{ maxHeight: windowHeight }}
         >
-          <div className="page-home__containers-wrapper__container-1">
+          <div
+            className="page-home__containers-wrapper__container-1"
+            style={{ height: windowHeight }}
+          >
             <p className="page-home__containers-wrapper__container-1__title">
               UNE EXPERIENCE
               <br />
@@ -189,6 +197,7 @@ const Home: FunctionComponent<Props> = ({ match }) => {
           <div
             ref={refContainer}
             className="page-home__containers-wrapper__container-2"
+            style={{ height: windowHeight }}
           >
             <p className="page-home__containers-wrapper__container-2__title">
               COMMENT PARTICIPER ?
