@@ -1,4 +1,5 @@
 import { TimelineMax, TweenMax, Power1, Power2 } from 'gsap'
+import { autorun } from 'mobx'
 // @ts-ignore
 import ScrollMagic from 'scrollmagic'
 import 'animation.gsap'
@@ -9,14 +10,65 @@ import { NavigationStore } from '../../../store'
 class ScrollMagicController {
   scenes: ScrollMagic.Scene[]
   sceneTestimonyTextTranslate: any
+  scrollProgressFirstPartTestimonyPlayer: number
+  isFirstPartPlayerPlaying: boolean
+
   constructor() {
     this.scenes = []
+    this.scrollProgressFirstPartTestimonyPlayer =
+      ScrollMagicStore.scrollProgressFirstPartTestimonyPlayer
+    this.isFirstPartPlayerPlaying = ScrollMagicStore.isFirstPartPlayerPlaying
+
+    autorun(() => {
+      this.isFirstPartPlayerPlaying = ScrollMagicStore.isFirstPartPlayerPlaying
+    })
+
+    autorun(() => {
+      this.scrollProgressFirstPartTestimonyPlayer =
+        ScrollMagicStore.scrollProgressFirstPartTestimonyPlayer
+
+      if (this.sceneTestimonyTextTranslate) {
+        // this.sceneTestimonyTextTranslate.progress(this.scrollProgressFirstPartTestimonyPlayer)
+        // const currentProgress = {
+        //   progress : this.sceneTestimonyTextTranslate.progress()
+        // }
+        //
+        // TweenMax.to(currentProgress, 0.5, {
+        //   progress : this.scrollProgressFirstPartTestimonyPlayer,
+        //   onUpdate: () => {
+        //     if(this.isFirstPartPlayerPlaying) {
+        //       console.log("auto scroll : ", currentProgress.progress);
+        //       this.sceneTestimonyTextTranslate.progress(currentProgress.progress)
+        //     }
+        //   }
+        // });
+
+        const scroll = {
+          y: window.pageYOffset,
+        }
+
+        const newScroll =
+          this.sceneTestimonyTextTranslate.scrollOffset() +
+          this.scrollProgressFirstPartTestimonyPlayer *
+            this.sceneTestimonyTextTranslate.duration()
+        TweenMax.to(scroll, 0.3, {
+          y: newScroll,
+          onUpdate: () => {
+            if (this.isFirstPartPlayerPlaying) {
+              console.log('auto scroll : ', scroll.y)
+              window.scrollTo(0, scroll.y)
+            }
+          },
+        })
+      }
+    })
   }
 
   public initController = () => {
     const {
       setScrollProgressFirstPart,
       setScrollProgressFirstPartTestimonyPlayer,
+      scrollProgressFirstPartTestimonyPlayer,
     } = ScrollMagicStore
     const { setScrollProgression } = NavigationStore
 
@@ -233,8 +285,10 @@ class ScrollMagicController {
     this.scenes.push(this.sceneTestimonyTextTranslate)
 
     this.sceneTestimonyTextTranslate.on('progress', (event: any) => {
-      console.log(event)
-      setScrollProgressFirstPartTestimonyPlayer(event.progress)
+      if (!this.isFirstPartPlayerPlaying) {
+        console.log('manual scroll ', event.progress)
+        setScrollProgressFirstPartTestimonyPlayer(event.progress)
+      }
     })
 
     // Part 1 : pin

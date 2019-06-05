@@ -1,10 +1,9 @@
-import React, { FunctionComponent, useEffect, useState } from 'react'
+import React, { FunctionComponent, useEffect, useRef, useState } from 'react'
 import { pageProps } from '../../types'
 import { InstallationStore, MapStore } from '../../../store'
 import { ApiInstallation } from '../../../@types'
 import './installation-unlocked.scss'
 import ScrollMagicController from './ScrollMagicController'
-import DummyPlayer from './../../../assets/images/dummy_player.png'
 import Button, {
   themes as buttonThemes,
 } from '../../../components/Button/Button'
@@ -23,6 +22,7 @@ import AudioPlayer, {
 type Props = pageProps & {}
 
 const Installation: FunctionComponent<Props> = ({ match, history }) => {
+  const ref = useRef<HTMLDivElement>(null)
   const [installation, setInstallation] = useState<ApiInstallation>({ _id: '' })
   const { installationList, fetchInstallationList } = InstallationStore
 
@@ -35,12 +35,7 @@ const Installation: FunctionComponent<Props> = ({ match, history }) => {
   } = ScrollMagicStore
   const { setIsMapButtonVisible } = NavigationStore
 
-  useEffect(() => {
-    ScrollMagicController.updateTestimonyPlayerProgress(
-      scrollProgressFirstPartTestimonyPlayer
-    )
-  }, [scrollProgressFirstPartTestimonyPlayer])
-
+  // mount / unmount
   useEffect(() => {
     if (match && installationList.length === 0) {
       fetchInstallationList({
@@ -52,10 +47,35 @@ const Installation: FunctionComponent<Props> = ({ match, history }) => {
     if (match && installation._id.length === 0) {
       getInstallationInformation()
     }
-    // setIsMapButtonVisible(true)
+
+    const onTouchStart = (e: any) => {
+      const isString = (value: any) => {
+        return typeof value === 'string' || value instanceof String
+      }
+
+      const isTouchOnPlayer = e.path.find((el: HTMLElement) => {
+        return (
+          isString(el.className) &&
+          el.className.includes(
+            'page-installation__wrapper__part--first-part__testimony__player'
+          )
+        )
+      })
+
+      if (!isTouchOnPlayer) {
+        setIsFirstPartPlayerPlaying(false)
+      }
+    }
+
+    if (ref.current) {
+      ref.current.addEventListener('touchstart', onTouchStart)
+    }
 
     return () => {
       ScrollMagicController.destroyScrollMagicScenes()
+      if (ref.current) {
+        ref.current.removeEventListener('touchstart', onTouchStart)
+      }
       window.scrollTo(0, 0)
     }
   }, [])
@@ -103,8 +123,12 @@ const Installation: FunctionComponent<Props> = ({ match, history }) => {
     history.push('/')
   }
 
+  const handleOnTogglePlayPlayer = (isPlay: boolean) => {
+    setIsFirstPartPlayerPlaying(isPlay)
+  }
+
   return (
-    <div className="page-installation">
+    <div className="page-installation" ref={ref}>
       <div className="page-installation__wrapper">
         <div className="page-installation__wrapper__part--first-part">
           <div className="page-installation__wrapper__part--first-part__presentation">
@@ -143,7 +167,7 @@ const Installation: FunctionComponent<Props> = ({ match, history }) => {
               }
               audio={AudioPlayerAudios.Audio1}
               play={isFirstPartPlayerPlaying}
-              onTogglePlay={setIsFirstPartPlayerPlaying}
+              onTogglePlay={handleOnTogglePlayPlayer}
               onProgress={setScrollProgressFirstPartTestimonyPlayer}
               progress={scrollProgressFirstPartTestimonyPlayer}
             />
