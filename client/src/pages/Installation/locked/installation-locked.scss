@@ -2,101 +2,113 @@
 
 .page-installation {
   background-color: $color-blue;
+  height: 100vh;
+
   &--locked {
-    $self: &;
+    &__wrapper {
+      height: 100%;
+      width: 100%;
+      position: relative;
 
-    > *:not(#{$self}__svg) {
-      z-index: 2;
-    }
+      &__part {
+        &--first-part {
+          position: relative;
+          height: calc(100vh - #{$header-height});
+          left: 0 !important;
+          z-index: 2;
 
-    &__presentation {
-      &__svg {
-        position: absolute;
-        width: 80%;
-        left: 50%;
-        top: calc(50% + #{$header-height / 2});
-        transform: translateX(-50%) translateY(-50%);
-        opacity: 0;
-        z-index: -1;
-      }
+          &__presentation {
+            height: 100%;
+            overflow: hidden;
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            padding-top: 5rem;
+            display: flex;
+            flex-direction: column;
+            z-index: 2;
+            pointer-events: none;
 
-      &__title {
-        display: inline-block;
-        margin: 3.5rem 0;
-        width: 100%;
-        color: $color-green;
-        font-size: 4rem;
-        text-align: center;
-        font-family: $font-infini-regular;
-        text-transform: uppercase;
-        height: 4.6rem;
-      }
+            &.hidden {
+              z-index: 0;
+              display: none;
+            }
 
-      &__content-wrapper {
-        position: relative;
-        overflow: hidden;
+            &__title {
+              margin: 0;
+              position: absolute;
+              top: 3.5rem;
+              display: inline-block;
+              width: 100%;
+              color: $color-green;
+              font-size: 4rem;
+              text-align: center;
+              font-family: $font-infini-regular;
+              text-transform: uppercase;
+              will-change: filter;
+            }
 
-        &__installation-sketch {
-          display: block;
-          max-width: 100%;
-          max-height: 50rem;
-          margin: 0 auto;
-          padding: 5rem 0;
+            &__installation-sketch {
+              width: 100%;
+              opacity: 0;
+              transform: scale(1);
+            }
+
+            &__description {
+              position: absolute;
+              top: 70%;
+              display: flex;
+              flex-direction: column;
+              align-items: center;
+              width: 100%;
+              transform: translateY(-50%);
+
+              &__text {
+                font-family: $font-infini-regular;
+                color: $color-pink;
+                font-size: 1.5rem;
+                line-height: 1.8rem;
+                max-width: $content-width;
+                text-align: center;
+                margin-bottom: 1.5rem;
+              }
+
+              &__caption {
+                font-family: $font-infini-italic;
+                color: $color-pink;
+                font-size: 1.25rem;
+                line-height: 1.5rem;
+                max-width: $content-width;
+                text-align: center;
+              }
+            }
+          }
+
+          &__go-to-installation {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            opacity: 0;
+
+            p {
+              color: $color-green;
+              font-family: $font-infini-bold;
+              font-size: 2.5rem;
+              text-transform: uppercase;
+              padding: 0 10rem;
+              margin-bottom: 5rem;
+            }
+          }
         }
-
-        &__text-content {
-          display: flex;
-          align-items: center;
-          justify-content: center;
-          text-align: center;
-          max-width: $content-width;
-          padding: 0 $content-padding;
-          margin: auto;
-          font-family: $font-infini-regular;
-          color: $color-pink;
-          font-size: 1.5rem;
-          line-height: 1.3em;
-          height: 50rem;
-        }
-
-        &__mask {
-          position: absolute;
-          top: 0;
-          left: 0;
-          right: 0;
-          bottom: 0;
-          background: linear-gradient(
-            to top,
-            $color-blue,
-            rgba(25, 33, 147, 0) 20%,
-            rgba(25, 33, 147, 0) 80%,
-            $color-blue
-          );
-          z-index: 1;
-        }
-      }
-    }
-
-    &__go-to-installation {
-      position: absolute;
-      top: 0;
-      left: 0;
-      right: 0;
-      bottom: 0;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      text-align: center;
-      opacity: 0;
-
-      p {
-        color: $color-green;
-        font-family: $font-infini-bold;
-        font-size: 2.5rem;
-        text-transform: uppercase;
-        padding: 0 10rem;
-        margin-bottom: 5rem;
       }
     }
   }
