@@ -6,6 +6,7 @@ import 'debug.addIndicators'
 import ScrollMagicStore from '../../../store/ScrollMagicStore'
 import { NavigationStore } from '../../../store'
 import { getHeaderHeight } from '../../../utils/hooks'
+import { mapRange } from '../../../utils'
 
 class ScrollMagicController {
   scenes: ScrollMagic.Scene[]
@@ -113,6 +114,11 @@ class ScrollMagicController {
       .addIndicators({ name: 'Pin 3' })
       .addTo(controller)
     this.scenes.push(sceneGoToInstallation)
+
+    scenePage.on('progress', (event: any) => {
+      const progress = mapRange(event.progress, 0, 1, 0, 0.8)
+      setScrollProgression(progress)
+    })
   }
 
   public destroyScrollMagicScenes = () => {
