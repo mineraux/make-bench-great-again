@@ -15,11 +15,16 @@ import InformationsPanel from '../InformationsPanel/InformationsPanel'
 import { featureCoords } from '../../utils/map'
 import Modal from '../Modal/Modal'
 import { pageProps } from '../../pages/types'
+import { Feature } from 'geojson'
 
 type Props = pageProps & {}
 
 const ProtoMap: FunctionComponent<Props> = ({ match, history }) => {
   const { installationList, fetchInstallationList } = InstallationStore
+  const {
+    calculatePathFromAnotherPage,
+    setCalculatePathFromAnotherPage,
+  } = MapStore
 
   const directions = useRef(DirectionsController.initMapboxDirections())
   const geolocate = useRef<GeolocateControl>(
@@ -98,7 +103,7 @@ const ProtoMap: FunctionComponent<Props> = ({ match, history }) => {
     ) {
       const onClickMarker = (e: any) => {
         if (e.features && featureInFeaturesCoords(e)) {
-          map.flyTo({ center: featureInFeaturesCoords(e) })
+          map.flyTo({ center: featureInFeaturesCoords(e), offset: [0, -150] })
           setSelectedMarker(e.features[0])
 
           if (map.getLayer('markers')) {
@@ -194,7 +199,6 @@ const ProtoMap: FunctionComponent<Props> = ({ match, history }) => {
           MapStore.targetInstallation._id
         )
       ) {
-        console.log(MapStore.targetInstallation._id)
         InstallationStore.addUnlockedInstallation(
           MapStore.targetInstallation._id
         )
@@ -202,6 +206,12 @@ const ProtoMap: FunctionComponent<Props> = ({ match, history }) => {
       }
     }
   }, [travelDistance])
+
+  useEffect(() => {
+    if (!MapStore.isInformationsPanelOpen && selectedMarker) {
+      map.flyTo({ center: selectedMarker._geometry.coordinates })
+    }
+  }, [MapStore.isInformationsPanelOpen, selectedMarker])
 
   const setFastestPath = () => {
     setSelectedMarker(
@@ -229,6 +239,56 @@ const ProtoMap: FunctionComponent<Props> = ({ match, history }) => {
     setIsTourStarted(true)
   }
 
+  useEffect(() => {
+    if (
+      map &&
+      isMapLoaded &&
+      installationList &&
+      markers &&
+      installationList &&
+      mapStylesLoaded &&
+      isGeolocationPermissionGranted &&
+      calculatePathFromAnotherPage
+    ) {
+      markers.forEach((marker: Feature) => {
+        if (marker.properties!.slug === MapStore.targetInstallation.slug) {
+          setSelectedMarker(marker)
+        }
+      })
+      setTargetInstallationSlug(MapStore.targetInstallation.slug)
+      setIsTourStarted(true)
+    }
+  }, [
+    map,
+    isMapLoaded,
+    installationList,
+    markers,
+    mapStylesLoaded,
+    isGeolocationPermissionGranted,
+    calculatePathFromAnotherPage,
+  ])
+
+  useEffect(() => {
+    if (
+      directions &&
+      selectedMarker &&
+      calculatePathFromAnotherPage &&
+      userLocation
+    ) {
+      DirectionsController.setPathToInstallation(
+        directions.current,
+        featureCoords(selectedMarker),
+        userLocation
+      )
+      setCalculatePathFromAnotherPage(false)
+    }
+  }, [
+    directions.current,
+    calculatePathFromAnotherPage,
+    selectedMarker,
+    userLocation,
+  ])
+
   return (
     <div id="map">
       <div className="mapboxgl-map__mask" />
@@ -244,7 +304,7 @@ const ProtoMap: FunctionComponent<Props> = ({ match, history }) => {
           onButtonClick={initGeoLocate}
         />
       )}
-      {markers && (
+      {
         <InformationsPanel
           marker={selectedMarker}
           travelTime={travelTime}
@@ -253,7 +313,7 @@ const ProtoMap: FunctionComponent<Props> = ({ match, history }) => {
           userLocation={userLocation}
           targetInstallationID={targetInstallationSlug}
         />
-      )}
+      }
     </div>
   )
 }

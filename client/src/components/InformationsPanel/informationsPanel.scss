@@ -25,6 +25,10 @@
     }
   }
 
+  &.close {
+    transform: translateY(100%);
+  }
+
   &__direction-informations {
     position: absolute;
     top: 1.9rem;

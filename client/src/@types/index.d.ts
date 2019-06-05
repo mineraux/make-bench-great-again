@@ -14,12 +14,14 @@ export interface ApiInstallation {
   _id: string
   slug?: string
   name?: string
+  lockedName?: string
   description?: string
   lockedDescription?: string
   geolocation?: Coords
   hashTags?: string[]
   testimony?: string
   relatedPetition?: string
+  caption?: string
 
   replace?(arg0: RegExp, arg1: string)
 }
@@ -27,17 +29,20 @@ export interface ApiInstallation {
 export interface queryApiInstallation {
   slug?: boolean
   name?: boolean
+  lockedName?: boolean
   description?: boolean
   lockedDescription?: boolean
   geolocation?: boolean
   hashTags?: boolean
   testimony?: boolean
   relatedPetition?: boolean
+  caption?: boolean
 }
 
 export interface createApiInstallation {
   slug: string
   name: string
+  lockedName: string
   description: string
   lockedDescription: string
   latitude: number
@@ -45,6 +50,7 @@ export interface createApiInstallation {
   hashtags: string[]
   testimony: string
   relatedPetition?: string
+  caption: string
 }
 
 export interface updateApiInstallation extends createApiInstallation {

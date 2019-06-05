@@ -37,6 +37,12 @@ class Admin extends Component<Props, stateAdmin> {
         const name: string = (this.createInstallationForm.querySelector(
           '[name="name"]'
         ) as HTMLInputElement).value
+        const lockedName: string = (this.createInstallationForm.querySelector(
+          '[name="lockedName"]'
+        ) as HTMLInputElement).value
+        const caption: string = (this.createInstallationForm.querySelector(
+          '[name="caption"]'
+        ) as HTMLInputElement).value
         const description: string = (this.createInstallationForm.querySelector(
           '[name="description"]'
         ) as HTMLTextAreaElement).value
@@ -59,6 +65,8 @@ class Admin extends Component<Props, stateAdmin> {
         if (
           slug.length > 0 &&
           name.length > 0 &&
+          lockedName.length > 0 &&
+          caption.length > 0 &&
           description.length > 0 &&
           lockedDescription.length > 0 &&
           latitude.length > 0 &&
@@ -67,6 +75,8 @@ class Admin extends Component<Props, stateAdmin> {
           await ApiClient.createInstallation({
             slug,
             name,
+            lockedName,
+            caption,
             description,
             lockedDescription,
             latitude: parseFloat(latitude),
@@ -105,6 +115,12 @@ class Admin extends Component<Props, stateAdmin> {
         const name: string = (this.updateInstallationForm.querySelector(
           '[name="name"]'
         ) as HTMLInputElement).value
+        const lockedName: string = (this.updateInstallationForm.querySelector(
+          '[name="lockedName"]'
+        ) as HTMLInputElement).value
+        const caption: string = (this.updateInstallationForm.querySelector(
+          '[name="caption"]'
+        ) as HTMLInputElement).value
         const description: string = (this.updateInstallationForm.querySelector(
           '[name="description"]'
         ) as HTMLTextAreaElement).value
@@ -134,6 +150,14 @@ class Admin extends Component<Props, stateAdmin> {
 
         if (name.length > 0) {
           fieldsToUpdate.name = name
+        }
+
+        if (lockedName.length > 0) {
+          fieldsToUpdate.lockedName = lockedName
+        }
+
+        if (caption.length > 0) {
+          fieldsToUpdate.caption = caption
         }
 
         if (description.length > 0) {
@@ -270,6 +294,20 @@ class Admin extends Component<Props, stateAdmin> {
             required
             className="admin-panel__form__field"
           />
+          <input
+            type="text"
+            name="lockedName"
+            placeholder="Nom caché"
+            required
+            className="admin-panel__form__field"
+          />
+          <input
+            type="text"
+            name="caption"
+            placeholder="Légende"
+            required
+            className="admin-panel__form__field"
+          />
           <textarea
             name="description"
             placeholder="Description"
@@ -339,6 +377,18 @@ class Admin extends Component<Props, stateAdmin> {
             type="text"
             name="name"
             placeholder="Nom"
+            className="admin-panel__form__field"
+          />
+          <input
+            type="text"
+            name="lockedName"
+            placeholder="Nom caché"
+            className="admin-panel__form__field"
+          />
+          <input
+            type="text"
+            name="caption"
+            placeholder="Légende"
             className="admin-panel__form__field"
           />
           <textarea

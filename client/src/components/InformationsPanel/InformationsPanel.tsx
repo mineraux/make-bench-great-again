@@ -26,10 +26,11 @@ const InformationsPanel: FunctionComponent<Props> = ({
   travelTime,
   className,
   onButtonClick,
+  isTourStarted,
   userLocation,
   targetInstallationID,
 }) => {
-  const [isOpen, setIsOpen] = useState(false)
+  const { isInformationsPanelOpen, setIsInformationsPanelOpen } = MapStore
   const [installationTargetName, setInstallationTargetName] = useState(
     'Choisissez une oeuvre'
   )
@@ -44,13 +45,18 @@ const InformationsPanel: FunctionComponent<Props> = ({
     if (marker && marker.properties) {
       setInstallationTargetName(marker.properties.name)
       setInstallationTargetDescription(marker.properties.description)
-      setIsOpen(true)
+      setIsInformationsPanelOpen(true)
     }
   }, [marker])
 
   useEffect(() => {
-    if (marker && marker.properties && marker.properties._id) {
-      if (targetInstallationID === marker.properties._id) {
+    if (
+      marker &&
+      marker.properties &&
+      marker.properties._id &&
+      targetInstallationID
+    ) {
+      if (targetInstallationID === marker.properties.slug) {
         setIsCurrentTargetMatching(true)
       } else {
         setIsCurrentTargetMatching(false)
@@ -81,7 +87,7 @@ const InformationsPanel: FunctionComponent<Props> = ({
   return (
     <div
       className={ClassNames('informations-panel', className, {
-        open: isOpen,
+        open: isInformationsPanelOpen,
       })}
     >
       {travelTime && travelTime > 0 && isCurrentTargetMatching && (
@@ -97,7 +103,7 @@ const InformationsPanel: FunctionComponent<Props> = ({
         <button
           className="informations-panel__close-ico"
           onClick={() => {
-            setIsOpen(!isOpen)
+            setIsInformationsPanelOpen(!isInformationsPanelOpen)
           }}
         >
           <CrossIco />
@@ -122,14 +128,15 @@ const InformationsPanel: FunctionComponent<Props> = ({
           className="informations-panel__informations--installation__installation-see-more"
         />
       )}
-      {!isCurrentTargetMatching && userLocation && (
-        <Button
-          onClick={onButtonClick}
-          label={'Calculer mon itinéraire'}
-          theme={ButtonThemes.Blue}
-          className={'informations-panel__set-direction-button'}
-        />
-      )}
+      {userLocation &&
+        (!isTourStarted || (!isCurrentTargetMatching && isTourStarted)) && (
+          <Button
+            onClick={onButtonClick}
+            label={'Calculer mon itinéraire'}
+            theme={ButtonThemes.Blue}
+            className={'informations-panel__set-direction-button'}
+          />
+        )}
     </div>
   )
 }
