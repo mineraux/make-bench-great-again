@@ -157,6 +157,30 @@ class InstallationStore {
             ],
           },
         },
+        {
+          _id: '4',
+          slug: 'raccord',
+          name: 'Raccord',
+          description:
+            'Conçue par Marc Aurel comme une véritable ode à la nature, sa structure en courbes rappelle la forme délicate et organique des feuillages, ramenant une touche printanière dans la ville. Au cours de cette expérience, le Raccord questionne la place de la nature dans la ville.',
+          geolocation: [2.403, 48.875],
+        },
+        {
+          _id: '5',
+          slug: 'mi-lune',
+          name: 'Mi-lune',
+          description:
+            'Conçue à la fin du XXe siècle, cette structure à la forme avant-gardiste suscite depuis de nombreuses années la curiosité des passants. Disposée sous-terre, cette oeuvre minimaliste interroge notre rapport au temps en nous offrant une halte dans les profondeurs de Paris.',
+          geolocation: [2.4, 48.87294],
+        },
+        {
+          _id: '7',
+          slug: 'ligne',
+          name: 'La ligne',
+          description:
+            'Conçue par Marc Aurel comme une véritable ode à la nature, sa structure en courbes rappelle la forme délicate et organique des feuillages, ramenant une touche printanière dans la ville. Au cours de cette expérience, la Ligne questionne la place de la nature dans la ville.',
+          geolocation: [2.408, 48.8775],
+        },
       ]
     } else {
       const data: ApiInstallationReponseRoot = (await ApiClient.getInstallationList(
