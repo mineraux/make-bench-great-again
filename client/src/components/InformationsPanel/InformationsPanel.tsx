@@ -26,6 +26,7 @@ const InformationsPanel: FunctionComponent<Props> = ({
   travelTime,
   className,
   onButtonClick,
+  isTourStarted,
   userLocation,
   targetInstallationID,
 }) => {
@@ -49,8 +50,13 @@ const InformationsPanel: FunctionComponent<Props> = ({
   }, [marker])
 
   useEffect(() => {
-    if (marker && marker.properties && marker.properties._id) {
-      if (targetInstallationID === marker.properties._id) {
+    if (
+      marker &&
+      marker.properties &&
+      marker.properties._id &&
+      targetInstallationID
+    ) {
+      if (targetInstallationID === marker.properties.slug) {
         setIsCurrentTargetMatching(true)
       } else {
         setIsCurrentTargetMatching(false)
@@ -122,14 +128,15 @@ const InformationsPanel: FunctionComponent<Props> = ({
           className="informations-panel__informations--installation__installation-see-more"
         />
       )}
-      {!isCurrentTargetMatching && userLocation && (
-        <Button
-          onClick={onButtonClick}
-          label={'Calculer mon itinéraire'}
-          theme={ButtonThemes.Blue}
-          className={'informations-panel__set-direction-button'}
-        />
-      )}
+      {userLocation &&
+        (!isTourStarted || (!isCurrentTargetMatching && isTourStarted)) && (
+          <Button
+            onClick={onButtonClick}
+            label={'Calculer mon itinéraire'}
+            theme={ButtonThemes.Blue}
+            className={'informations-panel__set-direction-button'}
+          />
+        )}
     </div>
   )
 }

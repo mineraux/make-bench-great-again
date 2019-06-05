@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useCallback } from 'react'
 import { throttle } from './index'
 
 export function useWindowSize() {
@@ -71,4 +71,25 @@ export function useScrollSpeed({
   }, [])
 
   return scrollSpeed
+}
+
+export function useClientRect(): any {
+  const [rect, setRect] = useState(null)
+  const ref = useCallback(node => {
+    if (node !== null) {
+      setRect(node.getBoundingClientRect())
+    }
+  }, [])
+  return [rect, ref]
+}
+
+export function getHeaderHeight(): any {
+  let headerHeight = 0
+  const header = document.querySelector('.app__header-container')
+
+  if (header) {
+    headerHeight = header.clientHeight
+  }
+
+  return headerHeight
 }
