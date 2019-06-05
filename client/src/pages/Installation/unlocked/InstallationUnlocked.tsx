@@ -39,21 +39,22 @@ const Installation: FunctionComponent<Props> = ({ match, history }) => {
     }
     // setIsMapButtonVisible(true)
 
-    TweenMax.to(
-      '.page-installation__wrapper__part--first-part__presentation__installation-sketch',
-      2,
-      {
-        opacity: 1,
-        delay: 1,
-        ease: Power2.easeInOut,
-      }
-    )
-
     return () => {
       ScrollMagicController.destroyScrollMagicScenes()
       window.scrollTo(0, 0)
     }
   }, [])
+
+  const handleSpriteAnimationInstance = () => {
+    TweenMax.to(
+      '.page-installation__wrapper__part--first-part__presentation__installation-sketch',
+      1.5,
+      {
+        opacity: 1,
+        ease: Power2.easeInOut,
+      }
+    )
+  }
 
   const getInstallationInformation = async () => {
     await InstallationStore.fetchSingleInstallation(
@@ -92,8 +93,11 @@ const Installation: FunctionComponent<Props> = ({ match, history }) => {
       <div className="page-installation__wrapper">
         <div className="page-installation__wrapper__part--first-part">
           <div className="page-installation__wrapper__part--first-part__presentation">
-            <p className="page-installation__wrapper__part--first-part__presentation__title">
+            <p className="page-installation__wrapper__part--first-part__presentation__title title1">
               {installation.name}
+            </p>
+            <p className="page-installation__wrapper__part--first-part__presentation__title title2">
+              {'Autre titre'}
             </p>
             <SpriteAnimation
               className={
@@ -101,12 +105,16 @@ const Installation: FunctionComponent<Props> = ({ match, history }) => {
               }
               progression={scrollProgressFirstPart}
               animationID={animationId.bancMetro}
+              onInstance={handleSpriteAnimationInstance}
             />
+
             <div className="page-installation__wrapper__part--first-part__presentation__text-content-wrapper">
               <div className="page-installation__wrapper__part--first-part__presentation__text-content-wrapper__mask" />
-              <p className="page-installation__wrapper__part--first-part__presentation__text-content-wrapper__text-content">
-                {installation.lockedDescription}
-              </p>
+              <div className="page-installation__wrapper__part--first-part__presentation__text-content-wrapper__container">
+                <p className="page-installation__wrapper__part--first-part__presentation__text-content-wrapper__container__text-content">
+                  {installation.lockedDescription}
+                </p>
+              </div>
             </div>
           </div>
 
@@ -121,14 +129,17 @@ const Installation: FunctionComponent<Props> = ({ match, history }) => {
             />
             <div className="page-installation__wrapper__part--first-part__testimony__text-content-wrapper">
               <div className="page-installation__wrapper__part--first-part__testimony__text-content-wrapper__mask" />
-              <p className="page-installation__wrapper__part--first-part__testimony__text-content-wrapper__text-content">
-                Avant je pouvais venir dormir ici mais depuis qu'ils ont mis en
-                place ces accoudoirs, je suis obliger de dormir sur le trottoir.
-                On était au calme ici, bla bla bla Lorem ipsum dolor, sit amet
-                consectetur adipisicing elit. Incidunt tenetur quas itaque
-                quisquam ipsum ipsa id minus laborum animi iusto tempore, harum
-                sit iste. Quod suscipit esse adipisci dicta omnis.
-              </p>
+              <div className="page-installation__wrapper__part--first-part__testimony__text-content-wrapper__container">
+                <p className="page-installation__wrapper__part--first-part__testimony__text-content-wrapper__container__text-content">
+                  Avant je pouvais venir dormir ici mais depuis qu'ils ont mis
+                  en place ces accoudoirs, je suis obliger de dormir sur le
+                  trottoir. On était au calme ici, bla bla bla Lorem ipsum
+                  dolor, sit amet consectetur adipisicing elit. Incidunt tenetur
+                  quas itaque quisquam ipsum ipsa id minus laborum animi iusto
+                  tempore, harum sit iste. Quod suscipit esse adipisci dicta
+                  omnis.
+                </p>
+              </div>
             </div>
           </div>
         </div>
