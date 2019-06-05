@@ -175,9 +175,9 @@ class Admin extends Component<Props, stateAdmin> {
           ]
         }
 
-        if (testimony.length > 0) {
-          fieldsToUpdate.testimony = testimony
-        }
+        // if (testimony.length > 0) {
+        //   fieldsToUpdate.testimony = testimony
+        // }
 
         if (hashtags && hashtags[0].length > 0) {
           fieldsToUpdate.hashTags = hashtags
