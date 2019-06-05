@@ -8,6 +8,7 @@ import ScrollMagicStore from '../../../store/ScrollMagicStore'
 import { NavigationStore } from '../../../store'
 
 class ScrollMagicController {
+  isDebug: boolean
   scenes: ScrollMagic.Scene[]
   sceneTestimonyTextTranslate: any
   scrollProgressFirstPartTestimonyPlayer: number
@@ -15,6 +16,7 @@ class ScrollMagicController {
 
   constructor() {
     this.scenes = []
+    this.isDebug = false
     this.scrollProgressFirstPartTestimonyPlayer =
       ScrollMagicStore.scrollProgressFirstPartTestimonyPlayer
     this.isFirstPartPlayerPlaying = ScrollMagicStore.isFirstPartPlayerPlaying
@@ -80,21 +82,42 @@ class ScrollMagicController {
 
     // TWEENS
 
-    // Presentation : sketch + titles
-    const tweenInstallationSketch = new TimelineMax()
+    // Presentation : sketch
+    const tweenInstallationSketch = new TimelineMax().fromTo(
+      '.page-installation__wrapper__part--first-part__presentation__installation-sketch',
+      1,
+      {
+        scale: 1.7,
+        yPercent: 30,
+      },
+      {
+        scale: 1,
+        yPercent: 0,
+        ease: Power1.easeInOut,
+        onUpdate: () => {
+          // window.dispatchEvent(new Event('resize'));
+        },
+      }
+    )
+
+    // Presentation : description + title
+
+    const tweenPresentationDescription = new TimelineMax()
       .fromTo(
-        '.page-installation__wrapper__part--first-part__presentation__installation-sketch',
+        '.page-installation__wrapper__part--first-part__presentation__description',
         1,
         {
-          scale: 1.7,
-          yPercent: 30,
+          opacity: 0,
+          filter: 'blur(4px)',
         },
         {
-          scale: 1,
-          yPercent: 0,
+          opacity: 1,
+          filter: 'blur(0)',
+          autoRound: false,
           ease: Power1.easeInOut,
         }
       )
+      .add('title1BeginOut', '+=0.5')
       .fromTo(
         '.page-installation__wrapper__part--first-part__presentation__title.title1',
         1,
@@ -107,8 +130,9 @@ class ScrollMagicController {
           autoRound: false,
           ease: Power1.easeInOut,
         },
-        '-=0.5'
+        'title1BeginOut'
       )
+      .add('title1FinishOut')
       .fromTo(
         '.page-installation__wrapper__part--first-part__presentation__title.title2',
         1,
@@ -122,7 +146,18 @@ class ScrollMagicController {
           autoRound: false,
           ease: Power1.easeInOut,
         },
-        '-=0.2'
+        'title1FinishOut-=0.5'
+      )
+      .to(
+        '.page-installation__wrapper__part--first-part__presentation__description',
+        1,
+        {
+          opacity: 0,
+          filter: 'blur(4px)',
+          autoRound: false,
+          ease: Power1.easeInOut,
+        },
+        'title1FinishOut-=0.5'
       )
 
     // Presentation : text content
@@ -197,6 +232,7 @@ class ScrollMagicController {
     // SCENES
 
     // Presentation: sketch + title
+
     const scenePart1InstallationSketchDuration = 600
     const scenePart1InstallationSketchOffset = 0
     const scenePart1InstallationSketch = new ScrollMagic.Scene({
@@ -206,15 +242,40 @@ class ScrollMagicController {
     })
       .setTween(tweenInstallationSketch)
       .addTo(controller)
-      .addIndicators({ name: 'scenePart1InstallationSketch' })
+    if (this.isDebug) {
+      scenePart1InstallationSketch.addIndicators({
+        name: 'scenePart1InstallationSketch',
+      })
+    }
     this.scenes.push(scenePart1InstallationSketch)
 
-    // Presentation : text
-    const scenePart1PresentationTextDuration = 1700
-    const scenePart1PresentationTextOffset =
+    // Presentation : description + title
+
+    const scenePart1PresentationDescriptionDuration = 800
+    const scenePart1PresentationDescriptionOffset =
       scenePart1InstallationSketch.scrollOffset() +
       scenePart1InstallationSketch.duration() -
-      150
+      350
+    const scenePart1PresentationDescription = new ScrollMagic.Scene({
+      duration: scenePart1PresentationDescriptionDuration,
+      triggerHook: 0,
+      offset: scenePart1PresentationDescriptionOffset,
+    })
+      .setTween(tweenPresentationDescription)
+      .addTo(controller)
+    if (this.isDebug) {
+      scenePart1PresentationDescription.addIndicators({
+        name: 'scenePart1PresentationDescription',
+      })
+    }
+    this.scenes.push(scenePart1PresentationDescription)
+
+    // Presentation : text
+
+    const scenePart1PresentationTextDuration = 1700
+    const scenePart1PresentationTextOffset =
+      scenePart1PresentationDescription.scrollOffset() +
+      scenePart1PresentationDescription.duration()
     const scenePart1PresentationText = new ScrollMagic.Scene({
       duration: scenePart1PresentationTextDuration,
       triggerHook: 0,
@@ -222,7 +283,11 @@ class ScrollMagicController {
     })
       .setTween(tweenPresentationText)
       .addTo(controller)
-      .addIndicators({ name: 'scenePart1PresentationText' })
+    if (this.isDebug) {
+      scenePart1PresentationText.addIndicators({
+        name: 'scenePart1PresentationText',
+      })
+    }
     this.scenes.push(scenePart1PresentationText)
 
     scenePart1PresentationText.on('progress', (event: any) => {
@@ -231,6 +296,7 @@ class ScrollMagicController {
     })
 
     // Presentation : fade out
+
     const scenePresentationFadeOffset =
       scenePart1PresentationText.scrollOffset() +
       scenePart1PresentationText.duration() -
@@ -241,11 +307,16 @@ class ScrollMagicController {
       triggerHook: 0,
     })
       .setTween(tweenPresentationFade)
-      .addIndicators({ name: 'scenePart1PresentationFade' })
       .addTo(controller)
+    if (this.isDebug) {
+      scenePart1PresentationFade.addIndicators({
+        name: 'scenePart1PresentationFade',
+      })
+    }
     this.scenes.push(scenePart1PresentationFade)
 
     // Testimony : fade in
+
     const sceneTestimonyOffset =
       scenePart1PresentationFade.scrollOffset() +
       scenePart1PresentationFade.duration() -
@@ -257,7 +328,9 @@ class ScrollMagicController {
     })
       .setTween(tweenTestimony)
       .addTo(controller)
-      .addIndicators({ name: 'sceneTestimony' })
+    if (this.isDebug) {
+      sceneTestimony.addIndicators({ name: 'sceneTestimony' })
+    }
     this.scenes.push(sceneTestimony)
 
     sceneTestimony.on('start', (event: any) => {
@@ -283,11 +356,16 @@ class ScrollMagicController {
       offset: 1500,
     })
       .setTween(tweenTestimonyTextFade)
-      // .addIndicators({ name: 'Animation testimony text' })
       .addTo(controller)
+    if (this.isDebug) {
+      sceneTestimonyTextFade.addIndicators({
+        name: '/////// TODO sceneTestimonyTextFade',
+      })
+    }
     this.scenes.push(sceneTestimonyTextFade)
 
     // Testimony : text translate
+
     const sceneTestimonyTextTranslateOffset =
       sceneTestimony.scrollOffset() + sceneTestimony.duration()
     this.sceneTestimonyTextTranslate = new ScrollMagic.Scene({
@@ -296,8 +374,12 @@ class ScrollMagicController {
       triggerHook: 0,
     })
       .setTween(tweenTestimonyTextTranslate)
-      .addIndicators({ name: 'sceneTestimonyTextTranslate' })
       .addTo(controller)
+    if (this.isDebug) {
+      this.sceneTestimonyTextTranslate.addIndicators({
+        name: 'sceneTestimonyTextTranslate',
+      })
+    }
     this.scenes.push(this.sceneTestimonyTextTranslate)
 
     this.sceneTestimonyTextTranslate.on('progress', (event: any) => {
@@ -317,7 +399,9 @@ class ScrollMagicController {
     })
       .setPin('.page-installation__wrapper__part--first-part')
       .addTo(controller)
-      .addIndicators({ name: 'scenePart1Pin' })
+    if (this.isDebug) {
+      scenePart1Pin.addIndicators({ name: 'scenePart1Pin' })
+    }
     this.scenes.push(scenePart1Pin)
 
     /**

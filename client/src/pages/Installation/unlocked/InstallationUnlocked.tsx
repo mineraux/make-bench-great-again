@@ -37,6 +37,8 @@ const Installation: FunctionComponent<Props> = ({ match, history }) => {
 
   // mount / unmount
   useEffect(() => {
+    window.scrollTo(0, 0)
+
     if (match && installationList.length === 0) {
       fetchInstallationList({
         name: true,
@@ -80,17 +82,6 @@ const Installation: FunctionComponent<Props> = ({ match, history }) => {
     }
   }, [])
 
-  const handleSpriteAnimationInstance = () => {
-    TweenMax.to(
-      '.page-installation__wrapper__part--first-part__presentation__installation-sketch',
-      1.5,
-      {
-        opacity: 1,
-        ease: Power2.easeInOut,
-      }
-    )
-  }
-
   const getInstallationInformation = async () => {
     await InstallationStore.fetchSingleInstallation(
       {
@@ -127,6 +118,17 @@ const Installation: FunctionComponent<Props> = ({ match, history }) => {
     setIsFirstPartPlayerPlaying(isPlay)
   }
 
+  const handleSpriteAnimationInstance = () => {
+    TweenMax.to(
+      '.page-installation__wrapper__part--first-part__presentation__installation-sketch',
+      1.5,
+      {
+        opacity: 1,
+        ease: Power2.easeInOut,
+      }
+    )
+  }
+
   return (
     <div className="page-installation" ref={ref}>
       <div className="page-installation__wrapper">
@@ -146,6 +148,26 @@ const Installation: FunctionComponent<Props> = ({ match, history }) => {
               animationID={animationId.bancMetro}
               onInstance={handleSpriteAnimationInstance}
             />
+
+            <div className="page-installation__wrapper__part--first-part__presentation__description">
+              <p
+                className={
+                  'page-installation__wrapper__part--first-part__presentation__description__text'
+                }
+              >
+                Conçue comme une véritable ode à la nature, sa structure en
+                courbes rappelle la forme délicate et organique des feuillages,
+                ramenant une touche printanière dans la ville.
+              </p>
+              <p
+                className={
+                  'page-installation__wrapper__part--first-part__presentation__description__caption'
+                }
+              >
+                Exedros, Fonte, résine de couleur “vert papier russe” H. : 150
+                L. : 70cm, 2016
+              </p>
+            </div>
 
             <div className="page-installation__wrapper__part--first-part__presentation__text-content-wrapper">
               <div className="page-installation__wrapper__part--first-part__presentation__text-content-wrapper__mask" />
