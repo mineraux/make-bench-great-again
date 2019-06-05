@@ -76,14 +76,24 @@
         height: calc(100vh - #{$header-height});
         //padding-bottom: 10rem;
         left: 0 !important;
+        z-index: 2;
 
         &__presentation {
           height: 100%;
-          overflow-x: hidden;
-          position: relative;
+          overflow: hidden;
+          position: absolute;
+          top: 0;
+          left: 0;
+          right: 0;
+          bottom: 0;
           padding-top: 5rem;
           display: flex;
           flex-direction: column;
+          z-index: 2;
+          &.hidden {
+            z-index: 0;
+            display: none;
+          }
 
           &__title {
             margin: 0;
@@ -110,6 +120,7 @@
         }
 
         &__testimony {
+          z-index: 1;
           position: absolute;
           top: 0;
           left: 0;
@@ -119,6 +130,10 @@
           display: flex;
           flex-direction: column;
           align-items: center;
+
+          &.hidden {
+            pointer-events: none;
+          }
 
           &__player {
             margin-top: auto;

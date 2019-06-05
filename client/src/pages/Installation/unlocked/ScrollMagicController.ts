@@ -260,6 +260,22 @@ class ScrollMagicController {
       .addIndicators({ name: 'sceneTestimony' })
     this.scenes.push(sceneTestimony)
 
+    sceneTestimony.on('start', (event: any) => {
+      const prensentation = document.querySelector(
+        '.page-installation__wrapper__part--first-part__presentation'
+      )
+      const testimony = document.querySelector(
+        '.page-installation__wrapper__part--first-part__testimony'
+      )
+      if (event.scrollDirection === 'FORWARD') {
+        prensentation!.classList.add('hidden')
+        testimony!.classList.remove('hidden')
+      } else if (event.scrollDirection === 'REVERSE') {
+        testimony!.classList.add('hidden')
+        prensentation!.classList.remove('hidden')
+      }
+    })
+
     // TODO
     const sceneTestimonyTextFade = new ScrollMagic.Scene({
       duration: 100,

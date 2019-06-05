@@ -157,7 +157,7 @@ const Installation: FunctionComponent<Props> = ({ match, history }) => {
             </div>
           </div>
 
-          <div className="page-installation__wrapper__part--first-part__testimony">
+          <div className="page-installation__wrapper__part--first-part__testimony hidden">
             <p className="page-installation__wrapper__part--first-part__testimony__title">
               Témoignage
             </p>
