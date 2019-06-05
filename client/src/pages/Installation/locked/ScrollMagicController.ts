@@ -57,31 +57,6 @@ class ScrollMagicController {
         },
         'progressAppear-=0.2'
       )
-      .add('blurPresentation')
-      .fromTo(
-        '.page-installation--locked__presentation',
-        0.5,
-        {
-          filter: 'blur(0)',
-        },
-        {
-          autoRound: false,
-          filter: 'blur(8px)',
-          ease: Power2.easeInOut,
-        },
-        'blurPresentation'
-      )
-      .fromTo(
-        '.page-installation--locked__go-to-installation',
-        0.5,
-        {
-          opacity: 0,
-        },
-        {
-          opacity: 1,
-        },
-        'blurPresentation+=0.2'
-      )
 
     const headerHeight = getHeaderHeight()
     const durationPart1 = 1000 - headerHeight
@@ -97,7 +72,7 @@ class ScrollMagicController {
     this.scenes.push(scenePage)
 
     const scenePresentation = new ScrollMagic.Scene({
-      duration: durationPart1 - headerHeight,
+      duration: durationPart1,
       triggerHook: 0,
     })
       .setTween(tweenFakeScroll)
@@ -108,7 +83,7 @@ class ScrollMagicController {
     const sceneGoToInstallation = new ScrollMagic.Scene({
       duration: durationPart2,
       triggerHook: 0,
-      offset: durationPart1 - 200,
+      offset: durationPart1 - 100,
     })
       .setTween(tweenBlurPresentation)
       .addIndicators({ name: 'Pin 3' })
@@ -118,6 +93,41 @@ class ScrollMagicController {
     scenePage.on('progress', (event: any) => {
       const progress = mapRange(event.progress, 0, 1, 0, 0.8)
       setScrollProgression(progress)
+    })
+
+    sceneGoToInstallation.on('end', (event: any) => {
+      const blur = new TimelineMax({ paused: true })
+        .add('blurPresentation')
+        .fromTo(
+          '.page-installation--locked__presentation',
+          0.5,
+          {
+            filter: 'blur(0)',
+          },
+          {
+            autoRound: false,
+            filter: 'blur(8px)',
+            ease: Power2.easeInOut,
+          },
+          'blurPresentation'
+        )
+        .fromTo(
+          '.page-installation--locked__go-to-installation',
+          0.5,
+          {
+            opacity: 0,
+          },
+          {
+            opacity: 1,
+          },
+          'blurPresentation+=0.2'
+        )
+
+      if (event.scrollDirection === 'FORWARD') {
+        blur.play()
+      } else if (event.scrollDirection === 'REVERSE') {
+        blur.reverse()
+      }
     })
   }
 
