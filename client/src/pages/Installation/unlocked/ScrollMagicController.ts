@@ -1,4 +1,4 @@
-import { TimelineMax, Power1, Power2 } from 'gsap'
+import { TimelineMax, TweenMax, Power1, Power2 } from 'gsap'
 // @ts-ignore
 import ScrollMagic from 'scrollmagic'
 import 'animation.gsap'
@@ -8,13 +8,16 @@ import { NavigationStore } from '../../../store'
 
 class ScrollMagicController {
   scenes: ScrollMagic.Scene[]
-
+  sceneTestimonyTextTranslate: any
   constructor() {
     this.scenes = []
   }
 
   public initController = () => {
-    const { setScrollProgressFirstPart } = ScrollMagicStore
+    const {
+      setScrollProgressFirstPart,
+      setScrollProgressFirstPartTestimonyPlayer,
+    } = ScrollMagicStore
     const { setScrollProgression } = NavigationStore
 
     const controller = new ScrollMagic.Controller()
@@ -23,18 +26,12 @@ class ScrollMagicController {
      * PART 1
      */
 
-    // DOM
-
-    const sketchEl = document.querySelector(
-      '.page-installation__wrapper__part--first-part__presentation__installation-sketch'
-    )
-
     // TWEENS
 
-    // sketch + titles
+    // Presentation : sketch + titles
     const tweenInstallationSketch = new TimelineMax()
       .fromTo(
-        sketchEl!,
+        '.page-installation__wrapper__part--first-part__presentation__installation-sketch',
         1,
         {
           scale: 1.7,
@@ -76,12 +73,12 @@ class ScrollMagicController {
         '-=0.2'
       )
 
-    // text
+    // Presentation : text content
     const tweenPresentationText = new TimelineMax().fromTo(
       '.page-installation__wrapper__part--first-part__presentation__text-content-wrapper__container__text-content',
       0.5,
       {
-        transform: 'translateY(25rem)',
+        transform: 'translateY(20rem)',
         yPercent: 0,
       },
       {
@@ -90,6 +87,7 @@ class ScrollMagicController {
       }
     )
 
+    // Presentation : fade out
     const tweenPresentationFade = new TimelineMax().fromTo(
       '.page-installation__wrapper__part--first-part__presentation',
       0.5,
@@ -105,28 +103,23 @@ class ScrollMagicController {
       }
     )
 
-    const tweenTestimonyTextTranslate = new TimelineMax().fromTo(
-      '.page-installation__wrapper__part--first-part__testimony__text-content-wrapper__text-content',
-      0.5,
-      {
-        yPercent: 100,
-      },
-      {
-        yPercent: -100,
-      }
-    )
-
-    /**
-     * Tweens de témoignage de l'oeuvre
-     */
-    const tweenTestimony = new TimelineMax().to(
+    // Testimony : fade in
+    const tweenTestimony = new TimelineMax().fromTo(
       '.page-installation__wrapper__part--first-part__testimony',
       0.5,
       {
+        filter: 'blur(4px)',
+        opacity: 0,
+      },
+      {
         opacity: 1,
+        filter: 'blur(0)',
+        autoRound: false,
+        ease: Power1.easeInOut,
       }
     )
 
+    // Testimony : test fade
     const tweenTestimonyTextFade = new TimelineMax().to(
       '.page-installation__wrapper__part--first-part__testimony__text-content-wrapper',
       0.5,
@@ -135,20 +128,23 @@ class ScrollMagicController {
       }
     )
 
+    // Testimony : text translate
+    const tweenTestimonyTextTranslate = new TimelineMax().fromTo(
+      '.page-installation__wrapper__part--first-part__testimony__text-content-wrapper__container__text-content',
+      0.5,
+      {
+        transform: `translateY(${20 / 2}rem)`,
+        yPercent: 0,
+      },
+      {
+        transform: `translateY(${20 / 2}rem)`,
+        yPercent: -100,
+      }
+    )
+
     // SCENES
 
-    // Part 1 : pin
-    const part1Height = 2700
-    const scenePart1Pin = new ScrollMagic.Scene({
-      duration: part1Height,
-      triggerHook: 0,
-    })
-      .setPin('.page-installation__wrapper__part--first-part')
-      .addTo(controller)
-      .addIndicators({ name: 'scenePart1Pin' })
-    this.scenes.push(scenePart1Pin)
-
-    // Part 1 : installation sketch
+    // Presentation: sketch + title
     const scenePart1InstallationSketchDuration = 600
     const scenePart1InstallationSketchOffset = 0
     const scenePart1InstallationSketch = new ScrollMagic.Scene({
@@ -161,7 +157,7 @@ class ScrollMagicController {
       .addIndicators({ name: 'scenePart1InstallationSketch' })
     this.scenes.push(scenePart1InstallationSketch)
 
-    // Part 1 : presentation text
+    // Presentation : text
     const scenePart1PresentationTextDuration = 1700
     const scenePart1PresentationTextOffset =
       scenePart1InstallationSketch.scrollOffset() +
@@ -182,6 +178,7 @@ class ScrollMagicController {
       setScrollProgressFirstPart(event.progress)
     })
 
+    // Presentation : fade out
     const scenePresentationFadeOffset =
       scenePart1PresentationText.scrollOffset() +
       scenePart1PresentationText.duration() -
@@ -196,20 +193,22 @@ class ScrollMagicController {
       .addTo(controller)
     this.scenes.push(scenePart1PresentationFade)
 
+    // Testimony : fade in
     const sceneTestimonyOffset =
       scenePart1PresentationFade.scrollOffset() +
       scenePart1PresentationFade.duration() -
       100
     const sceneTestimony = new ScrollMagic.Scene({
-      duration: 400,
+      duration: 500,
       triggerHook: 0,
       offset: sceneTestimonyOffset,
     })
       .setTween(tweenTestimony)
-      .addIndicators({ name: 'Animation testimony' })
       .addTo(controller)
+      .addIndicators({ name: 'sceneTestimony' })
     this.scenes.push(sceneTestimony)
 
+    // TODO
     const sceneTestimonyTextFade = new ScrollMagic.Scene({
       duration: 100,
       triggerHook: 0,
@@ -220,15 +219,37 @@ class ScrollMagicController {
       .addTo(controller)
     this.scenes.push(sceneTestimonyTextFade)
 
-    const sceneTestimonyTextTranslate = new ScrollMagic.Scene({
+    // Testimony : text translate
+    const sceneTestimonyTextTranslateOffset =
+      sceneTestimony.scrollOffset() + sceneTestimony.duration()
+    this.sceneTestimonyTextTranslate = new ScrollMagic.Scene({
       duration: 1000,
-      offset: 1700,
+      offset: sceneTestimonyTextTranslateOffset,
       triggerHook: 0,
     })
       .setTween(tweenTestimonyTextTranslate)
-      // .addIndicators({ name: 'Animation testimony translate text' })
+      .addIndicators({ name: 'sceneTestimonyTextTranslate' })
       .addTo(controller)
-    this.scenes.push(sceneTestimonyTextTranslate)
+    this.scenes.push(this.sceneTestimonyTextTranslate)
+
+    this.sceneTestimonyTextTranslate.on('progress', (event: any) => {
+      console.log(event)
+      setScrollProgressFirstPartTestimonyPlayer(event.progress)
+    })
+
+    // Part 1 : pin
+    const scenePart1PinDuration =
+      this.sceneTestimonyTextTranslate.scrollOffset() +
+      this.sceneTestimonyTextTranslate.duration()
+    const scenePart1Pin = new ScrollMagic.Scene({
+      duration: scenePart1PinDuration,
+      triggerHook: 0,
+    })
+      .setPin('.page-installation__wrapper__part--first-part')
+      .addTo(controller)
+      .addIndicators({ name: 'scenePart1Pin' })
+    this.scenes.push(scenePart1Pin)
+
     /**
      * PART 2
      */
@@ -279,7 +300,7 @@ class ScrollMagicController {
     this.scenes.push(transitionMapButtonColor)
 
     const scenePage = new ScrollMagic.Scene({
-      duration: part1Height + part2Height,
+      duration: scenePart1PinDuration + part2Height,
       triggerHook: 0,
     }).addTo(controller)
     this.scenes.push(scenePage)
@@ -287,6 +308,19 @@ class ScrollMagicController {
     scenePage.on('progress', (event: any) => {
       setScrollProgression(event.progress)
     })
+  }
+
+  updateTestimonyPlayerProgress = (progress: number) => {
+    if (this.sceneTestimonyTextTranslate) {
+      // const currentProgress = {progress : this.sceneTestimonyTextTranslate.progress()}
+      // TweenMax.to(currentProgress, 0.5, {
+      //   progress,
+      //   onUpdate: () => {
+      //     this.sceneTestimonyTextTranslate.progress(currentProgress.progress)
+      //   }
+      // })
+      // this.sceneTestimonyTextTranslate.progress(progress);
+    }
   }
 
   public destroyScrollMagicScenes = () => {

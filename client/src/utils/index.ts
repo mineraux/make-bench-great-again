@@ -9,3 +9,13 @@ export const throttle = (delay: number, fn: (...arg: any) => any) => {
     return fn(...args)
   }
 }
+
+export function debounce(callback: (...arg: any) => void, wait: number) {
+  let timeout: any
+  return (...args: any[]) => {
+    // @ts-ignore
+    const context = this
+    clearTimeout(timeout)
+    timeout = setTimeout(() => callback.apply(context, args), wait)
+  }
+}

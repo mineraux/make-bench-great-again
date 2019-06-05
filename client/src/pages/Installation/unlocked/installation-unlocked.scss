@@ -18,7 +18,7 @@
         &__challenge {
           &__title {
             display: inline-block;
-            margin: 3.5rem 0;
+            margin-top: 3.5rem;
             width: 100%;
             color: $color-green;
             font-size: 4rem;
@@ -29,19 +29,15 @@
           }
 
           &__text-content-wrapper {
-            position: absolute;
-            left: 50%;
-            top: 70%;
-            transform: translateX(-50%) translateY(-50%);
             width: 100%;
             padding: 0.1rem 0;
 
             &__mask {
               position: absolute;
-              top: -0rem;
+              top: 0;
               left: 0;
               right: 0;
-              bottom: -0rem;
+              bottom: 0;
               height: 100%;
               background: linear-gradient(
                 to top,
@@ -57,7 +53,7 @@
 
             &__container {
               position: relative;
-              max-height: 25rem;
+              height: 20rem;
               overflow: hidden;
 
               &__text-content {
@@ -105,6 +101,10 @@
           }
 
           &__text-content-wrapper {
+            position: absolute;
+            left: 50%;
+            top: 70%;
+            transform: translateX(-50%) translateY(-50%);
             z-index: -1;
           }
         }
@@ -116,17 +116,21 @@
           right: 0;
           bottom: 0;
           opacity: 0;
+          display: flex;
+          flex-direction: column;
+          align-items: center;
 
           &__player {
-            max-width: 15rem;
-            margin: auto;
+            margin-top: auto;
             display: block;
-            margin-bottom: 3rem;
+            margin-bottom: 10vh;
           }
 
           &__text-content-wrapper {
+            position: relative;
             opacity: 0;
             max-height: 25rem;
+            margin-bottom: auto;
           }
         }
       }

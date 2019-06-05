@@ -16,6 +16,9 @@ import { animationId } from '../../../components/SpriteAnimation/animations'
 import TwitterGallery from '../../../components/TwitterGallery/TwitterGallery'
 import config from '../../../config/config'
 import { TweenMax, Power2 } from 'gsap'
+import AudioPlayer, {
+  audios as AudioPlayerAudios,
+} from '../../../components/AudioPlayer/AudioPlayer'
 
 type Props = pageProps & {}
 
@@ -23,8 +26,20 @@ const Installation: FunctionComponent<Props> = ({ match, history }) => {
   const [installation, setInstallation] = useState<ApiInstallation>({ _id: '' })
   const { installationList, fetchInstallationList } = InstallationStore
 
-  const { scrollProgressFirstPart } = ScrollMagicStore
+  const {
+    scrollProgressFirstPart,
+    scrollProgressFirstPartTestimonyPlayer,
+    setScrollProgressFirstPartTestimonyPlayer,
+    isFirstPartPlayerPlaying,
+    setIsFirstPartPlayerPlaying,
+  } = ScrollMagicStore
   const { setIsMapButtonVisible } = NavigationStore
+
+  useEffect(() => {
+    ScrollMagicController.updateTestimonyPlayerProgress(
+      scrollProgressFirstPartTestimonyPlayer
+    )
+  }, [scrollProgressFirstPartTestimonyPlayer])
 
   useEffect(() => {
     if (match && installationList.length === 0) {
@@ -122,10 +137,15 @@ const Installation: FunctionComponent<Props> = ({ match, history }) => {
             <p className="page-installation__wrapper__part--first-part__testimony__title">
               Témoignage
             </p>
-            <img
-              className="page-installation__wrapper__part--first-part__testimony__player"
-              src={DummyPlayer}
-              alt=""
+            <AudioPlayer
+              className={
+                'page-installation__wrapper__part--first-part__testimony__player'
+              }
+              audio={AudioPlayerAudios.Audio1}
+              play={isFirstPartPlayerPlaying}
+              onTogglePlay={setIsFirstPartPlayerPlaying}
+              onProgress={setScrollProgressFirstPartTestimonyPlayer}
+              progress={scrollProgressFirstPartTestimonyPlayer}
             />
             <div className="page-installation__wrapper__part--first-part__testimony__text-content-wrapper">
               <div className="page-installation__wrapper__part--first-part__testimony__text-content-wrapper__mask" />
