@@ -22,12 +22,12 @@ class MapStore {
     this.selectedInstallation = installation
   }
 
-  @action setIsInformationsPanelOpen = (state: boolean) => {
-    this.isInformationsPanelOpen = state
-  }
-
   @action setCalculatePathFromAnotherPage = (state: boolean) => {
     this.calculatePathFromAnotherPage = state
+  }
+
+  @action setIsInformationsPanelOpen = (state: boolean) => {
+    this.isInformationsPanelOpen = state
   }
 }
 
