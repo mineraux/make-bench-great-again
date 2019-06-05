@@ -19,17 +19,56 @@ class InstallationStore {
       this.installationList = [
         {
           _id: '1',
-          slug: 'exedros',
-          name: 'Exedros',
-          lockedName: 'Pas pratique',
-          caption:
-            'Exedros, Fonte, résine de couleur “vert papier russe”, H. : 150 L. : 70cm, 2016',
+          slug: 'lisbonne',
+          name: 'La Vague',
+          lockedName: 'Lisbonne',
+          caption: 'La Vague, acier et fonte, H. : 75cm L. : 180cm, 2015',
           description:
-            'Conçue par Marc Aurel comme une véritable ode à la nature, sa structure en courbes rappelle la forme délicate et organique des feuillages, ramenant une touche printanière dans la ville. Au cours de cette expérience, L’Exedros questionne la place de la nature dans la ville.',
+            'Connu sous le pseudonyme d’Area, ce street artiste originaire de Toulouse nous offre une sculpture longiligne dont la forme ondulatoire aspire à la rêverie. Depuis 2015 des reproductions déferlent aux abords des parcs venant ponctuer les promenades estivales des parisiens. Au travers de cette expérience, l’espace public est questionné, quelle est la place de l’Homme face à ces créations ?',
           lockedDescription:
-            'Derrière cette forme conviviale et propice à l’échange, se cache pourtant une volonté de rejeter une partie de la population, empêchant les sans-domicile fixes de s’allonger. Cette assise publique voit le jour boulevard Président Wilson en 2016. Son succès est tel qu’elle s’étendra dans toute la capitale. Inventés par JC. Decaux et Marc Aurel, ces bancs fleurissent au pied des arbres, à proximité des abribus.',
-          geolocation: [2.402, 48.8787],
-          hashTags: ['Exedros'],
+            'De son vrai nom, Lisbonne, ce banc anti-sdf à dossier est devenu la nouvelle référence en matière “de banc de repos”. Après avoir révolutionné le banc public en métal il est aujourd’hui un classique du design anti-sdf. Mobilier dissuasif par excellence car en plus d’être conçue pour repousser les sans abris, sa formes le rends impraticable auprès des skateurs et street artistes.',
+          geolocation: [2.39636, 48.87539],
+          hashTags: ['lisbonne'],
+          testimony: {
+            fileUrl: 'temoignage_01',
+            talkers: [
+              {
+                id: 1,
+                name: 'Manu',
+                details: 'sans abri',
+              },
+              {
+                id: 2,
+                name: 'Anonyme',
+                details: 'fournisseur de mobilier anti-SDF',
+              },
+              {
+                id: 3,
+                name: 'Journaliste',
+              },
+            ],
+            textContent: [
+              {
+                text:
+                  "C’est pas fulgurant, mais ouais petit à petit, on voit que quand même, on ne peut plus s'asseoir devant un magasin, on ne peut plus s’asseoir dans le métro, enfin on peut s’asseoir mais on ne peut pas se coucher par exemple",
+                talkerID: 1,
+              },
+              {
+                text:
+                  'Vous pouvez vous reposer les fesses sans vous asseoir et être prêt à partir dès que votre train ou votre bus arrive.',
+                talkerID: 2,
+              },
+              {
+                text: 'Est-ce que ce n’est pas un problème ?',
+                talkerID: 3,
+              },
+              {
+                text:
+                  'Non pas du tout, pour les SDF peut-être mais j’en sais rien !',
+                talkerID: 2,
+              },
+            ],
+          },
         },
         {
           _id: '2',
@@ -44,19 +83,79 @@ class InstallationStore {
             "De son vrai nom Appui ischiatique ou Miséricordieux, elle puise ses origines des miséricordes. Ces dernières étaient des aménagements apportés aux stalles pour permettre aux moines de s’appuyer ou de s’asseoir pendant les offices tout en ayant l’air d’être debout. Miséricordieux signifie avoir le cœur sensible au malheur d’autrui (du lat. miseria & cor ~ misère & cœur), ce qui constitue un paradoxe lorsqu'il s’avère que la RATP conçoit ces bancs pour repousser les sans-abri des stations de métro",
           geolocation: [2.40764, 48.87512],
           hashTags: ['enSuspens'],
+          testimony: {
+            fileUrl: 'temoignage_03',
+            talkers: [
+              {
+                id: 1,
+                name: 'Anonyme',
+                details: 'Passant',
+              },
+              {
+                id: 2,
+                name: 'Christian Page',
+                details: 'ancien SDF',
+              },
+            ],
+            textContent: [
+              {
+                text:
+                  'J’en veux pas ! J’en veux pas ! Aujourd’hui il n’y a que des problèmes ! Donc plus ils dégagent, mieux c’est.',
+                talkerID: 1,
+              },
+              {
+                text:
+                  'Les SDF, tu sais, on nous chasse. C’est pas genre, juste, “ouais tu sais, on veut t’aider ou pas t’aider”. On nous chasse, on ne chasse pas les êtres humains, on chasse que les animaux, ça veut dire qu’ils nous prennent pour des animaux. Les gens s’en rendent pas compte mais dans la rue tu meurs !  Il y a plus d’une personne qui meurt dans la rue tous les jours en France !',
+                talkerID: 2,
+              },
+            ],
+          },
         },
         {
           _id: '3',
-          slug: 'lisbonne',
-          name: 'La Vague',
-          lockedName: 'Lisbonne',
-          caption: 'La Vague, acier et fonte, H. : 75cm L. : 180cm, 2015',
+          slug: 'exedros',
+          name: 'Exedros',
+          lockedName: 'Pas pratique',
+          caption:
+            'Exedros, Fonte, résine de couleur “vert papier russe”, H. : 150 L. : 70cm, 2016',
           description:
-            'Connu sous le pseudonyme d’Area, ce street artiste originaire de Toulouse nous offre une sculpture longiligne dont la forme ondulatoire aspire à la rêverie. Depuis 2015 des reproductions déferlent aux abords des parcs venant ponctuer les promenades estivales des parisiens. Au travers de cette expérience, l’espace public est questionné, quelle est la place de l’Homme face à ces créations ?',
+            'Conçue par Marc Aurel comme une véritable ode à la nature, sa structure en courbes rappelle la forme délicate et organique des feuillages, ramenant une touche printanière dans la ville. Au cours de cette expérience, L’Exedros questionne la place de la nature dans la ville.',
           lockedDescription:
-            'De son vrai nom, Lisbonne, ce banc anti-sdf à dossier est devenu la nouvelle référence en matière “de banc de repos”. Après avoir révolutionné le banc public en métal il est aujourd’hui un classique du design anti-sdf. Mobilier dissuasif par excellence car en plus d’être conçue pour repousser les sans abris, sa formes le rends impraticable auprès des skateurs et street artistes.',
-          geolocation: [2.39636, 48.87539],
-          hashTags: ['lisbonne'],
+            'Derrière cette forme conviviale et propice à l’échange, se cache pourtant une volonté de rejeter une partie de la population, empêchant les sans-domicile fixes de s’allonger. Cette assise publique voit le jour boulevard Président Wilson en 2016. Son succès est tel qu’elle s’étendra dans toute la capitale. Inventés par JC. Decaux et Marc Aurel, ces bancs fleurissent au pied des arbres, à proximité des abribus.',
+          geolocation: [2.402, 48.8787],
+          hashTags: ['Exedros'],
+          testimony: {
+            fileUrl: 'temoignage_03',
+            talkers: [
+              {
+                id: 1,
+                name: 'François',
+                details: 'sans abri depuis 20 ans',
+              },
+              {
+                id: 2,
+                name: 'Anonyme',
+                details: 'fournisseur',
+              },
+            ],
+            textContent: [
+              {
+                text:
+                  'Imaginez, vous ne trouvez pas une place pendant la nuit et vous êtes obligé de traîner là pendant la nuit.',
+                talkerID: 1,
+              },
+              {
+                text:
+                  'Quelques maires nous on déjà dit “je veux un banc le moins confortable possible” justement pour éviter les problèmes de SDF ou de gens qui pourrait y passer un peu plus de temps',
+                talkerID: 2,
+              },
+              {
+                text:
+                  'Avant il y avait une certaine… comment on dit… une tolérance, exactement, une certaine tolérance, mais aujourd’hui je ne sais pas où c’est passé mais il n’y en a plus. C’est pas la joie, c’est pas la joie.',
+                talkerID: 1,
+              },
+            ],
+          },
         },
       ]
     } else {
