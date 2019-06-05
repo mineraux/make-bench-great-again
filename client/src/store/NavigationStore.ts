@@ -35,7 +35,7 @@ class NavigationStore {
 
   @observable isHeaderVisible: isHeaderVisibleType = false
 
-  @observable headerTitle: headerTitleType = 'Envers du décor'
+  @observable headerTitle: headerTitleType = "L'envers du décor"
 
   @observable headerTheme: headerThemes = headerThemes.Blue
 
