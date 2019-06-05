@@ -7,6 +7,8 @@ import { ReactComponent as BackgroundSvg } from './background.svg'
 import './finish.scss'
 import { useWindowSize } from '../../utils/hooks'
 import { TimelineMax, Power1 } from 'gsap'
+import { observer } from 'mobx-react-lite'
+import { InstallationStore } from '../../store'
 
 type Props = pageProps
 
@@ -15,11 +17,44 @@ const Finish: FunctionComponent<Props> = ({ match }) => {
   const windowHeight = useWindowSize().height
   const [strokeDashArray, setStrokeDashArray] = useState(0)
 
-  const currentStep = 3
-  const totalStep = 5
+  // const currentStep = 3
+  // const totalStep = 5
+  const {
+    installationList,
+    fetchInstallationList,
+    unlockedInstallations,
+  } = InstallationStore
+  const currentStep = unlockedInstallations.length
+  const totalStep = installationList.length
 
   useEffect(() => {
-    if (ref.current) {
+    const getInstallationList = () => {
+      fetchInstallationList({
+        slug: true,
+        name: true,
+        description: true,
+        geolocation: true,
+      })
+    }
+
+    getInstallationList()
+  })
+
+  useEffect(() => {
+    console.log(installationList.length)
+  }, [installationList.length])
+
+  const wording = {
+    0: "Il semblerait que tu n'aies pas encore signé de pétition.",
+    1: 'C’est un bon début ! Tu as relevé le premier défi, pour signer d’autres pétitions, rends-toi à la prochaine oeuvre !',
+    2: 'Merci ! Maintenant que tu en sais un peu plus sur le mobilier anti-sdf, poursuis ton engagement !',
+    3: 'Très bien ! Tu as réalisé plus de la moitié du parcours. Plus que deux oeuvres à découvrir ! ',
+    4: 'Bravo ! Tu as dû faire preuve d’agilité pour ce défi. Pour découvrir la dernière oeuvre, suis l’itinéraire.',
+    5: 'Félicitations, tu as signé toutes les pétitions ! Grâce à tes performances, nous espérons retirer ces dispositifs pour lutter contre le design hostile.',
+  }
+
+  useEffect(() => {
+    if (ref.current && totalStep > 0) {
       const svg = ref.current.querySelector('.page-finish__svg') as SVGElement
 
       const path = ref.current.querySelector(
@@ -37,7 +72,6 @@ const Finish: FunctionComponent<Props> = ({ match }) => {
         if (i === currentStep) {
           circles[i].classList.add('stroked')
           circles[i].setAttribute('stroke-width', '3')
-          console.dir()
         } else {
           circles[i].classList.add('filled')
         }
@@ -76,7 +110,7 @@ const Finish: FunctionComponent<Props> = ({ match }) => {
           '-=0.5'
         )
     }
-  }, [])
+  }, [installationList.length])
 
   const renderCircles = () => {
     const circles = []
@@ -98,6 +132,26 @@ const Finish: FunctionComponent<Props> = ({ match }) => {
       )
     }
     return circles
+  }
+
+  const getWording = (): string => {
+    let string = ''
+
+    if (currentStep === 0) {
+      string = wording[0]
+    } else if (currentStep === 1) {
+      string = wording[1]
+    } else if (currentStep === Math.floor(totalStep / 2)) {
+      string = wording[3]
+    } else if (currentStep === totalStep - 1) {
+      string = wording[4]
+    } else if (currentStep === totalStep) {
+      string = wording[5]
+    } else {
+      string = wording[2]
+    }
+
+    return string
   }
 
   const renderSvg = () => (
@@ -143,11 +197,7 @@ const Finish: FunctionComponent<Props> = ({ match }) => {
 
       <p className="page-finish__title">Pétition(s) signée(s)</p>
 
-      <p className="page-finish__text">
-        C’est un bon début !<br />
-        Tu as relevé le premier défis, pour signer d’autre pétitions rends toi à
-        la prochaine oeuvre.
-      </p>
+      <p className="page-finish__text">{getWording()}</p>
 
       <Button
         className={'page-finish__button'}
@@ -159,4 +209,4 @@ const Finish: FunctionComponent<Props> = ({ match }) => {
   )
 }
 
-export default Finish
+export default observer(Finish)
