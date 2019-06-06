@@ -19,7 +19,6 @@ import { TweenMax, Power2 } from 'gsap'
 import AudioPlayer, {
   audios as AudioPlayerAudios,
 } from '../../../components/AudioPlayer/AudioPlayer'
-import { useWindowSize, getHeaderHeight } from '../../../utils/hooks'
 
 type Props = pageProps & {}
 
@@ -36,8 +35,6 @@ const Installation: FunctionComponent<Props> = ({ match, history }) => {
     setIsFirstPartPlayerPlaying,
   } = ScrollMagicStore
   const { setIsMapButtonVisible } = NavigationStore
-
-  const windowHeight = useWindowSize().height
 
   // mount / unmount
   useEffect(() => {
@@ -217,11 +214,9 @@ const Installation: FunctionComponent<Props> = ({ match, history }) => {
             </div>
           </div>
         </div>
-        <div
-          className="page-installation__wrapper__part--second-part"
-          style={{ height: windowHeight - getHeaderHeight() }}
-        >
+        <div className="page-installation__wrapper__part--second-part">
           <div className="page-installation__wrapper__part--second-part__challenge">
+            <div className="page-installation__wrapper__part--second-part__challenge__radial-circle" />
             <p
               className="page-installation__wrapper__part--second-part__challenge__title"
               dangerouslySetInnerHTML={{

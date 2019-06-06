@@ -16,7 +16,7 @@ class ScrollMagicController {
 
   constructor() {
     this.scenes = []
-    this.isDebug = true
+    this.isDebug = false
     this.scrollProgressFirstPartTestimonyPlayer =
       ScrollMagicStore.scrollProgressFirstPartTestimonyPlayer
     this.isFirstPartPlayerPlaying = ScrollMagicStore.isFirstPartPlayerPlaying
@@ -432,7 +432,7 @@ class ScrollMagicController {
     const scenePart2Pin = new ScrollMagic.Scene({
       triggerElement: '.page-installation__wrapper__part--second-part',
       duration: 1,
-      triggerHook: 0,
+      triggerHook: 0.7,
     })
       .setPin('.page-installation__wrapper__part--second-part')
       // .addIndicators({ name: 'Pin 2' })
@@ -461,6 +461,40 @@ class ScrollMagicController {
 
     scenePage.on('progress', (event: any) => {
       setScrollProgression(event.progress)
+    })
+
+    const tweenShowChallenge = new TimelineMax({ paused: true })
+      .add('showChallenge')
+      .fromTo(
+        '.page-installation__wrapper__part--second-part__challenge__radial-circle',
+        0.5,
+        {
+          opacity: 0,
+        },
+        {
+          opacity: 1,
+        },
+        'showChallenge'
+      )
+      .fromTo(
+        [
+          '.page-installation__wrapper__part--second-part__challenge__title',
+          '.page-installation__wrapper__part--second-part__challenge__text-content',
+          '.page-installation__wrapper__part--second-part__challenge__sign-petition-button',
+          '.page-installation__wrapper__part--second-part__challenge__help',
+        ],
+        0.5,
+        {
+          opacity: 0,
+        },
+        {
+          opacity: 1,
+        },
+        'showChallange+=0.1'
+      )
+
+    scenePart2Pin.on('start', () => {
+      tweenShowChallenge.play()
     })
   }
 
