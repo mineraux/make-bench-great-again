@@ -209,7 +209,11 @@ const ProtoMap: FunctionComponent<Props> = ({ match, history }) => {
   }, [travelDistance])
 
   useEffect(() => {
-    if (!MapStore.isInformationsPanelOpen && selectedMarker) {
+    if (
+      !MapStore.isInformationsPanelOpen &&
+      selectedMarker &&
+      selectedMarker._geometry
+    ) {
       map.flyTo({ center: selectedMarker._geometry.coordinates })
     }
   }, [MapStore.isInformationsPanelOpen, selectedMarker])
