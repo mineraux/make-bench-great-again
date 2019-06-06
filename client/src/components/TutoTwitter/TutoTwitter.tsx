@@ -4,6 +4,7 @@ import './tuto-twitter.scss'
 import Button, { themes as buttonThemes } from '../Button/Button'
 import { useWindowSize, getHeaderHeight } from '../../utils/hooks'
 import TutoImage from '../../assets/images/tuto.png'
+import { TweenMax } from 'gsap'
 
 type Props = {
   className?: string
@@ -17,6 +18,10 @@ const TwitterDebug: FunctionComponent<Props> = ({ className }) => {
   }
 
   const windowHeight = useWindowSize().height
+
+  const onClickButton = () => {
+    TweenMax.set('.tuto-twitter', { className: '+=hidden' })
+  }
 
   return (
     <div
@@ -37,6 +42,7 @@ const TwitterDebug: FunctionComponent<Props> = ({ className }) => {
           label="J'ai compris"
           theme={buttonThemes.Blue}
           url={getTwitterUrl()}
+          onClick={onClickButton}
           icon={true}
         />
       </div>

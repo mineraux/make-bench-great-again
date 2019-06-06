@@ -239,15 +239,6 @@ const Installation: FunctionComponent<Props> = ({ match, history }) => {
               }
               label="Signer la pétition"
               theme={buttonThemes.Blue}
-              url={getTwitterUrl()}
-              icon={true}
-            />
-            <Button
-              className={
-                'page-installation__wrapper__part--second-part__challenge__sign-petition-button'
-              }
-              label="Signer la pétition"
-              theme={buttonThemes.Blue}
               onClick={onClickTutoBtn}
               icon={true}
             />
