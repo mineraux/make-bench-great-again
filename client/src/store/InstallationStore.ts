@@ -27,7 +27,7 @@ class InstallationStore {
       this.installationList = [
         {
           _id: '1',
-          slug: 'lisbonne',
+          slug: 'vague',
           name: 'La Vague',
           lockedName: 'Lisbonne',
           caption: 'La Vague, acier et fonte, H. : 75cm L. : 180cm, 2015',
@@ -84,7 +84,7 @@ class InstallationStore {
         },
         {
           _id: '2',
-          slug: 'Miséricordieux',
+          slug: 'en_suspens',
           name: 'En suspens',
           lockedName: 'Miséricordieux',
           caption:

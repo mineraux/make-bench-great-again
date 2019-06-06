@@ -155,14 +155,16 @@ const Installation: FunctionComponent<Props> = ({ match, history }) => {
             <p className="page-installation__wrapper__part--first-part__presentation__title title2">
               {installation && installation.lockedName}
             </p>
-            <SpriteAnimation
-              className={
-                'page-installation__wrapper__part--first-part__presentation__installation-sketch'
-              }
-              progression={scrollProgressFirstPart}
-              animationID={animationId.bancMetro}
-              onInstance={handleSpriteAnimationInstance}
-            />
+            {installation && installation.slug && (
+              <SpriteAnimation
+                className={
+                  'page-installation__wrapper__part--first-part__presentation__installation-sketch'
+                }
+                progression={scrollProgressFirstPart}
+                animationID={installation.slug}
+                onInstance={handleSpriteAnimationInstance}
+              />
+            )}
 
             <div className="page-installation__wrapper__part--first-part__presentation__description">
               <p
