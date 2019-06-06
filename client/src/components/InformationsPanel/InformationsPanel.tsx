@@ -90,7 +90,7 @@ const InformationsPanel: FunctionComponent<Props> = ({
         open: isInformationsPanelOpen,
       })}
     >
-      {travelTime && travelTime > 0 && isCurrentTargetMatching && (
+      {travelTime > 0 && isCurrentTargetMatching && (
         <div className="informations-panel__direction-informations">
           <WalkIco className="informations-panel__direction-informations__walk-ico" />
           <span className="informations-panel__direction-informations__direction-duration">
