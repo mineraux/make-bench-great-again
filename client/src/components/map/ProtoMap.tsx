@@ -16,6 +16,7 @@ import { featureCoords } from '../../utils/map'
 import Modal from '../Modal/Modal'
 import { pageProps } from '../../pages/types'
 import { Feature } from 'geojson'
+import { TweenMax } from 'gsap'
 
 type Props = pageProps & {}
 
@@ -237,6 +238,7 @@ const ProtoMap: FunctionComponent<Props> = ({ match, history }) => {
     MapStore.setTargetInstallation(selectedMarker.properties)
     setTargetInstallationSlug(MapStore.targetInstallation.slug)
     setIsTourStarted(true)
+    TweenMax.set('.informations-panel', { className: '-=open' })
   }
 
   useEffect(() => {
