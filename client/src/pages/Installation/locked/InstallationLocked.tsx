@@ -75,11 +75,11 @@ const Installation: FunctionComponent<Props> = ({ match, history }) => {
   }
 
   const onButtonClick = () => {
-    MapStore.setCalculatePathFromAnotherPage(true)
     const target = InstallationStore.getInstallationBySlug(
       match.params.installationSlug
     )
     MapStore.setTargetInstallation(target)
+    MapStore.setCalculatePathFromAnotherPage(true)
   }
 
   const windowHeight = useWindowSize().height
@@ -93,14 +93,16 @@ const Installation: FunctionComponent<Props> = ({ match, history }) => {
               {installation.name}
             </p>
 
-            <SpriteAnimation
-              className={
-                'page-installation--locked__wrapper__part--first-part__presentation__installation-sketch'
-              }
-              progression={1}
-              animationID={animationId.bancMetro}
-              onInstance={handleSpriteAnimationInstance}
-            />
+            {installation && installation.slug && (
+              <SpriteAnimation
+                className={
+                  'page-installation--locked__wrapper__part--first-part__presentation__installation-sketch'
+                }
+                progression={1}
+                animationID={installation.slug}
+                onInstance={handleSpriteAnimationInstance}
+              />
+            )}
 
             <div className="page-installation--locked__wrapper__part--first-part__presentation__description">
               <p

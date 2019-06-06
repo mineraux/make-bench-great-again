@@ -16,6 +16,8 @@ import { featureCoords } from '../../utils/map'
 import Modal from '../Modal/Modal'
 import { pageProps } from '../../pages/types'
 import { Feature } from 'geojson'
+import { TweenMax } from 'gsap'
+import * as turf from '@turf/turf'
 
 type Props = pageProps & {}
 
@@ -37,6 +39,7 @@ const ProtoMap: FunctionComponent<Props> = ({ match, history }) => {
 
   const [markers, setMarkers] = useState()
   const [userLocation, setUserLocation] = useState()
+  const [tempUserLocation, setTempUserLocation] = useState()
   const [selectedMarker, setSelectedMarker] = useState()
 
   const [travelTime, setTravelTime] = useState()
@@ -144,7 +147,7 @@ const ProtoMap: FunctionComponent<Props> = ({ match, history }) => {
       })
 
       geolocate.current.on('geolocate', (e: EventData) => {
-        setUserLocation([e.coords.longitude, e.coords.latitude])
+        setTempUserLocation([e.coords.longitude, e.coords.latitude])
         localStorage.setItem('geolocateGranted', 'true')
         setIsGeolocationPermissionGranted('true')
       })
@@ -155,10 +158,10 @@ const ProtoMap: FunctionComponent<Props> = ({ match, history }) => {
       })
 
       directions.current.on('route', (e: EventData) => {
-        // // Returned value is in secondes => conversion to minutes
+        // Returned value is in secondes => conversion to minutes
         setTravelTime(Math.floor(e.route[0].duration / 60))
 
-        // // Returned value is in meters => conversion to km
+        // Returned value is in meters => conversion to km
         setTravelDistance((e.route[0].distance / 1000).toFixed(2))
       })
 
@@ -173,22 +176,33 @@ const ProtoMap: FunctionComponent<Props> = ({ match, history }) => {
     markers,
     mapStylesLoaded,
     isGeolocationPermissionGranted,
+    userLocation,
   ])
 
-  // useEffect(() => {
-  //   /**
-  //    * Position d'une instal pour fake le GPS :
-  //    * 48,875100
-  //    * 2,407654
-  //    */
-  //   if (isTourStarted) {
-  //     DirectionsController.setPathToInstallation(
-  //       directions.current,
-  //       featureCoords(selectedMarker),
-  //       userLocation
-  //     )
-  //   }
-  // }, [isTourStarted, userLocation])
+  useEffect(() => {
+    if (!userLocation) {
+      setUserLocation(tempUserLocation)
+    } else {
+      const distance = turf.distance(tempUserLocation, userLocation, {
+        units: 'meters',
+      })
+
+      if (distance > 5) {
+        setUserLocation(tempUserLocation)
+      }
+    }
+  }, [tempUserLocation])
+
+  useEffect(() => {
+    if (isTourStarted && userLocation) {
+      DirectionsController.setPathToInstallation(
+        directions.current,
+        featureCoords(selectedMarker),
+        userLocation
+      )
+    }
+  }, [isTourStarted, userLocation])
+
   useEffect(() => {
     if (travelDistance === 0 || travelTime === 0) {
       console.log(
@@ -208,7 +222,11 @@ const ProtoMap: FunctionComponent<Props> = ({ match, history }) => {
   }, [travelDistance])
 
   useEffect(() => {
-    if (!MapStore.isInformationsPanelOpen && selectedMarker) {
+    if (
+      !MapStore.isInformationsPanelOpen &&
+      selectedMarker &&
+      selectedMarker._geometry
+    ) {
       map.flyTo({ center: selectedMarker._geometry.coordinates })
     }
   }, [MapStore.isInformationsPanelOpen, selectedMarker])
@@ -237,6 +255,7 @@ const ProtoMap: FunctionComponent<Props> = ({ match, history }) => {
     MapStore.setTargetInstallation(selectedMarker.properties)
     setTargetInstallationSlug(MapStore.targetInstallation.slug)
     setIsTourStarted(true)
+    TweenMax.set('.informations-panel', { className: '-=open' })
   }
 
   useEffect(() => {
@@ -256,7 +275,6 @@ const ProtoMap: FunctionComponent<Props> = ({ match, history }) => {
         }
       })
       setTargetInstallationSlug(MapStore.targetInstallation.slug)
-      setIsTourStarted(true)
     }
   }, [
     map,
@@ -280,6 +298,11 @@ const ProtoMap: FunctionComponent<Props> = ({ match, history }) => {
         featureCoords(selectedMarker),
         userLocation
       )
+
+      MapStore.setTargetInstallation(selectedMarker.properties)
+      setTargetInstallationSlug(MapStore.targetInstallation.slug)
+      setIsTourStarted(true)
+      TweenMax.set('.informations-panel', { className: '-=open' })
       setCalculatePathFromAnotherPage(false)
     }
   }, [

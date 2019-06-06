@@ -183,11 +183,11 @@ const Home: FunctionComponent<Props> = ({ match }) => {
       {isSplashscreenCompleted && (
         <div
           className="page-home__containers-wrapper"
-          style={{ maxHeight: windowHeight }}
+          style={{ maxHeight: windowHeight - getHeaderHeight() }}
         >
           <div
             className="page-home__containers-wrapper__container-1"
-            style={{ height: windowHeight }}
+            style={{ height: windowHeight - getHeaderHeight() }}
           >
             <p className="page-home__containers-wrapper__container-1__title">
               UNE EXPERIENCE
@@ -208,7 +208,7 @@ const Home: FunctionComponent<Props> = ({ match }) => {
           <div
             ref={refContainer}
             className="page-home__containers-wrapper__container-2"
-            style={{ height: windowHeight }}
+            style={{ height: windowHeight - getHeaderHeight() }}
           >
             <p className="page-home__containers-wrapper__container-2__title">
               COMMENT PARTICIPER ?

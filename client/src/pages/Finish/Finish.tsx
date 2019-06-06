@@ -38,11 +38,7 @@ const Finish: FunctionComponent<Props> = ({ match }) => {
     }
 
     getInstallationList()
-  })
-
-  useEffect(() => {
-    console.log(installationList.length)
-  }, [installationList.length])
+  }, [])
 
   const wording = {
     0: "Il semblerait que tu n'aies pas encore signé de pétition.",
