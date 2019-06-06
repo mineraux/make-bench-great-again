@@ -33,9 +33,25 @@
       line-height: 1.5em;
     }
 
-    &__figure {
-      max-width: 25rem;
+    &__video-wrapper {
       margin-bottom: 3rem;
+      overflow: hidden;
+      position: relative;
+
+      &__video {
+        position: absolute;
+        bottom: -1px;
+        left: 50%;
+        right: 2rem;
+        transform: translateX(-50%);
+        width: calc(100% - 40px);
+      }
+
+      &__mockup {
+        width: 100%;
+        height: 100%;
+        display: block;
+      }
     }
 
     &__informations {

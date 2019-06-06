@@ -3,8 +3,9 @@ import ClassNames from 'classnames'
 import './tuto-twitter.scss'
 import Button, { themes as buttonThemes } from '../Button/Button'
 import { useWindowSize, getHeaderHeight } from '../../utils/hooks'
-import TutoImage from '../../assets/images/tuto.png'
 import { TweenMax } from 'gsap'
+import TutoVideo from '../../assets/video/tuto.mp4'
+import mockup from '../../assets/images/mockup.png'
 
 type Props = {
   className?: string
@@ -32,7 +33,21 @@ const TwitterDebug: FunctionComponent<Props> = ({ className }) => {
     >
       <div className="tuto-twitter__wrapper">
         <p className="tuto-twitter__wrapper__title">Comment participer ?</p>
-        <img className="tuto-twitter__wrapper__figure" src={TutoImage} alt="" />
+        <div className="tuto-twitter__wrapper__video-wrapper">
+          <img
+            src={mockup}
+            alt=""
+            className="tuto-twitter__wrapper__video-wrapper__mockup"
+          />
+          <video
+            className="tuto-twitter__wrapper__video-wrapper__video"
+            muted
+            autoPlay
+          >
+            <source src={TutoVideo} type="video/mp4" />
+            Désolé, votre navigateur ne supporte pas les fichiers videos
+          </video>
+        </div>
         <p className="tuto-twitter__wrapper__informations">
           Nous allons te rediriger vers Twitter. Prends-toi en photo depuis
           l’application et poste-la sur ton profil avec le hashtag
