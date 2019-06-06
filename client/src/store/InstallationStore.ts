@@ -238,7 +238,7 @@ class InstallationStore {
   @action public addUnlockedInstallation = (
     installationID: ApiInstallation['_id']
   ) => {
-    this.unlockedInstallations.push(installationID!)
+    this.unlockedInstallations.push(installationID)
 
     if (!this.isInstallationInLocalStorage(installationID)) {
       localStorage.setItem(
@@ -255,7 +255,9 @@ class InstallationStore {
 
     if (storageUnlockedInstallations) {
       JSON.parse(storageUnlockedInstallations).forEach((id: string) => {
-        this.addUnlockedInstallation(id)
+        if (!this.isInstallationUnlocked(id)) {
+          this.addUnlockedInstallation(id)
+        }
       })
     }
   }
