@@ -17,6 +17,7 @@ import Modal from '../Modal/Modal'
 import { pageProps } from '../../pages/types'
 import { Feature } from 'geojson'
 import { TweenMax } from 'gsap'
+import * as turf from '@turf/turf'
 
 type Props = pageProps & {}
 
@@ -38,6 +39,7 @@ const ProtoMap: FunctionComponent<Props> = ({ match, history }) => {
 
   const [markers, setMarkers] = useState()
   const [userLocation, setUserLocation] = useState()
+  const [tempUserLocation, setTempUserLocation] = useState()
   const [selectedMarker, setSelectedMarker] = useState()
 
   const [travelTime, setTravelTime] = useState()
@@ -145,7 +147,7 @@ const ProtoMap: FunctionComponent<Props> = ({ match, history }) => {
       })
 
       geolocate.current.on('geolocate', (e: EventData) => {
-        setUserLocation([e.coords.longitude, e.coords.latitude])
+        setTempUserLocation([e.coords.longitude, e.coords.latitude])
         localStorage.setItem('geolocateGranted', 'true')
         setIsGeolocationPermissionGranted('true')
       })
@@ -176,20 +178,30 @@ const ProtoMap: FunctionComponent<Props> = ({ match, history }) => {
     isGeolocationPermissionGranted,
   ])
 
-  // useEffect(() => {
-  //   /**
-  //    * Position d'une instal pour fake le GPS :
-  //    * 48,875100
-  //    * 2,407654
-  //    */
-  //   if (isTourStarted) {
-  //     DirectionsController.setPathToInstallation(
-  //       directions.current,
-  //       featureCoords(selectedMarker),
-  //       userLocation
-  //     )
-  //   }
-  // }, [isTourStarted, userLocation])
+  useEffect(() => {
+    if (!userLocation) {
+      setUserLocation(tempUserLocation)
+    } else {
+      const distance = turf.distance(tempUserLocation, userLocation, {
+        units: 'meters',
+      })
+
+      if (distance > 5) {
+        setUserLocation(tempUserLocation)
+      }
+    }
+  }, [tempUserLocation])
+
+  useEffect(() => {
+    if (isTourStarted) {
+      DirectionsController.setPathToInstallation(
+        directions.current,
+        featureCoords(selectedMarker),
+        userLocation
+      )
+    }
+  }, [isTourStarted, userLocation])
+
   useEffect(() => {
     if (travelDistance === 0 || travelTime === 0) {
       console.log(
