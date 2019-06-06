@@ -35,6 +35,15 @@ const Home: FunctionComponent<Props> = ({ match }) => {
   let yDown: number
 
   useEffect(() => {
+    return () => {
+      if (ref.current) {
+        ref.current.removeEventListener('touchstart', handleTouchStart, false)
+        ref.current.removeEventListener('touchmove', handleTouchMove, false)
+      }
+    }
+  }, [])
+
+  useEffect(() => {
     if (isSplashscreenCompleted) {
       setIsHeaderVisible(true)
 
@@ -67,8 +76,10 @@ const Home: FunctionComponent<Props> = ({ match }) => {
           0
         )
       }
-      document.addEventListener('touchstart', handleTouchStart, false)
-      document.addEventListener('touchmove', handleTouchMove, false)
+      if (ref.current) {
+        ref.current.addEventListener('touchstart', handleTouchStart, false)
+        ref.current.addEventListener('touchmove', handleTouchMove, false)
+      }
     }
   }, [isSplashscreenCompleted])
 
