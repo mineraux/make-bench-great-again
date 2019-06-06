@@ -4,8 +4,9 @@ import { autorun } from 'mobx'
 import ScrollMagic from 'scrollmagic'
 import 'animation.gsap'
 import 'debug.addIndicators'
+import { ApiInstallation } from '../../../@types'
 import ScrollMagicStore from '../../../store/ScrollMagicStore'
-import { NavigationStore } from '../../../store'
+import { NavigationStore, InstallationStore } from '../../../store'
 
 class ScrollMagicController {
   isDebug: boolean
@@ -13,6 +14,7 @@ class ScrollMagicController {
   sceneTestimonyTextTranslate: any
   scrollProgressFirstPartTestimonyPlayer: number
   isFirstPartPlayerPlaying: boolean
+  installation: ApiInstallation | null
 
   constructor() {
     this.scenes = []
@@ -20,6 +22,7 @@ class ScrollMagicController {
     this.scrollProgressFirstPartTestimonyPlayer =
       ScrollMagicStore.scrollProgressFirstPartTestimonyPlayer
     this.isFirstPartPlayerPlaying = ScrollMagicStore.isFirstPartPlayerPlaying
+    this.installation = null
 
     autorun(() => {
       this.isFirstPartPlayerPlaying = ScrollMagicStore.isFirstPartPlayerPlaying
@@ -66,7 +69,8 @@ class ScrollMagicController {
     })
   }
 
-  public initController = () => {
+  public initController = (installation: ApiInstallation) => {
+    this.installation = installation
     const {
       setScrollProgressFirstPart,
       setScrollProgressFirstPartTestimonyPlayer,
@@ -206,7 +210,7 @@ class ScrollMagicController {
       }
     )
 
-    // Testimony : test fade
+    // Testimony : text fade
     const tweenTestimonyTextFade = new TimelineMax().to(
       '.page-installation__wrapper__part--first-part__testimony__text-content-wrapper',
       0.5,
@@ -214,6 +218,40 @@ class ScrollMagicController {
         opacity: 1,
       }
     )
+
+    // Testimony : talkers
+
+    const tweenTestimonyTalkers = new TimelineMax({ paused: true })
+
+    const fadeDuration = 0.5
+
+    this.installation!.testimony!.textContent.forEach(text => {
+      const el = document.querySelector(
+        `.page-installation__wrapper__part--first-part__testimony__talkers__talker.talker-${
+          text.talkerID
+        }`
+      )
+
+      tweenTestimonyTalkers.to(
+        el!,
+        fadeDuration,
+        {
+          opacity: 1,
+          overwrite: false,
+        },
+        text.timecodes![0]
+      )
+
+      tweenTestimonyTalkers.to(
+        el!,
+        fadeDuration,
+        {
+          opacity: 0,
+          overwrite: false,
+        },
+        text.timecodes![1]
+      )
+    })
 
     // Testimony : text translate
     const tweenTestimonyTextTranslate = new TimelineMax().fromTo(
@@ -383,6 +421,7 @@ class ScrollMagicController {
     this.scenes.push(this.sceneTestimonyTextTranslate)
 
     this.sceneTestimonyTextTranslate.on('progress', (event: any) => {
+      tweenTestimonyTalkers.progress(event.progress)
       if (!this.isFirstPartPlayerPlaying) {
         console.log('manual scroll ', event.progress)
         setScrollProgressFirstPartTestimonyPlayer(event.progress)

@@ -11,7 +11,11 @@ type Props = pageProps & {}
 const Installation: FunctionComponent<Props> = ({ match, history }) => {
   const [installationIdentifier, setInstallationIdentifier] = useState()
 
-  const { isInstallationUnlocked } = InstallationStore
+  const {
+    isInstallationUnlocked,
+    getInstallationBySlug,
+    setCurrentInstallationId,
+  } = InstallationStore
   const { selectedInstallation } = MapStore
 
   useEffect(() => {
@@ -19,6 +23,13 @@ const Installation: FunctionComponent<Props> = ({ match, history }) => {
       selectedInstallation._id
         ? selectedInstallation._id
         : match.params.installationSlug
+    )
+
+    // TODO : required ?
+    setCurrentInstallationId(
+      selectedInstallation._id
+        ? selectedInstallation._id
+        : getInstallationBySlug(match.params.installationSlug)._id
     )
 
     InstallationStore.setUnlockedInstallationFromLocalStorage()

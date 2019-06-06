@@ -19,12 +19,14 @@ import { TweenMax, Power2 } from 'gsap'
 import AudioPlayer, {
   audios as AudioPlayerAudios,
 } from '../../../components/AudioPlayer/AudioPlayer'
+import { number } from 'prop-types'
 
 type Props = pageProps & {}
 
 const Installation: FunctionComponent<Props> = ({ match, history }) => {
   const ref = useRef<HTMLDivElement>(null)
-  const [installation, setInstallation] = useState<ApiInstallation>({ _id: '' })
+  const [installation, setInstallation] = useState<ApiInstallation | null>(null)
+
   const { installationList, fetchInstallationList } = InstallationStore
 
   const {
@@ -34,11 +36,34 @@ const Installation: FunctionComponent<Props> = ({ match, history }) => {
     isFirstPartPlayerPlaying,
     setIsFirstPartPlayerPlaying,
   } = ScrollMagicStore
-  const { setIsMapButtonVisible } = NavigationStore
 
   // mount / unmount
   useEffect(() => {
     window.scrollTo(0, 0)
+
+    const getInstallationInformation = async () => {
+      await InstallationStore.fetchSingleInstallation(
+        {
+          name: true,
+          lockedName: true,
+          caption: true,
+          description: true,
+          lockedDescription: true,
+        },
+        MapStore.selectedInstallation._id
+          ? MapStore.selectedInstallation._id
+          : undefined,
+        !MapStore.selectedInstallation._id
+          ? match.params.installationSlug
+          : undefined
+      )
+        .then(res => {
+          setInstallation(res)
+        })
+        .then(() => {
+          // ScrollMagicController.initController()
+        })
+    }
 
     if (match && installationList.length === 0) {
       fetchInstallationList({
@@ -47,7 +72,8 @@ const Installation: FunctionComponent<Props> = ({ match, history }) => {
         lockedDescription: true,
       })
     }
-    if (match && installation._id.length === 0) {
+
+    if (match && !installation) {
       getInstallationInformation()
     }
 
@@ -83,27 +109,11 @@ const Installation: FunctionComponent<Props> = ({ match, history }) => {
     }
   }, [])
 
-  const getInstallationInformation = async () => {
-    await InstallationStore.fetchSingleInstallation(
-      {
-        name: true,
-        description: true,
-        lockedDescription: true,
-      },
-      MapStore.selectedInstallation._id
-        ? MapStore.selectedInstallation._id
-        : undefined,
-      !MapStore.selectedInstallation._id
-        ? match.params.installationSlug
-        : undefined
-    )
-      .then(res => {
-        setInstallation(res)
-      })
-      .then(() => {
-        ScrollMagicController.initController()
-      })
-  }
+  useEffect(() => {
+    if (installation) {
+      ScrollMagicController.initController(installation)
+    }
+  }, [installation])
 
   const getTwitterUrl = (): string => {
     const tweet = `À l'occasion de la Nuit Blanche, grace à l'Envers du décors, j'ai essayé de m'installer sur des dispositifs anti-SDF...`
@@ -140,10 +150,10 @@ const Installation: FunctionComponent<Props> = ({ match, history }) => {
         <div className="page-installation__wrapper__part--first-part">
           <div className="page-installation__wrapper__part--first-part__presentation">
             <p className="page-installation__wrapper__part--first-part__presentation__title title1">
-              {installation.name}
+              {installation && installation.name}
             </p>
             <p className="page-installation__wrapper__part--first-part__presentation__title title2">
-              {'Autre titre'}
+              {installation && installation.lockedName}
             </p>
             <SpriteAnimation
               className={
@@ -160,17 +170,15 @@ const Installation: FunctionComponent<Props> = ({ match, history }) => {
                   'page-installation__wrapper__part--first-part__presentation__description__text'
                 }
               >
-                Conçue comme une véritable ode à la nature, sa structure en
-                courbes rappelle la forme délicate et organique des feuillages,
-                ramenant une touche printanière dans la ville.
+                {installation && installation.description}
               </p>
               <p
                 className={
                   'page-installation__wrapper__part--first-part__presentation__description__caption'
                 }
               >
-                Exedros, Fonte, résine de couleur “vert papier russe” H. : 150
-                L. : 70cm, 2016
+                {' '}
+                {installation && installation.caption}
               </p>
             </div>
 
@@ -178,7 +186,7 @@ const Installation: FunctionComponent<Props> = ({ match, history }) => {
               <div className="page-installation__wrapper__part--first-part__presentation__text-content-wrapper__mask" />
               <div className="page-installation__wrapper__part--first-part__presentation__text-content-wrapper__container">
                 <p className="page-installation__wrapper__part--first-part__presentation__text-content-wrapper__container__text-content">
-                  {installation.lockedDescription}
+                  {installation && installation.lockedDescription}
                 </p>
               </div>
             </div>
@@ -188,16 +196,52 @@ const Installation: FunctionComponent<Props> = ({ match, history }) => {
             <p className="page-installation__wrapper__part--first-part__testimony__title">
               Témoignage
             </p>
-            <AudioPlayer
+
+            <div
               className={
-                'page-installation__wrapper__part--first-part__testimony__player'
+                'page-installation__wrapper__part--first-part__testimony__talkers'
               }
-              audio={AudioPlayerAudios.Audio1}
-              play={isFirstPartPlayerPlaying}
-              onTogglePlay={handleOnTogglePlayPlayer}
-              onProgress={setScrollProgressFirstPartTestimonyPlayer}
-              progress={scrollProgressFirstPartTestimonyPlayer}
-            />
+            >
+              {installation &&
+                installation.testimony &&
+                installation.testimony.talkers.map(talker => (
+                  <div
+                    className={`page-installation__wrapper__part--first-part__testimony__talkers__talker talker-${
+                      talker.id
+                    }`}
+                    key={talker.id}
+                  >
+                    <p
+                      className={
+                        'page-installation__wrapper__part--first-part__testimony__talkers__talker__name'
+                      }
+                    >
+                      {talker.name}
+                    </p>
+                    <p
+                      className={
+                        'page-installation__wrapper__part--first-part__testimony__talkers__talker__details'
+                      }
+                    >
+                      {talker.details}
+                    </p>
+                  </div>
+                ))}
+            </div>
+
+            {installation && installation.testimony && (
+              <AudioPlayer
+                className={
+                  'page-installation__wrapper__part--first-part__testimony__player'
+                }
+                audio={installation.testimony.fileUrl}
+                play={isFirstPartPlayerPlaying}
+                onTogglePlay={handleOnTogglePlayPlayer}
+                onProgress={setScrollProgressFirstPartTestimonyPlayer}
+                progress={scrollProgressFirstPartTestimonyPlayer}
+              />
+            )}
+
             <div className="page-installation__wrapper__part--first-part__testimony__text-content-wrapper">
               <div className="page-installation__wrapper__part--first-part__testimony__text-content-wrapper__mask" />
               <div className="page-installation__wrapper__part--first-part__testimony__text-content-wrapper__container">
@@ -248,7 +292,12 @@ const Installation: FunctionComponent<Props> = ({ match, history }) => {
               entendus
             </p>
           </div>
-          <TutoTwitter className={'hidden'} hashtags={installation.hashTags} />
+          {installation && (
+            <TutoTwitter
+              className={'hidden'}
+              hashtags={installation.hashTags}
+            />
+          )}
         </div>
         <div className="page-installation__wrapper__part--third-part">
           <p className="page-installation__wrapper__part--third-part__title">

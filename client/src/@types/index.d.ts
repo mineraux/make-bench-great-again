@@ -13,6 +13,7 @@ export type Coords = [number, number]
 type TestimonyTextContentType = {
   text: string
   talkerID: number
+  timecodes?: [number, number]
 }
 
 type TestimonyTalkersType = {

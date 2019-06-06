@@ -51,7 +51,7 @@ const TwitterDebug: FunctionComponent<Props> = ({ className, hashtags }) => {
           />
           <video
             className="tuto-twitter__wrapper__video-wrapper__video"
-            muted
+            muted={true}
             autoPlay
           >
             <source src={TutoVideo} type="video/mp4" />

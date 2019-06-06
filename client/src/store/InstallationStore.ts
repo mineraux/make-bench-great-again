@@ -12,6 +12,14 @@ class InstallationStore {
   @observable installationListTemp: ApiInstallationReponseRoot = []
   @observable unlockedInstallations: string[] = ['3']
 
+  // TODO : required ?
+  @observable currentInstallationId: string | null = null
+
+  // TODO : required ?
+  @action public setCurrentInstallationId = (id: string) => {
+    this.currentInstallationId = id
+  }
+
   @action public fetchInstallationList = async (
     fieldToFetch: QueryApiInstallationReponse
   ) => {
@@ -52,20 +60,24 @@ class InstallationStore {
                 text:
                   "C’est pas fulgurant, mais ouais petit à petit, on voit que quand même, on ne peut plus s'asseoir devant un magasin, on ne peut plus s’asseoir dans le métro, enfin on peut s’asseoir mais on ne peut pas se coucher par exemple",
                 talkerID: 1,
+                timecodes: [0, 6],
               },
               {
                 text:
                   'Vous pouvez vous reposer les fesses sans vous asseoir et être prêt à partir dès que votre train ou votre bus arrive.',
                 talkerID: 2,
+                timecodes: [6.5, 14],
               },
               {
                 text: 'Est-ce que ce n’est pas un problème ?',
                 talkerID: 3,
+                timecodes: [14.5, 15.5],
               },
               {
                 text:
                   'Non pas du tout, pour les SDF peut-être mais j’en sais rien !',
                 talkerID: 2,
+                timecodes: [16, 19],
               },
             ],
           },

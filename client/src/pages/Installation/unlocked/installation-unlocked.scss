@@ -162,10 +162,51 @@
             pointer-events: none;
           }
 
+          &__talkers {
+            position: relative;
+            width: 100%;
+            height: 4rem;
+            margin-top: auto;
+
+            &__talker {
+              position: absolute;
+              left: 50%;
+              top: 50%;
+              transform: translateX(-50%) translateY(-50%);
+              opacity: 0;
+
+              &.talker-1 {
+                color: red;
+              }
+
+              &.talker-2 {
+                color: green;
+              }
+
+              &.talker-3 {
+                color: yellow;
+              }
+
+              &__name {
+                width: 100%;
+                text-align: center;
+                font-family: $font-infini-regular;
+                font-size: 1.5rem;
+              }
+
+              &__details {
+                width: 100%;
+                text-align: center;
+                font-family: $font-infini-regular;
+                font-size: 1.5rem;
+              }
+            }
+          }
+
           &__player {
             margin-top: auto;
             display: block;
-            margin-bottom: 10vh;
+            margin-bottom: auto;
           }
 
           &__text-content-wrapper {
@@ -194,6 +235,8 @@
           height: 100%;
 
           &__radial-circle {
+            //TODO : refacto
+            pointer-events: none;
             position: absolute;
             top: 0;
             left: 5rem;
