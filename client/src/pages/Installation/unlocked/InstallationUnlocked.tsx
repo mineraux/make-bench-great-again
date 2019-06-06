@@ -247,7 +247,7 @@ const Installation: FunctionComponent<Props> = ({ match, history }) => {
               entendus
             </p>
           </div>
-          <TutoTwitter className={'hidden'} />
+          <TutoTwitter className={'hidden'} hashtags={installation.hashTags} />
         </div>
         <div className="page-installation__wrapper__part--third-part">
           <p className="page-installation__wrapper__part--third-part__title">

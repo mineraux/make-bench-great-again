@@ -6,16 +6,26 @@ import { useWindowSize, getHeaderHeight } from '../../utils/hooks'
 import { TweenMax } from 'gsap'
 import TutoVideo from '../../assets/video/tuto.mp4'
 import mockup from '../../assets/images/mockup.png'
+import { ApiInstallation } from '../../@types'
 
 type Props = {
   className?: string
+  hashtags?: ApiInstallation['hashTags']
 }
 
-const TwitterDebug: FunctionComponent<Props> = ({ className }) => {
+const TwitterDebug: FunctionComponent<Props> = ({ className, hashtags }) => {
   const getTwitterUrl = (): string => {
     const tweet = `À l'occasion de la Nuit Blanche, grace à l'Envers du décors, j'ai essayé de m'installer sur des dispositifs anti-SDF...`
-    const uri = `https://twitter.com/intent/tweet?text=${tweet}`
-    return encodeURI(uri)
+
+    let uri = encodeURI(`https://twitter.com/intent/tweet?text=${tweet}`)
+    uri += encodeURIComponent(` #lenversdudecor`)
+    if (hashtags) {
+      hashtags.forEach(hashtag => {
+        uri += encodeURIComponent(` #${hashtag}`)
+      })
+    }
+
+    return uri
   }
 
   const windowHeight = useWindowSize().height
