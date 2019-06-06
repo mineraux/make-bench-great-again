@@ -75,11 +75,11 @@ const Installation: FunctionComponent<Props> = ({ match, history }) => {
   }
 
   const onButtonClick = () => {
-    MapStore.setCalculatePathFromAnotherPage(true)
     const target = InstallationStore.getInstallationBySlug(
       match.params.installationSlug
     )
     MapStore.setTargetInstallation(target)
+    MapStore.setCalculatePathFromAnotherPage(true)
   }
 
   const windowHeight = useWindowSize().height

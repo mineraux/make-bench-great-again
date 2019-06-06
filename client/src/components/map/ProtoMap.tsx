@@ -193,7 +193,7 @@ const ProtoMap: FunctionComponent<Props> = ({ match, history }) => {
   }, [tempUserLocation])
 
   useEffect(() => {
-    if (isTourStarted) {
+    if (isTourStarted && userLocation) {
       DirectionsController.setPathToInstallation(
         directions.current,
         featureCoords(selectedMarker),
@@ -274,7 +274,6 @@ const ProtoMap: FunctionComponent<Props> = ({ match, history }) => {
         }
       })
       setTargetInstallationSlug(MapStore.targetInstallation.slug)
-      setIsTourStarted(true)
     }
   }, [
     map,
