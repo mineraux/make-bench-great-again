@@ -16,7 +16,7 @@ class ScrollMagicController {
 
   constructor() {
     this.scenes = []
-    this.isDebug = false
+    this.isDebug = true
     this.scrollProgressFirstPartTestimonyPlayer =
       ScrollMagicStore.scrollProgressFirstPartTestimonyPlayer
     this.isFirstPartPlayerPlaying = ScrollMagicStore.isFirstPartPlayerPlaying

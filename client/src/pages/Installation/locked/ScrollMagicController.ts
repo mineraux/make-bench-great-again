@@ -14,7 +14,7 @@ class ScrollMagicController {
 
   constructor() {
     this.scenes = []
-    this.isDebug = true
+    this.isDebug = false
   }
 
   public initController = () => {

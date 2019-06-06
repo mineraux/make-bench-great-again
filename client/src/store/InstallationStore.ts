@@ -10,7 +10,7 @@ import ApiClient from '../ApiClient/ApiClient'
 class InstallationStore {
   @observable installationList: ApiInstallationReponseRoot = []
   @observable installationListTemp: ApiInstallationReponseRoot = []
-  @observable unlockedInstallations: string[] = []
+  @observable unlockedInstallations: string[] = ['3']
 
   @action public fetchInstallationList = async (
     fieldToFetch: QueryApiInstallationReponse

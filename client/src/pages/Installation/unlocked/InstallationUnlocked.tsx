@@ -13,6 +13,7 @@ import SpriteAnimation from '../../../components/SpriteAnimation/SpriteAnimation
 import ScrollMagicStore from '../../../store/ScrollMagicStore'
 import { animationId } from '../../../components/SpriteAnimation/animations'
 import TwitterGallery from '../../../components/TwitterGallery/TwitterGallery'
+import TutoTwitter from '../../../components/TutoTwitter/TutoTwitter'
 import config from '../../../config/config'
 import { TweenMax, Power2 } from 'gsap'
 import AudioPlayer, {
@@ -129,6 +130,10 @@ const Installation: FunctionComponent<Props> = ({ match, history }) => {
     )
   }
 
+  const onClickTutoBtn = () => {
+    TweenMax.set('.tuto-twitter', { className: '-=hidden' })
+  }
+
   return (
     <div className="page-installation" ref={ref}>
       <div className="page-installation__wrapper">
@@ -237,11 +242,21 @@ const Installation: FunctionComponent<Props> = ({ match, history }) => {
               url={getTwitterUrl()}
               icon={true}
             />
+            <Button
+              className={
+                'page-installation__wrapper__part--second-part__challenge__sign-petition-button'
+              }
+              label="Signer la pétition"
+              theme={buttonThemes.Blue}
+              onClick={onClickTutoBtn}
+              icon={true}
+            />
             <p className="page-installation__wrapper__part--second-part__challenge__help">
               Plus nous serons nombreux, plus nous aurons de chances d'être
               entendus
             </p>
           </div>
+          <TutoTwitter className={'hidden'} />
         </div>
         <div className="page-installation__wrapper__part--third-part">
           <p className="page-installation__wrapper__part--third-part__title">
