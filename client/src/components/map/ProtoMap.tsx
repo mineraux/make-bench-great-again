@@ -158,10 +158,10 @@ const ProtoMap: FunctionComponent<Props> = ({ match, history }) => {
       })
 
       directions.current.on('route', (e: EventData) => {
-        // // Returned value is in secondes => conversion to minutes
+        // Returned value is in secondes => conversion to minutes
         setTravelTime(Math.floor(e.route[0].duration / 60))
 
-        // // Returned value is in meters => conversion to km
+        // Returned value is in meters => conversion to km
         setTravelDistance((e.route[0].distance / 1000).toFixed(2))
       })
 
@@ -176,6 +176,7 @@ const ProtoMap: FunctionComponent<Props> = ({ match, history }) => {
     markers,
     mapStylesLoaded,
     isGeolocationPermissionGranted,
+    userLocation,
   ])
 
   useEffect(() => {
@@ -297,6 +298,11 @@ const ProtoMap: FunctionComponent<Props> = ({ match, history }) => {
         featureCoords(selectedMarker),
         userLocation
       )
+
+      MapStore.setTargetInstallation(selectedMarker.properties)
+      setTargetInstallationSlug(MapStore.targetInstallation.slug)
+      setIsTourStarted(true)
+      TweenMax.set('.informations-panel', { className: '-=open' })
       setCalculatePathFromAnotherPage(false)
     }
   }, [

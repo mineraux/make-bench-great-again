@@ -10,7 +10,7 @@ import ApiClient from '../ApiClient/ApiClient'
 class InstallationStore {
   @observable installationList: ApiInstallationReponseRoot = []
   @observable installationListTemp: ApiInstallationReponseRoot = []
-  @observable unlockedInstallations: string[] = ['3']
+  @observable unlockedInstallations: string[] = []
 
   // TODO : required ?
   @observable currentInstallationId: string | null = null
