@@ -112,7 +112,12 @@ const InformationsPanel: FunctionComponent<Props> = ({
       )}
 
       <div className="informations-panel__informations--installation">
-        <span className="informations-panel__informations--installation__installation-name">
+        <span
+          className="informations-panel__informations--installation__installation-name"
+          onClick={() => {
+            setIsInformationsPanelOpen(!isInformationsPanelOpen)
+          }}
+        >
           {installationTargetName}
         </span>
         <p className="informations-panel__informations--installation__installation-description">
