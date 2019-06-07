@@ -10,6 +10,7 @@ import config from '../../config/config'
 import Button, { themes as buttonThemes } from '../../components/Button/Button'
 import { useScrollSpeed, useWindowSize, useClientRect } from '../../utils/hooks'
 import { getHeaderHeight } from '../../utils'
+import ScrollMagicController from './ScrollMagicController'
 
 import SplashscreenAnimation from '../../components/SplashscreenAnimation/SplashscreenAnimation'
 import { NavigationStore } from '../../store'
@@ -33,20 +34,16 @@ const Home: FunctionComponent<Props> = ({ match }) => {
 
   useEffect(() => {
     return () => {
-      if (ref.current) {
-        ref.current.removeEventListener('touchstart', handleTouchStart, false)
-        ref.current.removeEventListener('touchmove', handleTouchMove, false)
-      }
+      ScrollMagicController.destroyScrollMagicScenes()
     }
   }, [])
 
   useEffect(() => {
     if (isSplashscreenCompleted) {
-      setIsHeaderVisible(true)
-
+      ScrollMagicController.initController()
       if (ref.current) {
         const containers = ref.current.querySelectorAll(
-          '.page-home__containers-wrapper__container-1, .page-home__containers-wrapper__container-2'
+          '.page-home__containers-wrapper__title, .page-home__containers-wrapper__container-1, .page-home__containers-wrapper__container-2'
         )
 
         const tl = new TimelineMax({
@@ -55,28 +52,46 @@ const Home: FunctionComponent<Props> = ({ match }) => {
           },
         })
 
-        tl.to(
-          containers,
+        // tl.to(
+        //   containers,
+        //   1.5,
+        //   {
+        // filter: 'blur(0)',
+        // autoRound: false,
+        // ease: Power2.easeOut,
+        //   },
+        //   0
+        // ).to(
+        //   [
+        //     '.page-home__containers-wrapper__title',
+        //     '.page-home__containers-wrapper__container-1',
+        //   ],
+        //   1,
+        //   {
+        //     opacity: 1,
+        //   },
+        //   0
+        // )
+
+        tl.fromTo(
+          '.page-home__containers-wrapper',
           1.5,
           {
-            filter: 'blur(0rem)',
-            autoRound: false,
-            ease: Power2.easeOut,
+            filter: 'blur(4px)',
+            opacity: 0,
           },
-          0
-        ).to(
-          containers!,
-          1,
           {
+            filter: 'blur(0)',
             opacity: 1,
-          },
-          0
+            autoRound: false,
+            ease: Power1.easeOut,
+          }
         )
       }
-      if (ref.current) {
-        ref.current.addEventListener('touchstart', handleTouchStart, false)
-        ref.current.addEventListener('touchmove', handleTouchMove, false)
-      }
+      // if (ref.current) {
+      //   ref.current.addEventListener('touchstart', handleTouchStart, false)
+      //   ref.current.addEventListener('touchmove', handleTouchMove, false)
+      // }
     }
   }, [isSplashscreenCompleted])
 
@@ -152,39 +167,22 @@ const Home: FunctionComponent<Props> = ({ match }) => {
     yDown
   }
 
-  // useEffect(() => {
-  //   if (scrollSpeed !== null && isTextReady && ref.current) {
-  //     const containers = ref.current.querySelectorAll(
-  //       '.page-home__container-1, .page-home__container-2'
-  //     )
-  //     const minDelta = 0
-  //     const maxDelta = 20
-  //     const clampedDelta = Math.max(minDelta, Math.min(scrollSpeed, maxDelta))
-  //     const normalizedDelta = (clampedDelta - minDelta) / (maxDelta - minDelta)
-  //     if (ref && ref.current) {
-  //       TweenMax.to(containers, 0.8, {
-  //         filter: `blur(${normalizedDelta * 0.15}rem)`,
-  //       })
-  //     }
-  //   }
-  // }, [scrollSpeed, isTextReady])
-
   const handleSplashscreenComplete = () => {
     setIsSplashscreenCompleted(true)
   }
 
   return (
-    <div className={'page-home'} ref={ref} style={{ height: windowHeight }}>
+    <div className={'page-home'} ref={ref}>
       <SplashscreenAnimation onComplete={handleSplashscreenComplete} />
 
       {isSplashscreenCompleted && (
-        <div
-          className="page-home__containers-wrapper"
-          style={{ maxHeight: windowHeight - getHeaderHeight() }}
-        >
+        <div className="page-home__containers-wrapper">
+          <h2 className="page-home__containers-wrapper__title">
+            L'envers <br /> du décor
+          </h2>
           <div
             className="page-home__containers-wrapper__container-1"
-            style={{ height: windowHeight - getHeaderHeight() }}
+            style={{ height: windowHeight }}
           >
             <p className="page-home__containers-wrapper__container-1__title">
               UNE EXPERIENCE
@@ -205,7 +203,7 @@ const Home: FunctionComponent<Props> = ({ match }) => {
           <div
             ref={refContainer}
             className="page-home__containers-wrapper__container-2"
-            style={{ height: windowHeight - getHeaderHeight() }}
+            style={{ height: windowHeight }}
           >
             <p className="page-home__containers-wrapper__container-2__title">
               COMMENT PARTICIPER ?
@@ -223,6 +221,7 @@ const Home: FunctionComponent<Props> = ({ match }) => {
               label={'Commencer'}
               theme={buttonThemes.Green}
               link={config.routes.Map.path}
+              onClick={() => setIsHeaderVisible(true)}
             />
           </div>
         </div>

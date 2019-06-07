@@ -16,7 +16,7 @@ type Props = {
 
 const TwitterDebug: FunctionComponent<Props> = ({ className, hashtags }) => {
   const getTwitterUrl = (): string => {
-    const tweet = `À l'occasion de la Nuit Blanche, grace à l'Envers du décors, j'ai essayé de m'installer sur des dispositifs anti-SDF...`
+    const tweet = `À l'occasion de la Nuit Blanche, grace à l'Envers du décor, j'ai essayé de m'installer sur des dispositifs anti-SDF...`
 
     let uri = encodeURI(`https://twitter.com/intent/tweet?text=${tweet}`)
     uri += encodeURIComponent(` #lenversdudecor`)

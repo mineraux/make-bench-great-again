@@ -3,7 +3,25 @@
 .page-home {
   overflow: hidden;
   &__containers-wrapper {
+    opacity: 0;
+    height: 100% !important;
+
+    &__title {
+      position: absolute;
+      top: 7%;
+      margin: 0;
+      width: 100%;
+      color: $color-pink;
+      font-size: 4rem;
+      text-align: center;
+      font-family: $font-infini-regular;
+      text-transform: uppercase;
+    }
+
     &__container-2 {
+      pointer-events: none;
+      opacity: 0;
+
       &__button {
         width: max-content;
         margin: 4rem auto 0 auto;
@@ -12,10 +30,12 @@
 
     &__container-1,
     &__container-2 {
+      position: absolute;
+      top: 0;
+      left: 0;
       text-align: center;
       width: 100%;
       opacity: 0;
-      filter: blur(1.5rem);
       will-change: filter;
       display: flex;
       flex-direction: column;
@@ -33,9 +53,9 @@
       &__text {
         font-family: $font-infini-regular;
         color: $color-pink;
-        font-size: 1.5rem;
+        font-size: 1.6rem;
         text-align: center;
-        line-height: 1.8rem;
+        line-height: 2.2rem;
         width: 23.8rem;
         margin: 0 auto 1.5rem auto;
       }
