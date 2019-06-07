@@ -1,4 +1,4 @@
-import { TimelineMax, TweenMax, Power1, Power2 } from 'gsap'
+import { TimelineMax, TweenMax, Power0, Power1, Power2 } from 'gsap'
 import { autorun } from 'mobx'
 // @ts-ignore
 import ScrollMagic from 'scrollmagic'
@@ -18,7 +18,7 @@ class ScrollMagicController {
 
   constructor() {
     this.scenes = []
-    this.isDebug = false
+    this.isDebug = true
     this.scrollProgressFirstPartTestimonyPlayer =
       ScrollMagicStore.scrollProgressFirstPartTestimonyPlayer
     this.isFirstPartPlayerPlaying = ScrollMagicStore.isFirstPartPlayerPlaying
@@ -56,11 +56,12 @@ class ScrollMagicController {
           this.sceneTestimonyTextTranslate.scrollOffset() +
           this.scrollProgressFirstPartTestimonyPlayer *
             this.sceneTestimonyTextTranslate.duration()
-        TweenMax.to(scroll, 0.3, {
+
+        TweenMax.to(scroll, 0.5, {
           y: newScroll,
           onUpdate: () => {
             if (this.isFirstPartPlayerPlaying) {
-              console.log('auto scroll : ', scroll.y)
+              // console.log('auto scroll : ', scroll.y)
               window.scrollTo(0, scroll.y)
             }
           },
@@ -87,6 +88,7 @@ class ScrollMagicController {
     // TWEENS
 
     // Presentation : sketch
+
     const tweenInstallationSketch = new TimelineMax().fromTo(
       '.page-installation__wrapper__part--first-part__presentation__installation-sketch',
       1,
@@ -165,6 +167,7 @@ class ScrollMagicController {
       )
 
     // Presentation : text content
+
     const tweenPresentationText = new TimelineMax().fromTo(
       '.page-installation__wrapper__part--first-part__presentation__text-content-wrapper__container__text-content',
       0.5,
@@ -179,6 +182,7 @@ class ScrollMagicController {
     )
 
     // Presentation : fade out
+
     const tweenPresentationFade = new TimelineMax().fromTo(
       '.page-installation__wrapper__part--first-part__presentation',
       0.5,
@@ -195,6 +199,7 @@ class ScrollMagicController {
     )
 
     // Testimony : fade in
+
     const tweenTestimony = new TimelineMax().fromTo(
       '.page-installation__wrapper__part--first-part__testimony',
       0.5,
@@ -211,6 +216,7 @@ class ScrollMagicController {
     )
 
     // Testimony : text fade
+
     const tweenTestimonyTextFade = new TimelineMax().to(
       '.page-installation__wrapper__part--first-part__testimony__text-content-wrapper',
       0.5,
@@ -237,6 +243,8 @@ class ScrollMagicController {
         fadeDuration,
         {
           opacity: 1,
+          filter: 'blur(0)',
+          autoRound: false,
           overwrite: false,
         },
         text.timecodes![0]
@@ -247,23 +255,29 @@ class ScrollMagicController {
         fadeDuration,
         {
           opacity: 0,
+          filter: 'blur(4px)',
+          autoRound: false,
           overwrite: false,
         },
         text.timecodes![1]
       )
     })
 
+    tweenTestimonyTalkers.progress(0)
+
     // Testimony : text translate
+
     const tweenTestimonyTextTranslate = new TimelineMax().fromTo(
       '.page-installation__wrapper__part--first-part__testimony__text-content-wrapper__container__text-content',
-      0.5,
+      1,
       {
-        transform: `translateY(${20 / 2}rem)`,
+        transform: `translateY(${20 * 0.75}rem)`,
         yPercent: 0,
       },
       {
-        transform: `translateY(${20 / 2}rem)`,
+        transform: `translateY(${20 * 0.25}rem)`,
         yPercent: -100,
+        ease: Power0.easeOut,
       }
     )
 
@@ -329,7 +343,7 @@ class ScrollMagicController {
     this.scenes.push(scenePart1PresentationText)
 
     scenePart1PresentationText.on('progress', (event: any) => {
-      console.log(event.progress)
+      // console.log("progress" event.progress)
       setScrollProgressFirstPart(event.progress)
     })
 
@@ -421,6 +435,7 @@ class ScrollMagicController {
     this.scenes.push(this.sceneTestimonyTextTranslate)
 
     this.sceneTestimonyTextTranslate.on('progress', (event: any) => {
+      console.log('progress', event.progress)
       tweenTestimonyTalkers.progress(event.progress)
       if (!this.isFirstPartPlayerPlaying) {
         console.log('manual scroll ', event.progress)

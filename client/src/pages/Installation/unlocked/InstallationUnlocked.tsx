@@ -11,7 +11,6 @@ import { observer } from 'mobx-react-lite'
 import { NavigationStore } from '../../../store'
 import SpriteAnimation from '../../../components/SpriteAnimation/SpriteAnimation'
 import ScrollMagicStore from '../../../store/ScrollMagicStore'
-import { animationId } from '../../../components/SpriteAnimation/animations'
 import TwitterGallery from '../../../components/TwitterGallery/TwitterGallery'
 import TutoTwitter from '../../../components/TutoTwitter/TutoTwitter'
 import config from '../../../config/config'
@@ -19,12 +18,14 @@ import { TweenMax, Power2 } from 'gsap'
 import AudioPlayer, {
   audios as AudioPlayerAudios,
 } from '../../../components/AudioPlayer/AudioPlayer'
-import { number } from 'prop-types'
+import { useWindowSize } from '../../../utils/hooks'
+import { getHeaderHeight } from '../../../utils'
 
 type Props = pageProps & {}
 
 const Installation: FunctionComponent<Props> = ({ match, history }) => {
   const ref = useRef<HTMLDivElement>(null)
+  const initialWindowHeight = useRef(window.innerHeight)
   const [installation, setInstallation] = useState<ApiInstallation | null>(null)
 
   const { installationList, fetchInstallationList } = InstallationStore
@@ -145,9 +146,20 @@ const Installation: FunctionComponent<Props> = ({ match, history }) => {
   }
 
   return (
-    <div className="page-installation" ref={ref}>
+    <div
+      className="page-installation"
+      ref={ref}
+      style={{
+        height: initialWindowHeight.current - getHeaderHeight(),
+      }}
+    >
       <div className="page-installation__wrapper">
-        <div className="page-installation__wrapper__part--first-part">
+        <div
+          className="page-installation__wrapper__part--first-part"
+          style={{
+            height: initialWindowHeight.current - getHeaderHeight(),
+          }}
+        >
           <div className="page-installation__wrapper__part--first-part__presentation">
             <p className="page-installation__wrapper__part--first-part__presentation__title title1">
               {installation && installation.name}
@@ -248,13 +260,16 @@ const Installation: FunctionComponent<Props> = ({ match, history }) => {
               <div className="page-installation__wrapper__part--first-part__testimony__text-content-wrapper__mask" />
               <div className="page-installation__wrapper__part--first-part__testimony__text-content-wrapper__container">
                 <p className="page-installation__wrapper__part--first-part__testimony__text-content-wrapper__container__text-content">
-                  Avant je pouvais venir dormir ici mais depuis qu'ils ont mis
-                  en place ces accoudoirs, je suis obliger de dormir sur le
-                  trottoir. On était au calme ici, bla bla bla Lorem ipsum
-                  dolor, sit amet consectetur adipisicing elit. Incidunt tenetur
-                  quas itaque quisquam ipsum ipsa id minus laborum animi iusto
-                  tempore, harum sit iste. Quod suscipit esse adipisci dicta
-                  omnis.
+                  {installation &&
+                    installation.testimony!.textContent.map(text => (
+                      <span
+                        className={`page-installation__wrapper__part--first-part__testimony__text-content-wrapper__container__text-content__text talker-${
+                          text.talkerID
+                        }`}
+                      >
+                        {text.text}
+                      </span>
+                    ))}
                 </p>
               </div>
             </div>

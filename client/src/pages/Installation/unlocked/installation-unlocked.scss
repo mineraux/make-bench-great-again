@@ -2,7 +2,7 @@
 
 .page-installation {
   background-color: $color-blue;
-  height: 100vh;
+  //height: 100vh;
 
   &__wrapper {
     height: 100%;
@@ -65,7 +65,7 @@
                 font-family: $font-infini-regular;
                 color: $color-pink;
                 font-size: 1.5rem;
-                line-height: 2rem;
+                line-height: 2.1rem;
               }
             }
           }
@@ -73,7 +73,8 @@
       }
 
       &--first-part {
-        height: calc(100vh - #{$header-height});
+        //height: calc(100vh - #{$header-height});
+        height: 100%;
         //padding-bottom: 10rem;
         left: 0 !important;
         z-index: 2;
@@ -111,12 +112,11 @@
 
           &__description {
             position: absolute;
-            top: 70%;
+            top: 60%;
             display: flex;
             flex-direction: column;
             align-items: center;
             width: 100%;
-            transform: translateY(-50%);
             &__text {
               font-family: $font-infini-regular;
               color: $color-pink;
@@ -140,8 +140,8 @@
           &__text-content-wrapper {
             position: absolute;
             left: 50%;
-            top: 70%;
-            transform: translateX(-50%) translateY(-50%);
+            top: 60%;
+            transform: translateX(-50%);
             z-index: -1;
           }
         }
@@ -174,24 +174,28 @@
               top: 50%;
               transform: translateX(-50%) translateY(-50%);
               opacity: 0;
+              filter: blur(4px);
+              width: 100%;
 
               &.talker-1 {
-                color: red;
+                color: $color-pink;
               }
 
               &.talker-2 {
-                color: green;
+                color: $color-green;
               }
 
               &.talker-3 {
-                color: yellow;
+                color: $color-pink;
+                font-family: $font-infini-italic;
               }
 
               &__name {
                 width: 100%;
                 text-align: center;
-                font-family: $font-infini-regular;
-                font-size: 1.5rem;
+                font-family: $font-infini-bold;
+                font-size: 2rem;
+                margin-bottom: 1rem;
               }
 
               &__details {
@@ -214,6 +218,27 @@
             opacity: 0;
             max-height: 25rem;
             margin-bottom: auto;
+            &__container {
+              &__text-content {
+                &__text {
+                  display: inline-block;
+                  margin: 0.3rem 0;
+
+                  &.talker-1 {
+                    color: $color-pink;
+                  }
+
+                  &.talker-2 {
+                    color: $color-green;
+                  }
+
+                  &.talker-3 {
+                    color: $color-pink;
+                    font-family: $font-infini-italic;
+                  }
+                }
+              }
+            }
           }
         }
       }

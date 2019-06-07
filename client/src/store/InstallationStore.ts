@@ -58,7 +58,7 @@ class InstallationStore {
             textContent: [
               {
                 text:
-                  "C’est pas fulgurant, mais ouais petit à petit, on voit que quand même, on ne peut plus s'asseoir devant un magasin, on ne peut plus s’asseoir dans le métro, enfin on peut s’asseoir mais on ne peut pas se coucher par exemple",
+                  "C’est pas fulgurant, mais ouais petit à petit, on voit que quand même, on ne peut plus s'asseoir devant un magasin, on ne peut plus s’asseoir dans le métro, enfin on peut s’asseoir mais on ne peut pas se coucher par exemple.",
                 talkerID: 1,
                 timecodes: [0, 6],
               },
