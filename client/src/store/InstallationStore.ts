@@ -290,9 +290,6 @@ class InstallationStore {
       JSON.parse(storageUnlockedInstallations).forEach((id: string) => {
         if (id === installationID) {
           is = true
-          return
-        } else {
-          is = false
         }
       })
     }
@@ -308,9 +305,6 @@ class InstallationStore {
     this.unlockedInstallations.forEach(id => {
       if (id === installationID) {
         isUnlocked = true
-        return
-      } else {
-        isUnlocked = false
       }
     })
 
