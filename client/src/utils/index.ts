@@ -19,3 +19,24 @@ export const mapRange = (
 ): number => {
   return ((num - in_min) * (out_max - out_min)) / (in_max - in_min) + out_min
 }
+
+export function debounce(callback: (...arg: any) => void, wait: number) {
+  let timeout: any
+  return (...args: any[]) => {
+    // @ts-ignore
+    const context = this
+    clearTimeout(timeout)
+    timeout = setTimeout(() => callback.apply(context, args), wait)
+  }
+}
+
+export function getHeaderHeight(): any {
+  let headerHeight = 0
+  const header = document.querySelector('.app__header-container')
+
+  if (header) {
+    headerHeight = header.clientHeight
+  }
+
+  return headerHeight
+}

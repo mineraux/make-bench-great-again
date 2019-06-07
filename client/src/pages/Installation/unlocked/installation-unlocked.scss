@@ -2,7 +2,7 @@
 
 .page-installation {
   background-color: $color-blue;
-  height: 100vh;
+  //height: 100vh;
 
   &__wrapper {
     height: 100%;
@@ -12,35 +12,25 @@
       &--first-part,
       &--second-part,
       &--third-part {
+        position: relative;
         &__presentation,
         &__testimony,
         &__challenge {
           &__title {
             display: inline-block;
-            margin: 3.5rem 0;
+            margin-top: 3.5rem;
             width: 100%;
             color: $color-green;
             font-size: 4rem;
             text-align: center;
             font-family: $font-infini-regular;
             text-transform: uppercase;
+            will-change: filter;
           }
 
           &__text-content-wrapper {
-            position: relative;
-            max-height: 25em;
-            overflow: hidden;
-
-            &__text-content {
-              text-align: center;
-              max-width: $content-width;
-              padding: 3rem $content-padding 0 $content-padding;
-              margin: auto;
-              font-family: $font-infini-regular;
-              color: $color-pink;
-              font-size: 1.5rem;
-              line-height: 1.3em;
-            }
+            width: 100%;
+            padding: 0;
 
             &__mask {
               position: absolute;
@@ -48,59 +38,223 @@
               left: 0;
               right: 0;
               bottom: 0;
+              height: 100%;
               background: linear-gradient(
                 to top,
                 $color-blue,
-                rgba(25, 33, 147, 0) 20%,
-                rgba(25, 33, 147, 0) 80%,
+                rgba(29, 24, 153, 0.8) 10%,
+                rgba(29, 24, 153, 0) 25%,
+                rgba(29, 24, 153, 0) 75%,
+                rgba(29, 24, 153, 0.8) 90%,
                 $color-blue
               );
               z-index: 1;
+            }
+
+            &__container {
+              position: relative;
+              height: 25rem;
+              overflow: hidden;
+
+              &__text-content {
+                position: relative;
+                text-align: center;
+                max-width: $content-width;
+                padding: 0 $content-padding;
+                margin: auto;
+                font-family: $font-infini-regular;
+                color: $color-pink;
+                font-size: 1.6rem;
+                line-height: 2.2rem;
+              }
             }
           }
         }
       }
 
       &--first-part {
-        height: 100vh;
-        padding-bottom: 10rem;
+        //height: calc(100vh - #{$header-height});
+        height: 100%;
+        //padding-bottom: 10rem;
         left: 0 !important;
+        z-index: 2;
+        //width: 100% !important; // to overrid scrollmagic style
 
         &__presentation {
+          height: 100%;
+          overflow: hidden;
+          position: absolute;
+          top: 0;
+          left: 0;
+          right: 0;
+          bottom: 0;
+          //padding-top: 5rem;
+          display: flex;
+          flex-direction: column;
+          z-index: 2;
+
+          &.hidden {
+            z-index: 0;
+            display: none;
+          }
+
           &__title {
-            margin-bottom: 0;
+            margin: 0;
+            position: absolute;
+            //left: 50%;
+            top: 3.5rem;
           }
 
           &__installation-sketch {
             width: 100%;
-            margin: auto;
             opacity: 0;
+            transform: scale(1);
+            position: absolute;
+            top: 12%;
+          }
+
+          &__description {
+            position: absolute;
+            top: 60%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            width: 100%;
+
+            &__text {
+              font-family: $font-infini-regular;
+              color: $color-pink;
+              //font-size: 1.5rem;
+              //line-height: 1.8rem;
+              font-size: 1.6rem;
+              line-height: 2.2rem;
+
+              max-width: $content-width;
+              text-align: center;
+              margin-bottom: 1.5rem;
+            }
+
+            &__caption {
+              font-family: $font-infini-italic;
+              color: $color-pink;
+              font-size: 1.25rem;
+              line-height: 1.5rem;
+              max-width: $content-width;
+              text-align: center;
+            }
           }
 
           &__text-content-wrapper {
-            transform: translateY(-6rem);
+            position: absolute;
+            left: 50%;
+            top: 60%;
+            transform: translateX(-50%);
             z-index: -1;
+
+            &__container {
+              &__text-content {
+                opacity: 0;
+                filter: blur(4px);
+                will-change: filter;
+              }
+            }
           }
         }
 
         &__testimony {
+          z-index: 1;
           position: absolute;
           top: 0;
           left: 0;
           right: 0;
           bottom: 0;
           opacity: 0;
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+
+          &.hidden {
+            pointer-events: none;
+          }
+
+          &__talkers {
+            position: relative;
+            width: 100%;
+            height: 4rem;
+            margin-top: auto;
+
+            &__talker {
+              position: absolute;
+              left: 50%;
+              top: 50%;
+              transform: translateX(-50%) translateY(-50%);
+              opacity: 0;
+              filter: blur(4px);
+              width: 100%;
+
+              &.talker-1 {
+                color: $color-pink;
+              }
+
+              &.talker-2 {
+                color: $color-green;
+              }
+
+              &.talker-3 {
+                color: $color-pink;
+                font-family: $font-infini-italic;
+              }
+
+              &__name {
+                width: 100%;
+                text-align: center;
+                font-family: $font-infini-bold;
+                font-size: 2rem;
+                margin-bottom: 1rem;
+              }
+
+              &__details {
+                width: 100%;
+                text-align: center;
+                font-family: $font-infini-regular;
+                font-size: 1.5rem;
+              }
+            }
+          }
 
           &__player {
-            max-width: 15rem;
-            margin: auto;
+            margin-top: auto;
             display: block;
-            margin-bottom: 3rem;
+            margin-bottom: auto;
           }
 
           &__text-content-wrapper {
+            position: relative;
             opacity: 0;
             max-height: 25rem;
+            margin-bottom: auto;
+
+            &__container {
+              &__text-content {
+                &__text {
+                  display: inline-block;
+                  margin: 0.3rem 0;
+
+                  &.talker-1 {
+                    color: $color-pink;
+                  }
+
+                  &.talker-2 {
+                    color: $color-green;
+                  }
+
+                  &.talker-3 {
+                    color: $color-pink;
+                    font-family: $font-infini-italic;
+                  }
+                }
+              }
+            }
           }
         }
       }
@@ -118,13 +272,30 @@
           display: flex;
           flex-direction: column;
           align-items: center;
+          justify-content: center;
+          height: 100%;
+
+          &__radial-circle {
+            //TODO : refacto
+            pointer-events: none;
+            position: absolute;
+            top: 0;
+            left: 5rem;
+            right: 5rem;
+            bottom: 0;
+            background: radial-gradient(
+              circle closest-side,
+              rgba(97, 249, 132, 1),
+              rgba(97, 249, 132, 0)
+            );
+            background-repeat: no-repeat;
+            background-position-y: -18rem;
+          }
 
           &__title {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            min-height: 20rem;
-            margin: 7rem 0 2rem;
+            display: inline-block;
+            width: 100%;
+            margin: 0rem 0 2rem;
             padding: 0 1.7em;
             width: 100%;
             font-size: 2.5rem;
@@ -132,11 +303,6 @@
             color: $color-blue;
             text-transform: uppercase;
             line-height: 1.5em;
-            background: radial-gradient(
-              circle closest-side,
-              rgba(97, 249, 132, 1),
-              rgba(97, 249, 132, 0)
-            );
           }
 
           &__text-content {

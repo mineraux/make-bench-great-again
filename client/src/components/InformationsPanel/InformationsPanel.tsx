@@ -10,6 +10,7 @@ import { Coords } from '../../@types'
 import { featureCoords } from '../../utils/map'
 import GeoLocationController from '../map/GeoLocationController'
 import { MapStore, InstallationStore } from '../../store'
+import Truncate from 'react-truncate'
 
 interface Props {
   marker: Feature
@@ -90,7 +91,7 @@ const InformationsPanel: FunctionComponent<Props> = ({
         open: isInformationsPanelOpen,
       })}
     >
-      {travelTime && travelTime > 0 && isCurrentTargetMatching && (
+      {travelTime > 0 && isCurrentTargetMatching && (
         <div className="informations-panel__direction-informations">
           <WalkIco className="informations-panel__direction-informations__walk-ico" />
           <span className="informations-panel__direction-informations__direction-duration">
@@ -111,12 +112,19 @@ const InformationsPanel: FunctionComponent<Props> = ({
       )}
 
       <div className="informations-panel__informations--installation">
-        <span className="informations-panel__informations--installation__installation-name">
+        <span
+          className="informations-panel__informations--installation__installation-name"
+          onClick={() => {
+            setIsInformationsPanelOpen(!isInformationsPanelOpen)
+          }}
+        >
           {installationTargetName}
         </span>
-        <span className="informations-panel__informations--installation__installation-description">
-          {installationTargetDescription}
-        </span>
+        <p className="informations-panel__informations--installation__installation-description">
+          <Truncate lines={3} ellipsis="...">
+            {installationTargetDescription}
+          </Truncate>
+        </p>
       </div>
 
       {marker && marker.properties && (

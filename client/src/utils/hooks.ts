@@ -82,14 +82,3 @@ export function useClientRect(): any {
   }, [])
   return [rect, ref]
 }
-
-export function getHeaderHeight(): any {
-  let headerHeight = 0
-  const header = document.querySelector('.app__header-container')
-
-  if (header) {
-    headerHeight = header.clientHeight
-  }
-
-  return headerHeight
-}

@@ -12,6 +12,14 @@ class InstallationStore {
   @observable installationListTemp: ApiInstallationReponseRoot = []
   @observable unlockedInstallations: string[] = []
 
+  // TODO : required ?
+  @observable currentInstallationId: string | null = null
+
+  // TODO : required ?
+  @action public setCurrentInstallationId = (id: string) => {
+    this.currentInstallationId = id
+  }
+
   @action public fetchInstallationList = async (
     fieldToFetch: QueryApiInstallationReponse
   ) => {
@@ -19,7 +27,7 @@ class InstallationStore {
       this.installationList = [
         {
           _id: '1',
-          slug: 'lisbonne',
+          slug: 'vague',
           name: 'La Vague',
           lockedName: 'Lisbonne',
           caption: 'La Vague, acier et fonte, H. : 75cm L. : 180cm, 2015',
@@ -50,29 +58,33 @@ class InstallationStore {
             textContent: [
               {
                 text:
-                  "C’est pas fulgurant, mais ouais petit à petit, on voit que quand même, on ne peut plus s'asseoir devant un magasin, on ne peut plus s’asseoir dans le métro, enfin on peut s’asseoir mais on ne peut pas se coucher par exemple",
+                  "C’est pas fulgurant, mais ouais petit à petit, on voit que quand même, on ne peut plus s'asseoir devant un magasin, on ne peut plus s’asseoir dans le métro, enfin on peut s’asseoir mais on ne peut pas se coucher par exemple.",
                 talkerID: 1,
+                timecodes: [0, 6],
               },
               {
                 text:
                   'Vous pouvez vous reposer les fesses sans vous asseoir et être prêt à partir dès que votre train ou votre bus arrive.',
                 talkerID: 2,
+                timecodes: [6.5, 14],
               },
               {
                 text: 'Est-ce que ce n’est pas un problème ?',
                 talkerID: 3,
+                timecodes: [14.5, 15.5],
               },
               {
                 text:
                   'Non pas du tout, pour les SDF peut-être mais j’en sais rien !',
                 talkerID: 2,
+                timecodes: [16, 19],
               },
             ],
           },
         },
         {
           _id: '2',
-          slug: 'Miséricordieux',
+          slug: 'en_suspens',
           name: 'En suspens',
           lockedName: 'Miséricordieux',
           caption:
@@ -84,7 +96,7 @@ class InstallationStore {
           geolocation: [2.40764, 48.87512],
           hashTags: ['enSuspens'],
           testimony: {
-            fileUrl: 'temoignage_03',
+            fileUrl: 'temoignage_02',
             talkers: [
               {
                 id: 1,
@@ -102,11 +114,13 @@ class InstallationStore {
                 text:
                   'J’en veux pas ! J’en veux pas ! Aujourd’hui il n’y a que des problèmes ! Donc plus ils dégagent, mieux c’est.',
                 talkerID: 1,
+                timecodes: [0, 5],
               },
               {
                 text:
-                  'Les SDF, tu sais, on nous chasse. C’est pas genre, juste, “ouais tu sais, on veut t’aider ou pas t’aider”. On nous chasse, on ne chasse pas les êtres humains, on chasse que les animaux, ça veut dire qu’ils nous prennent pour des animaux. Les gens s’en rendent pas compte mais dans la rue tu meurs !  Il y a plus d’une personne qui meurt dans la rue tous les jours en France !',
+                  'Les SDF, tu sais, on nous chasse. C’est pas genre, juste, “ouais tu sais, on veut t’aider ou pas t’aider”. On nous chasse, on ne chasse pas les êtres humains, on chasse que les animaux, ça veut dire qu’ils nous prennent pour des animaux. Les gens s’en rendent pas compte mais dans la rue tu meurs ! Il y a plus d’une personne qui meurt dans la rue tous les jours en France !',
                 talkerID: 2,
+                timecodes: [5.25, 30],
               },
             ],
           },
@@ -141,18 +155,21 @@ class InstallationStore {
             textContent: [
               {
                 text:
-                  'Imaginez, vous ne trouvez pas une place pendant la nuit et vous êtes obligé de traîner là pendant la nuit.',
+                  'Imaginez, vous ne trouvez pas une place pendant la nuit et vous êtes obligé de traîner ici pendant la nuit.',
                 talkerID: 1,
+                timecodes: [0, 10.5],
               },
               {
                 text:
-                  'Quelques maires nous on déjà dit “je veux un banc le moins confortable possible” justement pour éviter les problèmes de SDF ou de gens qui pourrait y passer un peu plus de temps',
+                  'Quelques maires nous ont déjà dit “je veux un banc le moins confortable possible” justement pour éviter les problèmes de SDF ou de gens qui pourraient y passer un peu plus de temps',
                 talkerID: 2,
+                timecodes: [10.75, 19.5],
               },
               {
                 text:
                   'Avant il y avait une certaine… comment on dit… une tolérance, exactement, une certaine tolérance, mais aujourd’hui je ne sais pas où c’est passé mais il n’y en a plus. C’est pas la joie, c’est pas la joie.',
                 talkerID: 1,
+                timecodes: [19.75, 39],
               },
             ],
           },
@@ -226,7 +243,7 @@ class InstallationStore {
   @action public addUnlockedInstallation = (
     installationID: ApiInstallation['_id']
   ) => {
-    this.unlockedInstallations.push(installationID!)
+    this.unlockedInstallations.push(installationID)
 
     if (!this.isInstallationInLocalStorage(installationID)) {
       localStorage.setItem(
@@ -243,7 +260,9 @@ class InstallationStore {
 
     if (storageUnlockedInstallations) {
       JSON.parse(storageUnlockedInstallations).forEach((id: string) => {
-        this.addUnlockedInstallation(id)
+        if (!this.isInstallationUnlocked(id)) {
+          this.addUnlockedInstallation(id)
+        }
       })
     }
   }
@@ -271,9 +290,6 @@ class InstallationStore {
       JSON.parse(storageUnlockedInstallations).forEach((id: string) => {
         if (id === installationID) {
           is = true
-          return
-        } else {
-          is = false
         }
       })
     }
@@ -289,9 +305,6 @@ class InstallationStore {
     this.unlockedInstallations.forEach(id => {
       if (id === installationID) {
         isUnlocked = true
-        return
-      } else {
-        isUnlocked = false
       }
     })
 

@@ -10,21 +10,31 @@ import { observer } from 'mobx-react-lite'
 import { ReactComponent as PlayIcon } from './play.svg'
 import { ReactComponent as PauseIcon } from './pause.svg'
 import './audio-player.scss'
-import { TweenMax, TimelineMax, Sine, Power2 } from 'gsap'
+import { TweenMax } from 'gsap'
 
 export enum audios {
   Audio1 = 'audio1',
-  Audio2 = 'audio2',
+  Temoignage1 = 'temoignage_01',
+  Temoignage2 = 'temoignage_02',
+  Temoignage3 = 'temoignage_03',
 }
 
-const audioPath = {
+const audioPath: { [k: string]: string } = {
   [audios.Audio1]: `${process.env.PUBLIC_URL}/assets/audio/sample1.mp3`,
-  [audios.Audio2]: 'https://dl.espressif.com/dl/audio/ff-16b-2c-44100hz.mp3',
+  [audios.Temoignage1]: `${
+    process.env.PUBLIC_URL
+  }/assets/audio/temoignage_01.mp3`,
+  [audios.Temoignage2]: `${
+    process.env.PUBLIC_URL
+  }/assets/audio/temoignage_02.mp3`,
+  [audios.Temoignage3]: `${
+    process.env.PUBLIC_URL
+  }/assets/audio/temoignage_03.mp3`,
 }
 
 type Props = {
   className?: string
-  audio: audios
+  audio: audios | string
   play: boolean
   progress: number
   onTogglePlay?: (isPlaying: boolean) => any
@@ -143,7 +153,7 @@ const AudioPlayer: FunctionComponent<Props> = ({
           cx="60"
           cy="60"
           r="54"
-          strokeWidth="4"
+          strokeWidth="3"
         />
       </svg>
 

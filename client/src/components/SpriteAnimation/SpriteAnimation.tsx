@@ -10,12 +10,14 @@ type Props = {
   className?: string
   animationID?: string
   progression?: number
+  onInstance?: (spriteSheet: any) => void
 }
 
 const SpriteAnimation: FunctionComponent<Props> = ({
   className,
   animationID = 'banc-metro',
   progression = 0,
+  onInstance,
 }) => {
   const { image, widthFrame, heightFrame, steps, fps, loop } = animations[
     animationID
@@ -25,7 +27,8 @@ const SpriteAnimation: FunctionComponent<Props> = ({
 
   useEffect(() => {
     if (spritesheetInstance.current && progression >= 0) {
-      const frame = Math.floor((steps - 1) * progression)
+      const frame = Math.ceil((steps - 1) * progression)
+      // console.log('SpriteAnimation current frame = ', frame)
       // @ts-ignore
       spritesheetInstance.current.goToAndPause(frame)
     }
@@ -33,6 +36,9 @@ const SpriteAnimation: FunctionComponent<Props> = ({
 
   const getInstance = (spritesheet: any) => {
     spritesheetInstance.current = spritesheet
+    if (onInstance) {
+      onInstance(spritesheet)
+    }
   }
 
   return (
