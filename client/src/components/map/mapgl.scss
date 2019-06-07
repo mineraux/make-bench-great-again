@@ -50,6 +50,68 @@
     display: none;
   }
 
+  .mapboxgl-ctrl-directions {
+    display: none;
+  }
+
+  .mapboxgl-ctrl-group {
+    background-color: $color-blue;
+    border: none;
+    margin: $border-gutter-width $border-gutter-width 0 0 !important;
+
+    .mapboxgl-ctrl-icon.mapboxgl-ctrl-geolocate {
+      position: relative;
+      border-radius: 0.65rem;
+      border: 0.1rem solid $color-pink;
+      background-image: none !important;
+
+      &:after {
+        content: '';
+        position: absolute;
+        left: 50%;
+        top: 50%;
+        width: 100%;
+        height: 100%;
+        transform: translateX(-50%) translateY(-50%);
+        background-size: 68%;
+        background-repeat: no-repeat;
+        background-position: center;
+        background-image: url('icon/inactif.svg') !important;
+      }
+
+      &.mapboxgl-ctrl-geolocate-background {
+        border-color: $color-green;
+        &:after {
+          background-image: url('icon/actif.svg') !important;
+        }
+      }
+
+      &.mapboxgl-ctrl-geolocate-active {
+        border-color: $color-green;
+        &:after {
+          background-image: url('icon/actif_centre.svg') !important;
+        }
+      }
+
+      &.mapboxgl-ctrl-geolocate-waiting {
+        animation: none;
+
+        &:after {
+          animation: wait 0.8s infinite ease-in-out alternate;
+
+          @keyframes wait {
+            from {
+              opacity: 1;
+            }
+            to {
+              opacity: 0.3;
+            }
+          }
+        }
+      }
+    }
+  }
+
   .mapboxgl-user-location-dot {
     background-color: $color-blue;
     border: 1px solid $color-pink;
