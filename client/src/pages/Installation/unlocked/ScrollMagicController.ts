@@ -557,6 +557,21 @@ class ScrollMagicController {
         },
         'showChallange+=0.1'
       )
+      .add('radialCircleAppeared')
+      .fromTo(
+        '.page-installation__wrapper__part--second-part__challenge__radial-circle',
+        2,
+        {
+          scale: 1,
+        },
+        {
+          scale: 1.2,
+          ease: Power2.easeInOut,
+          repeat: -1,
+          yoyo: true,
+        },
+        'animationOnLoadFinished'
+      )
 
     scenePart2Pin.on('start', () => {
       tweenShowChallenge.play()
