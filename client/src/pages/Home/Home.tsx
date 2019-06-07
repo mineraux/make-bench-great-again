@@ -42,8 +42,6 @@ const Home: FunctionComponent<Props> = ({ match }) => {
 
   useEffect(() => {
     if (isSplashscreenCompleted) {
-      setIsHeaderVisible(true)
-
       if (ref.current) {
         const containers = ref.current.querySelectorAll(
           '.page-home__containers-wrapper__container-1, .page-home__containers-wrapper__container-2'
@@ -223,6 +221,7 @@ const Home: FunctionComponent<Props> = ({ match }) => {
               label={'Commencer'}
               theme={buttonThemes.Green}
               link={config.routes.Map.path}
+              onClick={() => setIsHeaderVisible(true)}
             />
           </div>
         </div>
