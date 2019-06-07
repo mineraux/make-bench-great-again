@@ -18,7 +18,7 @@ class ScrollMagicController {
 
   constructor() {
     this.scenes = []
-    this.isDebug = true
+    this.isDebug = false
     this.scrollProgressFirstPartTestimonyPlayer =
       ScrollMagicStore.scrollProgressFirstPartTestimonyPlayer
     this.isFirstPartPlayerPlaying = ScrollMagicStore.isFirstPartPlayerPlaying
@@ -33,21 +33,6 @@ class ScrollMagicController {
         ScrollMagicStore.scrollProgressFirstPartTestimonyPlayer
 
       if (this.sceneTestimonyTextTranslate) {
-        // this.sceneTestimonyTextTranslate.progress(this.scrollProgressFirstPartTestimonyPlayer)
-        // const currentProgress = {
-        //   progress : this.sceneTestimonyTextTranslate.progress()
-        // }
-        //
-        // TweenMax.to(currentProgress, 0.5, {
-        //   progress : this.scrollProgressFirstPartTestimonyPlayer,
-        //   onUpdate: () => {
-        //     if(this.isFirstPartPlayerPlaying) {
-        //       console.log("auto scroll : ", currentProgress.progress);
-        //       this.sceneTestimonyTextTranslate.progress(currentProgress.progress)
-        //     }
-        //   }
-        // });
-
         const scroll = {
           y: window.pageYOffset,
         }
@@ -62,6 +47,7 @@ class ScrollMagicController {
           onUpdate: () => {
             if (this.isFirstPartPlayerPlaying) {
               // console.log('auto scroll : ', scroll.y)
+              // Auto scroll
               window.scrollTo(0, scroll.y)
             }
           },
@@ -266,20 +252,45 @@ class ScrollMagicController {
     tweenTestimonyTalkers.progress(0)
 
     // Testimony : text translate
-
-    const tweenTestimonyTextTranslate = new TimelineMax().fromTo(
-      '.page-installation__wrapper__part--first-part__testimony__text-content-wrapper__container__text-content',
-      1,
-      {
-        transform: `translateY(${20 * 0.75}rem)`,
-        yPercent: 0,
-      },
-      {
-        transform: `translateY(${20 * 0.25}rem)`,
-        yPercent: -100,
-        ease: Power0.easeOut,
-      }
+    const textContentEl = document.querySelector(
+      '.page-installation__wrapper__part--first-part__testimony__text-content-wrapper__container__text-content'
     )
+    const tweenTestimonyTextTranslate = new TimelineMax()
+      .fromTo(
+        textContentEl!,
+        10,
+        {
+          opacity: 0,
+        },
+        { opacity: 1, ease: Power1.easeInOut },
+        0
+      )
+      .fromTo(
+        textContentEl!,
+        100,
+        {
+          transform: `translateY(${20 * 0.7}rem)`,
+          yPercent: 0,
+        },
+        {
+          transform: `translateY(${20 * 0.3}rem)`,
+          yPercent: -100,
+          ease: Power0.easeOut,
+        },
+        0
+      )
+      .fromTo(
+        textContentEl!,
+        10,
+        {
+          opacity: 1,
+        },
+        {
+          opacity: 0,
+          ease: Power1.easeInOut,
+        },
+        90
+      )
 
     // SCENES
 
@@ -343,7 +354,6 @@ class ScrollMagicController {
     this.scenes.push(scenePart1PresentationText)
 
     scenePart1PresentationText.on('progress', (event: any) => {
-      // console.log("progress" event.progress)
       setScrollProgressFirstPart(event.progress)
     })
 
@@ -435,10 +445,10 @@ class ScrollMagicController {
     this.scenes.push(this.sceneTestimonyTextTranslate)
 
     this.sceneTestimonyTextTranslate.on('progress', (event: any) => {
-      console.log('progress', event.progress)
       tweenTestimonyTalkers.progress(event.progress)
       if (!this.isFirstPartPlayerPlaying) {
-        console.log('manual scroll ', event.progress)
+        // console.log('manual scroll ', event.progress)
+        // Manual scroll
         setScrollProgressFirstPartTestimonyPlayer(event.progress)
       }
     })

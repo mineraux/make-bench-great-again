@@ -96,7 +96,7 @@ class InstallationStore {
           geolocation: [2.40764, 48.87512],
           hashTags: ['enSuspens'],
           testimony: {
-            fileUrl: 'temoignage_03',
+            fileUrl: 'temoignage_02',
             talkers: [
               {
                 id: 1,
@@ -114,11 +114,13 @@ class InstallationStore {
                 text:
                   'J’en veux pas ! J’en veux pas ! Aujourd’hui il n’y a que des problèmes ! Donc plus ils dégagent, mieux c’est.',
                 talkerID: 1,
+                timecodes: [0, 5],
               },
               {
                 text:
-                  'Les SDF, tu sais, on nous chasse. C’est pas genre, juste, “ouais tu sais, on veut t’aider ou pas t’aider”. On nous chasse, on ne chasse pas les êtres humains, on chasse que les animaux, ça veut dire qu’ils nous prennent pour des animaux. Les gens s’en rendent pas compte mais dans la rue tu meurs !  Il y a plus d’une personne qui meurt dans la rue tous les jours en France !',
+                  'Les SDF, tu sais, on nous chasse. C’est pas genre, juste, “ouais tu sais, on veut t’aider ou pas t’aider”. On nous chasse, on ne chasse pas les êtres humains, on chasse que les animaux, ça veut dire qu’ils nous prennent pour des animaux. Les gens s’en rendent pas compte mais dans la rue tu meurs ! Il y a plus d’une personne qui meurt dans la rue tous les jours en France !',
                 talkerID: 2,
+                timecodes: [5.25, 30],
               },
             ],
           },
@@ -153,18 +155,21 @@ class InstallationStore {
             textContent: [
               {
                 text:
-                  'Imaginez, vous ne trouvez pas une place pendant la nuit et vous êtes obligé de traîner là pendant la nuit.',
+                  'Imaginez, vous ne trouvez pas une place pendant la nuit et vous êtes obligé de traîner ici pendant la nuit.',
                 talkerID: 1,
+                timecodes: [0, 10.5],
               },
               {
                 text:
-                  'Quelques maires nous on déjà dit “je veux un banc le moins confortable possible” justement pour éviter les problèmes de SDF ou de gens qui pourrait y passer un peu plus de temps',
+                  'Quelques maires nous ont déjà dit “je veux un banc le moins confortable possible” justement pour éviter les problèmes de SDF ou de gens qui pourraient y passer un peu plus de temps',
                 talkerID: 2,
+                timecodes: [10.75, 19.5],
               },
               {
                 text:
                   'Avant il y avait une certaine… comment on dit… une tolérance, exactement, une certaine tolérance, mais aujourd’hui je ne sais pas où c’est passé mais il n’y en a plus. C’est pas la joie, c’est pas la joie.',
                 talkerID: 1,
+                timecodes: [19.75, 39],
               },
             ],
           },

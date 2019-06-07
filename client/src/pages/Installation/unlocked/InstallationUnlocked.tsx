@@ -261,11 +261,12 @@ const Installation: FunctionComponent<Props> = ({ match, history }) => {
               <div className="page-installation__wrapper__part--first-part__testimony__text-content-wrapper__container">
                 <p className="page-installation__wrapper__part--first-part__testimony__text-content-wrapper__container__text-content">
                   {installation &&
-                    installation.testimony!.textContent.map(text => (
+                    installation.testimony!.textContent.map((text, index) => (
                       <span
                         className={`page-installation__wrapper__part--first-part__testimony__text-content-wrapper__container__text-content__text talker-${
                           text.talkerID
                         }`}
+                        key={`${text.talkerID}-${index}`}
                       >
                         {text.text}
                       </span>

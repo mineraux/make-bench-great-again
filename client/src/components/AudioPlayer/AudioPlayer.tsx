@@ -153,7 +153,7 @@ const AudioPlayer: FunctionComponent<Props> = ({
           cx="60"
           cy="60"
           r="54"
-          strokeWidth="4"
+          strokeWidth="3"
         />
       </svg>
 
