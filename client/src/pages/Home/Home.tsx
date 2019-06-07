@@ -180,6 +180,9 @@ const Home: FunctionComponent<Props> = ({ match }) => {
           className="page-home__containers-wrapper"
           style={{ maxHeight: windowHeight - getHeaderHeight() }}
         >
+          <h2 className="page-home__containers-wrapper__title">
+            L'envers <br /> du décor
+          </h2>
           <div
             className="page-home__containers-wrapper__container-1"
             style={{ height: windowHeight - getHeaderHeight() }}

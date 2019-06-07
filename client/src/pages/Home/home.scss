@@ -3,6 +3,17 @@
 .page-home {
   overflow: hidden;
   &__containers-wrapper {
+    &__title {
+      display: inline-block;
+      margin-top: 3.5rem;
+      width: 100%;
+      color: $color-pink;
+      font-size: 4rem;
+      text-align: center;
+      font-family: $font-infini-regular;
+      text-transform: uppercase;
+    }
+
     &__container-2 {
       &__button {
         width: max-content;
