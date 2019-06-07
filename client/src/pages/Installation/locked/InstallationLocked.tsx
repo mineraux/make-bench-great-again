@@ -14,7 +14,8 @@ import ScrollMagicStore from '../../../store/ScrollMagicStore'
 import { animationId } from '../../../components/SpriteAnimation/animations'
 import config from '../../../config/config'
 import { TweenMax, Power2 } from 'gsap'
-import { useWindowSize, getHeaderHeight } from '../../../utils/hooks'
+import { useWindowSize } from '../../../utils/hooks'
+import { getHeaderHeight } from '../../../utils'
 
 type Props = pageProps & {}
 

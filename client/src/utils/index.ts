@@ -29,3 +29,14 @@ export function debounce(callback: (...arg: any) => void, wait: number) {
     timeout = setTimeout(() => callback.apply(context, args), wait)
   }
 }
+
+export function getHeaderHeight(): any {
+  let headerHeight = 0
+  const header = document.querySelector('.app__header-container')
+
+  if (header) {
+    headerHeight = header.clientHeight
+  }
+
+  return headerHeight
+}

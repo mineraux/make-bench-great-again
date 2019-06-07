@@ -8,12 +8,9 @@ import React, {
 import { pageProps } from '../types'
 import config from '../../config/config'
 import Button, { themes as buttonThemes } from '../../components/Button/Button'
-import {
-  useScrollSpeed,
-  useWindowSize,
-  getHeaderHeight,
-  useClientRect,
-} from '../../utils/hooks'
+import { useScrollSpeed, useWindowSize, useClientRect } from '../../utils/hooks'
+import { getHeaderHeight } from '../../utils'
+
 import SplashscreenAnimation from '../../components/SplashscreenAnimation/SplashscreenAnimation'
 import { NavigationStore } from '../../store'
 import { TimelineMax, TweenMax, Power1, Power2 } from 'gsap'
