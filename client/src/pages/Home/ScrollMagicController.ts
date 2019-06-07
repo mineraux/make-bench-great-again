@@ -11,7 +11,7 @@ class ScrollMagicController {
 
   constructor() {
     this.scenes = []
-    this.isDebug = false
+    this.isDebug = true
   }
 
   public initController = () => {
@@ -38,9 +38,12 @@ class ScrollMagicController {
         1,
         {
           opacity: 0,
+          filter: 'blur(4px)',
         },
         {
           opacity: 1,
+          filter: 'blur(0)',
+          autoRound: false,
           ease: Power1.easeInOut,
         }
       )
@@ -65,7 +68,7 @@ class ScrollMagicController {
     const scenePart2 = new ScrollMagic.Scene({
       duration: scenePart2Duration,
       triggerHook: 0,
-      offset: scenePart1.duration() - 100,
+      offset: scenePart1.duration() + scenePart1.offset() - 300,
     })
       .setTween(tweenPart2)
       .addTo(controller)
@@ -77,7 +80,11 @@ class ScrollMagicController {
     this.scenes.push(scenePart2)
     // Scene page pin
     const scenePageDuration =
-      scenePart1.duration() + scenePart2.duration() + scenePart2.offset()
+      scenePart1.duration() +
+      scenePart1.offset() +
+      scenePart2.duration() +
+      scenePart2.offset()
+
     const scenePage = new ScrollMagic.Scene({
       duration: scenePageDuration,
       triggerHook: 0,
@@ -86,7 +93,7 @@ class ScrollMagicController {
       .addTo(controller)
 
     if (this.isDebug) {
-      scenePage.addIndicators({ name: 'scenePart1Pin' })
+      scenePage.addIndicators({ name: 'scenePagePin' })
     }
     this.scenes.push(scenePage)
   }

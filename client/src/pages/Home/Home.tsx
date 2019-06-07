@@ -52,25 +52,40 @@ const Home: FunctionComponent<Props> = ({ match }) => {
           },
         })
 
-        tl.to(
-          containers,
+        // tl.to(
+        //   containers,
+        //   1.5,
+        //   {
+        // filter: 'blur(0)',
+        // autoRound: false,
+        // ease: Power2.easeOut,
+        //   },
+        //   0
+        // ).to(
+        //   [
+        //     '.page-home__containers-wrapper__title',
+        //     '.page-home__containers-wrapper__container-1',
+        //   ],
+        //   1,
+        //   {
+        //     opacity: 1,
+        //   },
+        //   0
+        // )
+
+        tl.fromTo(
+          '.page-home__containers-wrapper',
           1.5,
           {
-            filter: 'blur(0rem)',
-            autoRound: false,
-            ease: Power2.easeOut,
+            filter: 'blur(4px)',
+            opacity: 0,
           },
-          0
-        ).to(
-          [
-            '.page-home__containers-wrapper__title',
-            '.page-home__containers-wrapper__container-1',
-          ],
-          1,
           {
+            filter: 'blur(0)',
             opacity: 1,
-          },
-          0
+            autoRound: false,
+            ease: Power1.easeOut,
+          }
         )
       }
       // if (ref.current) {
