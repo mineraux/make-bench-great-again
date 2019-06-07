@@ -5,7 +5,8 @@
   &__containers-wrapper {
     &__title {
       display: inline-block;
-      margin-top: 3.5rem;
+      margin-top: $header-height;
+      padding-top: 4rem;
       width: 100%;
       color: $color-pink;
       font-size: 4rem;
@@ -15,6 +16,7 @@
     }
 
     &__container-2 {
+      pointer-events: none;
       &__button {
         width: max-content;
         margin: 4rem auto 0 auto;
@@ -23,6 +25,9 @@
 
     &__container-1,
     &__container-2 {
+      position: absolute;
+      top: 0;
+      left: 0;
       text-align: center;
       width: 100%;
       opacity: 0;
