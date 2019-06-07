@@ -28,7 +28,7 @@ const SpriteAnimation: FunctionComponent<Props> = ({
   useEffect(() => {
     if (spritesheetInstance.current && progression >= 0) {
       const frame = Math.ceil((steps - 1) * progression)
-      console.log('SpriteAnimation current frame = ', frame)
+      // console.log('SpriteAnimation current frame = ', frame)
       // @ts-ignore
       spritesheetInstance.current.goToAndPause(frame)
     }

@@ -79,7 +79,7 @@ class ScrollMagicController {
       '.page-installation__wrapper__part--first-part__presentation__installation-sketch',
       1,
       {
-        scale: 1.7,
+        scale: 1.4,
         yPercent: 30,
       },
       {
@@ -473,6 +473,7 @@ class ScrollMagicController {
      */
 
     // TWEENS
+    // TODO : refacto to use store theme
     const tweenMapButtonColor = new TimelineMax()
       .to(
         '.map-button',
@@ -560,19 +561,6 @@ class ScrollMagicController {
     scenePart2Pin.on('start', () => {
       tweenShowChallenge.play()
     })
-  }
-
-  updateTestimonyPlayerProgress = (progress: number) => {
-    if (this.sceneTestimonyTextTranslate) {
-      // const currentProgress = {progress : this.sceneTestimonyTextTranslate.progress()}
-      // TweenMax.to(currentProgress, 0.5, {
-      //   progress,
-      //   onUpdate: () => {
-      //     this.sceneTestimonyTextTranslate.progress(currentProgress.progress)
-      //   }
-      // })
-      // this.sceneTestimonyTextTranslate.progress(progress);
-    }
   }
 
   public destroyScrollMagicScenes = () => {
