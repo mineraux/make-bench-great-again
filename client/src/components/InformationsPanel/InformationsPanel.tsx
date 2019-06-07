@@ -10,6 +10,7 @@ import { Coords } from '../../@types'
 import { featureCoords } from '../../utils/map'
 import GeoLocationController from '../map/GeoLocationController'
 import { MapStore, InstallationStore } from '../../store'
+import Truncate from 'react-truncate'
 
 interface Props {
   marker: Feature
@@ -114,9 +115,11 @@ const InformationsPanel: FunctionComponent<Props> = ({
         <span className="informations-panel__informations--installation__installation-name">
           {installationTargetName}
         </span>
-        <span className="informations-panel__informations--installation__installation-description">
-          {installationTargetDescription}
-        </span>
+        <p className="informations-panel__informations--installation__installation-description">
+          <Truncate lines={3} ellipsis="...">
+            {installationTargetDescription}
+          </Truncate>
+        </p>
       </div>
 
       {marker && marker.properties && (
