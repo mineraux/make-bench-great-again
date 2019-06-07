@@ -83,6 +83,7 @@ const Installation: FunctionComponent<Props> = ({ match, history }) => {
         return typeof value === 'string' || value instanceof String
       }
 
+      // TODO: don't work on IOS
       const isTouchOnPlayer = e.path.find((el: HTMLElement) => {
         return (
           isString(el.className) &&

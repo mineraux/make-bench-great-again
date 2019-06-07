@@ -154,18 +154,45 @@ class ScrollMagicController {
 
     // Presentation : text content
 
-    const tweenPresentationText = new TimelineMax().fromTo(
-      '.page-installation__wrapper__part--first-part__presentation__text-content-wrapper__container__text-content',
-      0.5,
-      {
-        transform: 'translateY(20rem)',
-        yPercent: 0,
-      },
-      {
-        transform: 'translateY(0)',
-        yPercent: -100,
-      }
+    const presentationTextContentEl = document.querySelector(
+      '.page-installation__wrapper__part--first-part__presentation__text-content-wrapper__container__text-content'
     )
+    const tweenPresentationText = new TimelineMax()
+      .to(
+        presentationTextContentEl!,
+        10,
+        {
+          opacity: 1,
+          filter: 'blur(0)',
+          autoRound: false,
+          ease: Power1.easeInOut,
+        },
+        0
+      )
+      .fromTo(
+        presentationTextContentEl!,
+        100,
+        {
+          transform: 'translateY(10rem)',
+          yPercent: 0,
+        },
+        {
+          transform: 'translateY(10rem)',
+          yPercent: -100,
+        },
+        0
+      )
+      .to(
+        presentationTextContentEl!,
+        10,
+        {
+          opacity: 0,
+          filter: 'blur(4px)',
+          autoRound: false,
+          ease: Power1.easeInOut,
+        },
+        90
+      )
 
     // Presentation : fade out
 

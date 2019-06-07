@@ -30,7 +30,7 @@
 
           &__text-content-wrapper {
             width: 100%;
-            padding: 0.1rem 0;
+            padding: 0;
 
             &__mask {
               position: absolute;
@@ -53,7 +53,7 @@
 
             &__container {
               position: relative;
-              height: 20rem;
+              height: 25rem;
               overflow: hidden;
 
               &__text-content {
@@ -64,8 +64,8 @@
                 margin: auto;
                 font-family: $font-infini-regular;
                 color: $color-pink;
-                font-size: 1.5rem;
-                line-height: 2.1rem;
+                font-size: 1.6rem;
+                line-height: 2.2rem;
               }
             }
           }
@@ -110,7 +110,7 @@
             opacity: 0;
             transform: scale(1);
             position: absolute;
-            top: 14%;
+            top: 12%;
           }
 
           &__description {
@@ -124,8 +124,11 @@
             &__text {
               font-family: $font-infini-regular;
               color: $color-pink;
-              font-size: 1.5rem;
-              line-height: 1.8rem;
+              //font-size: 1.5rem;
+              //line-height: 1.8rem;
+              font-size: 1.6rem;
+              line-height: 2.2rem;
+
               max-width: $content-width;
               text-align: center;
               margin-bottom: 1.5rem;
@@ -147,6 +150,14 @@
             top: 60%;
             transform: translateX(-50%);
             z-index: -1;
+
+            &__container {
+              &__text-content {
+                opacity: 0;
+                filter: blur(4px);
+                will-change: filter;
+              }
+            }
           }
         }
 
