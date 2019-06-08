@@ -33,6 +33,7 @@ const Home: FunctionComponent<Props> = ({ match }) => {
   let yDown: number
 
   useEffect(() => {
+    setIsHeaderVisible(false)
     return () => {
       ScrollMagicController.destroyScrollMagicScenes()
     }
@@ -131,20 +132,20 @@ const Home: FunctionComponent<Props> = ({ match }) => {
         // )
 
         if (ref && ref.current) {
-          TweenMax.to('.page-home__containers-wrapper', animationDuration / 2, {
-            autoRound: false,
-            filter: `blur(1px)`,
-            onComplete: () => {
-              TweenMax.to(
-                '.page-home__containers-wrapper',
-                animationDuration / 2,
-                {
-                  autoRound: false,
-                  filter: `blur(0)`,
-                }
-              )
-            },
-          })
+          // TweenMax.to('.page-home__containers-wrapper', animationDuration / 2, {
+          //   autoRound: false,
+          //   filter: `blur(1px)`,
+          //   onComplete: () => {
+          //     TweenMax.to(
+          //       '.page-home__containers-wrapper',
+          //       animationDuration / 2,
+          //       {
+          //         autoRound: false,
+          //         filter: `blur(0)`,
+          //       }
+          //     )
+          //   },
+          // })
         }
       }
 
@@ -176,18 +177,20 @@ const Home: FunctionComponent<Props> = ({ match }) => {
       <SplashscreenAnimation onComplete={handleSplashscreenComplete} />
 
       {isSplashscreenCompleted && (
-        <div className="page-home__containers-wrapper">
+        <div
+          className="page-home__containers-wrapper"
+          style={{ height: windowHeight }}
+        >
           <h2 className="page-home__containers-wrapper__title">
-            L'envers <br /> du décor
+            L'envers
+            <br />
+            du décor
           </h2>
-          <div
-            className="page-home__containers-wrapper__container-1"
-            style={{ height: windowHeight }}
-          >
+          <div className="page-home__containers-wrapper__container-1">
             <p className="page-home__containers-wrapper__container-1__title">
-              UNE EXPERIENCE
+              Une expérience
               <br />
-              INTERACTIVE
+              interactive
             </p>
             <p className="page-home__containers-wrapper__container-1__text">
               L’envers du décors vous propose un parcours conçu sous forme de
