@@ -279,14 +279,16 @@ const Installation: FunctionComponent<Props> = ({ match, history }) => {
         </div>
         <div className="page-installation__wrapper__part--second-part">
           <div className="page-installation__wrapper__part--second-part__challenge">
-            <div className="page-installation__wrapper__part--second-part__challenge__radial-circle" />
             {installation && (
-              <p
-                className="page-installation__wrapper__part--second-part__challenge__title"
-                dangerouslySetInnerHTML={{
-                  __html: `${installation.challengeText}`,
-                }}
-              />
+              <div className="page-installation__wrapper__part--second-part__challenge__wrapper-title">
+                <div className="page-installation__wrapper__part--second-part__challenge__wrapper-title__radial-circle" />
+                <p
+                  className="page-installation__wrapper__part--second-part__challenge__wrapper-title__title"
+                  dangerouslySetInnerHTML={{
+                    __html: `${installation.challengeText}`,
+                  }}
+                />
+              </div>
             )}
             <div className="page-installation__wrapper__part--second-part__challenge__text-content">
               <p>

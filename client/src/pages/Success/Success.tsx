@@ -13,10 +13,13 @@ const Success: FunctionComponent<Props> = ({ match, history }) => {
     <div className="page-success">
       <Background className={'page-success__svg'} />
       <div className="page-success__presentation">
-        <div className="page-success__presentation__radial-circle" />
-        <p className="page-success__presentation__title">
-          {MapStore.targetInstallation.name}
-        </p>
+        <div className="page-success__presentation__wrapper-title">
+          <div className="page-success__presentation__wrapper-title__radial-circle" />
+          <p className="page-success__presentation__wrapper-title__title">
+            {MapStore.targetInstallation.name}
+          </p>
+        </div>
+
         <p className="page-success__presentation__text-content">
           Vous êtes arrivé devant {MapStore.targetInstallation.name}. Son
           contenu est maintenant débloqué.

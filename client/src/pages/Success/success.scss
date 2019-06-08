@@ -26,30 +26,36 @@
     align-items: center;
     height: 100%;
 
-    &__radial-circle {
-      position: absolute;
-      top: 0;
-      left: 0;
-      right: 0;
-      bottom: 0;
-      background: radial-gradient(
-        circle closest-side,
-        rgba(239, 202, 202, 1) 0%,
-        rgba(239, 202, 202, 1) 40%,
-        rgba(239, 202, 202, 0)
-      );
-      background-repeat: no-repeat;
-      background-position-y: -10rem;
-    }
+    &__wrapper-title {
+      position: relative;
 
-    &__title {
-      display: inline-block;
-      margin: 8.5rem 0;
-      width: 100%;
-      font-size: 4rem;
-      text-align: center;
-      font-family: $font-infini-regular;
-      text-transform: uppercase;
+      &__radial-circle {
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: radial-gradient(
+          circle closest-side,
+          rgba(239, 202, 202, 1) 0%,
+          rgba(239, 202, 202, 1) 40%,
+          rgba(239, 202, 202, 0)
+        );
+        background-repeat: no-repeat;
+        z-index: 0;
+      }
+
+      &__title {
+        position: relative;
+        display: inline-block;
+        margin: 8.5rem 0;
+        width: 100%;
+        font-size: 4rem;
+        text-align: center;
+        font-family: $font-infini-regular;
+        text-transform: uppercase;
+        z-index: 1;
+      }
     }
 
     &__text-content {
