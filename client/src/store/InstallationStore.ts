@@ -32,9 +32,9 @@ class InstallationStore {
           lockedName: 'Lisbonne',
           caption: 'La Vague, acier et fonte, H. : 75cm L. : 180cm, 2015',
           description:
-            'Connu sous le pseudonyme d’Area, ce street artiste originaire de Toulouse nous offre une sculpture longiligne dont la forme ondulatoire aspire à la rêverie. Depuis 2015 des reproductions déferlent aux abords des parcs venant ponctuer les promenades estivales des parisiens. Au travers de cette expérience, l’espace public est questionné, quelle est la place de l’Homme face à ces créations ?',
+            'Connu sous le pseudonyme d’Area, ce street artiste originaire de Toulouse nous offre une sculpture longiligne dont la forme ondulatoire aspire à la rêverie. Depuis 2015 des reproductions déferlent aux abords des parcs venant ponctuer les promenades estivales des Parisiens. Au travers de cette expérience, l’espace public est questionné, quelle est la place de l’Homme face à ces créations ?',
           lockedDescription:
-            'De son vrai nom, Lisbonne, ce banc anti-sdf à dossier est devenu la nouvelle référence en matière “de banc de repos”. Après avoir révolutionné le banc public en métal il est aujourd’hui un classique du design anti-sdf. Mobilier dissuasif par excellence car en plus d’être conçue pour repousser les sans abris, sa formes le rends impraticable auprès des skateurs et street artistes.',
+            'De son vrai nom, Lisbonne, ce banc anti-sdf à dossier est devenu la nouvelle référence en matière “de banc de repos”. Après avoir révolutionné le banc public en métal il est aujourd’hui un classique du design anti-sdf. Mobilier dissuasif par excellence car en plus d’être conçu pour repousser les sans-abris, sa forme le rend impraticable auprès des skateurs et street artistes.',
           geolocation: [2.39636, 48.87539],
           hashTags: ['lisbonne'],
           testimony: {
