@@ -14,6 +14,7 @@ import InstallationStore from '../../store/InstallationStore'
 import InstallationThumbnail from '../../components/InstallationThumbnail/InstallationThumbnail'
 // import TweenMax = gsap.TweenMax;
 import { TimelineMax, Power1, Power2 } from 'gsap'
+import { observer } from 'mobx-react-lite'
 
 type Props = pageProps
 
@@ -85,4 +86,4 @@ const Programmation: FunctionComponent<Props> = ({ match }) => {
   )
 }
 
-export default Programmation
+export default observer(Programmation)

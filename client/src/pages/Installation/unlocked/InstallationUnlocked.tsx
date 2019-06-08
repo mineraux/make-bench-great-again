@@ -280,13 +280,14 @@ const Installation: FunctionComponent<Props> = ({ match, history }) => {
         <div className="page-installation__wrapper__part--second-part">
           <div className="page-installation__wrapper__part--second-part__challenge">
             <div className="page-installation__wrapper__part--second-part__challenge__radial-circle" />
-            <p
-              className="page-installation__wrapper__part--second-part__challenge__title"
-              dangerouslySetInnerHTML={{
-                __html:
-                  "Es-tu assez souple pour réussir à t'allonger sur cette installation&nbsp;?",
-              }}
-            />
+            {installation && (
+              <p
+                className="page-installation__wrapper__part--second-part__challenge__title"
+                dangerouslySetInnerHTML={{
+                  __html: `${installation.challengeText}`,
+                }}
+              />
+            )}
             <div className="page-installation__wrapper__part--second-part__challenge__text-content">
               <p>
                 Pour témoigner de ton indignation et nous aider à retirer ce

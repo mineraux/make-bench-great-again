@@ -81,6 +81,8 @@ class InstallationStore {
               },
             ],
           },
+          challengeText:
+            'Es-tu assez agile pour réussir à t’allonger sur cette installation&nbsp;?',
         },
         {
           _id: '2',
@@ -124,6 +126,8 @@ class InstallationStore {
               },
             ],
           },
+          challengeText:
+            'As-tu assez d’équilibre pour rester allongé sur l’installation&nbsp;?',
         },
         {
           _id: '3',
@@ -173,6 +177,8 @@ class InstallationStore {
               },
             ],
           },
+          challengeText:
+            'Ta souplesse te permet-elle de t’allonger sur cette installation&nbsp;?',
         },
         {
           _id: '4',
