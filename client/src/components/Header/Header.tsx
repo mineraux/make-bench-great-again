@@ -49,11 +49,12 @@ const Header: FunctionComponent<Props> = ({
 
   const ref = useRef<HTMLHeadElement>(null)
   useEffect(() => {
-    if (ref.current && isHeaderVisible) {
+    if (ref.current) {
       const tl = new TimelineMax()
-
       tl.to(ref.current, 1, {
-        transform: 'translateY(0)',
+        transform: isHeaderVisible ? 'translateY(0)' : 'translateY(-105%)',
+        filter: isHeaderVisible ? 'blur(0)' : 'blur(4px)',
+        autoRound: false,
         ease: Power1.easeInOut,
       })
     }

@@ -4,7 +4,7 @@
   overflow: hidden;
   &__containers-wrapper {
     opacity: 0;
-    height: 100% !important;
+    width: 100%;
 
     &__title {
       position: absolute;
@@ -16,16 +16,6 @@
       text-align: center;
       font-family: $font-infini-regular;
       text-transform: uppercase;
-    }
-
-    &__container-2 {
-      pointer-events: none;
-      opacity: 0;
-
-      &__button {
-        width: max-content;
-        margin: 4rem auto 0 auto;
-      }
     }
 
     &__container-1,
@@ -40,6 +30,7 @@
       display: flex;
       flex-direction: column;
       justify-content: center;
+      height: 100%;
 
       &__title {
         font-size: 2.1rem;
@@ -48,6 +39,7 @@
         text-align: center;
         line-height: 2.5rem;
         margin-bottom: 3.5rem;
+        text-transform: uppercase;
       }
 
       &__text {
@@ -58,6 +50,16 @@
         line-height: 2.2rem;
         width: 23.8rem;
         margin: 0 auto 1.5rem auto;
+      }
+    }
+
+    &__container-2 {
+      pointer-events: none;
+      opacity: 0;
+
+      &__button {
+        width: max-content;
+        margin: 4rem auto 0 auto;
       }
     }
   }
