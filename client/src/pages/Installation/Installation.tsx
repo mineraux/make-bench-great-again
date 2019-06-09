@@ -3,12 +3,12 @@ import { pageProps } from '../types'
 import { InstallationStore, MapStore } from '../../store'
 import './unlocked/installation-unlocked.scss'
 import { observer } from 'mobx-react-lite'
-import InstallationUnlocked from './unlocked/InstallationUnlocked'
-import InstallationLocked from './locked/InstallationLocked'
+import InstallationUnlockedTransition from './unlocked/Transition'
+import InstallationLockedTransition from './locked/Transition'
 
-type Props = pageProps & {}
+type Props = pageProps & { show: boolean }
 
-const Installation: FunctionComponent<Props> = ({ match, history }) => {
+const Installation: FunctionComponent<Props> = ({ show, match, history }) => {
   const [installationIdentifier, setInstallationIdentifier] = useState()
 
   const {
@@ -38,9 +38,17 @@ const Installation: FunctionComponent<Props> = ({ match, history }) => {
   return (
     <>
       {isInstallationUnlocked(installationIdentifier) ? (
-        <InstallationUnlocked match={match} history={history} />
+        <InstallationUnlockedTransition
+          show={show}
+          match={match}
+          history={history}
+        />
       ) : (
-        <InstallationLocked match={match} history={history} />
+        <InstallationLockedTransition
+          show={show}
+          match={match}
+          history={history}
+        />
       )}
     </>
   )

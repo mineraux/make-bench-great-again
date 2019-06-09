@@ -1,6 +1,6 @@
 import React, { FunctionComponent } from 'react'
 import { Transition } from 'react-transition-group'
-import { TimelineMax, TweenMax } from 'gsap'
+import { TimelineMax, TweenMax, Power2, Power3 } from 'gsap'
 import { pageTransitionProps } from '../types'
 import Installation from './Installation'
 import { observer } from 'mobx-react-lite'
@@ -64,8 +64,9 @@ const TransitionComponent: FunctionComponent<Props> = ({
       onEnter={onEnter}
       onExited={onExited}
       addEndListener={addEndListener}
+      appear={true}
     >
-      <Installation match={match} history={history} />
+      {/*<Installation match={match} history={history} />*/}
     </Transition>
   )
 }
