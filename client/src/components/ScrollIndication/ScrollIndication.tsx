@@ -13,6 +13,7 @@ type Props = {
   title?: string
   theme?: themes
   isVisible?: boolean
+  isTextVisible?: boolean
 }
 
 const ScrollIndication: FunctionComponent<Props> = ({
@@ -20,6 +21,7 @@ const ScrollIndication: FunctionComponent<Props> = ({
   title = 'Scroll',
   theme = themes.Green,
   isVisible = true,
+  isTextVisible = true,
 }) => {
   return (
     <div
@@ -27,7 +29,13 @@ const ScrollIndication: FunctionComponent<Props> = ({
         visible: isVisible,
       })}
     >
-      <p className={'scroll-indication__title'}>{title}</p>
+      <p
+        className={ClassNames('scroll-indication__title', {
+          visible: isTextVisible,
+        })}
+      >
+        {title}
+      </p>
       <Arrow className={'scroll-indication__icon'} />
     </div>
   )

@@ -2,6 +2,7 @@ import { action, observable } from 'mobx'
 
 import { themes as headerThemes } from '../components/Header/Header'
 import { themes as mapButtonThemes } from '../components/MapButton/MapButton'
+import { themes as scrolIndicationThemes } from '../components/ScrollIndication/ScrollIndication'
 
 type previousPagePathType = string | null
 type currentPagePathType = string | null
@@ -13,17 +14,25 @@ type isMapButtonMenuType = boolean
 type scrollProgressionType = number
 type isHeaderVisibleType = boolean
 type headerTitleType = string
+type isScrollIndicationVisible = boolean
+type isScrollIndicationTextVisible = boolean
 
 class NavigationStore {
+  // page path
+
   @observable previousPagePath: previousPagePathType = null
 
   @observable currentPagePath: currentPagePathType = null
 
   @observable nextPagePath: nextPagePathType = null
 
+  // menu
+
   @observable isMenuOpen: isMenuOpenType = false
 
   @observable isDevNavOpen: isMenuOpenType = false
+
+  // map button
 
   @observable isMapButtonVisible: isMapButtonVisibleType = false
 
@@ -31,13 +40,29 @@ class NavigationStore {
 
   @observable mapButtonTheme: mapButtonThemes = mapButtonThemes.Pink
 
+  // scroll progression
+
   @observable scrollProgression: scrollProgressionType = 0
+
+  // header
 
   @observable isHeaderVisible: isHeaderVisibleType = false
 
   @observable headerTitle: headerTitleType = "L'envers du décor"
 
   @observable headerTheme: headerThemes = headerThemes.Blue
+
+  // scroll indication
+
+  @observable isScrollIndicationVisible: isScrollIndicationVisible = false
+
+  @observable
+  isScrollIndicationTextVisible: isScrollIndicationTextVisible = true
+
+  @observable scrollIndicationTheme: scrolIndicationThemes =
+    scrolIndicationThemes.Green
+
+  // ACTIONS
 
   @action setPreviousPagePath = (value: previousPagePathType): void => {
     this.previousPagePath = value
@@ -86,6 +111,22 @@ class NavigationStore {
 
   @action setHeaderThemes = (value: headerThemes): void => {
     this.headerTheme = value
+  }
+
+  @action setIsScrollIndicationVisible = (
+    value: isScrollIndicationVisible
+  ): void => {
+    this.isScrollIndicationVisible = value
+  }
+
+  @action setIsScrollIndicationTextVisible = (
+    value: isScrollIndicationTextVisible
+  ): void => {
+    this.isScrollIndicationTextVisible = value
+  }
+
+  @action setScrollIndicationTheme = (value: scrolIndicationThemes): void => {
+    this.scrollIndicationTheme = value
   }
 }
 
