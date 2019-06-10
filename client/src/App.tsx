@@ -13,6 +13,9 @@ import Nav from './components/Nav/Nav'
 import './assets/styles/app.scss'
 import MapButton from './components/MapButton/MapButton'
 import { useWindowSize } from './utils/hooks'
+import ScrollIndication, {
+  themes as scrollIndicationThemes,
+} from './components/ScrollIndication/ScrollIndication'
 
 const App: FunctionComponent = () => {
   const {
@@ -21,9 +24,11 @@ const App: FunctionComponent = () => {
     setNextPagePath,
     headerTitle,
     headerTheme,
-    isMenuOpen,
     setIsHeaderVisible,
     isDevNavOpen,
+    scrollIndicationTheme,
+    isScrollIndicationVisible,
+    isScrollIndicationTextVisible,
   } = NavigationStore
 
   const windowHeight = useWindowSize().height
@@ -81,6 +86,12 @@ const App: FunctionComponent = () => {
         </div>
         <Nav isOpen={isDevNavOpen} links={Object.values(config.routes)} />
         {Object.values(config.routes).map(route => renderRoute(route))}
+        <ScrollIndication
+          className={'app__scroll-indication'}
+          theme={scrollIndicationTheme}
+          isVisible={isScrollIndicationVisible}
+          isTextVisible={isScrollIndicationTextVisible}
+        />
         <MapButton />
       </BrowserRouter>
     </div>

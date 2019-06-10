@@ -2,11 +2,13 @@ import React, { FunctionComponent, useEffect, useState, useRef } from 'react'
 import { pageProps } from '../types'
 import config from '../../config/config'
 import Button, { themes as buttonThemes } from '../../components/Button/Button'
+import { themes as scrollIndicationThemes } from '../../components/ScrollIndication/ScrollIndication'
 import { useWindowSize } from '../../utils/hooks'
 import ScrollMagicController from './ScrollMagicController'
 import SplashscreenAnimation from '../../components/SplashscreenAnimation/SplashscreenAnimation'
 import { NavigationStore } from '../../store'
 import { TimelineMax, Power1, Power2 } from 'gsap'
+
 // styles
 import './home.scss'
 
@@ -15,12 +17,20 @@ type Props = pageProps
 const Home: FunctionComponent<Props> = ({ match }) => {
   const [isSplashscreenCompleted, setIsSplashscreenCompleted] = useState(false)
   const ref = useRef<HTMLDivElement>(null)
-  const { setIsHeaderVisible } = NavigationStore
+  const {
+    setIsHeaderVisible,
+    setScrollIndicationTheme,
+    setIsScrollIndicationVisible,
+    setIsScrollIndicationTextVisible,
+  } = NavigationStore
   const windowHeight = useWindowSize().height
   const refContainer = useRef<HTMLDivElement>(null)
 
   useEffect(() => {
     setIsHeaderVisible(false)
+    setScrollIndicationTheme(scrollIndicationThemes.Blue)
+    setIsScrollIndicationVisible(false)
+    setIsScrollIndicationTextVisible(true)
     return () => {
       ScrollMagicController.destroyScrollMagicScenes()
     }
@@ -45,7 +55,9 @@ const Home: FunctionComponent<Props> = ({ match }) => {
             autoRound: false,
             ease: Power1.easeOut,
           }
-        )
+        ).add(() => {
+          NavigationStore.setIsScrollIndicationVisible(true)
+        }, '-=0.5')
       }
     }
   }, [isSplashscreenCompleted])

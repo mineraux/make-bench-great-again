@@ -1,5 +1,6 @@
 import { TimelineMax, TweenMax, Power0, Power1, Power2 } from 'gsap'
 import { autorun } from 'mobx'
+import { NavigationStore } from '../../store'
 // @ts-ignore
 import ScrollMagic from 'scrollmagic'
 import 'animation.gsap'
@@ -87,6 +88,17 @@ class ScrollMagicController {
       })
     }
     this.scenes.push(scenePart2)
+
+    scenePart2.on('start', (event: any) => {
+      console.log(event)
+      if (event.scrollDirection === 'FORWARD') {
+        NavigationStore.setIsScrollIndicationVisible(false)
+      }
+      if (event.scrollDirection === 'REVERSE') {
+        NavigationStore.setIsScrollIndicationVisible(true)
+      }
+    })
+
     // Scene page pin
     const scenePageDuration = scenePart2.duration() + scenePart2.offset()
 

@@ -19,12 +19,18 @@ class ScrollMagicController {
 
   public initController = () => {
     const { setScrollProgressFirstPart } = ScrollMagicStore
-    const { setScrollProgression } = NavigationStore
+    const {
+      setScrollProgression,
+      setIsScrollIndicationVisible,
+      setIsScrollIndicationTextVisible,
+    } = NavigationStore
 
     const controller = new ScrollMagic.Controller()
 
     // TWEENS
+
     // Presentation : sketch
+
     const tweenInstallationSketch = new TimelineMax().fromTo(
       '.page-installation--locked__wrapper__part--first-part__presentation__installation-sketch',
       1,
@@ -40,6 +46,7 @@ class ScrollMagicController {
     )
 
     // Presentation : description + title
+
     const tweenPresentationDescription = new TimelineMax().fromTo(
       '.page-installation--locked__wrapper__part--first-part__presentation__description',
       1,
@@ -56,6 +63,7 @@ class ScrollMagicController {
     )
 
     // Presentation : text content
+
     const tweenPresentationText = new TimelineMax().fromTo(
       '.page-installation--locked__wrapper__part--first-part__presentation__text-content-wrapper__container__text-content',
       0.5,
@@ -70,6 +78,9 @@ class ScrollMagicController {
     )
 
     // SCENES
+
+    // Presentation : sketch
+
     const scenePart1InstallationSketchDuration = 600
     const scenePart1InstallationSketchOffset = 0
     const scenePart1InstallationSketch = new ScrollMagic.Scene({
@@ -87,6 +98,7 @@ class ScrollMagicController {
     this.scenes.push(scenePart1InstallationSketch)
 
     // Presentation : description + title
+
     const scenePart1PresentationDescriptionDuration = 800
     const scenePart1PresentationDescriptionOffset =
       scenePart1InstallationSketch.scrollOffset() +
@@ -106,6 +118,15 @@ class ScrollMagicController {
     }
     this.scenes.push(scenePart1PresentationDescription)
 
+    scenePart1PresentationDescription.on('start', (event: any) => {
+      if (event.scrollDirection === 'FORWARD') {
+        NavigationStore.setIsScrollIndicationTextVisible(false)
+      }
+      if (event.scrollDirection === 'REVERSE') {
+        NavigationStore.setIsScrollIndicationTextVisible(true)
+      }
+    })
+
     // Presentation : text
     const scenePart1PresentationTextDuration = 500
     const scenePart1PresentationTextOffset =
@@ -124,7 +145,9 @@ class ScrollMagicController {
       })
     }
     this.scenes.push(scenePart1PresentationText)
+
     // Part 1 : pin
+
     const scenePart1PinDuration =
       scenePart1PresentationText.scrollOffset() +
       scenePart1PresentationText.duration()
@@ -140,7 +163,8 @@ class ScrollMagicController {
     }
     this.scenes.push(scenePart1Pin)
 
-    // SCENES
+    // scene page
+
     const scenePage = new ScrollMagic.Scene({
       duration: scenePart1PinDuration,
       triggerHook: 0,
@@ -181,8 +205,10 @@ class ScrollMagicController {
     scenePart1PresentationDescription.on('end', (event: any) => {
       if (event.scrollDirection === 'FORWARD') {
         blur.play()
+        NavigationStore.setIsScrollIndicationVisible(false)
       } else if (event.scrollDirection === 'REVERSE') {
         blur.reverse()
+        NavigationStore.setIsScrollIndicationVisible(true)
       }
     })
   }

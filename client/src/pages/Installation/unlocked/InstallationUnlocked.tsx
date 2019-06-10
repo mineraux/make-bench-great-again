@@ -8,9 +8,9 @@ import Button, {
   themes as buttonThemes,
 } from '../../../components/Button/Button'
 import { observer } from 'mobx-react-lite'
-import { NavigationStore } from '../../../store'
+import { NavigationStore, ScrollMagicStore } from '../../../store'
 import SpriteAnimation from '../../../components/SpriteAnimation/SpriteAnimation'
-import ScrollMagicStore from '../../../store/ScrollMagicStore'
+
 import TwitterGallery from '../../../components/TwitterGallery/TwitterGallery'
 import TutoTwitter from '../../../components/TutoTwitter/TutoTwitter'
 import config from '../../../config/config'
@@ -20,6 +20,7 @@ import AudioPlayer, {
 } from '../../../components/AudioPlayer/AudioPlayer'
 import { useWindowSize } from '../../../utils/hooks'
 import { getHeaderHeight } from '../../../utils'
+import { themes as scrollIndicationThemes } from '../../../components/ScrollIndication/ScrollIndication'
 
 type Props = pageProps & {}
 
@@ -29,7 +30,11 @@ const Installation: FunctionComponent<Props> = ({ match, history }) => {
   const [installation, setInstallation] = useState<ApiInstallation | null>(null)
 
   const { installationList, fetchInstallationList } = InstallationStore
-
+  const {
+    setScrollIndicationTheme,
+    setIsScrollIndicationVisible,
+    setIsScrollIndicationTextVisible,
+  } = NavigationStore
   const {
     scrollProgressFirstPart,
     scrollProgressFirstPartTestimonyPlayer,
@@ -41,6 +46,10 @@ const Installation: FunctionComponent<Props> = ({ match, history }) => {
   // mount / unmount
   useEffect(() => {
     window.scrollTo(0, 0)
+
+    setScrollIndicationTheme(scrollIndicationThemes.Green)
+    setIsScrollIndicationVisible(false)
+    setIsScrollIndicationTextVisible(true)
 
     const getInstallationInformation = async () => {
       await InstallationStore.fetchSingleInstallation(
@@ -108,6 +117,7 @@ const Installation: FunctionComponent<Props> = ({ match, history }) => {
         ref.current.removeEventListener('touchstart', onTouchStart)
       }
       window.scrollTo(0, 0)
+      setIsScrollIndicationVisible(false)
     }
   }, [])
 
@@ -129,6 +139,8 @@ const Installation: FunctionComponent<Props> = ({ match, history }) => {
 
   const handleOnTogglePlayPlayer = (isPlay: boolean) => {
     setIsFirstPartPlayerPlaying(isPlay)
+
+    setIsScrollIndicationVisible(!isPlay)
   }
 
   const handleSpriteAnimationInstance = () => {
