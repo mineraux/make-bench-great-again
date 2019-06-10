@@ -29,10 +29,26 @@ const TransitionComponent: FunctionComponent<Props> = ({
       onComplete: done,
     })
 
-    tl.to(node, 0.25, {
-      opacity: 1,
-      ease: 'Sine.easeInOut',
-    })
+    tl.to(
+      node!,
+      1,
+      {
+        opacity: 1,
+        ease: Power2.easeIn,
+      },
+      0
+    )
+      .to(
+        node!,
+        1,
+        {
+          filter: 'blur(0)',
+          autoRound: false,
+          ease: Power1.easeOut,
+        },
+        0
+      )
+
       .add(() => {
         NavigationStore.setHeaderThemes(themes.Green)
       })
@@ -67,7 +83,7 @@ const TransitionComponent: FunctionComponent<Props> = ({
           filter: 'blur(0)',
           ease: Power2.easeInOut,
         },
-        'background+=1'
+        'background+=0.5'
       )
       .fromTo(
         [
@@ -85,7 +101,7 @@ const TransitionComponent: FunctionComponent<Props> = ({
           opacity: 1,
           filter: 'blur(0)',
         },
-        'background+=1.5'
+        'background+=1'
       )
       .add('animationOnLoadFinished')
       .fromTo(
