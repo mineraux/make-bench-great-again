@@ -19,7 +19,6 @@ const TwitterDebug: FunctionComponent<Props> = ({ className, hashtags }) => {
     const tweet = `À l'occasion de la Nuit Blanche, grace à l'Envers du décor, j'ai essayé de m'installer sur des dispositifs anti-SDF...`
 
     let uri = encodeURI(`https://twitter.com/intent/tweet?text=${tweet}`)
-    uri += encodeURIComponent(` #lenversdudecor`)
     if (hashtags) {
       hashtags.forEach(hashtag => {
         uri += encodeURIComponent(` #${hashtag}`)

@@ -332,7 +332,13 @@ const Installation: FunctionComponent<Props> = ({ match, history }) => {
             theme={buttonThemes.Green}
             link={config.routes.Finish.path}
           />
-          <TwitterGallery totalNumber={8} hashtags={['fake']} isFake={true} />
+          {installation && installation.hashTags && (
+            <TwitterGallery
+              totalNumber={8}
+              hashtags={installation.hashTags}
+              isFake={false}
+            />
+          )}
         </div>
       </div>
     </div>

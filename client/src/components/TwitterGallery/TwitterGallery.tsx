@@ -113,7 +113,11 @@ const TwitterGallery: FunctionComponent<Props> = ({
     <div className={Classnames(className, 'twitter-gallery')}>
       <div className="twitter-gallery__informations">
         <TwitterLogo />
-        <p>{totalNumber} passants ont relevé la performance</p>
+        {tweets.length === 1 ? (
+          <p>{tweets.length} passant a relevé la performance</p>
+        ) : (
+          <p>{tweets.length} passants ont relevé la performance</p>
+        )}
       </div>
       <div className="twitter-gallery__thumbnails">
         {renderTwitterThumbnails()}
