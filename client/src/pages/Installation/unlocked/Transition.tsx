@@ -79,12 +79,12 @@ const TransitionComponent: FunctionComponent<Props> = ({
     const firstPart = node.querySelector(
       '.page-installation__wrapper__part--first-part'
     )
-    const secondPart = node.querySelector(
-      '.page-installation__wrapper__part--second-part'
+    const thirdPart = node.querySelector(
+      '.page-installation__wrapper__part--third-part'
     )
 
     tl.fromTo(
-      [firstPart, secondPart],
+      [firstPart, thirdPart],
       0.8,
       {
         filter: 'blur(0)',
@@ -96,7 +96,7 @@ const TransitionComponent: FunctionComponent<Props> = ({
       },
       0
     ).fromTo(
-      [firstPart, secondPart],
+      [firstPart, thirdPart],
       0.8,
       {
         opacity: 1,
