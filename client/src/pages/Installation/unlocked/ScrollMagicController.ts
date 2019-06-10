@@ -549,7 +549,7 @@ class ScrollMagicController {
         name: 'sceneChallenge',
       })
     }
-    this.scenes.push(this.sceneTestimonyTextTranslate)
+    this.scenes.push(sceneChallenge)
 
     sceneChallenge.on('start', (event: any) => {
       const testimony = document.querySelector(
