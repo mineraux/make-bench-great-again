@@ -6,7 +6,7 @@ import ComponentsTransition from '../pages/Components/Transition'
 import MenuTransition from '../pages/Menu/Transition'
 import AboutTransition from '../pages/About/Transition'
 import ProgrammationTransition from '../pages/Programmation/Transition'
-import InstallationTransition from '../pages/Installation/Transition'
+import Installation from '../pages/Installation/Installation'
 import FinishTransition from '../pages/Finish/Transition'
 import SuccessTransition from '../pages/Success/Transition'
 
@@ -87,7 +87,7 @@ const config: configInterface = {
     Installation: {
       path: '/installation/:installationSlug',
       name: 'Installation',
-      component: InstallationTransition,
+      component: Installation,
       inNav: false,
       isMapButtonVisible: true,
     },

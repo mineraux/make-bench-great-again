@@ -16,6 +16,7 @@ import config from '../../../config/config'
 import { TweenMax, Power2 } from 'gsap'
 import { useWindowSize } from '../../../utils/hooks'
 import { getHeaderHeight } from '../../../utils'
+import { themes as scrollIndicationThemes } from '../../../components/ScrollIndication/ScrollIndication'
 
 type Props = pageProps & {}
 
@@ -26,11 +27,20 @@ const Installation: FunctionComponent<Props> = ({ match, history }) => {
 
   const { scrollProgressFirstPart } = ScrollMagicStore
 
-  const { setIsMapButtonVisible } = NavigationStore
+  const {
+    setIsMapButtonVisible,
+    setScrollIndicationTheme,
+    setIsScrollIndicationVisible,
+    setIsScrollIndicationTextVisible,
+  } = NavigationStore
 
   // mount / unmount
   useEffect(() => {
     window.scrollTo(0, 0)
+
+    setScrollIndicationTheme(scrollIndicationThemes.Green)
+    setIsScrollIndicationVisible(false)
+    setIsScrollIndicationTextVisible(true)
 
     if (match && installation._id.length === 0) {
       getInstallationInformation()
@@ -39,6 +49,7 @@ const Installation: FunctionComponent<Props> = ({ match, history }) => {
     return () => {
       ScrollMagicController.destroyScrollMagicScenes()
       window.scrollTo(0, 0)
+      setIsScrollIndicationVisible(false)
     }
   }, [])
 

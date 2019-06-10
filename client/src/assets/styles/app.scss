@@ -11,6 +11,14 @@
     z-index: 998;
   }
 
+  &__scroll-indication {
+    z-index: 100;
+    position: fixed;
+    bottom: 1.9rem;
+    left: 50%;
+    transform: translateX(-50%);
+  }
+
   > *[class*='page']:not([class*='home']) {
     padding-top: $header-height;
   }
