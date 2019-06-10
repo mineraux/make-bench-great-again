@@ -18,7 +18,7 @@ class ScrollMagicController {
 
   constructor() {
     this.scenes = []
-    this.isDebug = false
+    this.isDebug = true
     this.scrollProgressFirstPartTestimonyPlayer =
       ScrollMagicStore.scrollProgressFirstPartTestimonyPlayer
     this.isFirstPartPlayerPlaying = ScrollMagicStore.isFirstPartPlayerPlaying
@@ -42,16 +42,15 @@ class ScrollMagicController {
           this.scrollProgressFirstPartTestimonyPlayer *
             this.sceneTestimonyTextTranslate.duration()
 
-        TweenMax.to(scroll, 0.5, {
-          y: newScroll,
-          onUpdate: () => {
-            if (this.isFirstPartPlayerPlaying) {
-              // console.log('auto scroll : ', scroll.y)
+        if (this.isFirstPartPlayerPlaying) {
+          TweenMax.to(scroll, 0.5, {
+            y: newScroll,
+            onUpdate: () => {
               // Auto scroll
               window.scrollTo(0, scroll.y)
-            }
-          },
-        })
+            },
+          })
+        }
       }
     })
   }
@@ -360,6 +359,15 @@ class ScrollMagicController {
     }
     this.scenes.push(scenePart1PresentationDescription)
 
+    scenePart1PresentationDescription.on('start', (event: any) => {
+      if (event.scrollDirection === 'FORWARD') {
+        NavigationStore.setIsScrollIndicationTextVisible(false)
+      }
+      if (event.scrollDirection === 'REVERSE') {
+        NavigationStore.setIsScrollIndicationTextVisible(true)
+      }
+    })
+
     // Presentation : text
 
     const scenePart1PresentationTextDuration = 1700
@@ -494,6 +502,15 @@ class ScrollMagicController {
       scenePart1Pin.addIndicators({ name: 'scenePart1Pin' })
     }
     this.scenes.push(scenePart1Pin)
+
+    scenePart1Pin.on('end', (event: any) => {
+      if (event.scrollDirection === 'FORWARD') {
+        NavigationStore.setIsScrollIndicationVisible(false)
+      }
+      if (event.scrollDirection === 'REVERSE') {
+        NavigationStore.setIsScrollIndicationVisible(true)
+      }
+    })
 
     /**
      * PART 2
