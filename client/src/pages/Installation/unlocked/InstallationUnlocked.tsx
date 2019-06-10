@@ -276,25 +276,24 @@ const Installation: FunctionComponent<Props> = ({ match, history }) => {
               </div>
             </div>
           </div>
-        </div>
-        <div className="page-installation__wrapper__part--second-part">
-          <div className="page-installation__wrapper__part--second-part__challenge">
+
+          <div className="page-installation__wrapper__part--first-part__challenge hidden">
             {installation && (
-              <div className="page-installation__wrapper__part--second-part__challenge__wrapper-title">
-                <div className="page-installation__wrapper__part--second-part__challenge__wrapper-title__radial-circle" />
+              <div className="page-installation__wrapper__part--first-part__challenge__wrapper-title">
+                <div className="page-installation__wrapper__part--first-part__challenge__wrapper-title__radial-circle" />
                 <p
-                  className="page-installation__wrapper__part--second-part__challenge__wrapper-title__title"
+                  className="page-installation__wrapper__part--first-part__challenge__wrapper-title__title"
                   dangerouslySetInnerHTML={{
                     __html: `${installation.challengeText}`,
                   }}
                 />
               </div>
             )}
-            <div className="page-installation__wrapper__part--second-part__challenge__text-content">
+            <div className="page-installation__wrapper__part--first-part__challenge__text-content">
               <p>
                 Pour témoigner de ton indignation et nous aider à retirer ce
                 dispositifi anti-SDF. <br />
-                <span className="page-installation__wrapper__part--second-part__challenge__text-content--bold">
+                <span className="page-installation__wrapper__part--first-part__challenge__text-content--bold">
                   Prends-toi en photo et poste ta performance sur Twitter, ta
                   photo servira de signature pour notre pétition
                 </span>
@@ -302,14 +301,14 @@ const Installation: FunctionComponent<Props> = ({ match, history }) => {
             </div>
             <Button
               className={
-                'page-installation__wrapper__part--second-part__challenge__sign-petition-button'
+                'page-installation__wrapper__part--first-part__challenge__sign-petition-button'
               }
               label="Signer la pétition"
               theme={buttonThemes.Blue}
               onClick={onClickTutoBtn}
               icon={true}
             />
-            <p className="page-installation__wrapper__part--second-part__challenge__help">
+            <p className="page-installation__wrapper__part--first-part__challenge__help">
               Plus nous serons nombreux, plus nous aurons de chances d'être
               entendus
             </p>
@@ -321,6 +320,7 @@ const Installation: FunctionComponent<Props> = ({ match, history }) => {
             />
           )}
         </div>
+
         <div className="page-installation__wrapper__part--third-part">
           <p className="page-installation__wrapper__part--third-part__title">
             ILS SE SONT ENGAGÉS
