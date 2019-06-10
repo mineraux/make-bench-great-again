@@ -12,7 +12,7 @@
   background-color: $color-pink;
   padding: 2.5rem;
   z-index: 10;
-  transform: translateY(calc(100% - 6rem));
+  transform: translateY(calc(100% - 6.5rem));
   transition: transform 0.5s cubic-bezier(0.23, 1, 0.32, 1);
   color: $color-blue;
   font-family: $font-infini-regular;
@@ -50,8 +50,8 @@
 
   &__close-ico {
     position: absolute;
-    top: 1.9rem;
-    right: 2rem;
+    top: 2.2rem;
+    right: 2.5rem;
     padding: 0;
     transition: transform 0.5s cubic-bezier(0.23, 1, 0.32, 1);
     background: none;
@@ -71,17 +71,22 @@
     &__installation-name {
       display: block;
       font-size: 2rem;
-      margin-bottom: 3rem;
+      margin-bottom: 2.5rem;
       text-transform: uppercase;
     }
 
     &__installation-description {
       display: inline;
-      font-size: 1.5rem;
+      font-size: 1.6rem;
+      line-height: 2.2rem;
     }
 
     &__installation-see-more {
-      margin-bottom: 1rem;
+      margin-bottom: 1.5rem;
     }
+  }
+
+  .button {
+    min-width: 24rem;
   }
 }
