@@ -42,6 +42,13 @@ const Installation: FunctionComponent<Props> = ({ match, history }) => {
     setIsScrollIndicationVisible(false)
     setIsScrollIndicationTextVisible(true)
 
+    if (match && installationList.length === 0) {
+      fetchInstallationList({
+        name: true,
+        description: true,
+      })
+    }
+
     if (match && installation._id.length === 0) {
       getInstallationInformation()
     }
@@ -58,22 +65,19 @@ const Installation: FunctionComponent<Props> = ({ match, history }) => {
       {
         name: true,
         description: true,
-        lockedDescription: true,
       },
-      MapStore.selectedInstallation._id
-        ? MapStore.selectedInstallation._id
-        : undefined,
-      !MapStore.selectedInstallation._id
-        ? match.params.installationSlug
-        : undefined
-    )
-      .then(res => {
-        setInstallation(res)
-      })
-      .then(() => {
-        ScrollMagicController.initController()
-      })
+      InstallationStore.getInstallationBySlug(match.params.installationSlug)._id
+    ).then(res => {
+      setInstallation(res)
+    })
   }
+
+  useEffect(() => {
+    if (installation) {
+      ScrollMagicController.initController()
+      handleSpriteAnimationInstance()
+    }
+  }, [installation])
 
   const handleSpriteAnimationInstance = () => {
     TweenMax.to(
@@ -95,7 +99,6 @@ const Installation: FunctionComponent<Props> = ({ match, history }) => {
   }
 
   const windowHeight = useWindowSize().height
-
   return (
     <div className="page-installation--locked" ref={ref}>
       <div className="page-installation--locked__wrapper">
@@ -105,16 +108,15 @@ const Installation: FunctionComponent<Props> = ({ match, history }) => {
               {installation.name}
             </p>
 
-            {installation && installation.slug && (
-              <SpriteAnimation
-                className={
-                  'page-installation--locked__wrapper__part--first-part__presentation__installation-sketch'
-                }
-                progression={1}
-                animationID={installation.slug}
-                onInstance={handleSpriteAnimationInstance}
-              />
-            )}
+            <img
+              src={`${process.env.PUBLIC_URL}/assets/images/installations/${
+                installation.slug
+              }_locked.png`}
+              alt=""
+              className={
+                'page-installation--locked__wrapper__part--first-part__presentation__installation-sketch'
+              }
+            />
 
             <div className="page-installation--locked__wrapper__part--first-part__presentation__description">
               <p
@@ -122,17 +124,14 @@ const Installation: FunctionComponent<Props> = ({ match, history }) => {
                   'page-installation--locked__wrapper__part--first-part__presentation__description__text'
                 }
               >
-                Conçue comme une véritable ode à la nature, sa structure en
-                courbes rappelle la forme délicate et organique des feuillages,
-                ramenant une touche printanière dans la ville.
+                {installation.description}
               </p>
               <p
                 className={
                   'page-installation--locked__wrapper__part--first-part__presentation__description__caption'
                 }
               >
-                Exedros, Fonte, résine de couleur “vert papier russe” H. : 150
-                L. : 70cm, 2016
+                {installation.caption}
               </p>
             </div>
           </div>
