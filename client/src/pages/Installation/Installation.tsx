@@ -19,21 +19,23 @@ const Installation: FunctionComponent<Props> = ({ show, match, history }) => {
   const { selectedInstallation } = MapStore
 
   useEffect(() => {
-    setInstallationIdentifier(
-      selectedInstallation._id
-        ? selectedInstallation._id
-        : match.params.installationSlug
-    )
+    if (match) {
+      setInstallationIdentifier(
+        selectedInstallation._id
+          ? selectedInstallation._id
+          : match.params.installationSlug
+      )
 
-    // TODO : required ?
-    setCurrentInstallationId(
-      selectedInstallation._id
-        ? selectedInstallation._id
-        : getInstallationBySlug(match.params.installationSlug)._id
-    )
+      // TODO : required ?
+      setCurrentInstallationId(
+        selectedInstallation._id
+          ? selectedInstallation._id
+          : getInstallationBySlug(match.params.installationSlug)._id
+      )
 
-    InstallationStore.setUnlockedInstallationFromLocalStorage()
-  }, [])
+      InstallationStore.setUnlockedInstallationFromLocalStorage()
+    }
+  }, [match])
 
   return (
     <>
