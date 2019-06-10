@@ -286,22 +286,23 @@
           &__wrapper-title {
             position: relative;
             margin-top: auto;
-            overflow-x: hidden;
+
+            width: 100%;
 
             &__radial-circle {
+              $width-circle: 15rem;
+
               pointer-events: none;
               position: absolute;
-              top: 0;
-              left: 0;
-              right: 0;
-              bottom: 0;
-              background: radial-gradient(
-                circle closest-side,
-                rgba(97, 249, 132, 1),
-                rgba(97, 249, 132, 0)
-              );
-              background-repeat: no-repeat;
-              z-index: 0;
+              top: calc(50% - #{$width-circle/2});
+              left: calc(50% - #{$width-circle/2});
+
+              background-color: $color-green;
+              border-radius: 50%;
+              width: $width-circle;
+              height: $width-circle;
+              transform-origin: center center;
+              filter: blur(8px);
             }
 
             &__title {
