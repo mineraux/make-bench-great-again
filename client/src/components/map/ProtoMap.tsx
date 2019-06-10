@@ -16,7 +16,7 @@ import { featureCoords } from '../../utils/map'
 import Modal from '../Modal/Modal'
 import { pageProps } from '../../pages/types'
 import { Feature } from 'geojson'
-import { TweenMax } from 'gsap'
+import { TweenMax, Power1 } from 'gsap'
 import * as turf from '@turf/turf'
 
 type Props = pageProps & {}
@@ -312,6 +312,16 @@ const ProtoMap: FunctionComponent<Props> = ({ match, history }) => {
     userLocation,
   ])
 
+  const closeModal = () => {
+    TweenMax.to('.modal', 0.4, {
+      opacity: 0,
+      ease: Power1.easeOut,
+      onComplete: () => {
+        initGeoLocate()
+      },
+    })
+  }
+
   return (
     <div id="map">
       <div className="mapboxgl-map__mask" />
@@ -324,7 +334,7 @@ const ProtoMap: FunctionComponent<Props> = ({ match, history }) => {
         Pour cela nous aurons besoin de votre localisation. 
         "
           buttonLabel="Démarrer"
-          onButtonClick={initGeoLocate}
+          onButtonClick={closeModal}
         />
       )}
       {
