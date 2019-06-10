@@ -55,16 +55,20 @@ const TransitionComponent: FunctionComponent<Props> = ({
         ease: Power2.easeIn,
       },
       0
-    ).to(
-      firstPart!,
-      2.5,
-      {
-        filter: 'blur(0)',
-        autoRound: false,
-        ease: Power1.easeOut,
-      },
-      1
     )
+      .to(
+        firstPart!,
+        2.5,
+        {
+          filter: 'blur(0)',
+          autoRound: false,
+          ease: Power1.easeOut,
+        },
+        1
+      )
+      .add(() => {
+        NavigationStore.setIsScrollIndicationVisible(true)
+      }, '-=0.8')
   }
 
   // Exit : transition

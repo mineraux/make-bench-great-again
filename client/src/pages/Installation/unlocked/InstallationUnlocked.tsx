@@ -117,6 +117,7 @@ const Installation: FunctionComponent<Props> = ({ match, history }) => {
         ref.current.removeEventListener('touchstart', onTouchStart)
       }
       window.scrollTo(0, 0)
+      setIsScrollIndicationVisible(false)
     }
   }, [])
 
