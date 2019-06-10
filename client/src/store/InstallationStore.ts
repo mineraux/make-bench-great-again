@@ -32,11 +32,11 @@ class InstallationStore {
           lockedName: 'Lisbonne',
           caption: 'La Vague, acier et fonte, H. : 75cm L. : 180cm, 2015',
           description:
-            'Connu sous le pseudonyme d’Area, ce street artiste originaire de Toulouse nous offre une sculpture longiligne dont la forme ondulatoire aspire à la rêverie. Depuis 2015 des reproductions déferlent aux abords des parcs venant ponctuer les promenades estivales des parisiens. Au travers de cette expérience, l’espace public est questionné, quelle est la place de l’Homme face à ces créations ?',
+            'Connu sous le pseudonyme d’Area, ce street artiste originaire de Toulouse nous offre une sculpture longiligne dont la forme ondulatoire aspire à la rêverie. Depuis 2015 des reproductions déferlent aux abords des parcs venant ponctuer les promenades estivales des Parisiens. Au travers de cette expérience, l’espace public est questionné, quelle est la place de l’Homme face à ces créations ?',
           lockedDescription:
-            'De son vrai nom, Lisbonne, ce banc anti-sdf à dossier est devenu la nouvelle référence en matière “de banc de repos”. Après avoir révolutionné le banc public en métal il est aujourd’hui un classique du design anti-sdf. Mobilier dissuasif par excellence car en plus d’être conçue pour repousser les sans abris, sa formes le rends impraticable auprès des skateurs et street artistes.',
+            'De son vrai nom, Lisbonne, ce banc anti-sdf à dossier est devenu la nouvelle référence en matière “de banc de repos”. Après avoir révolutionné le banc public en métal il est aujourd’hui un classique du design anti-sdf. Mobilier dissuasif par excellence car en plus d’être conçu pour repousser les sans-abris, sa forme le rend impraticable auprès des skateurs et street artistes.',
           geolocation: [2.39636, 48.87539],
-          hashTags: ['lisbonne'],
+          hashTags: ['lenversdudecor', 'lisbonne'],
           testimony: {
             fileUrl: 'temoignage_01',
             talkers: [
@@ -81,6 +81,8 @@ class InstallationStore {
               },
             ],
           },
+          challengeText:
+            'Es-tu assez agile pour réussir à t’allonger sur cette installation&nbsp;?',
         },
         {
           _id: '2',
@@ -94,7 +96,7 @@ class InstallationStore {
           lockedDescription:
             "De son vrai nom Appui ischiatique ou Miséricordieux, elle puise ses origines des miséricordes. Ces dernières étaient des aménagements apportés aux stalles pour permettre aux moines de s’appuyer ou de s’asseoir pendant les offices tout en ayant l’air d’être debout. Miséricordieux signifie avoir le cœur sensible au malheur d’autrui (du lat. miseria & cor ~ misère & cœur), ce qui constitue un paradoxe lorsqu'il s’avère que la RATP conçoit ces bancs pour repousser les sans-abri des stations de métro",
           geolocation: [2.40764, 48.87512],
-          hashTags: ['enSuspens'],
+          hashTags: ['lenversdudecor', 'enSuspens'],
           testimony: {
             fileUrl: 'temoignage_02',
             talkers: [
@@ -124,6 +126,8 @@ class InstallationStore {
               },
             ],
           },
+          challengeText:
+            'As-tu assez d’équilibre pour rester allongé sur l’installation&nbsp;?',
         },
         {
           _id: '3',
@@ -137,7 +141,7 @@ class InstallationStore {
           lockedDescription:
             'Derrière cette forme conviviale et propice à l’échange, se cache pourtant une volonté de rejeter une partie de la population, empêchant les sans-domicile fixes de s’allonger. Cette assise publique voit le jour boulevard Président Wilson en 2016. Son succès est tel qu’elle s’étendra dans toute la capitale. Inventés par JC. Decaux et Marc Aurel, ces bancs fleurissent au pied des arbres, à proximité des abribus.',
           geolocation: [2.402, 48.8787],
-          hashTags: ['Exedros'],
+          hashTags: ['lenversdudecor', 'Exedros'],
           testimony: {
             fileUrl: 'temoignage_03',
             talkers: [
@@ -173,6 +177,8 @@ class InstallationStore {
               },
             ],
           },
+          challengeText:
+            'Ta souplesse te permet-elle de t’allonger sur cette installation&nbsp;?',
         },
         {
           _id: '4',

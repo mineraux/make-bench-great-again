@@ -6,6 +6,7 @@
   height: 100%;
   position: relative;
   overflow-y: hidden;
+  font: inherit !important;
 
   &__mask {
     pointer-events: none;

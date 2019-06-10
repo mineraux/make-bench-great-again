@@ -2,14 +2,14 @@
 
 .button {
   display: inline-block;
-  padding: 1.3rem 3.5rem;
-  border-radius: 2.2rem;
+  padding: 1.8rem 3.5rem;
+  border-radius: 10rem; // always round
   border-width: 0.1rem;
   border-style: solid;
   text-decoration: none;
   cursor: pointer;
   transition-property: background-color, color;
-  transition-duration: 0.25s;
+  transition-duration: 0.3s;
   transition-timing-function: cubic-bezier(0.19, 1, 0.22, 1);
 
   &.theme-blue {
@@ -43,8 +43,8 @@
   }
 
   &__label {
-    font-size: 1.1rem;
-    line-height: 1.1rem;
+    font-size: 1.2rem;
+    line-height: 1.2rem;
     text-transform: uppercase;
     font-family: $font-avenir-medium;
   }

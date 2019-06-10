@@ -9,12 +9,13 @@ import { useWindowSize } from '../../utils/hooks'
 type props = pageProps
 
 const Map: FunctionComponent<props> = ({ match, history }) => {
-  const { setIsMapButtonVisible } = NavigationStore
+  const { setIsMapButtonVisible, setScrollProgression } = NavigationStore
   const windowHeight = useWindowSize().height
 
   useEffect(() => {
     console.log('map mounted')
     // setIsMapButtonVisible(false)
+    setScrollProgression(0)
   }, [])
   return (
     <div

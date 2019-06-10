@@ -7,6 +7,7 @@ import TwitterThumbnail, {
 } from '../TwitterThumbnail/TwitterThumbnail'
 
 import fakeData from './fakeData'
+import { setInterval } from 'timers'
 
 type Props = {
   className?: string
@@ -93,6 +94,11 @@ const TwitterGallery: FunctionComponent<Props> = ({
       }
     }
     fetchTweets(hashtags)
+
+    const interval = setInterval(() => {
+      fetchTweets(hashtags)
+    }, 5000)
+    return () => clearInterval(interval)
   }, [hashtags])
 
   const renderTwitterThumbnails = () =>
@@ -113,7 +119,11 @@ const TwitterGallery: FunctionComponent<Props> = ({
     <div className={Classnames(className, 'twitter-gallery')}>
       <div className="twitter-gallery__informations">
         <TwitterLogo />
-        <p>{totalNumber} passants ont relevé la performance</p>
+        {tweets.length === 1 ? (
+          <p>{tweets.length} passant a relevé la performance</p>
+        ) : (
+          <p>{tweets.length} passants ont relevé la performance</p>
+        )}
       </div>
       <div className="twitter-gallery__thumbnails">
         {renderTwitterThumbnails()}

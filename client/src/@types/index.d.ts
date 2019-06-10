@@ -38,6 +38,7 @@ export interface ApiInstallation {
   }
   relatedPetition?: string
   caption?: string
+  challengeText?: string
 
   replace?(arg0: RegExp, arg1: string)
 }
@@ -53,6 +54,7 @@ export interface queryApiInstallation {
   testimony?: boolean
   relatedPetition?: boolean
   caption?: boolean
+  challengeText?: boolean
 }
 
 export interface createApiInstallation {

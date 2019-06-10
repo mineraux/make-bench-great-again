@@ -7,6 +7,7 @@ import 'debug.addIndicators'
 import { ApiInstallation } from '../../../@types'
 import ScrollMagicStore from '../../../store/ScrollMagicStore'
 import { NavigationStore, InstallationStore } from '../../../store'
+import { themes as scrollIndicationThemes } from '../../../components/ScrollIndication/ScrollIndication'
 
 class ScrollMagicController {
   isDebug: boolean
@@ -66,9 +67,9 @@ class ScrollMagicController {
 
     const controller = new ScrollMagic.Controller()
 
-    /**
+    /*****
      * PART 1
-     */
+     *****/
 
     // TWEENS
 
@@ -278,9 +279,11 @@ class ScrollMagicController {
     tweenTestimonyTalkers.progress(0)
 
     // Testimony : text translate
+
     const textContentEl = document.querySelector(
       '.page-installation__wrapper__part--first-part__testimony__text-content-wrapper__container__text-content'
     )
+
     const tweenTestimonyTextTranslate = new TimelineMax()
       .fromTo(
         textContentEl!,
@@ -317,6 +320,47 @@ class ScrollMagicController {
         },
         90
       )
+
+    // Challenge : challenge fade in / testimony fade out
+
+    const tweenChallenge = new TimelineMax()
+      .to('.page-installation__wrapper__part--first-part__testimony', 1, {
+        opacity: 0,
+        filter: 'blur(15px)',
+        autoRound: false,
+        ease: Power1.easeInOut,
+      })
+      .fromTo(
+        '.page-installation__wrapper__part--first-part__challenge',
+        1,
+        {
+          opacity: 0,
+          filter: 'blur(15px)',
+        },
+        {
+          opacity: 1,
+          filter: 'blur(0)',
+          autoRound: false,
+          ease: Power1.easeInOut,
+        },
+        '-=0.7'
+      )
+
+    // Challenge : cirle animation
+
+    const tweenChallengeCircle = new TimelineMax({ paused: true }).fromTo(
+      '.page-installation__wrapper__part--first-part__challenge__wrapper-title__radial-circle',
+      2,
+      {
+        scale: 1,
+      },
+      {
+        scale: 1.2,
+        ease: Power2.easeInOut,
+        repeat: -1,
+        yoyo: true,
+      }
+    )
 
     // SCENES
 
@@ -488,10 +532,49 @@ class ScrollMagicController {
       }
     })
 
-    // Part 1 : pin
-    const scenePart1PinDuration =
+    // Challenge fade in / Testimony fade out
+
+    const sceneChallengeOffset =
       this.sceneTestimonyTextTranslate.scrollOffset() +
       this.sceneTestimonyTextTranslate.duration()
+    const sceneChallenge = new ScrollMagic.Scene({
+      duration: 700,
+      offset: sceneChallengeOffset,
+      triggerHook: 0,
+    })
+      .setTween(tweenChallenge)
+      .addTo(controller)
+    if (this.isDebug) {
+      sceneChallenge.addIndicators({
+        name: 'sceneChallenge',
+      })
+    }
+    this.scenes.push(sceneChallenge)
+
+    sceneChallenge.on('start', (event: any) => {
+      const testimony = document.querySelector(
+        '.page-installation__wrapper__part--first-part__testimony'
+      )
+      const challenge = document.querySelector(
+        '.page-installation__wrapper__part--first-part__challenge'
+      )
+      if (event.scrollDirection === 'FORWARD') {
+        testimony!.classList.add('hidden')
+        challenge!.classList.remove('hidden')
+        tweenChallengeCircle.play()
+        NavigationStore.setScrollIndicationTheme(scrollIndicationThemes.Blue)
+      } else if (event.scrollDirection === 'REVERSE') {
+        challenge!.classList.add('hidden')
+        testimony!.classList.remove('hidden')
+        tweenChallengeCircle.pause()
+        NavigationStore.setScrollIndicationTheme(scrollIndicationThemes.Green)
+      }
+    })
+
+    // Part 1 : pin
+
+    const scenePart1PinDuration =
+      sceneChallenge.scrollOffset() + sceneChallenge.duration()
     const scenePart1Pin = new ScrollMagic.Scene({
       duration: scenePart1PinDuration,
       triggerHook: 0,
@@ -512,11 +595,6 @@ class ScrollMagicController {
       }
     })
 
-    /**
-     * PART 2
-     */
-
-    // TWEENS
     // TODO : refacto to use store theme
     const tweenMapButtonColor = new TimelineMax()
       .to(
@@ -527,7 +605,6 @@ class ScrollMagicController {
         },
         0
       )
-
       .to(
         '.map-button__marker path',
         3,
@@ -537,88 +614,23 @@ class ScrollMagicController {
         0
       )
 
-    // SCENES
-    const scenePart2Pin = new ScrollMagic.Scene({
-      triggerElement: '.page-installation__wrapper__part--second-part',
-      duration: 1,
-      triggerHook: 0.7,
-    })
-      .setPin('.page-installation__wrapper__part--second-part')
-      // .addIndicators({ name: 'Pin 2' })
-      .addTo(controller)
-    this.scenes.push(scenePart2Pin)
+    // ALL PAGE
 
-    const part2Height = document
-      .querySelector('.page-installation__wrapper__part--second-part')!
-      .getBoundingClientRect().height
-
-    const transitionMapButtonColor = new ScrollMagic.Scene({
-      triggerElement: '.page-installation__wrapper__part--second-part',
-      duration: part2Height,
-      triggerHook: 1,
-    })
-      .setTween(tweenMapButtonColor)
-      // .addIndicators({ name: 'Transition Map button color' })
-      .addTo(controller)
-    this.scenes.push(transitionMapButtonColor)
+    const thirdPart = document.querySelector(
+      '.page-installation__wrapper__part--third-part'
+    )
 
     const scenePage = new ScrollMagic.Scene({
-      duration: scenePart1PinDuration + part2Height,
+      duration: scenePart1PinDuration + thirdPart!.clientHeight,
       triggerHook: 0,
     }).addTo(controller)
+    if (this.isDebug) {
+      scenePage.addIndicators({ name: 'scenePage' })
+    }
     this.scenes.push(scenePage)
 
     scenePage.on('progress', (event: any) => {
       setScrollProgression(event.progress)
-    })
-
-    const tweenShowChallenge = new TimelineMax({ paused: true })
-      .add('showChallenge')
-      .fromTo(
-        '.page-installation__wrapper__part--second-part__challenge__radial-circle',
-        0.5,
-        {
-          opacity: 0,
-        },
-        {
-          opacity: 1,
-        },
-        'showChallenge'
-      )
-      .fromTo(
-        [
-          '.page-installation__wrapper__part--second-part__challenge__title',
-          '.page-installation__wrapper__part--second-part__challenge__text-content',
-          '.page-installation__wrapper__part--second-part__challenge__sign-petition-button',
-          '.page-installation__wrapper__part--second-part__challenge__help',
-        ],
-        0.5,
-        {
-          opacity: 0,
-        },
-        {
-          opacity: 1,
-        },
-        'showChallange+=0.1'
-      )
-      .add('radialCircleAppeared')
-      .fromTo(
-        '.page-installation__wrapper__part--second-part__challenge__radial-circle',
-        2,
-        {
-          scale: 1,
-        },
-        {
-          scale: 1.2,
-          ease: Power2.easeInOut,
-          repeat: -1,
-          yoyo: true,
-        },
-        'animationOnLoadFinished'
-      )
-
-    scenePart2Pin.on('start', () => {
-      tweenShowChallenge.play()
     })
   }
 

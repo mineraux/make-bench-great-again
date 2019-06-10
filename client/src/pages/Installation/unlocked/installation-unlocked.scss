@@ -10,7 +10,6 @@
 
     &__part {
       &--first-part,
-      &--second-part,
       &--third-part {
         position: relative;
         &__presentation,
@@ -96,6 +95,7 @@
           &.hidden {
             z-index: 0;
             display: none;
+            pointer-events: none;
           }
 
           &__title {
@@ -175,6 +175,7 @@
 
           &.hidden {
             pointer-events: none;
+            z-index: 0;
           }
 
           &__talkers {
@@ -257,63 +258,77 @@
             }
           }
         }
-      }
-
-      &--second-part {
-        background-color: $color-pink;
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        height: 100vh;
 
         &__challenge {
+          z-index: 1;
+          position: absolute;
+          top: 0;
+          left: 0;
+          right: 0;
+          bottom: 0;
+          opacity: 0;
+          background-color: $color-pink;
+
           font-family: $font-infini-regular;
           color: $color-blue;
           display: flex;
           flex-direction: column;
           align-items: center;
           justify-content: center;
-          height: 100%;
+          //height: 100%;
 
-          &__radial-circle {
-            //TODO : refacto
+          &.hidden {
+            z-index: 0;
+            display: none;
             pointer-events: none;
-            position: absolute;
-            top: 0;
-            left: 5rem;
-            right: 5rem;
-            bottom: 0;
-            background: radial-gradient(
-              circle closest-side,
-              rgba(97, 249, 132, 1),
-              rgba(97, 249, 132, 0)
-            );
-            background-repeat: no-repeat;
-            background-position-y: -18rem;
           }
 
-          &__title {
-            display: inline-block;
-            width: 100%;
-            margin: 0rem 0 2rem;
-            padding: 0 1.7em;
-            width: 100%;
-            font-size: 2.5rem;
-            text-align: center;
-            color: $color-blue;
-            text-transform: uppercase;
-            line-height: 1.5em;
+          &__wrapper-title {
+            position: relative;
+            margin-top: auto;
+            overflow-x: hidden;
+
+            &__radial-circle {
+              pointer-events: none;
+              position: absolute;
+              top: 0;
+              left: 0;
+              right: 0;
+              bottom: 0;
+              background: radial-gradient(
+                circle closest-side,
+                rgba(97, 249, 132, 1),
+                rgba(97, 249, 132, 0)
+              );
+              background-repeat: no-repeat;
+              z-index: 0;
+            }
+
+            &__title {
+              position: relative;
+              display: inline-block;
+              width: 100%;
+              padding: 0 1.7em;
+              width: 100%;
+              font-size: 2.5rem;
+              text-align: center;
+              color: $color-blue;
+              text-transform: uppercase;
+              line-height: 1.5em;
+              z-index: 1;
+            }
           }
 
           &__text-content {
             text-align: center;
             max-width: $content-width;
-            padding: 3rem 4rem 0 4rem;
-            margin: 0 auto 3em auto;
+            //padding: 3rem 4rem 0 4rem;
+            //margin: 0 auto 3em auto;
+            margin: auto;
             font-family: $font-infini-regular;
             color: $color-blue;
-            font-size: 1.5rem;
-            line-height: 1.3em;
+            font-size: 1.6rem;
+            line-height: 2.2rem;
 
             &--bold {
               font-family: $font-infini-bold;
@@ -327,6 +342,7 @@
             max-width: $content-width;
             text-align: center;
             line-height: 1.3em;
+            margin-bottom: auto;
           }
         }
       }

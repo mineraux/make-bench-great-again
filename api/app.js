@@ -89,7 +89,6 @@ app.post('/twitter', (req, res) => {
     q: hashtagsString + ' filter:twimg filter:images',
     count: 15,
     result_type: "recent",
-    lang: "fr",
     include_entities: true,
     tweet_mode: "extended"
   }, function (error, tweets, response) {
