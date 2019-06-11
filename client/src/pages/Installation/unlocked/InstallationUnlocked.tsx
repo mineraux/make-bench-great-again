@@ -36,6 +36,7 @@ const Installation: FunctionComponent<Props> = ({ match, history }) => {
     setIsScrollIndicationVisible,
     setIsScrollIndicationTextVisible,
     setMapButttonThemes,
+    setScrollProgression,
   } = NavigationStore
   const {
     scrollProgressFirstPart,
@@ -64,12 +65,8 @@ const Installation: FunctionComponent<Props> = ({ match, history }) => {
           description: true,
           lockedDescription: true,
         },
-        MapStore.selectedInstallation._id
-          ? MapStore.selectedInstallation._id
-          : undefined,
-        !MapStore.selectedInstallation._id
-          ? match.params.installationSlug
-          : undefined
+        InstallationStore.getInstallationBySlug(match.params.installationSlug)
+          ._id
       )
         .then(res => {
           setInstallation(res)
@@ -123,6 +120,7 @@ const Installation: FunctionComponent<Props> = ({ match, history }) => {
       window.scrollTo(0, 0)
       setIsScrollIndicationVisible(false)
       setMapButttonThemes(mapButtonThemes.Pink)
+      setScrollProgression(0)
     }
   }, [])
 
