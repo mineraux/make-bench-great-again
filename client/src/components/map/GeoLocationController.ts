@@ -10,6 +10,9 @@ class GeoLocationController {
       positionOptions: {
         enableHighAccuracy: true,
       },
+      fitBoundsOptions: {
+        zoom: 15,
+      },
       trackUserLocation: true,
     })
 
