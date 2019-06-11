@@ -128,7 +128,7 @@ class ScrollMagicController {
     })
 
     // Presentation : text
-    const scenePart1PresentationTextDuration = 500
+    const scenePart1PresentationTextDuration = 250
     const scenePart1PresentationTextOffset =
       scenePart1PresentationDescription.scrollOffset() +
       scenePart1PresentationDescription.duration()
