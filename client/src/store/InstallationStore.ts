@@ -226,7 +226,10 @@ class InstallationStore {
       _id: '',
     }
 
-    if (process.env.NODE_ENV === 'development') {
+    if (
+      process.env.NODE_ENV === 'development' ||
+      process.env.NODE_ENV === 'production'
+    ) {
       this.installationList.map(installation => {
         if (installationID) {
           if (installation._id === installationID) {
