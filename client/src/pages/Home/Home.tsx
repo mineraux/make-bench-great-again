@@ -25,16 +25,51 @@ const Home: FunctionComponent<Props> = ({ match }) => {
   } = NavigationStore
   const windowHeight = useWindowSize().height
   const refContainer = useRef<HTMLDivElement>(null)
+  const [pwaPrompt, setPwaPrompt] = useState<Event | null>(null)
 
   useEffect(() => {
     setIsHeaderVisible(false)
     setScrollIndicationTheme(scrollIndicationThemes.Blue)
     setIsScrollIndicationVisible(false)
     setIsScrollIndicationTextVisible(true)
+
+    const handleBeforeinstallprompt = (e: any) => {
+      console.log('beforeinstallprompt')
+      // Prevent Chrome 67 and earlier from automatically showing the prompt
+      e.preventDefault()
+      // Stash the event so it can be triggered later.
+      setPwaPrompt(e)
+    }
+
+    window.addEventListener('beforeinstallprompt', handleBeforeinstallprompt)
+
     return () => {
       ScrollMagicController.destroyScrollMagicScenes()
+      window.removeEventListener(
+        'beforeinstallprompt',
+        handleBeforeinstallprompt
+      )
     }
   }, [])
+
+  useEffect(() => {
+    if (pwaPrompt) {
+      console.log('pwaPrompt ready')
+
+      // @ts-ignore
+      pwaPrompt.prompt()
+      // Wait for the user to respond to the prompt
+      // @ts-ignore
+      pwaPrompt.userChoice.then((choiceResult: any) => {
+        if (choiceResult.outcome === 'accepted') {
+          console.log('User accepted the A2HS prompt')
+        } else {
+          console.log('User dismissed the A2HS prompt')
+        }
+        setPwaPrompt(null)
+      })
+    }
+  }, [pwaPrompt])
 
   useEffect(() => {
     if (isSplashscreenCompleted) {
