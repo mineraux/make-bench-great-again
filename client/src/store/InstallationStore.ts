@@ -108,24 +108,35 @@ class InstallationStore {
                 text:
                   "C’est pas fulgurant, mais ouais petit à petit, on voit que quand même, on ne peut plus s'asseoir devant un magasin, on ne peut plus s’asseoir dans le métro, enfin on peut s’asseoir mais on ne peut pas se coucher par exemple.",
                 talkerID: 1,
-                timecodes: [0, 6],
+                timecodes: [0, 7],
               },
               {
                 text:
                   'Vous pouvez vous reposer les fesses sans vous asseoir et être prêt à partir dès que votre train ou votre bus arrive.',
                 talkerID: 2,
-                timecodes: [6.5, 14],
+                timecodes: [7.25, 13.5],
               },
               {
                 text: 'Est-ce que ce n’est pas un problème ?',
                 talkerID: 3,
-                timecodes: [14.5, 15.5],
+                timecodes: [13.75, 14.75],
               },
               {
                 text:
-                  'Non pas du tout, pour les SDF peut-être mais j’en sais rien !',
+                  'Non pas du tout, pour les SDF peut-être mais... j’en sais rien !',
                 talkerID: 2,
-                timecodes: [16, 19],
+                timecodes: [15, 18.5],
+              },
+              {
+                text: "Pour les sdf oui ils ne peuvent pas s'allonger du coup.",
+                talkerID: 3,
+                timecodes: [19, 20.5],
+              },
+              {
+                text:
+                  "Voilà exactement, oui oui, tout à fait, c'est pas fait pour, c'est pas fait pour.",
+                talkerID: 2,
+                timecodes: [20.75, 24],
               },
             ],
           },
