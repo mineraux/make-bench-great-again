@@ -333,8 +333,8 @@ const ProtoMap: FunctionComponent<Props> = ({ match, history }) => {
         <Modal
           modalTitle="Votre parcours commence !"
           textContent="
-        Nous vous proposons de vous diriger vers l’installation la plus proche pour réaliser la performance et débloquer le contenu associé.
-        Pour cela nous aurons besoin de votre localisation. 
+        Nous vous proposons de vous diriger vers l’installationla plus proche pour réaliser la performance et débloquer le contenu associé.
+        Pour cela nous aurons besoin de votre localisation.
         "
           buttonLabel="Démarrer"
           onButtonClick={closeModal}
