@@ -23,7 +23,10 @@ class InstallationStore {
   @action public fetchInstallationList = async (
     fieldToFetch: QueryApiInstallationReponse
   ) => {
-    if (process.env.NODE_ENV === 'development') {
+    if (
+      process.env.NODE_ENV === 'development' ||
+      process.env.NODE_ENV === 'production'
+    ) {
       this.installationList = [
         {
           _id: '1',
