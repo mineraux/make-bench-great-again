@@ -9,6 +9,7 @@ import ScrollMagicStore from '../../../store/ScrollMagicStore'
 import { NavigationStore, InstallationStore } from '../../../store'
 import { themes as scrollIndicationThemes } from '../../../components/ScrollIndication/ScrollIndication'
 import { themes as mapButtonThemes } from '../../../components/MapButton/MapButton'
+import { mapRange } from '../../../utils'
 
 class ScrollMagicController {
   isDebug: boolean
@@ -174,12 +175,13 @@ class ScrollMagicController {
         presentationTextContentEl!,
         100,
         {
-          transform: 'translateY(10rem)',
+          transform: 'translateY(12rem)',
           yPercent: 0,
         },
         {
-          transform: 'translateY(10rem)',
+          transform: 'translateY(8rem)',
           yPercent: -100,
+          ease: Power0.easeOut,
         },
         0
       )
@@ -397,7 +399,8 @@ class ScrollMagicController {
     const scenePart1PresentationTextDuration = 1700
     const scenePart1PresentationTextOffset =
       scenePart1PresentationDescription.scrollOffset() +
-      scenePart1PresentationDescription.duration()
+      scenePart1PresentationDescription.duration() -
+      100
     const scenePart1PresentationText = new ScrollMagic.Scene({
       duration: scenePart1PresentationTextDuration,
       triggerHook: 0,
@@ -413,7 +416,13 @@ class ScrollMagicController {
     this.scenes.push(scenePart1PresentationText)
 
     scenePart1PresentationText.on('progress', (event: any) => {
-      setScrollProgressFirstPart(event.progress)
+      let progress = mapRange(event.progress, 0, 0.7, 0, 1)
+
+      if (progress >= 1) {
+        progress = 1
+      }
+      console.log(event.progress, progress)
+      setScrollProgressFirstPart(progress)
     })
 
     // Presentation : fade out
