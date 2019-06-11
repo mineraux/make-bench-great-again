@@ -123,17 +123,33 @@ const TransitionComponent: FunctionComponent<Props> = ({
       onComplete: done,
     })
 
-    tl.to(
+    tl.fromTo(
       node,
-      0.25,
+      0.8,
       {
-        opacity: 0,
-        ease: 'Sine.easeInOut',
+        filter: 'blur(0)',
       },
-      1
-    ).add(() => {
-      NavigationStore.setHeaderThemes(themes.Blue)
-    }, 1)
+      {
+        filter: 'blur(15px)',
+        autoRound: false,
+        ease: Power2.easeInOut,
+      }
+    )
+      .fromTo(
+        node,
+        0.8,
+        {
+          opacity: 1,
+        },
+        {
+          opacity: 0,
+          ease: Power2.easeInOut,
+        },
+        0.2
+      )
+      .add(() => {
+        NavigationStore.setHeaderThemes(themes.Blue)
+      })
   }
 
   // Exit : end
