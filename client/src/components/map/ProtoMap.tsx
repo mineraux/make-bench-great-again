@@ -313,8 +313,11 @@ const ProtoMap: FunctionComponent<Props> = ({ match, history }) => {
   ])
 
   const closeModal = () => {
-    TweenMax.to('.modal', 0.4, {
+    TweenMax.to('.modal', 1, {
       opacity: 0,
+      filter: 'blur(4px)',
+      autoRound: false,
+      force3D: true,
       ease: Power1.easeOut,
       onComplete: () => {
         initGeoLocate()
