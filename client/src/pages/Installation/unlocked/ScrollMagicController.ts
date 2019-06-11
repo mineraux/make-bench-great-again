@@ -228,16 +228,6 @@ class ScrollMagicController {
       }
     )
 
-    // Testimony : text fade
-
-    const tweenTestimonyTextFade = new TimelineMax().to(
-      '.page-installation__wrapper__part--first-part__testimony__text-content-wrapper',
-      0.5,
-      {
-        opacity: 1,
-      }
-    )
-
     // Testimony : talkers
 
     const tweenTestimonyTalkers = new TimelineMax({ paused: true })
@@ -285,15 +275,7 @@ class ScrollMagicController {
     )
 
     const tweenTestimonyTextTranslate = new TimelineMax()
-      .fromTo(
-        textContentEl!,
-        10,
-        {
-          opacity: 0,
-        },
-        { opacity: 1, ease: Power1.easeInOut },
-        0
-      )
+      .to(textContentEl!, 10, { opacity: 1, ease: Power1.easeInOut }, 0)
       .fromTo(
         textContentEl!,
         100,
@@ -308,12 +290,9 @@ class ScrollMagicController {
         },
         0
       )
-      .fromTo(
+      .to(
         textContentEl!,
         10,
-        {
-          opacity: 1,
-        },
         {
           opacity: 0,
           ease: Power1.easeInOut,
@@ -489,21 +468,6 @@ class ScrollMagicController {
         prensentation!.classList.remove('hidden')
       }
     })
-
-    // TODO
-    const sceneTestimonyTextFade = new ScrollMagic.Scene({
-      duration: 100,
-      triggerHook: 0,
-      offset: 1500,
-    })
-      .setTween(tweenTestimonyTextFade)
-      .addTo(controller)
-    if (this.isDebug) {
-      sceneTestimonyTextFade.addIndicators({
-        name: '/////// TODO sceneTestimonyTextFade',
-      })
-    }
-    this.scenes.push(sceneTestimonyTextFade)
 
     // Testimony : text translate
 

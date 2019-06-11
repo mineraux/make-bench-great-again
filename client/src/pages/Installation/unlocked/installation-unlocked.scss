@@ -231,12 +231,12 @@
 
           &__text-content-wrapper {
             position: relative;
-            opacity: 0;
             max-height: 25rem;
             margin-bottom: auto;
 
             &__container {
               &__text-content {
+                opacity: 0;
                 &__text {
                   display: inline-block;
                   margin: 0.3rem 0;
