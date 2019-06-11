@@ -38,7 +38,7 @@ class InstallationStore {
             'Connu sous le pseudonyme d’Area, ce street artiste originaire de Toulouse nous offre une sculpture longiligne dont la forme ondulatoire aspire à la rêverie. Depuis 2015 des reproductions déferlent aux abords des parcs venant ponctuer les promenades estivales des Parisiens. Au travers de cette expérience, l’espace public est questionné, quelle est la place de l’Homme face à ces créations ?',
           lockedDescription:
             'De son vrai nom, Lisbonne, ce banc anti-sdf à dossier est devenu la nouvelle référence en matière “de banc de repos”. Après avoir révolutionné le banc public en métal il est aujourd’hui un classique du design anti-sdf. Mobilier dissuasif par excellence car en plus d’être conçu pour repousser les sans-abris, sa forme le rend impraticable auprès des skateurs et street artistes.',
-          geolocation: [2.39636, 48.87539],
+          geolocation: [2.4005, 48.8755],
           hashTags: ['lenversdudecor', 'lisbonne'],
           testimony: {
             fileUrl: 'temoignage_02',
@@ -83,7 +83,7 @@ class InstallationStore {
             'Conçue à la fin du XXe siècle, cette structure à la forme avant-gardiste suscite depuis de nombreuses années la curiosité des passants. Disposée sous-terre, cette oeuvre minimaliste interroge notre rapport au temps en nous offrant une halte dans les profondeurs de Paris.',
           lockedDescription:
             "De son vrai nom Appui ischiatique ou Miséricordieux, elle puise ses origines des miséricordes. Ces dernières étaient des aménagements apportés aux stalles pour permettre aux moines de s’appuyer ou de s’asseoir pendant les offices tout en ayant l’air d’être debout. Miséricordieux signifie avoir le cœur sensible au malheur d’autrui (du lat. miseria & cor ~ misère & cœur), ce qui constitue un paradoxe lorsqu'il s’avère que la RATP conçoit ces bancs pour repousser les sans-abri des stations de métro",
-          geolocation: [2.40764, 48.87512],
+          geolocation: [2.408, 48.8744],
           hashTags: ['lenversdudecor', 'enSuspens'],
           testimony: {
             fileUrl: 'temoignage_01',
@@ -197,7 +197,7 @@ class InstallationStore {
           name: 'Mi-lune',
           description:
             'Conçue à la fin du XXe siècle, cette structure à la forme avant-gardiste suscite depuis de nombreuses années la curiosité des passants. Disposée sous-terre, cette oeuvre minimaliste interroge notre rapport au temps en nous offrant une halte dans les profondeurs de Paris.',
-          geolocation: [2.4, 48.87294],
+          geolocation: [2.4045, 48.8719],
         },
         {
           _id: '7',
