@@ -3,6 +3,8 @@ import Classnames from 'classnames'
 import './installation-thumbnail.scss'
 import { Link } from 'react-router-dom'
 import { InstallationStore } from '../../store'
+import { getHeaderHeight } from '../../utils'
+import { useWindowSize } from '../../utils/hooks'
 
 export interface Props {
   className?: string
@@ -26,10 +28,15 @@ const InstallationThumbnail: FunctionComponent<Props> = ({
   const imagePath = `${
     process.env.PUBLIC_URL
   }/assets/images/installations/${installationSlug}_${suffixPath}.png`
+  const windowHeight = useWindowSize().height
+
   return (
     <Link
       className={Classnames(className, 'installation-thumbnail')}
       to={`/installation/${installationSlug}`}
+      style={{
+        height: (windowHeight - getHeaderHeight()) / 3,
+      }}
     >
       <div className="installation-thumbnail__ratio-wrap">
         <div className="installation-thumbnail__ratio-wrap__container">
