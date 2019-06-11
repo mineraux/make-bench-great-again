@@ -52,7 +52,7 @@ const Header: FunctionComponent<Props> = ({
     if (ref.current) {
       const tl = new TimelineMax()
       tl.to(ref.current, 1, {
-        transform: isHeaderVisible ? 'translateY(0)' : 'translateY(-105%)',
+        transform: isHeaderVisible ? 'translateY(0)' : 'translateY(-120%)',
         filter: isHeaderVisible ? 'blur(0)' : 'blur(4px)',
         autoRound: false,
         ease: Power1.easeInOut,
