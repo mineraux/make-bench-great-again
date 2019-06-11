@@ -6,9 +6,9 @@ class MapController {
   public initMapCanvas = () => {
     const map = new MapboxGlMap({
       container: 'map',
+      minZoom: 14,
       zoom: 15,
       maxZoom: 16,
-      minZoom: 14,
       center: [2.40592, 48.8757],
       style: 'mapbox://styles/manonc/cjv267i2a04fm1fpj6vt354xd',
       attributionControl: false,

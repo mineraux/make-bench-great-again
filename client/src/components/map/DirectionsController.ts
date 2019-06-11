@@ -18,6 +18,7 @@ class DirectionsController {
       profile: 'mapbox/walking',
       controls: false,
       interactive: false,
+      zoom: 15,
     })
 
     return directions
