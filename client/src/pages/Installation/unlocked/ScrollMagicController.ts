@@ -589,9 +589,11 @@ class ScrollMagicController {
     scenePart1Pin.on('end', (event: any) => {
       if (event.scrollDirection === 'FORWARD') {
         NavigationStore.setIsScrollIndicationVisible(false)
+        ScrollMagicStore.setIsTwitterLiveReload(true)
       }
       if (event.scrollDirection === 'REVERSE') {
         NavigationStore.setIsScrollIndicationVisible(true)
+        ScrollMagicStore.setIsTwitterLiveReload(false)
       }
     })
 

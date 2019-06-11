@@ -7,6 +7,8 @@ class InstallationStore {
 
   @observable isFirstPartPlayerPlaying: boolean = false
 
+  @observable isTwitterLiveReload: boolean = false
+
   @action public setScrollProgressFirstPart = (scroll: number) => {
     this.scrollProgressFirstPart = scroll
   }
@@ -19,6 +21,10 @@ class InstallationStore {
 
   @action public setIsFirstPartPlayerPlaying = (isPlaying: boolean) => {
     this.isFirstPartPlayerPlaying = isPlaying
+  }
+
+  @action public setIsTwitterLiveReload = (isLiveReload: boolean) => {
+    this.isTwitterLiveReload = isLiveReload
   }
 }
 
