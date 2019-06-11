@@ -41,7 +41,7 @@ const app = express()
 
 const PORT = process.env.PORT || 4000;
 
-if(process.env.HTTPS === "true") {
+if(process.env.HTTPS === "true" && process.env.NODE_ENV === "developement") {
   // To create certificate :
   // https://flaviocopes.com/express-https-self-signed-certificate/
   https.createServer({
