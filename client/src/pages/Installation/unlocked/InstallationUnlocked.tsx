@@ -65,12 +65,8 @@ const Installation: FunctionComponent<Props> = ({ match, history }) => {
           description: true,
           lockedDescription: true,
         },
-        MapStore.selectedInstallation._id
-          ? MapStore.selectedInstallation._id
-          : undefined,
-        !MapStore.selectedInstallation._id
-          ? match.params.installationSlug
-          : undefined
+        InstallationStore.getInstallationBySlug(match.params.installationSlug)
+          ._id
       )
         .then(res => {
           setInstallation(res)
