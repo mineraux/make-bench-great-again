@@ -1,6 +1,6 @@
 import React, { FunctionComponent } from 'react'
 import { Transition } from 'react-transition-group'
-import { TimelineMax, TweenMax, Power2, Power0, Power1 } from 'gsap'
+import { TimelineMax, TweenMax, Power2, Power0, Power1, Sine } from 'gsap'
 import { pageTransitionProps } from '../types'
 import Success from './Success'
 import { observer } from 'mobx-react-lite'
@@ -57,13 +57,13 @@ const TransitionComponent: FunctionComponent<Props> = ({
         '.page-success__presentation__wrapper-title__radial-circle',
         2,
         {
-          opacity: 0,
-          scale: 0,
+          scale: 1,
         },
         {
-          opacity: 1,
-          scale: 1,
-          ease: Power2.easeInOut,
+          scale: 1.2,
+          ease: Sine.easeInOut,
+          repeat: -1,
+          yoyo: true,
         },
         'background'
       )

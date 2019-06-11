@@ -31,19 +31,33 @@ const TransitionComponent: FunctionComponent<Props> = ({ show }) => {
     tl.to(node, 2, {
       opacity: 1,
       ease: Power2.easeInOut,
-    }).fromTo(
-      node,
-      1.5,
-      {
-        filter: 'blur(15px)',
-      },
-      {
-        filter: 'blur(0)',
-        autoRound: false,
-        ease: Power2.easeInOut,
-      },
-      0
-    )
+    })
+      .fromTo(
+        node,
+        1.5,
+        {
+          filter: 'blur(15px)',
+        },
+        {
+          filter: 'blur(0)',
+          autoRound: false,
+          ease: Power2.easeInOut,
+        },
+        0
+      )
+      .fromTo(
+        '.page-about__top__round',
+        2,
+        {
+          scale: 1,
+        },
+        {
+          scale: 1.2,
+          ease: Sine.easeInOut,
+          repeat: -1,
+          yoyo: true,
+        }
+      )
   }
 
   // Exit : transition

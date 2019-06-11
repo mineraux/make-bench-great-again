@@ -1,4 +1,4 @@
-import { TimelineMax, TweenMax, Power0, Power1, Power2 } from 'gsap'
+import { TimelineMax, TweenMax, Power0, Power1, Power2, Sine } from 'gsap'
 import { autorun } from 'mobx'
 // @ts-ignore
 import ScrollMagic from 'scrollmagic'
@@ -336,7 +336,7 @@ class ScrollMagicController {
       },
       {
         scale: 1.2,
-        ease: Power2.easeInOut,
+        ease: Sine.easeInOut,
         repeat: -1,
         yoyo: true,
       }
