@@ -53,10 +53,13 @@ const Countdown: FunctionComponent<Props> = ({
     }
   }, [])
 
+  const handleOnClick = () => {
+    document.location.reload(true)
+  }
   return (
     <div className={ClassNames('countdown', `theme-${theme}`)}>
       {days !== null && hours !== null && minutes !== null && (
-        <p>
+        <p onClick={handleOnClick}>
           {('0' + hours).slice(-2)}
           <span>:</span>
           {('0' + minutes).slice(-2)}
