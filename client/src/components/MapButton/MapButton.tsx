@@ -30,6 +30,7 @@ const MapButton: FunctionComponent<Props> = ({ className }) => {
     isMapButtonMenu,
     setIsMapButtonMenu,
     mapButtonTheme,
+    setMapButttonThemes,
     currentPagePath,
     nextPagePath,
   } = NavigationStore
@@ -127,18 +128,21 @@ const MapButton: FunctionComponent<Props> = ({ className }) => {
       const icon = ref.current.querySelector('.map-button__icon')
       const text = ref.current.querySelector('.map-button__menu-text')
 
-      tl.to(
-        icon!,
-        0.8,
-        {
-          opacity: 0,
-          filter: 'blur(4px)',
-          autoRound: false,
-          ease: Power1.easeInOut,
-          overwrite: true,
-        },
-        0
-      )
+      tl.add(() => {
+        setMapButttonThemes(themes.Pink)
+      })
+        .to(
+          icon!,
+          0.8,
+          {
+            opacity: 0,
+            filter: 'blur(4px)',
+            autoRound: false,
+            ease: Power1.easeInOut,
+            overwrite: true,
+          },
+          0
+        )
         .add('iconEnd', '-=0')
         .to(
           ref.current,

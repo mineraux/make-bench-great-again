@@ -8,6 +8,7 @@ import { ApiInstallation } from '../../../@types'
 import ScrollMagicStore from '../../../store/ScrollMagicStore'
 import { NavigationStore, InstallationStore } from '../../../store'
 import { themes as scrollIndicationThemes } from '../../../components/ScrollIndication/ScrollIndication'
+import { themes as mapButtonThemes } from '../../../components/MapButton/MapButton'
 
 class ScrollMagicController {
   isDebug: boolean
@@ -563,11 +564,13 @@ class ScrollMagicController {
         challenge!.classList.remove('hidden')
         tweenChallengeCircle.play()
         NavigationStore.setScrollIndicationTheme(scrollIndicationThemes.Blue)
+        NavigationStore.setMapButttonThemes(mapButtonThemes.Blue)
       } else if (event.scrollDirection === 'REVERSE') {
         challenge!.classList.add('hidden')
         testimony!.classList.remove('hidden')
         tweenChallengeCircle.pause()
         NavigationStore.setScrollIndicationTheme(scrollIndicationThemes.Green)
+        NavigationStore.setMapButttonThemes(mapButtonThemes.Pink)
       }
     })
 
@@ -590,31 +593,14 @@ class ScrollMagicController {
       if (event.scrollDirection === 'FORWARD') {
         NavigationStore.setIsScrollIndicationVisible(false)
         ScrollMagicStore.setIsTwitterLiveReload(true)
+        NavigationStore.setMapButttonThemes(mapButtonThemes.Pink)
       }
       if (event.scrollDirection === 'REVERSE') {
         NavigationStore.setIsScrollIndicationVisible(true)
         ScrollMagicStore.setIsTwitterLiveReload(false)
+        NavigationStore.setMapButttonThemes(mapButtonThemes.Blue)
       }
     })
-
-    // TODO : refacto to use store theme
-    const tweenMapButtonColor = new TimelineMax()
-      .to(
-        '.map-button',
-        3,
-        {
-          css: { className: 'map-button theme-blue' },
-        },
-        0
-      )
-      .to(
-        '.map-button__marker path',
-        3,
-        {
-          css: { className: 'theme-pink' },
-        },
-        0
-      )
 
     // ALL PAGE
 
