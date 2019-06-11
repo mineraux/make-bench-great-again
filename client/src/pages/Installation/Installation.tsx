@@ -39,7 +39,7 @@ const Installation: FunctionComponent<Props> = ({ show, match, history }) => {
 
   return (
     <>
-      {isInstallationUnlocked(installationIdentifier) || true ? (
+      {isInstallationUnlocked(installationIdentifier) ? (
         <InstallationUnlockedTransition
           show={show}
           match={match}
