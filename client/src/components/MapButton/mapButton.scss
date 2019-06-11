@@ -11,7 +11,7 @@
   border-radius: 50%;
   opacity: 0;
   cursor: pointer;
-  transition: background-color 0.4s ease;
+  transition: background-color 0.8s ease;
 
   &.theme-blue {
     background: $color-blue;
@@ -38,7 +38,7 @@
     left: 70%;
     transform: translateX(-50%) translateY(-50%);
     path {
-      transition: fill 0.4s ease;
+      transition: fill 0.8s ease;
     }
   }
 

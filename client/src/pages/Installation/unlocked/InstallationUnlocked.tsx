@@ -18,6 +18,7 @@ import { TweenMax, Power2 } from 'gsap'
 import AudioPlayer, {
   audios as AudioPlayerAudios,
 } from '../../../components/AudioPlayer/AudioPlayer'
+import { themes as mapButtonThemes } from '../../../components/MapButton/MapButton'
 import { useWindowSize } from '../../../utils/hooks'
 import { getHeaderHeight } from '../../../utils'
 import { themes as scrollIndicationThemes } from '../../../components/ScrollIndication/ScrollIndication'
@@ -34,6 +35,7 @@ const Installation: FunctionComponent<Props> = ({ match, history }) => {
     setScrollIndicationTheme,
     setIsScrollIndicationVisible,
     setIsScrollIndicationTextVisible,
+    setMapButttonThemes,
   } = NavigationStore
   const {
     scrollProgressFirstPart,
@@ -50,6 +52,8 @@ const Installation: FunctionComponent<Props> = ({ match, history }) => {
     setScrollIndicationTheme(scrollIndicationThemes.Green)
     setIsScrollIndicationVisible(false)
     setIsScrollIndicationTextVisible(true)
+
+    setMapButttonThemes(mapButtonThemes.Pink)
 
     const getInstallationInformation = async () => {
       await InstallationStore.fetchSingleInstallation(
@@ -118,6 +122,7 @@ const Installation: FunctionComponent<Props> = ({ match, history }) => {
       }
       window.scrollTo(0, 0)
       setIsScrollIndicationVisible(false)
+      setMapButttonThemes(mapButtonThemes.Pink)
     }
   }, [])
 
