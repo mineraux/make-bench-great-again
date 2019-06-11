@@ -38,6 +38,51 @@ class InstallationStore {
           geolocation: [2.39636, 48.87539],
           hashTags: ['lenversdudecor', 'lisbonne'],
           testimony: {
+            fileUrl: 'temoignage_02',
+            talkers: [
+              {
+                id: 1,
+                name: 'Anonyme',
+                details: 'Passant',
+              },
+              {
+                id: 2,
+                name: 'Christian Page',
+                details: 'ancien SDF',
+              },
+            ],
+            textContent: [
+              {
+                text:
+                  'J’en veux pas ! J’en veux pas ! Aujourd’hui il n’y a que des problèmes ! Donc plus ils dégagent, mieux c’est.',
+                talkerID: 1,
+                timecodes: [0, 5],
+              },
+              {
+                text:
+                  'Les SDF, tu sais, on nous chasse. C’est pas genre, juste, “ouais tu sais, on veut t’aider ou pas t’aider”. On nous chasse, on ne chasse pas les êtres humains, on chasse que les animaux, ça veut dire qu’ils nous prennent pour des animaux. Les gens s’en rendent pas compte mais dans la rue tu meurs ! Il y a plus d’une personne qui meurt dans la rue tous les jours en France !',
+                talkerID: 2,
+                timecodes: [5.25, 30],
+              },
+            ],
+          },
+          challengeText:
+            'Es-tu assez agile pour réussir à t’allonger sur cette installation&nbsp;?',
+        },
+        {
+          _id: '2',
+          slug: 'en_suspens',
+          name: 'En suspens',
+          lockedName: 'Miséricordieux',
+          caption:
+            'Super banc, Fonte, résine de couleur  “vert papier russe” H. : 150 L. : 70cm, 2016',
+          description:
+            'Conçue à la fin du XXe siècle, cette structure à la forme avant-gardiste suscite depuis de nombreuses années la curiosité des passants. Disposée sous-terre, cette oeuvre minimaliste interroge notre rapport au temps en nous offrant une halte dans les profondeurs de Paris.',
+          lockedDescription:
+            "De son vrai nom Appui ischiatique ou Miséricordieux, elle puise ses origines des miséricordes. Ces dernières étaient des aménagements apportés aux stalles pour permettre aux moines de s’appuyer ou de s’asseoir pendant les offices tout en ayant l’air d’être debout. Miséricordieux signifie avoir le cœur sensible au malheur d’autrui (du lat. miseria & cor ~ misère & cœur), ce qui constitue un paradoxe lorsqu'il s’avère que la RATP conçoit ces bancs pour repousser les sans-abri des stations de métro",
+          geolocation: [2.40764, 48.87512],
+          hashTags: ['lenversdudecor', 'enSuspens'],
+          testimony: {
             fileUrl: 'temoignage_01',
             talkers: [
               {
@@ -78,51 +123,6 @@ class InstallationStore {
                   'Non pas du tout, pour les SDF peut-être mais j’en sais rien !',
                 talkerID: 2,
                 timecodes: [16, 19],
-              },
-            ],
-          },
-          challengeText:
-            'Es-tu assez agile pour réussir à t’allonger sur cette installation&nbsp;?',
-        },
-        {
-          _id: '2',
-          slug: 'en_suspens',
-          name: 'En suspens',
-          lockedName: 'Miséricordieux',
-          caption:
-            'Super banc, Fonte, résine de couleur  “vert papier russe” H. : 150 L. : 70cm, 2016',
-          description:
-            'Conçue à la fin du XXe siècle, cette structure à la forme avant-gardiste suscite depuis de nombreuses années la curiosité des passants. Disposée sous-terre, cette oeuvre minimaliste interroge notre rapport au temps en nous offrant une halte dans les profondeurs de Paris.',
-          lockedDescription:
-            "De son vrai nom Appui ischiatique ou Miséricordieux, elle puise ses origines des miséricordes. Ces dernières étaient des aménagements apportés aux stalles pour permettre aux moines de s’appuyer ou de s’asseoir pendant les offices tout en ayant l’air d’être debout. Miséricordieux signifie avoir le cœur sensible au malheur d’autrui (du lat. miseria & cor ~ misère & cœur), ce qui constitue un paradoxe lorsqu'il s’avère que la RATP conçoit ces bancs pour repousser les sans-abri des stations de métro",
-          geolocation: [2.40764, 48.87512],
-          hashTags: ['lenversdudecor', 'enSuspens'],
-          testimony: {
-            fileUrl: 'temoignage_02',
-            talkers: [
-              {
-                id: 1,
-                name: 'Anonyme',
-                details: 'Passant',
-              },
-              {
-                id: 2,
-                name: 'Christian Page',
-                details: 'ancien SDF',
-              },
-            ],
-            textContent: [
-              {
-                text:
-                  'J’en veux pas ! J’en veux pas ! Aujourd’hui il n’y a que des problèmes ! Donc plus ils dégagent, mieux c’est.',
-                talkerID: 1,
-                timecodes: [0, 5],
-              },
-              {
-                text:
-                  'Les SDF, tu sais, on nous chasse. C’est pas genre, juste, “ouais tu sais, on veut t’aider ou pas t’aider”. On nous chasse, on ne chasse pas les êtres humains, on chasse que les animaux, ça veut dire qu’ils nous prennent pour des animaux. Les gens s’en rendent pas compte mais dans la rue tu meurs ! Il y a plus d’une personne qui meurt dans la rue tous les jours en France !',
-                talkerID: 2,
-                timecodes: [5.25, 30],
               },
             ],
           },
