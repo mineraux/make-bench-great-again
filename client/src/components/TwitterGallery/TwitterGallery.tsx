@@ -89,6 +89,10 @@ const TwitterGallery: FunctionComponent<Props> = ({
                   })
                 }
               })
+              fakeData.forEach(({ id, image, url, author, likeCount }) => {
+                newTweets.push({ id, image, url, author, likeCount })
+              })
+
               setTweets(newTweets)
             })
           })
