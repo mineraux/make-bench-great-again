@@ -102,13 +102,15 @@ class ScrollMagicController {
         1,
         {
           opacity: 0,
-          filter: 'blur(4px)',
+          y: 30,
+          filter: 'blur(5px)',
         },
         {
           opacity: 1,
+          y: 0,
           filter: 'blur(0)',
           autoRound: false,
-          ease: Power1.easeInOut,
+          // ease: Power1.easeInOut,
         }
       )
       .add('title1BeginOut', '+=0.5')
@@ -147,9 +149,10 @@ class ScrollMagicController {
         1,
         {
           opacity: 0,
-          filter: 'blur(4px)',
+          y: -30,
+          filter: 'blur(5px)',
           autoRound: false,
-          ease: Power1.easeInOut,
+          // ease: Power1.easeInOut,
         },
         'title1FinishOut-=0.5'
       )
@@ -175,11 +178,11 @@ class ScrollMagicController {
         presentationTextContentEl!,
         100,
         {
-          transform: 'translateY(12rem)',
+          transform: 'translateY(18rem)',
           yPercent: 0,
         },
         {
-          transform: 'translateY(8rem)',
+          transform: 'translateY(5rem)',
           yPercent: -100,
           ease: Power0.easeOut,
         },
@@ -190,7 +193,7 @@ class ScrollMagicController {
         10,
         {
           opacity: 0,
-          filter: 'blur(4px)',
+          filter: 'blur(5px)',
           autoRound: false,
           ease: Power1.easeInOut,
         },
@@ -208,7 +211,7 @@ class ScrollMagicController {
       },
       {
         opacity: 0,
-        filter: 'blur(4px)',
+        filter: 'blur(15px)',
         autoRound: false,
         ease: Power1.easeInOut,
       }
@@ -220,7 +223,7 @@ class ScrollMagicController {
       '.page-installation__wrapper__part--first-part__testimony',
       0.5,
       {
-        filter: 'blur(4px)',
+        filter: 'blur(15px)',
         opacity: 0,
       },
       {
@@ -400,7 +403,7 @@ class ScrollMagicController {
     const scenePart1PresentationTextOffset =
       scenePart1PresentationDescription.scrollOffset() +
       scenePart1PresentationDescription.duration() -
-      100
+      200
     const scenePart1PresentationText = new ScrollMagic.Scene({
       duration: scenePart1PresentationTextDuration,
       triggerHook: 0,
@@ -430,7 +433,7 @@ class ScrollMagicController {
     const scenePresentationFadeOffset =
       scenePart1PresentationText.scrollOffset() +
       scenePart1PresentationText.duration() -
-      300
+      200
     const scenePart1PresentationFade = new ScrollMagic.Scene({
       duration: 500,
       offset: scenePresentationFadeOffset,
@@ -445,25 +448,7 @@ class ScrollMagicController {
     }
     this.scenes.push(scenePart1PresentationFade)
 
-    // Testimony : fade in
-
-    const sceneTestimonyOffset =
-      scenePart1PresentationFade.scrollOffset() +
-      scenePart1PresentationFade.duration() -
-      100
-    const sceneTestimony = new ScrollMagic.Scene({
-      duration: 500,
-      triggerHook: 0,
-      offset: sceneTestimonyOffset,
-    })
-      .setTween(tweenTestimony)
-      .addTo(controller)
-    if (this.isDebug) {
-      sceneTestimony.addIndicators({ name: 'sceneTestimony' })
-    }
-    this.scenes.push(sceneTestimony)
-
-    sceneTestimony.on('start', (event: any) => {
+    scenePart1PresentationFade.on('end', (event: any) => {
       const prensentation = document.querySelector(
         '.page-installation__wrapper__part--first-part__presentation'
       )
@@ -478,6 +463,24 @@ class ScrollMagicController {
         prensentation!.classList.remove('hidden')
       }
     })
+
+    // Testimony : fade in
+
+    const sceneTestimonyOffset =
+      scenePart1PresentationFade.scrollOffset() +
+      scenePart1PresentationFade.duration() -
+      330
+    const sceneTestimony = new ScrollMagic.Scene({
+      duration: 500,
+      triggerHook: 0,
+      offset: sceneTestimonyOffset,
+    })
+      .setTween(tweenTestimony)
+      .addTo(controller)
+    if (this.isDebug) {
+      sceneTestimony.addIndicators({ name: 'sceneTestimony' })
+    }
+    this.scenes.push(sceneTestimony)
 
     // Testimony : text translate
 
