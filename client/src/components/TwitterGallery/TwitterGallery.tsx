@@ -68,7 +68,8 @@ const TwitterGallery: FunctionComponent<Props> = ({
                     url: `https://twitter.com/${
                       tweet.retweeted_status.user.id_str
                     }/status/${tweet.id_str}`,
-                    image: tweet.retweeted_status.entities.media[0].media_url,
+                    image:
+                      tweet.retweeted_status.entities.media[0].media_url_https,
                     author: tweet.retweeted_status.user.screen_name,
                     likeCount: tweet.retweeted_status.favorite_count,
                   })
@@ -82,7 +83,7 @@ const TwitterGallery: FunctionComponent<Props> = ({
                     url: `https://twitter.com/${tweet.user.id_str}/status/${
                       tweet.id_str
                     }`,
-                    image: tweet.extended_entities.media[0].media_url,
+                    image: tweet.extended_entities.media[0].media_url_https,
                     author: tweet.user.screen_name,
                     likeCount: tweet.favorite_count,
                   })
