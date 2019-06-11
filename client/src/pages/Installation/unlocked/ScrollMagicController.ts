@@ -424,7 +424,7 @@ class ScrollMagicController {
       if (progress >= 1) {
         progress = 1
       }
-      console.log(event.progress, progress)
+
       setScrollProgressFirstPart(progress)
     })
 
