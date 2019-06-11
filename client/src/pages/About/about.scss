@@ -18,15 +18,20 @@
     align-items: center;
 
     &__round {
-      top: 50%;
-      left: 50%;
-      transform: translateX(-50%) translateY(-50%);
+      $width-circle: 18rem;
+
+      pointer-events: none;
       position: absolute;
+      top: calc(50% - #{$width-circle/2});
+      left: calc(50% - #{$width-circle/2});
+
       background-color: $color-green;
-      filter: blur(25px);
-      width: 20rem;
-      height: 20rem;
       border-radius: 50%;
+      width: $width-circle;
+      height: $width-circle;
+      transform-origin: center center;
+      filter: blur(25px);
+      z-index: 0;
     }
 
     &__texts {

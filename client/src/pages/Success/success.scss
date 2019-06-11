@@ -31,7 +31,7 @@
       width: 100%;
 
       &__radial-circle {
-        $width-circle: 15rem;
+        $width-circle: 18rem;
 
         pointer-events: none;
         position: absolute;
@@ -43,7 +43,7 @@
         width: $width-circle;
         height: $width-circle;
         transform-origin: center center;
-        filter: blur(8px);
+        filter: blur(25px);
         z-index: 0;
       }
 
