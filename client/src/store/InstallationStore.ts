@@ -143,7 +143,7 @@ class InstallationStore {
             'Conçue par Marc Aurel comme une véritable ode à la nature, sa structure en courbes rappelle la forme délicate et organique des feuillages, ramenant une touche printanière dans la ville. Au cours de cette expérience, L’Exedros questionne la place de la nature dans la ville.',
           lockedDescription:
             'Derrière cette forme conviviale et propice à l’échange, se cache pourtant une volonté de rejeter une partie de la population, empêchant les sans-domicile fixes de s’allonger. Cette assise publique voit le jour boulevard Président Wilson en 2016. Son succès est tel qu’elle s’étendra dans toute la capitale. Inventés par JC. Decaux et Marc Aurel, ces bancs fleurissent au pied des arbres, à proximité des abribus.',
-          geolocation: [2.402, 48.8787],
+          geolocation: [2.4045, 48.8781],
           hashTags: ['lenversdudecor', 'Exedros'],
           testimony: {
             fileUrl: 'temoignage_03',
