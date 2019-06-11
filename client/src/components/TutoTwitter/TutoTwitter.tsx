@@ -53,6 +53,8 @@ const TwitterDebug: FunctionComponent<Props> = ({ className, hashtags }) => {
             className="tuto-twitter__wrapper__video-wrapper__video"
             muted={true}
             autoPlay
+            playsInline
+            loop
           >
             <source src={TutoVideo} type="video/mp4" />
             Désolé, votre navigateur ne supporte pas les fichiers videos
