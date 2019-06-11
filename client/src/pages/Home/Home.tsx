@@ -114,7 +114,7 @@ const Home: FunctionComponent<Props> = ({ match }) => {
               actions simples autour des installations
             </p>
             <p className="page-home__containers-wrapper__container-2__text">
-              Pour profiter pleinement de l’expérience,laissez-vous guider par
+              Pour profiter pleinement de l’expérience, laissez-vous guider par
               notre carte interactive.
             </p>
             <Button
