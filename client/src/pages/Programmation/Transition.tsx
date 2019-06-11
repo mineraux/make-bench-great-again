@@ -1,6 +1,6 @@
 import React, { FunctionComponent, ReactNode, useEffect } from 'react'
 import { Transition } from 'react-transition-group'
-import { TimelineMax, TweenMax } from 'gsap'
+import { TimelineMax, TweenMax, Power2 } from 'gsap'
 import { NavigationStore } from '../../store'
 import { observer } from 'mobx-react-lite'
 import Programmation from './Programmation'
@@ -36,10 +36,29 @@ const TransitionComponent: FunctionComponent<Props> = ({ show }) => {
       onComplete: done,
     })
 
-    tl.to(node, 0.25, {
-      opacity: 0,
-      ease: 'Sine.easeInOut',
-    })
+    tl.fromTo(
+      node,
+      0.8,
+      {
+        filter: 'blur(0)',
+      },
+      {
+        filter: 'blur(15px)',
+        autoRound: false,
+        ease: Power2.easeInOut,
+      }
+    ).fromTo(
+      node,
+      0.8,
+      {
+        opacity: 1,
+      },
+      {
+        opacity: 0,
+        ease: Power2.easeInOut,
+      },
+      0.2
+    )
   }
 
   // Exit : end
