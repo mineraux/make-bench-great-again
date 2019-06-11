@@ -7,7 +7,6 @@ import TwitterThumbnail, {
 } from '../TwitterThumbnail/TwitterThumbnail'
 
 import fakeData from './fakeData'
-import { setInterval } from 'timers'
 
 type Props = {
   className?: string
@@ -15,6 +14,7 @@ type Props = {
   hashtags: string[]
   limit?: number
   isFake?: boolean
+  isLiveReload?: boolean
 }
 
 type Tweet = twitterThumbnailProps & { id: string }
@@ -24,9 +24,11 @@ const TwitterGallery: FunctionComponent<Props> = ({
   totalNumber,
   hashtags,
   limit = 100,
-  isFake,
+  isFake = false,
+  isLiveReload = false,
 }) => {
   const [tweets, setTweets] = useState<Tweet[]>([])
+
   useEffect(() => {
     const fetchTweets = (hashtagsValues: string[]) => {
       if (isFake) {
@@ -52,7 +54,7 @@ const TwitterGallery: FunctionComponent<Props> = ({
             }
             res.json().then(resJSON => {
               const newTweets: Tweet[] = []
-              console.log(resJSON)
+              console.log('Tweet : ', resJSON)
               resJSON.statuses.map((tweet: any) => {
                 if (
                   tweet.retweeted_status &&
@@ -95,13 +97,16 @@ const TwitterGallery: FunctionComponent<Props> = ({
           })
       }
     }
+
     fetchTweets(hashtags)
 
     const interval = setInterval(() => {
-      fetchTweets(hashtags)
+      if (isLiveReload) {
+        fetchTweets(hashtags)
+      }
     }, 5000)
     return () => clearInterval(interval)
-  }, [hashtags])
+  }, [hashtags, isLiveReload])
 
   const renderTwitterThumbnails = () =>
     tweets.map((tweet, index) => {

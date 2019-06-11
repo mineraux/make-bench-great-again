@@ -348,7 +348,7 @@ const Installation: FunctionComponent<Props> = ({ match, history }) => {
             <TwitterGallery
               totalNumber={8}
               hashtags={installation.hashTags}
-              isFake={false}
+              isLiveReload={ScrollMagicStore.isTwitterLiveReload}
             />
           )}
         </div>
