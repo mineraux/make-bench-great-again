@@ -36,6 +36,7 @@ const Installation: FunctionComponent<Props> = ({ match, history }) => {
     setIsScrollIndicationVisible,
     setIsScrollIndicationTextVisible,
     setMapButttonThemes,
+    setScrollProgression,
   } = NavigationStore
   const {
     scrollProgressFirstPart,
@@ -123,6 +124,7 @@ const Installation: FunctionComponent<Props> = ({ match, history }) => {
       window.scrollTo(0, 0)
       setIsScrollIndicationVisible(false)
       setMapButttonThemes(mapButtonThemes.Pink)
+      setScrollProgression(0)
     }
   }, [])
 
