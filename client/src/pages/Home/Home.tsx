@@ -91,7 +91,7 @@ const Home: FunctionComponent<Props> = ({ match }) => {
               interactive
             </p>
             <p className="page-home__containers-wrapper__container-1__text">
-              L’envers du décors vous propose un parcours conçu sous forme de
+              L’envers du décor vous propose un parcours conçu sous forme de
               séries de performances.
             </p>
             <p className="page-home__containers-wrapper__container-1__text">
