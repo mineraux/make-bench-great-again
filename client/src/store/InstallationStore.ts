@@ -82,7 +82,7 @@ class InstallationStore {
           description:
             'Conçue à la fin du XXe siècle, cette structure à la forme avant-gardiste suscite depuis de nombreuses années la curiosité des passants. Disposée sous-terre, cette oeuvre minimaliste interroge notre rapport au temps en nous offrant une halte dans les profondeurs de Paris.',
           lockedDescription:
-            "De son vrai nom Appui ischiatique ou Miséricordieux, elle puise ses origines des miséricordes. Ces dernières étaient des aménagements apportés aux stalles pour permettre aux moines de s’appuyer ou de s’asseoir pendant les offices tout en ayant l’air d’être debout. Miséricordieux signifie avoir le cœur sensible au malheur d’autrui (du lat. miseria & cor ~ misère & cœur), ce qui constitue un paradoxe lorsqu'il s’avère que la RATP conçoit ces bancs pour repousser les sans-abri des stations de métro",
+            "De son vrai nom Appui ischiatique ou Miséricordieux, elle puise ses origines des miséricordes. Ces dernières étaient des aménagements apportés aux stalles pour permettre aux moines de s’appuyer ou de s’asseoir pendant les offices tout en ayant l’air d’être debout. Miséricordieux signifie avoir le cœur sensible au malheur d’autrui (du lat. miseria & cor ~ misère & cœur), ce qui constitue un paradoxe lorsqu'il s’avère que la RATP conçoit ces bancs pour repousser les sans-abri des stations de métro.",
           geolocation: [2.408, 48.8744],
           hashTags: ['lenversdudecor', 'enSuspens'],
           testimony: {

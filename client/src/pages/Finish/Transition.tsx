@@ -1,6 +1,6 @@
 import React, { FunctionComponent, ReactNode, useEffect } from 'react'
 import { Transition } from 'react-transition-group'
-import { TimelineMax, TweenMax } from 'gsap'
+import { TimelineMax, TweenMax, Power1 } from 'gsap'
 import { NavigationStore } from '../../store'
 import { observer } from 'mobx-react-lite'
 import Finish from './Finish'
@@ -24,10 +24,30 @@ const TransitionComponent: FunctionComponent<Props> = ({ show }) => {
       onComplete: done,
     })
 
-    tl.to(node, 0.25, {
-      opacity: 1,
-      ease: 'Sine.easeInOut',
-    })
+    tl.fromTo(
+      node,
+      1.5,
+      {
+        opacity: 0,
+      },
+      {
+        opacity: 1,
+        ease: Power1.easeInOut,
+      },
+      0
+    ).fromTo(
+      node,
+      1.5,
+      {
+        filter: 'blur(15px)',
+      },
+      {
+        filter: 'blur(0)',
+        autoRound: false,
+        ease: Power1.easeInOut,
+      },
+      0.5
+    )
   }
 
   // Exit : transition
@@ -36,10 +56,26 @@ const TransitionComponent: FunctionComponent<Props> = ({ show }) => {
       onComplete: done,
     })
 
-    tl.to(node, 0.25, {
-      opacity: 0,
-      ease: 'Sine.easeInOut',
-    })
+    tl.fromTo(
+      node,
+      0.8,
+      {
+        filter: 'blur(0)',
+      },
+      {
+        filter: 'blur(15px)',
+        autoRound: false,
+        ease: Power1.easeInOut,
+      }
+    ).to(
+      node,
+      0.8,
+      {
+        opacity: 0,
+        ease: Power1.easeInOut,
+      },
+      0.2
+    )
   }
 
   // Exit : end
@@ -56,6 +92,7 @@ const TransitionComponent: FunctionComponent<Props> = ({ show }) => {
     <Transition
       in={show}
       unmountOnExit
+      appear={true}
       timeout={10000}
       onEnter={onEnter}
       onExited={onExited}

@@ -211,7 +211,7 @@ class ScrollMagicController {
       },
       {
         opacity: 0,
-        filter: 'blur(15px)',
+        filter: 'blur(10px)',
         autoRound: false,
         ease: Power1.easeInOut,
       }
@@ -223,7 +223,7 @@ class ScrollMagicController {
       '.page-installation__wrapper__part--first-part__testimony',
       0.5,
       {
-        filter: 'blur(15px)',
+        filter: 'blur(10px)',
         opacity: 0,
       },
       {
