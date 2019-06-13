@@ -13,7 +13,7 @@ type Props = {
 }
 
 const Countdown: FunctionComponent<Props> = ({
-  endDate = '06/12/2019 10:00:00 GMT+0200',
+  endDate = '06/12/2019 15:00:00 GMT+0200',
   theme = themes.Green,
 }) => {
   const [days, setDays] = useState<number | null>(null)
@@ -53,13 +53,16 @@ const Countdown: FunctionComponent<Props> = ({
     }
   }, [])
 
+  const handleOnClick = () => {
+    document.location.reload(true)
+  }
   return (
     <div className={ClassNames('countdown', `theme-${theme}`)}>
       {days !== null && hours !== null && minutes !== null && (
-        <p>
-          {('0' + days).slice(-2)}
-          <span>:</span>
+        <p onClick={handleOnClick}>
           {('0' + hours).slice(-2)}
+          <span>:</span>
+          {('0' + minutes).slice(-2)}
         </p>
       )}
     </div>

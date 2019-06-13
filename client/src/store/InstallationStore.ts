@@ -38,7 +38,7 @@ class InstallationStore {
             'Connu sous le pseudonyme d’Area, ce street artiste originaire de Toulouse nous offre une sculpture longiligne dont la forme ondulatoire aspire à la rêverie. Depuis 2015 des reproductions déferlent aux abords des parcs venant ponctuer les promenades estivales des Parisiens. Au travers de cette expérience, l’espace public est questionné, quelle est la place de l’Homme face à ces créations ?',
           lockedDescription:
             'De son vrai nom, Lisbonne, ce banc anti-sdf à dossier est devenu la nouvelle référence en matière “de banc de repos”. Après avoir révolutionné le banc public en métal il est aujourd’hui un classique du design anti-sdf. Mobilier dissuasif par excellence car en plus d’être conçu pour repousser les sans-abris, sa forme le rend impraticable auprès des skateurs et street artistes.',
-          geolocation: [2.39636, 48.87539],
+          geolocation: [2.4005, 48.8755],
           hashTags: ['lenversdudecor', 'lisbonne'],
           testimony: {
             fileUrl: 'temoignage_02',
@@ -82,8 +82,8 @@ class InstallationStore {
           description:
             'Conçue à la fin du XXe siècle, cette structure à la forme avant-gardiste suscite depuis de nombreuses années la curiosité des passants. Disposée sous-terre, cette oeuvre minimaliste interroge notre rapport au temps en nous offrant une halte dans les profondeurs de Paris.',
           lockedDescription:
-            "De son vrai nom Appui ischiatique ou Miséricordieux, elle puise ses origines des miséricordes. Ces dernières étaient des aménagements apportés aux stalles pour permettre aux moines de s’appuyer ou de s’asseoir pendant les offices tout en ayant l’air d’être debout. Miséricordieux signifie avoir le cœur sensible au malheur d’autrui (du lat. miseria & cor ~ misère & cœur), ce qui constitue un paradoxe lorsqu'il s’avère que la RATP conçoit ces bancs pour repousser les sans-abri des stations de métro",
-          geolocation: [2.40764, 48.87512],
+            "De son vrai nom Appui ischiatique ou Miséricordieux, elle puise ses origines des miséricordes. Ces dernières étaient des aménagements apportés aux stalles pour permettre aux moines de s’appuyer ou de s’asseoir pendant les offices tout en ayant l’air d’être debout. Miséricordieux signifie avoir le cœur sensible au malheur d’autrui (du lat. miseria & cor ~ misère & cœur), ce qui constitue un paradoxe lorsqu'il s’avère que la RATP conçoit ces bancs pour repousser les sans-abri des stations de métro.",
+          geolocation: [2.408, 48.8744],
           hashTags: ['lenversdudecor', 'enSuspens'],
           testimony: {
             fileUrl: 'temoignage_01',
@@ -108,24 +108,35 @@ class InstallationStore {
                 text:
                   "C’est pas fulgurant, mais ouais petit à petit, on voit que quand même, on ne peut plus s'asseoir devant un magasin, on ne peut plus s’asseoir dans le métro, enfin on peut s’asseoir mais on ne peut pas se coucher par exemple.",
                 talkerID: 1,
-                timecodes: [0, 6],
+                timecodes: [0, 7],
               },
               {
                 text:
                   'Vous pouvez vous reposer les fesses sans vous asseoir et être prêt à partir dès que votre train ou votre bus arrive.',
                 talkerID: 2,
-                timecodes: [6.5, 14],
+                timecodes: [7.25, 13.5],
               },
               {
                 text: 'Est-ce que ce n’est pas un problème ?',
                 talkerID: 3,
-                timecodes: [14.5, 15.5],
+                timecodes: [13.75, 14.75],
               },
               {
                 text:
-                  'Non pas du tout, pour les SDF peut-être mais j’en sais rien !',
+                  'Non pas du tout, pour les SDF peut-être mais... j’en sais rien !',
                 talkerID: 2,
-                timecodes: [16, 19],
+                timecodes: [15, 18.5],
+              },
+              {
+                text: "Pour les sdf oui ils ne peuvent pas s'allonger du coup.",
+                talkerID: 3,
+                timecodes: [19, 20.5],
+              },
+              {
+                text:
+                  "Voilà exactement, oui oui, tout à fait, c'est pas fait pour, c'est pas fait pour.",
+                talkerID: 2,
+                timecodes: [20.75, 24],
               },
             ],
           },
@@ -143,7 +154,7 @@ class InstallationStore {
             'Conçue par Marc Aurel comme une véritable ode à la nature, sa structure en courbes rappelle la forme délicate et organique des feuillages, ramenant une touche printanière dans la ville. Au cours de cette expérience, L’Exedros questionne la place de la nature dans la ville.',
           lockedDescription:
             'Derrière cette forme conviviale et propice à l’échange, se cache pourtant une volonté de rejeter une partie de la population, empêchant les sans-domicile fixes de s’allonger. Cette assise publique voit le jour boulevard Président Wilson en 2016. Son succès est tel qu’elle s’étendra dans toute la capitale. Inventés par JC. Decaux et Marc Aurel, ces bancs fleurissent au pied des arbres, à proximité des abribus.',
-          geolocation: [2.402, 48.8787],
+          geolocation: [2.4045, 48.8781],
           hashTags: ['lenversdudecor', 'Exedros'],
           testimony: {
             fileUrl: 'temoignage_03',
@@ -197,7 +208,7 @@ class InstallationStore {
           name: 'Mi-lune',
           description:
             'Conçue à la fin du XXe siècle, cette structure à la forme avant-gardiste suscite depuis de nombreuses années la curiosité des passants. Disposée sous-terre, cette oeuvre minimaliste interroge notre rapport au temps en nous offrant une halte dans les profondeurs de Paris.',
-          geolocation: [2.4, 48.87294],
+          geolocation: [2.4045, 48.8719],
         },
         {
           _id: '7',
@@ -226,7 +237,10 @@ class InstallationStore {
       _id: '',
     }
 
-    if (process.env.NODE_ENV === 'development') {
+    if (
+      process.env.NODE_ENV === 'development' ||
+      process.env.NODE_ENV === 'production'
+    ) {
       this.installationList.map(installation => {
         if (installationID) {
           if (installation._id === installationID) {

@@ -20,7 +20,7 @@
             margin-top: 3.5rem;
             width: 100%;
             color: $color-green;
-            font-size: 4rem;
+            font-size: 3rem;
             text-align: center;
             font-family: $font-infini-regular;
             text-transform: uppercase;
@@ -154,7 +154,7 @@
             &__container {
               &__text-content {
                 opacity: 0;
-                filter: blur(4px);
+                filter: blur(5px);
                 will-change: filter;
               }
             }
@@ -191,6 +191,7 @@
               transform: translateX(-50%) translateY(-50%);
               opacity: 0;
               filter: blur(4px);
+              will-change: filter;
               width: 100%;
 
               &.talker-1 {

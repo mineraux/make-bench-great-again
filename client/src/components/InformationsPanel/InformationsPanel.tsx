@@ -20,6 +20,7 @@ interface Props {
   isTourStarted: boolean
   userLocation: Coords
   targetInstallationID: string
+  cancelDirectionOnClick: any
 }
 
 const InformationsPanel: FunctionComponent<Props> = ({
@@ -30,6 +31,7 @@ const InformationsPanel: FunctionComponent<Props> = ({
   isTourStarted,
   userLocation,
   targetInstallationID,
+  cancelDirectionOnClick,
 }) => {
   const { isInformationsPanelOpen, setIsInformationsPanelOpen } = MapStore
   const [installationTargetName, setInstallationTargetName] = useState(
@@ -145,6 +147,15 @@ const InformationsPanel: FunctionComponent<Props> = ({
             className={'informations-panel__set-direction-button'}
           />
         )}
+
+      {userLocation && isTourStarted && isCurrentTargetMatching && (
+        <Button
+          onClick={cancelDirectionOnClick}
+          label={'Annuler mon trajet'}
+          theme={ButtonThemes.Blue}
+          className={'informations-panel__set-direction-button'}
+        />
+      )}
     </div>
   )
 }

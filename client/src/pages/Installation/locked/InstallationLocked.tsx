@@ -73,7 +73,7 @@ const Installation: FunctionComponent<Props> = ({ match, history }) => {
   }
 
   useEffect(() => {
-    if (installation) {
+    if (installation._id.length > 0) {
       ScrollMagicController.initController()
       handleSpriteAnimationInstance()
     }

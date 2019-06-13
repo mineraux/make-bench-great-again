@@ -325,6 +325,13 @@ const ProtoMap: FunctionComponent<Props> = ({ match, history }) => {
     })
   }
 
+  const cancelCurrentDirection = () => {
+    directions.current.removeRoutes()
+    setIsTourStarted(false)
+    setTravelDistance(null)
+    setTravelTime(null)
+  }
+
   return (
     <div id="map">
       <div className="mapboxgl-map__mask" />
@@ -348,6 +355,7 @@ const ProtoMap: FunctionComponent<Props> = ({ match, history }) => {
           isTourStarted={isTourStarted}
           userLocation={userLocation}
           targetInstallationID={targetInstallationSlug}
+          cancelDirectionOnClick={cancelCurrentDirection}
         />
       }
     </div>

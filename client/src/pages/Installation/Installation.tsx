@@ -11,7 +11,15 @@ type Props = pageProps & { show: boolean }
 const Installation: FunctionComponent<Props> = ({ show, match, history }) => {
   const [installationIdentifier, setInstallationIdentifier] = useState()
 
-  const { isInstallationUnlocked, getInstallationBySlug } = InstallationStore
+  const {
+    isInstallationUnlocked,
+    getInstallationBySlug,
+    fetchInstallationList,
+  } = InstallationStore
+
+  useEffect(() => {
+    fetchInstallationList({ name: true })
+  }, [])
 
   useEffect(() => {
     if (match) {
@@ -24,19 +32,22 @@ const Installation: FunctionComponent<Props> = ({ show, match, history }) => {
 
   return (
     <>
-      {isInstallationUnlocked(installationIdentifier) ? (
-        <InstallationUnlockedTransition
-          show={show}
-          match={match}
-          history={history}
-        />
-      ) : (
-        <InstallationLockedTransition
-          show={show}
-          match={match}
-          history={history}
-        />
-      )}
+      {installationIdentifier &&
+        isInstallationUnlocked(installationIdentifier) && (
+          <InstallationUnlockedTransition
+            show={show}
+            match={match}
+            history={history}
+          />
+        )}
+      {installationIdentifier &&
+        !isInstallationUnlocked(installationIdentifier) && (
+          <InstallationLockedTransition
+            show={show}
+            match={match}
+            history={history}
+          />
+        )}
     </>
   )
 }
