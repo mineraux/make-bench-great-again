@@ -8,10 +8,11 @@ import React, {
 import Classnames from 'classnames'
 import './splashscreen-animation.scss'
 import { observer } from 'mobx-react-lite'
-import { TimelineMax, Power1 } from 'gsap'
+import { TimelineMax, Power1, Power2, Bounce } from 'gsap'
 import { useWindowSize } from '../../utils/hooks'
 import { ReactComponent as DateSvg } from './2019.svg'
 import { NavigationStore } from '../../store'
+import { themes as scrollIndicationThemes } from '../ScrollIndication/ScrollIndication'
 
 type Props = {
   className?: string
@@ -26,16 +27,16 @@ const SplashscreenAnimation: FunctionComponent<Props> = ({
   const ref = useRef<HTMLDivElement>(null)
 
   useEffect(() => {
-    const tl = new TimelineMax({
-      delay: 1.5,
-      onComplete: () => {
-        if (ref.current) {
-          ref.current.style.overflow = 'initial'
-        }
-      },
-    })
-
     if (ref.current) {
+      const tl = new TimelineMax({
+        paused: true,
+        onComplete: () => {
+          if (ref.current) {
+            ref.current.style.overflow = 'initial'
+          }
+        },
+      })
+
       const circle = ref.current.querySelector(
         '.splashscreen-animation__circle'
       )
@@ -64,7 +65,17 @@ const SplashscreenAnimation: FunctionComponent<Props> = ({
         '.splashscreen-animation__text-container__text-3'
       )
 
-      tl.add('part1')
+      tl
+        /* .add("fadeIn", 0)
+      fromTo(".splashscreen-animation", 2, {
+        opacity: 0,
+        filter: "blur(20px)",
+      }, {
+        opacity: 1,
+        filter: "blur(0)",
+        autoRound: false
+      }, "fadeIn")*/
+        .add('part1', 1.5)
         .to(
           [circleHalf1, circleHalf2],
           2,
@@ -86,15 +97,23 @@ const SplashscreenAnimation: FunctionComponent<Props> = ({
         )
         .to(
           textContainer!,
-          1.5,
+          1.8,
           {
-            filter: 'blur(0px)',
+            filter: 'blur(0)',
             autoRound: false,
+            force3D: true,
             ease: Power1.easeOut,
           },
           'part1+=1.5'
         )
+        .add(() => {
+          NavigationStore.setScrollIndicationTheme(scrollIndicationThemes.Green)
+          NavigationStore.setIsScrollIndicationVisible(true)
+        }, '+=0.2')
         .add('part2', '+=0.5')
+        .add(() => {
+          NavigationStore.setIsScrollIndicationVisible(false)
+        }, 'part2+=0.1')
         .to(
           circle!,
           2.5,
@@ -139,12 +158,23 @@ const SplashscreenAnimation: FunctionComponent<Props> = ({
           },
           'part2+=1.7'
         )
-        // .add(() => {NavigationStore.setIsScrollIndicationVisible(true)})
+        .add(() => {
+          NavigationStore.setScrollIndicationTheme(scrollIndicationThemes.Blue)
+          NavigationStore.setIsScrollIndicationVisible(true)
+        })
         .add(() => {
           if (onComplete) {
             onComplete()
           }
         }, 'part2+=1.5')
+
+      tl.tweenTo('part2')
+
+      const handleTouchStart = () => {
+        tl.play()
+      }
+
+      ref.current.addEventListener('touchstart', handleTouchStart)
     }
   }, [])
 
