@@ -5,6 +5,7 @@
   &__containers-wrapper {
     opacity: 0;
     width: 100%;
+    will-change: filter;
 
     &__title {
       position: absolute;
@@ -53,9 +54,19 @@
       }
     }
 
+    &__container-1 {
+      &__title {
+        //margin-top: 3rem;
+      }
+    }
+
     &__container-2 {
       pointer-events: none;
       opacity: 0;
+
+      &__title {
+        //margin-top: 6rem;
+      }
 
       &__button {
         width: max-content;

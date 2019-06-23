@@ -29,7 +29,7 @@ const Home: FunctionComponent<Props> = ({ match }) => {
 
   useEffect(() => {
     setIsHeaderVisible(false)
-    setScrollIndicationTheme(scrollIndicationThemes.Blue)
+    setScrollIndicationTheme(scrollIndicationThemes.Green)
     setIsScrollIndicationVisible(false)
     setIsScrollIndicationTextVisible(true)
 
@@ -79,7 +79,7 @@ const Home: FunctionComponent<Props> = ({ match }) => {
 
         tl.fromTo(
           '.page-home__containers-wrapper',
-          1.5,
+          1.8,
           {
             filter: 'blur(4px)',
             opacity: 0,
@@ -88,6 +88,7 @@ const Home: FunctionComponent<Props> = ({ match }) => {
             filter: 'blur(0)',
             opacity: 1,
             autoRound: false,
+            force3D: true,
             ease: Power1.easeOut,
           }
         ).add(() => {
@@ -126,7 +127,7 @@ const Home: FunctionComponent<Props> = ({ match }) => {
               interactive
             </p>
             <p className="page-home__containers-wrapper__container-1__text">
-              L’envers du décor vous propose un parcours conçu sous forme de
+              L’Envers du décor vous propose un parcours conçu sous forme de
               séries de performances.
             </p>
             <p className="page-home__containers-wrapper__container-1__text">
@@ -145,8 +146,8 @@ const Home: FunctionComponent<Props> = ({ match }) => {
               COMMENT PARTICIPER ?
             </p>
             <p className="page-home__containers-wrapper__container-2__text">
-              Pour prendre part à l’événement, vous serez amené à réaliser des
-              actions simples autour des installations
+              Pour prendre part à l’événement, vous serez amenés à réaliser des
+              actions simples autour des installations.
             </p>
             <p className="page-home__containers-wrapper__container-2__text">
               Pour profiter pleinement de l’expérience, laissez-vous guider par

@@ -18,6 +18,10 @@ class ScrollMagicController {
   public initController = () => {
     const controller = new ScrollMagic.Controller()
 
+    // TWEEN
+
+    // container 1
+
     const tweenPart1 = new TimelineMax().fromTo(
       '.page-home__containers-wrapper__container-1',
       1,
@@ -29,12 +33,14 @@ class ScrollMagicController {
       {
         opacity: 0,
         y: -100,
-        filter: 'blur(6px)',
+        filter: 'blur(4px)',
         autoRound: false,
         force3D: true,
         // ease: Power1.easeInOut,
       }
     )
+
+    // container 2
 
     const tweenPart2 = new TimelineMax()
       .set('.page-home__containers-wrapper__container-2', {
@@ -46,7 +52,7 @@ class ScrollMagicController {
         {
           opacity: 0,
           y: 100,
-          filter: 'blur(6px)',
+          filter: 'blur(4px)',
         },
         {
           opacity: 1,
@@ -57,6 +63,24 @@ class ScrollMagicController {
           // ease: Power1.easeInOut,
         }
       )
+
+    // page pin : circle fade out
+
+    const tweenPin = new TimelineMax().to(
+      '.splashscreen-animation__circle',
+      1,
+      {
+        yPercent: 20,
+        opacity: 0,
+        filter: 'blur(15px)',
+        autoRound: false,
+        ease: Power1.easeInOut,
+      }
+    )
+
+    // SCENE
+
+    // container 1
 
     const scenePart1Duration = 300
     const scenePart1Offset = 0
@@ -73,6 +97,8 @@ class ScrollMagicController {
       })
     }
     this.scenes.push(scenePart1)
+
+    // container 2
 
     const scenePart2Duration = 300
     const scenePart2 = new ScrollMagic.Scene({
@@ -99,7 +125,8 @@ class ScrollMagicController {
       }
     })
 
-    // Scene page pin
+    // Page pin
+
     const scenePageDuration = scenePart2.duration() + scenePart2.offset()
 
     const scenePage = new ScrollMagic.Scene({
@@ -107,6 +134,7 @@ class ScrollMagicController {
       triggerHook: 1,
     })
       .setPin('.page-home__containers-wrapper')
+      .setTween(tweenPin)
       .addTo(controller)
 
     if (this.isDebug) {
