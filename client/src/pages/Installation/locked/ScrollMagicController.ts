@@ -35,12 +35,13 @@ class ScrollMagicController {
       '.page-installation--locked__wrapper__part--first-part__presentation__installation-sketch',
       1,
       {
-        scale: 1.7,
-        yPercent: 30,
+        scale: 1.4,
+        yPercent: 20,
       },
       {
         scale: 1,
         yPercent: 0,
+        force3D: true,
         ease: Power1.easeInOut,
       }
     )
@@ -52,28 +53,16 @@ class ScrollMagicController {
       1,
       {
         opacity: 0,
+        y: 30,
         filter: 'blur(4px)',
       },
       {
         opacity: 1,
+        y: 0,
         filter: 'blur(0)',
         autoRound: false,
+        force3D: true,
         ease: Power1.easeInOut,
-      }
-    )
-
-    // Presentation : text content
-
-    const tweenPresentationText = new TimelineMax().fromTo(
-      '.page-installation--locked__wrapper__part--first-part__presentation__text-content-wrapper__container__text-content',
-      0.5,
-      {
-        transform: 'translateY(20rem)',
-        yPercent: 0,
-      },
-      {
-        transform: 'translateY(0)',
-        yPercent: -100,
       }
     )
 
@@ -81,7 +70,7 @@ class ScrollMagicController {
 
     // Presentation : sketch
 
-    const scenePart1InstallationSketchDuration = 600
+    const scenePart1InstallationSketchDuration = 350
     const scenePart1InstallationSketchOffset = 0
     const scenePart1InstallationSketch = new ScrollMagic.Scene({
       duration: scenePart1InstallationSketchDuration,
@@ -97,13 +86,13 @@ class ScrollMagicController {
     }
     this.scenes.push(scenePart1InstallationSketch)
 
-    // Presentation : description + title
+    // Presentation : description
 
-    const scenePart1PresentationDescriptionDuration = 800
+    const scenePart1PresentationDescriptionDuration = 350
     const scenePart1PresentationDescriptionOffset =
       scenePart1InstallationSketch.scrollOffset() +
       scenePart1InstallationSketch.duration() -
-      350
+      250
     const scenePart1PresentationDescription = new ScrollMagic.Scene({
       duration: scenePart1PresentationDescriptionDuration,
       triggerHook: 0,
@@ -127,30 +116,12 @@ class ScrollMagicController {
       }
     })
 
-    // Presentation : text
-    const scenePart1PresentationTextDuration = 250
-    const scenePart1PresentationTextOffset =
-      scenePart1PresentationDescription.scrollOffset() +
-      scenePart1PresentationDescription.duration()
-    const scenePart1PresentationText = new ScrollMagic.Scene({
-      duration: scenePart1PresentationTextDuration,
-      triggerHook: 0,
-      offset: scenePart1PresentationTextOffset,
-    })
-      .setTween(tweenPresentationText)
-      .addTo(controller)
-    if (this.isDebug) {
-      scenePart1PresentationText.addIndicators({
-        name: 'scenePart1PresentationText',
-      })
-    }
-    this.scenes.push(scenePart1PresentationText)
-
     // Part 1 : pin
 
     const scenePart1PinDuration =
-      scenePart1PresentationText.scrollOffset() +
-      scenePart1PresentationText.duration()
+      scenePart1PresentationDescription.scrollOffset() +
+      scenePart1PresentationDescription.duration() +
+      50
 
     const scenePart1Pin = new ScrollMagic.Scene({
       duration: scenePart1PinDuration,
@@ -166,7 +137,7 @@ class ScrollMagicController {
     // scene page
 
     const scenePage = new ScrollMagic.Scene({
-      duration: scenePart1PinDuration,
+      duration: scenePart1PinDuration - 1,
       triggerHook: 0,
     }).addTo(controller)
     this.scenes.push(scenePage)
@@ -202,7 +173,7 @@ class ScrollMagicController {
         'blurPresentation+=0.2'
       )
 
-    scenePart1PresentationDescription.on('end', (event: any) => {
+    scenePage.on('end', (event: any) => {
       if (event.scrollDirection === 'FORWARD') {
         blur.play()
         NavigationStore.setIsScrollIndicationVisible(false)

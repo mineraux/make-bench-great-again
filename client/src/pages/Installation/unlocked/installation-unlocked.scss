@@ -103,6 +103,7 @@
             position: absolute;
             //left: 50%;
             top: 3.5rem;
+            will-change: filter;
           }
 
           &__installation-sketch {
@@ -110,7 +111,7 @@
             opacity: 0;
             transform: scale(1);
             position: absolute;
-            top: 12%;
+            top: 10%;
           }
 
           &__description {
@@ -120,6 +121,7 @@
             flex-direction: column;
             align-items: center;
             width: 100%;
+            will-change: filter;
 
             &__text {
               font-family: $font-infini-regular;

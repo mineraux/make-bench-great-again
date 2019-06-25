@@ -102,7 +102,12 @@ const Installation: FunctionComponent<Props> = ({ match, history }) => {
   return (
     <div className="page-installation--locked" ref={ref}>
       <div className="page-installation--locked__wrapper">
-        <div className="page-installation--locked__wrapper__part--first-part">
+        <div
+          className="page-installation--locked__wrapper__part--first-part"
+          style={{
+            height: windowHeight - getHeaderHeight(),
+          }}
+        >
           <div className="page-installation--locked__wrapper__part--first-part__presentation">
             <p className="page-installation--locked__wrapper__part--first-part__presentation__title">
               {installation.name}

@@ -33,6 +33,7 @@ const SplashscreenAnimation: FunctionComponent<Props> = ({
         onComplete: () => {
           if (ref.current) {
             ref.current.style.overflow = 'initial'
+            ref.current.style.pointerEvents = 'none'
           }
         },
       })

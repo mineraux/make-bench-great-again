@@ -82,12 +82,13 @@ class ScrollMagicController {
       1,
       {
         scale: 1.4,
-        yPercent: 30,
+        yPercent: 20,
       },
       {
         scale: 1,
         yPercent: 0,
         ease: Power1.easeInOut,
+        force3D: true,
         onUpdate: () => {
           // window.dispatchEvent(new Event('resize'));
         },
@@ -110,10 +111,11 @@ class ScrollMagicController {
           y: 0,
           filter: 'blur(0)',
           autoRound: false,
+          force3D: true,
           // ease: Power1.easeInOut,
         }
       )
-      .add('title1BeginOut', '+=0.5')
+      .add('title1BeginOut', '+=0')
       .fromTo(
         '.page-installation__wrapper__part--first-part__presentation__title.title1',
         1,
@@ -124,6 +126,7 @@ class ScrollMagicController {
           opacity: 0,
           filter: 'blur(4px)',
           autoRound: false,
+          force3D: true,
           ease: Power1.easeInOut,
         },
         'title1BeginOut'
@@ -140,6 +143,7 @@ class ScrollMagicController {
           opacity: 1,
           filter: 'blur(0)',
           autoRound: false,
+          force3D: true,
           ease: Power1.easeInOut,
         },
         'title1FinishOut-=0.5'
@@ -152,6 +156,7 @@ class ScrollMagicController {
           y: -30,
           filter: 'blur(5px)',
           autoRound: false,
+          force3D: true,
           // ease: Power1.easeInOut,
         },
         'title1FinishOut-=0.5'
@@ -170,6 +175,7 @@ class ScrollMagicController {
           opacity: 1,
           filter: 'blur(0)',
           autoRound: false,
+          force3D: true,
           ease: Power1.easeInOut,
         },
         0
@@ -184,6 +190,7 @@ class ScrollMagicController {
         {
           transform: 'translateY(5rem)',
           yPercent: -100,
+          force3D: true,
           ease: Power0.easeOut,
         },
         0
@@ -195,6 +202,7 @@ class ScrollMagicController {
           opacity: 0,
           filter: 'blur(5px)',
           autoRound: false,
+          force3D: true,
           ease: Power1.easeInOut,
         },
         90
@@ -286,13 +294,14 @@ class ScrollMagicController {
         textContentEl!,
         100,
         {
-          transform: `translateY(${20 * 0.7}rem)`,
+          transform: `translateY(${200 * 0.7}px)`,
           yPercent: 0,
         },
         {
-          transform: `translateY(${20 * 0.3}rem)`,
+          transform: `translateY(${200 * 0.3}px)`,
           yPercent: -100,
           ease: Power0.easeOut,
+          force3D: true,
         },
         0
       )
@@ -349,9 +358,9 @@ class ScrollMagicController {
 
     // SCENES
 
-    // Presentation: sketch + title
+    // Presentation: sketch
 
-    const scenePart1InstallationSketchDuration = 600
+    const scenePart1InstallationSketchDuration = 350
     const scenePart1InstallationSketchOffset = 0
     const scenePart1InstallationSketch = new ScrollMagic.Scene({
       duration: scenePart1InstallationSketchDuration,
@@ -373,7 +382,7 @@ class ScrollMagicController {
     const scenePart1PresentationDescriptionOffset =
       scenePart1InstallationSketch.scrollOffset() +
       scenePart1InstallationSketch.duration() -
-      350
+      250
     const scenePart1PresentationDescription = new ScrollMagic.Scene({
       duration: scenePart1PresentationDescriptionDuration,
       triggerHook: 0,
@@ -399,7 +408,7 @@ class ScrollMagicController {
 
     // Presentation : text
 
-    const scenePart1PresentationTextDuration = 1700
+    const scenePart1PresentationTextDuration = 1000
     const scenePart1PresentationTextOffset =
       scenePart1PresentationDescription.scrollOffset() +
       scenePart1PresentationDescription.duration() -

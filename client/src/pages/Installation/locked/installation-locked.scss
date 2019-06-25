@@ -13,7 +13,7 @@
       &__part {
         &--first-part {
           position: relative;
-          height: calc(100vh - #{$header-height});
+          //height: calc(100vh - #{$header-height});
           left: 0 !important;
           z-index: 2;
 
@@ -54,22 +54,26 @@
               width: 100%;
               opacity: 0;
               transform: scale(1);
+              position: absolute;
+              top: 10%;
             }
 
             &__description {
               position: absolute;
-              top: 70%;
+              top: 60%;
               display: flex;
               flex-direction: column;
               align-items: center;
               width: 100%;
-              transform: translateY(-50%);
+              //transform: translateY(-50%);
 
               &__text {
                 font-family: $font-infini-regular;
                 color: $color-pink;
-                font-size: 1.5rem;
-                line-height: 1.8rem;
+                //font-size: 1.5rem;
+                //line-height: 1.8rem;
+                font-size: 1.6rem;
+                line-height: 2.2rem;
                 max-width: $content-width;
                 text-align: center;
                 margin-bottom: 1.5rem;
