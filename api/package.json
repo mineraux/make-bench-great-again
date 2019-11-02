@@ -13,7 +13,7 @@
     "express": "^4.16.4",
     "express-graphql": "^0.7.1",
     "graphql": "^14.2.1",
-    "mongoose": "^5.4.21",
+    "mongoose": "^5.7.5",
     "twitter": "^1.7.1"
   },
   "devDependencies": {
